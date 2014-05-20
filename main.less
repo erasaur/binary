@@ -1,0 +1,337 @@
+@pro0: rgba(152, 252, 152, 0.3);
+@pro1: rgba(21, 204, 245, 0.3);
+@pro2: rgba(0, 191, 255, 0.5);
+@pro3: rgba(45, 179, 15, 0.3);
+@pro4: rgba(38, 126, 180, 0.4);
+
+@con0: rgba(166, 22, 41, 0.3);
+@con1: rgba(200, 174, 134, 0.4);
+@con2: rgba(192, 91, 47, 0.3);
+@con3: rgba(112, 49, 18, 0.3);
+@con4: rgba(63, 17, 8, 0.3);
+
+@light-gray: rgba(220, 220, 220, 0.3);
+
+// --------------------- colors -----------------------
+
+tr.pro0 { background: @pro0; }
+tr.pro1 { background: @pro1; }
+tr.pro2 { background: @pro2; }
+tr.pro3 { background: @pro3; }
+tr.pro4 { background: @pro4; }
+
+tr.con0 { background: @con0; }
+tr.con1 { background: @con1; }
+tr.con2 { background: @con2; }
+tr.con3 { background: @con3; }
+tr.con4 { background: @con4; }
+
+// --------------- bg color fade effect ---------------
+
+@-webkit-keyframes target-fade {
+  0% { background-color: rgba(202, 245, 245, .6); }
+  100% { background-color: #fff; }
+}
+@-moz-keyframes target-fade {
+  0% { background-color: rgba(202, 245, 245, .6); }
+  100% { background-color: #fff; }
+}
+
+.bg-fade {
+	-webkit-animation: target-fade 2s 1;
+  -moz-animation: target-fade 2s 1;
+}
+
+// ----------------- general stuff --------------------
+
+html, body, div.container-fluid, div.row {
+	height: 100%;
+}
+input[type="text"], input[type="password"], input[type="email"], input[type="submit"], textarea.form-control, button.btn, a.btn, .alert, .well {
+	border-radius: 1px;
+}
+a {
+	text-decoration: none !important;
+}
+textarea {
+	width: 100%;
+	max-width: 100%;
+}
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+div.col {
+	background: @light-gray; //rgba(220, 220, 220, 0.3);
+	padding: 20px;
+}
+div.container-fluid {
+	padding: 0;
+}
+button.btn, button.round {
+	&:active, &:focus {
+		outline: none !important;
+	}
+}
+button.round {
+	margin: 10px;
+	padding: 5px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+td {
+	vertical-align: top;
+	&.col {
+		padding: 10px;
+	}
+}
+tr {
+	background: @light-gray;
+	&.collapse {
+		height: 0;
+	}
+}
+
+// ------------------ home page -----------------
+.show-more {
+	margin: 80px 0;
+	text-align: center;
+}
+
+// ----------------- profile page ---------------
+.profile-header {
+	width: 100%;
+	margin: 40px auto;
+}
+.profile-nav nav {
+	border-radius: 0;
+
+	ul {
+		width: 100%;
+
+		li {
+			float: left;
+			text-align: center;
+			width: 20%;
+		}
+	}
+}
+.profile-body {
+	padding: 40px;
+	background: @light-gray;
+	height: 100%;
+}
+
+.nav-pills {
+	text-align: center;
+
+	> li { //for centering the tabs
+		float: none;
+		display: inline-block;
+		*display: inline; //IE7
+    *zoom:1; //IE7
+
+		> a { //spacing the tabs
+			margin: 20px 20px 40px;
+			border-radius:0px;
+			color: #000 !important;
+		}
+	}
+
+	> .active > a, > .active > a:hover, > li > a:hover {
+		text-decoration: none;
+		border-radius: 0px;
+		border-bottom: 4px solid rgba(120, 208, 208, 0.6);
+	  background-color: transparent !important;
+	}
+
+	> .active > a:hover, > li > a:hover {
+  	border-bottom: 4px solid rgba(120, 208, 208, 0.8);
+	}
+}
+
+// --------------- topic/comment page --------------
+.replies-comment {
+	padding: 15px 20px 0;
+}
+.replies-bottom {
+	height: 0;
+}
+.comments {
+	padding: 0;
+	table-layout: fixed;
+}
+.comment {
+	padding: 0;
+	//min-height: 240px;
+	background: #fff;
+}
+.comment-header {
+	padding: 20px 10px 10px;
+}
+.comment-content {
+	padding: 0 10px;
+	min-height: 130px;
+	word-wrap: break-word;
+
+	> a {
+		height: 20px;
+	}
+
+	> p.collapsed {
+		height: 100px;
+		overflow-y: hidden;
+	}
+}
+.comment-date {
+	padding: 0 10px;
+	margin-top: 10px;
+	height: 20px;
+	font-size: 10px;
+}
+.comment-footer {
+	padding: 10px 10px;
+	height: 50px;
+	background: darken(@light-gray, 20%);
+}
+
+// ------------------ border caret thing -------------------
+.border {
+	background: transparent; 
+	height: 30px;
+
+	&:before {
+		content: " ";
+	  height: 0;
+	  width: 0;
+	  position: absolute;
+	  border: 15px solid transparent;
+	}
+	&.pro:before {
+		left: 10%;
+	}
+	&.con:before {
+		left: 85%;
+	}
+}
+
+.border.pro.c0:before { border-bottom-color: @pro0; }
+.border.pro.c1:before { border-bottom-color: @pro1; }
+.border.pro.c2:before { border-bottom-color: @pro2; }
+.border.pro.c3:before { border-bottom-color: @pro3; }
+.border.pro.c4:before { border-bottom-color: @pro4; }
+.border.con.c0:before { border-bottom-color: @con0; }
+.border.con.c1:before { border-bottom-color: @con1; }
+.border.con.c2:before { border-bottom-color: @con2; }
+.border.con.c3:before { border-bottom-color: @con3; }
+.border.con.c4:before { border-bottom-color: @con4; }
+
+// --------------------- general purpose stuff ---------------------
+.center {
+	text-align: center;
+}
+.float-right {
+	float: right;
+}
+.float-left {
+	float: left;
+}
+.clearfix {
+	&:before, &:after {
+		content: " ";
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+	*zoom: 1;
+}
+.padded {
+	padding: 10px;
+}
+
+// ------------- bootstrap elements (nav, modal, etc) --------------
+#nav-profile {
+	text-align: center;
+}
+.navbar {
+	margin-bottom: 0;
+}
+.navbar-nav > li > .dropdown-menu {
+	margin-top: 1px;
+	border-radius: 0 0 2px 2px;
+	border-color: rgba(200, 200, 200, 0.8);
+	background: @light-gray;
+	box-shadow: none;
+
+	&.notifications {
+		width: 250px;
+		height: 400px;
+		overflow-y: auto;	
+	}
+
+	> ul > li {
+		> a {
+			display: block;
+			padding: 5px 10px;
+
+			&:hover {
+				background: darken(@light-gray, 30%);
+			}
+		}
+	}
+
+	.btn {
+		width: 100%;
+		margin-top: 10px;
+	}
+}
+
+.modal.fade .modal-dialog {
+  -webkit-transition: -webkit-transform .3s ease-out;
+     -moz-transition:    -moz-transform .3s ease-out;
+       -o-transition:      -o-transform .3s ease-out;
+          transition:         transform .3s ease-out;
+	-webkit-transform: none;
+			-ms-transform: none;
+					transform: none;
+}
+.modal.in .modal-dialog {
+	-webkit-transition: -webkit-transform .3s ease-in-out;
+     -moz-transition:    -moz-transform .3s ease-in-out;
+       -o-transition:      -o-transform .3s ease-in-out;
+          transition:         transform .3s ease-in-out;
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none;
+}
+.modal-backdrop {
+	background: white;
+	-webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+.modal-dialog {
+	background: transparent;
+}
+.modal-content {
+	border-radius: 1px;
+	box-shadow: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+

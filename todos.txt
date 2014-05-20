@@ -1,0 +1,137 @@
+---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
+auth certain pages
+better way to do form alerts (home/signup modals)
+improve topics.js vote function
+meteor stubs -- have meteor methods on client and server (see meteor.methods in meteor docs)
+- sync client/server side collections
+remove the js files for comments, topics, etc?
+test the router for loading template, not found template, etc. need to do subscriptions for notfound template
+implement use of enter to submit forms (maybe not for sign up form -- less risk of bots signing up? add captcha maybe?)
+make a footer type thing (some space from the bottom)
+idToCollection function in helpers -- is it slow to pass collection as parameter?
+
+be consistent with database -- use id or username to store relationships?? eg owner, comment's "topic"
+- better to move to _id's, if we want to allow users to change their username in the future.
+
+edit/remove comments, edit/remove topics
+
+searching topics
+
+possibly: for the replies helper: show only the replies that are also in Session.get("showingReplies") array. or come up with some other way to make the shown replies only for current browser, not for global. right now it's global b/c it's taking all replies that has replyTo some id.
+
+fix: don't show comments that are already shown as replies.
+scrollTo new comment -- make sure to choose only the closest one (get current comment, pass as a param perhaps)
+- potential error if using replies box in anyway (replies box is removed if it is the last row)
+
+
+one client's updates screw up another client's layout. test on multiple browsers
+
+sorting by popular, newest, etc. for newest, might be best not to do auto-updates -- comments keep moving around too much
+
+infinite scrolling for comments
+forgot password feature
+test cross-browser functionality
+optimize structure of database
+fix up css make it better
+SEO
+benchmark website
+
+meteor permissions (allow, deny, etc)
+
+
+move followers, following, followingtopics etc not very important for security stuff into profile, so we don't have to publish so many fields?
+
+
+if user has 10 new updates, and we're planning on only storing 5, send only the 5 newest updates.
+
+**** maybe remove the notifications model, and put all of them into the user document? take advantage of mongodb "indexing" (search by current user _id rather than by notification's "user" entry), reduce number of publishes/subs
+
+notification system:
+- circle next to name showing notifications.find(user).count()
+- 4 categories of notifications
+-- for each one, if only 1 notification, then display something like: user1 posted in/replied to your topic/comment
+-- if 2+ notifications, then something like: 2 people posted in/replied to your topic/comment 
+
+- for meteor user:
+-- notifications field:
+	- replies:
+	-- list of notification ids for when users reply to user's comments
+	- topics/posts:
+	-- list of ids for new topics/posts created by people user is following
+	- comments:
+	-- list of ids for new comments on topics created by user
+	- follows:
+	-- list of people who just followed you
+
+- whenever someone comments on comment you posted (for example), update the notifications collection where the user is the comment owner (if they are not viewing the current page) and insert info about {person who posted that reply, type of notification (in this case, comment reply -- will be used later to format the message shown to the user), boolean of read to false}
+- when the notification page is viewed, all the notifications are marked as "read" (and perhaps delete notifications after 3 days)
+
+---------------------------------------------------------------------- DONE -------------------------------------------------------------------------
+
+optimize jquery selectors ("div.class"). can use id's for replies now, since no duplicate comments allowed at same time. scrollTo function also can use id's
+optimize subscription/publications -- only publish needed documents, not the entire database (which would take a lot of time/memory)
+
+
+
+<template name="commentRow">
+<tr>
+<td>{{> comment pros}}</td>
+<td>{{> comment cons}}</td>
+</tr>
+
+{{#if showingReplies}} //check if the pro or con comment has class "showing-replies"
+{{> commentRow}} //pros: CommentsModel.find({"replyTo": event.target.id, "side": pro}) where event.target.id is the id of the comment whose "toggle replies" was clicked
+{{/if}}
+</template>
+
+<template name="commentRow">
+<tr>
+<td>{{> comment pros}}</td>
+<td>{{> comment cons}}</td>
+</tr>
+
+{{#if showingProReplies}} //check if the pro comment has class "showing-replies"
+{{> commentRow}} //pros: CommentsModel.find({"replyTo": event.target.id, "side": pro}) where event.target.id is the id of the comment whose "toggle replies" was clicked
+{{/if}}
+{{#if showingConRplies}}
+	same thing
+{{/if}}
+</template>
+
+------ database info -----
+users:
+- username
+- email
+- password
+- profile
+- notifications
+	- commentReply (notifications received when users reply to their comment)
+	- followingUser (notifications received for activity regarding user they are following)
+	- followingTopic (notifications received for activity in topic they are following)
+- activity
+	- likes (the number of likes received -- reputation)
+	- liked (the comments they liked)
+	- following (users they are following)
+	- followers (users following them)
+	- followingTopics (topics they are following)
+	- topics (that the user had participated in)
+
+topics:
+- _id (automatically created)
+- title
+- owner [username]
+- date (of creation)
+- pro (count) [allow increment only if logged in]
+- con (count)
+~later - users [by username] (users who have commented on the topic)
+
+comments:
+- _id (automatically created)
+- owner [username]
+- topic (in which comment is posted)
+- date (of creation)
+- content
+- side ("pro" or "con")
+- likes
+- replyTo [_id] (the comment this is replying to -- only if this is a reply)
+- replies [_id] (comments replying to this)

@@ -1,0 +1,10 @@
+{
+  "packages": {
+    "iron-router": {
+		  "git": "git://github.com/EventedMind/iron-router.git",
+		  "branch": "sub-manager"
+		},
+    "bootstrap-3": {},
+    "fast-render": {}
+  }
+}
