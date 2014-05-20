@@ -1,0 +1,118 @@
+<template name="topic">
+	{{#if topic}}
+		<div class="col col-xs-12 col-sm-8 col-sm-offset-2">
+			<h2>{{topic.title}} 
+				{{#if currentUser}}
+					{{#if following}}
+						<button id="unfollow" class="btn btn-primary">Following</button>
+					{{else}}
+						<button id="follow" class="btn btn-default">Follow</button>
+					{{/if}}
+				{{/if}}
+			</h2> Created by {{topic.owner}} on {{date}}
+			<div class="well center">
+				<button class="inc-pro btn btn-success">Pro: {{topic.pro}}</button> <button class="inc-con btn btn-danger">Con: {{topic.con}}</button>
+			</div>
+
+			<div class="clearfix">
+				{{#if currentUser}}
+					{{> newComment}}
+				{{else}}
+					Please log in to comment.
+				{{/if}}
+			</div>
+		</div>
+
+		<div class="comments col-xs-12 col-sm-8 col-sm-offset-2">
+			{{#if hasComments}}
+				<table class="comments col-xs-12">
+					<tbody>
+					{{#each comments}}
+						{{> commentRow}}
+					{{/each}}
+					</tbody>
+				</table>
+			{{else}}
+				<div class="col">No comments yet.</div>
+			{{/if}}
+		</div>
+	{{/if}}
+</template>
+
+<template name="commentRow">
+	{{#unless bottom}}
+		<tr class="{{#if ../side}}{{../side}}{{../color}}{{/if}}">
+			{{#if pros}}
+				<td class="col col-xs-6" style="padding-left: 20px;">{{> comment pros}}</td>
+			{{else}}
+				<td class="col col-xs-6"></td>
+			{{/if}}
+			{{#if cons}}
+				<td class="col col-xs-6" style="padding-right: 20px;">{{> comment cons}}</td>
+			{{else}}
+				<td class="col col-xs-6"></td>
+			{{/if}}
+		</tr>
+	{{else}}
+		<tr class="replies-bottom"></tr>
+	{{/unless}}
+</template>
+
+<template name="comment">
+	<div id="{{_id}}" class="comment">
+		<div class="comment-header">
+			<b><a href="/{{owner}}">{{owner}}</a></b>
+		</div>
+  	<div class="comment-content">
+  		<p class="collapsed">
+  		{{{breaklines content}}}
+  		</p>
+  		{{#if readMore}}<a href="#" class="read-more">(more)</a>{{/if}}
+  	</div>
+  	<div class="comment-date">
+  		{{date}}
+  	</div>
+  	<div class="comment-footer">
+  		{{#if currentUser}}
+	  		{{#if liked}}
+	  			<button class="float-left btn btn-sm btn-default unlike-comment">Unlike {{likes}}</button>
+	  		{{else}}
+	  			<button class="float-left btn btn-sm btn-default like-comment"><i class="fa fa-thumbs-o-up"></i> {{likes}}</button>
+	  		{{/if}}
+	  	{{else}}
+	  		<i class="fa fa-thumbs-o-up"></i> {{likes}}
+  		{{/if}}
+  		<button class="btn btn-sm btn-default toggle-replies float-right">{{#if showingReplies}}Hide Replies{{else}}Show Replies{{/if}}</button>
+  	</div>
+	</div>
+</template>
+
+<template name="newComment">
+	<textarea class="new-comment" placeholder="Type your comment here..."></textarea>
+	<button class="btn btn-default float-right post-comment">Comment</button>
+	<button class="btn btn-success round float-right post-side"></button>
+</template>
+
+<template name="replies">
+	<tr id="{{id}}-replies-top" class="border {{side}} c{{color}}"><td colspan="2"></td></tr>
+
+	<tr class="{{id}}-replies {{side}}{{color}}">
+		{{#if currentUser}}
+			<td colspan="2" class="replies-comment">
+				{{> newComment}}
+			</td>
+		{{/if}}
+	</tr>
+
+	{{#if hasReplies}}
+		{{#each replies}}
+			{{> commentRow}}
+		{{/each}}
+	{{else}}
+		<tr class="{{id}}-replies {{side}}{{color}}">
+			<td class="col" colspan="2">No replies.</td>
+		</tr>
+	{{/if}}
+
+	<tr id="{{id}}-replies-bot" class="border"><td colspan="2"></td></tr>
+</template>

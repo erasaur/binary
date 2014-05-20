@@ -1,0 +1,56 @@
+<template name="home">
+	<div class="col col-xs-12 col-sm-8 col-sm-offset-2">
+		{{#if currentUser}}
+			<a href="#" class="btn btn-default" data-toggle="modal" data-target="#create-topic-modal">New Topic</a>
+		{{/if}}
+		
+		{{#if topics.count}}
+			{{#each topics}}
+				<h3><a href="{{pathFor 'topic'}}">{{title}}</a></h3> 
+				<p>Created by {{owner}} on {{date}}</p>
+				<p>
+					Pros: {{pro}}
+					Cons: {{con}}
+				</p>
+			{{/each}}
+		{{/if}}
+
+		{{#if moreTopics}}
+			<div class="show-more">
+				<span class="alert alert-info">Loading more...</span>
+			</div>
+		{{else}}
+			<div class="show-more">
+				<p>No more topics.</p>
+				{{#if currentUser}}	
+					<a href="#" class="btn btn-default" data-toggle="modal" data-target="#create-topic-modal">Create one!</a>
+				{{else}}
+					Sign up or log in to create one!
+				{{/if}}
+			</div>
+		{{/if}}
+	</div>
+
+	<div class="modal fade" id="create-topic-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content custom">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="modalLabel">Create Topic</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form class="form-horizontal" id="create-topic-form" role="form">
+						<div class="control-group">
+							<label class="control-label" for="create-title">Title</label>
+							<input type="text" class="form-control" id="create-title" placeholder="What will you be discussing?">
+						</div>
+					</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" id="create-topic">Create</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</template>

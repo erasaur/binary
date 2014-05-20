@@ -1,0 +1,180 @@
+<template name="profile">
+	{{#if user}}
+		<div class="col-xs-12 col-md-8 col-md-offset-2 center profile-header">
+			<h2>{{user.username}}</h2>
+			{{#if canFollow}}
+				{{#if following}}
+					<button id="unfollow" class="btn btn-primary">Following</button>
+				{{else}}
+					<button id="follow" class="btn btn-default">Follow</button>
+				{{/if}}
+			{{/if}}
+		</div>
+		<div class="col-xs-12 profile-nav">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+				<ul class="nav navbar-nav">
+					  <li class="navbar-tab {{#if currentTab 'followersTab'}}active{{/if}}"><a href="#" id="followersTab">Followers</a></li>
+					  <li class="navbar-tab {{#if currentTab 'followingTab'}}active{{/if}}"><a href="#" id="followingTab">Following</a></li>
+					  <li class="navbar-tab {{#if currentTab 'topicsTab'}}active{{/if}}"><a href="#" id="topicsTab">Topics</a></li>
+					  <li class="navbar-tab {{#if currentTab 'commentsTab'}}active{{/if}}"><a href="#" id="commentsTab">Comments</a></li>
+					  <li class="navbar-tab {{#if currentTab 'likedTab'}}active{{/if}}"><a href="#" id="likedTab">Likes: {{likes}}</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<div class="col-xs-12 col-md-8 col-md-offset-2 profile-body">
+			{{#if currentTab 'followersTab'}}
+				{{> profileFollowers}}
+			{{/if}}
+			{{#if currentTab 'followingTab'}}
+				{{> profileFollowing}}
+			{{/if}}
+			{{#if currentTab 'topicsTab'}}
+				{{> profileTopics}}
+			{{/if}}
+			{{#if currentTab 'commentsTab'}}
+				{{> profileComments}}
+			{{/if}}
+			{{#if currentTab 'likedTab'}}
+				{{> profileLiked}}
+			{{/if}}
+		</div>
+	{{/if}}
+</template>
+
+<template name="profileLiked">
+	<ul class="nav nav-pills">
+		<li class="active"><a href="#reputation" data-toggle="tab">Reputation</a></li>
+		<li><a href="#liked" data-toggle="tab">Comments {{user.username}} Liked</a></li>
+	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="reputation">
+			{{likes}}
+		</div>
+		<div class="tab-pane" id="liked">
+			{{#if liked}}
+				{{#each liked}}
+					<div>
+						<b><a href="/{{owner}}">{{owner}}</a></b>:
+						<p class="well">{{{breaklines content}}}</p>
+					</div>
+				{{/each}}
+			{{else}}
+				This user has not liked anything yet.
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+<template name="profileComments">
+	<ul class="nav nav-pills">
+		<li class="active"><a href="#comments" data-toggle="tab">Comments Posted</a></li>
+	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="comments">
+			{{#if comments.count}}
+				{{#each comments}}
+					<div>
+						In <b><a href="/topics/{{topic}}">{{title}}</a></b>:
+						<p class="well">{{{breaklines content}}}</p>
+					</div>
+				{{/each}}
+			{{else}}
+				This user has not posted any comments yet.
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+<template name="profileTopics">
+	<ul class="nav nav-pills">
+		<li class="active"><a href="#topics-discussed" data-toggle="tab">Topics {{user.username}} Discussed</a></li>
+		<li><a href="#topics-created" data-toggle="tab">Topics {{user.username}} Created</a></li>
+	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="topics-discussed">
+			{{#if topics}}
+				<ul>
+				{{#each topics}}
+					<li><a href="{{pathFor 'topic'}}">{{title}}</a></li>
+				{{/each}}
+				</ul>
+			{{else}}
+				This user has not discussed any topics yet.
+			{{/if}}
+		</div>
+		<div class="tab-pane" id="topics-created">
+			{{#if created.count}}
+				<ul>
+				{{#each created}}
+					<li><a href="{{pathFor 'topic'}}">{{title}}</a></li>
+				{{/each}}
+				</ul>
+			{{else}}
+				This user has not created any topics yet.
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+<template name="profileFollowers">
+	<ul class="nav nav-pills">
+		<li class="active"><a href="#followers" data-toggle="tab">Followers</a></li>
+	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="followers">
+			{{#if followers}}
+				{{#each followers}}
+					<a href="{{pathFor 'profile'}}">{{username}}</a>
+				{{/each}}
+			{{else}}
+				This user has no followers.
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+<template name="profileFollowing">
+	<ul class="nav nav-pills">
+		<li class="active"><a href="#following" data-toggle="tab">Following</a></li>
+	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="following">
+			{{#if following}}
+				{{#each following}}
+					<a href="{{pathFor 'profile'}}">{{username}}</a>
+				{{/each}}
+			{{else}}
+				This user is not following anybody. Suggest some?
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
