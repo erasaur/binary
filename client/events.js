@@ -49,15 +49,18 @@ setInterval(function() {
 }, 300);
 
 Template.home.events({
-	"click #create-topic, submit #create-topic-form": function(event, template) {
+	"click #create-topic": function(event, template) {
+		$("html,body").animate({ scrollTop: 0}, "fast");
+	},
+	"submit #create-topic-form": function(event, template) {
 		event.preventDefault();
 		var title = template.find("#create-title").value;
 
 		Meteor.call("newTopic", title, Meteor.userId(), Meteor.user().username, function(error, result) {
 			if(error) {
-				alert(error);
+				alert(formatError(error));
 			} else {
-				$("#create-topic-modal").modal("hide");
+				$("#create-title").val("");
 			}
 		});
 	}
@@ -77,7 +80,7 @@ Template.newComment.events({
 				if(error) {
 					alert(formatError(error));
 				} else {
-					scrollTo(result);
+					scrollToId(result);
 				}
 			});
 
@@ -122,7 +125,7 @@ Template.comment.events({
 	"click .comment-replyto": function(event, template) {
 		event.preventDefault();
 		if(this.replyTo) {
-			scrollTo(this.replyTo);
+			scrollToId(this.replyTo);
 		}
 	},
 	"click .toggle-replies": function(event, template) {
@@ -238,29 +241,28 @@ Template.nav.events({
 			event.returnValue = false;
 		}
 	},
-	"submit #login-form": function(event, template) {
-		event.preventDefault();
-		var username = template.find('#username').value,
-				password = template.find('#password').value;
-		
-		Meteor.loginWithPassword(username, password, function(error) {
-			if(error) { 
-				alert(formatError(error)); 
-			}
+	"click #logout": function(event, template) {
+		Meteor.logout(function(error) {
+			Router.go('home');
 		});
-	},
-	"click #create-user": function(event, template) {
+	}
+});
+
+Template.signup.events({
+	"submit #signup-form": function(event, template) {
+		event.preventDefault();
 		var username = template.find('#create-username').value,
 				email = template.find('#create-email').value,
-				password = template.find('#create-password').value,
-				repeat = template.find('#repeat-password').value;
-		Meteor.call("newUser", username, email, password, repeat, function(error, result) {
+				password = template.find('#create-password').value;
+
+		Meteor.call("newUser", username, email, password, function(error, result) {
 			if(error) {
-				template.find('#registerError').innerHTML = formatError(error);
-				$('#registerAlert').show();
+				alert(formatError(error));
+				// template.find('#registerError').innerHTML = formatError(error);
+				// $('#registerAlert').show();
 			} else {
 				alert(result);
-				$('#signup-modal').modal('hide');
+
 				Meteor.loginWithPassword(username, password, function(error) {
 					if(error) {
 						alert(formatError(error));
@@ -268,10 +270,19 @@ Template.nav.events({
 				});
 			}
 		});
-	},
-	"click #logout": function(event, template) {
-		Meteor.logout(function(error) {
-			Router.go('home');
+	}
+});
+
+Template.login.events({
+	"submit #login-form": function(event, template) {
+		event.preventDefault();
+		var username = template.find('#username').value,
+				password = template.find('#password').value;
+
+		Meteor.loginWithPassword(username, password, function(error) {
+			if(error) { 
+				alert(formatError(error)); 
+			}
 		});
 	}
 });

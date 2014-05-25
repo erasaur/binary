@@ -42,6 +42,30 @@ tr.con4 { background: @con4; }
   -moz-animation: target-fade 2s 1;
 }
 
+// --------------------- general purpose stuff ---------------------
+.center {
+	text-align: center;
+}
+.float-right {
+	float: right;
+}
+.float-left {
+	float: left;
+}
+.clearfix {
+	&:before, &:after {
+		content: " ";
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+	*zoom: 1;
+}
+.padded {
+	padding: 10px;
+}
+
 // ----------------- general stuff --------------------
 
 html, body, div.container-fluid, div.row {
@@ -56,6 +80,14 @@ a {
 textarea {
 	width: 100%;
 	max-width: 100%;
+  border: none;
+  border-color: transparent; 
+  overflow: auto;
+  outline: none;
+	-webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  //background: transparent;
 }
 ul {
 	list-style-type: none;
@@ -65,9 +97,10 @@ ul {
 div.col {
 	background: @light-gray; //rgba(220, 220, 220, 0.3);
 	padding: 20px;
-}
-div.container-fluid {
-	padding: 0;
+
+	&.wrapper {
+		padding-top: 50px;
+	}
 }
 button.btn, button.round {
 	&:active, &:focus {
@@ -95,10 +128,28 @@ tr {
 	}
 }
 
+// ------------- signup/login page --------------
+.landing-container {
+	width: 300px;
+	margin: 100px auto;
+	padding: 20px 40px;
+}
+.landing-form-header {
+	margin-bottom: 30px;
+	text-align: center;
+}
+.landing-form-body > form > button {
+	width: 100%;
+	margin: 20px 0 10px;
+}
+
 // ------------------ home page -----------------
 .show-more {
 	margin: 80px 0;
 	text-align: center;
+}
+#create-topic-container {
+	margin-bottom: 40px;
 }
 
 // ----------------- profile page ---------------
@@ -122,38 +173,12 @@ tr {
 .profile-body {
 	padding: 40px;
 	background: @light-gray;
-	height: 100%;
-}
-
-.nav-pills {
-	text-align: center;
-
-	> li { //for centering the tabs
-		float: none;
-		display: inline-block;
-		*display: inline; //IE7
-    *zoom:1; //IE7
-
-		> a { //spacing the tabs
-			margin: 20px 20px 40px;
-			border-radius:0px;
-			color: #000 !important;
-		}
-	}
-
-	> .active > a, > .active > a:hover, > li > a:hover {
-		text-decoration: none;
-		border-radius: 0px;
-		border-bottom: 4px solid rgba(120, 208, 208, 0.6);
-	  background-color: transparent !important;
-	}
-
-	> .active > a:hover, > li > a:hover {
-  	border-bottom: 4px solid rgba(120, 208, 208, 0.8);
-	}
 }
 
 // --------------- topic/comment page --------------
+.vote {
+	padding: 40px;
+}
 .replies-comment {
 	padding: 15px 20px 0;
 }
@@ -229,41 +254,46 @@ tr {
 .border.con.c3:before { border-bottom-color: @con3; }
 .border.con.c4:before { border-bottom-color: @con4; }
 
-// --------------------- general purpose stuff ---------------------
-.center {
-	text-align: center;
-}
-.float-right {
-	float: right;
-}
-.float-left {
-	float: left;
-}
-.clearfix {
-	&:before, &:after {
-		content: " ";
-		display: table;
-	}
-	&:after {
-		clear: both;
-	}
-	*zoom: 1;
-}
-.padded {
-	padding: 10px;
-}
-
 // ------------- bootstrap elements (nav, modal, etc) --------------
 #nav-profile {
 	text-align: center;
 }
+div.container-fluid.wrapper {
+	padding: 0;
+	//margin-top: -50px;
+}
 .navbar {
 	margin-bottom: 0;
 }
+.navbar-right {
+	float: right;
+}
+.navbar-transparent {
+	background: transparent;
+	border: none;
+
+	// > div.container {
+	// 	width: 1300px;
+	// }
+
+	.navbar-brand, ul.nav > li > a {
+		color: lighten(black, 30%);
+		font-size: 1.5em;	
+		background: transparent !important;
+
+		&:hover {
+			color: black;
+		}
+	}
+
+	ul.nav > li {
+		width: 50px;
+		display: inline-block; //so the list items don't stack when screen is shrunk
+	}
+}
 .navbar-nav > li > .dropdown-menu {
-	margin-top: 1px;
-	border-radius: 0 0 2px 2px;
-	border-color: rgba(200, 200, 200, 0.8);
+	border-radius: 1px;
+	border-color: darken(@light-gray, 30%);
 	background: @light-gray;
 	box-shadow: none;
 
@@ -279,7 +309,7 @@ tr {
 			padding: 5px 10px;
 
 			&:hover {
-				background: darken(@light-gray, 30%);
+				background: darken(@light-gray, 10%);
 			}
 		}
 	}
@@ -290,23 +320,49 @@ tr {
 	}
 }
 
-.modal.fade .modal-dialog {
-  -webkit-transition: -webkit-transform .3s ease-out;
-     -moz-transition:    -moz-transform .3s ease-out;
-       -o-transition:      -o-transform .3s ease-out;
-          transition:         transform .3s ease-out;
+.nav-pills { //underline tabs navbar thing
+	text-align: center;
+
+	> li { //for centering the tabs
+		float: none;
+		display: inline-block;
+		*display: inline; //IE7
+    *zoom:1; //IE7
+
+		> a { //spacing the tabs
+			margin: 20px 20px 40px;
+			border-radius:0px;
+			color: #000 !important;
+		}
+	}
+
+	> .active > a, > .active > a:hover, > li > a:hover {
+		text-decoration: none;
+		border-radius: 0px;
+		border-bottom: 4px solid rgba(120, 208, 208, 0.6);
+	  background-color: transparent !important;
+	}
+
+	> .active > a:hover, > li > a:hover {
+  	border-bottom: 4px solid rgba(120, 208, 208, 0.8);
+	}
+}
+
+.transition(@type) {
+	-webkit-transition: -webkit-transform .3s @type;
+     -moz-transition:    -moz-transform .3s @type;
+       -o-transition:      -o-transform .3s @type;
+          transition:         transform .3s @type;
 	-webkit-transform: none;
 			-ms-transform: none;
 					transform: none;
 }
+
+.modal.fade .modal-dialog {
+  .transition(ease-out);
+}
 .modal.in .modal-dialog {
-	-webkit-transition: -webkit-transform .3s ease-in-out;
-     -moz-transition:    -moz-transform .3s ease-in-out;
-       -o-transition:      -o-transform .3s ease-in-out;
-          transition:         transform .3s ease-in-out;
-  -webkit-transform: none;
-      -ms-transform: none;
-          transform: none;
+	.transition(ease-in-out);
 }
 .modal-backdrop {
 	background: white;

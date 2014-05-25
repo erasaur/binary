@@ -12,20 +12,14 @@ Accounts.onCreateUser(function(options, user) {
 });
 
 Meteor.methods({
-	newUser: function(username, email, password, repeat) {		
+	newUser: function(username, email, password) {		
 		var errors = [];
 
-		if(username && email && password && repeat) {			
-			if(validEmail(email)) {
-				if(password.length >= 6) {
-					if(password != repeat) { //passwords don't match
-						errors.push("The passwords do not match.");
-					}
-				} else { //password too short
-					errors.push("Your password must be at least 6 characters long."); 
-				}
-			} else { //invalid email
+		if(username && email && password) {			
+			if(!validEmail(email)) {
 				errors.push("The email entered is invalid.");
+			} else if(password.length < 6) {
+				errors.push("Your password must be at least 6 characters long."); 
 			}
 		} else { //fields not filled in
 			errors.push("Please fill in all of the fields!");

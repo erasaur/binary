@@ -6,7 +6,28 @@ Router.configure({
   notFoundTemplate: "notFound"
 });
 
-// Router.before(mustBeSignedIn, {except: ["home"]});
+Router.onBeforeAction(function() {
+  if(!(Meteor.loggingIn() || Meteor.user())) {
+    this.redirect("signup");
+  }
+}, {except: ["signup", "login"]}); //forgot password page
+
+Router.onBeforeAction(function() {
+  if(Meteor.user()) {
+    this.redirect("home");
+  }
+}, {only: ["signup", "login"]});
+
+Router.onAfterAction(function() {
+  var hash = window.location.hash.substring(1);
+  //console.log(this.data());
+  if(hash && this.ready()) {
+    setTimeout(function() {
+      scrollToId(hash);
+    }, 500);
+  }
+});
+
 Deps.autorun(function() {
   Meteor.subscribe("allTopics", Session.get("topicsLimit"));
   Meteor.subscribe("currentUser");
@@ -15,9 +36,9 @@ Deps.autorun(function() {
 Router.map(function() {
 	this.route("home", { 
 		path: "/",
-    // waitOn: function() {
-    //   return Meteor.subscribe("allTopics", Session.get("topicsLimit"));
-    // },
+    waitOn: function() {
+      return Meteor.subscribe("allTopics", Session.get("topicsLimit"));
+    }
     // cache: true
 		/*before: function() {
       if(!Meteor.loggingIn() && !Meteor.user()) {
@@ -25,6 +46,8 @@ Router.map(function() {
       }
     }*/
   });
+  this.route("signup", {yieldTemplates: {}});
+  this.route("login", {yieldTemplates: {}});
   this.route("profile", {
     path: "/:username",
     waitOn: function() {
@@ -51,6 +74,9 @@ Router.map(function() {
       }
   	}
   });
+  this.route("notFound", {
+    path: "*"
+  })
 });
 
 

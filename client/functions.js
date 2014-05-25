@@ -56,7 +56,7 @@ formatError = function(error) {
   return e.join(' ');
 };
 
-scrollTo = function(id){
+scrollToId = function(id){
   Deps.flush(); //immediately render the dom, so we can access $("#" + id)
 
   var comment = $("#" + id);

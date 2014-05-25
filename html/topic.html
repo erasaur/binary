@@ -9,8 +9,8 @@
 						<button id="follow" class="btn btn-default">Follow</button>
 					{{/if}}
 				{{/if}}
-			</h2> Created by {{topic.owner}} on {{date}}
-			<div class="well center">
+			</h2> Created by {{topic.owner}} on {{formatDate this.topic.date}}
+			<div class="vote center">
 				<button class="inc-pro btn btn-success">Pro: {{topic.pro}}</button> <button class="inc-con btn btn-danger">Con: {{topic.con}}</button>
 			</div>
 
@@ -70,7 +70,7 @@
   		{{#if readMore}}<a href="#" class="read-more">(more)</a>{{/if}}
   	</div>
   	<div class="comment-date">
-  		{{date}}
+  		{{formatDate date}}
   	</div>
   	<div class="comment-footer">
   		{{#if currentUser}}

@@ -1,3 +1,7 @@
+anchor hash
+em vs px
+separate sign up
+
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
 auth certain pages
 better way to do form alerts (home/signup modals)
