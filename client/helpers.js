@@ -6,6 +6,11 @@ UI.registerHelper("breaklines", function(text) {
 	text = text.replace(/(\r\n|\n|\r)/gm, "<br>");
 	return text;
 });
+UI.registerHelper("formatDate", function(date) {
+	if(date) {
+		return formatDate(date);
+	}
+});
 
 Template.home.helpers({
 	topics: function() {
@@ -91,11 +96,6 @@ Template.topic.helpers({
 		pairs.push({"bottom": true}); //dummy row, so we don't have to deal with moveLast
 		return pairs;
 	},
-	date: function() {
-		if(this.topic) {
-			return formatDate(this.topic.date);
-		}
-	},
 	following: function() {
 		//if(!Meteor.user().activity) return false;
 		return Meteor.user().activity.followingTopics && Meteor.user().activity.followingTopics.indexOf(this.topic._id) > -1;
@@ -111,9 +111,6 @@ Template.comment.helpers({
 	},
 	readMore: function() {
 		return this.content.split("\n").length > 5 || this.content.length > 200;
-	},
-	date: function() {
-		return formatDate(this.date);
 	},
 	liked: function() {
 		return Meteor.user().activity.liked && Meteor.user().activity.liked.indexOf(this._id) > -1;
