@@ -243,23 +243,33 @@ Template.nav.events({
 	},
 	"click #logout": function(event, template) {
 		Meteor.logout(function(error) {
-			Router.go('home');
+			Router.go("home");
 		});
 	}
 });
 
+function fadeElement(elem) {
+	if(elem.css("opacity") > 0) {
+		elem.fadeOut("slow", function() {
+			elem.html("");
+		});
+	}
+}
+
 Template.signup.events({
+	"change input": function(event, template) {
+		fadeElement($(".landing-form-errors"));	
+	},
 	"submit #signup-form": function(event, template) {
 		event.preventDefault();
-		var username = template.find('#create-username').value,
-				email = template.find('#create-email').value,
-				password = template.find('#create-password').value;
+		var username = template.find("#create-username").value,
+				email = template.find("#create-email").value,
+				password = template.find("#create-password").value;
 
 		Meteor.call("newUser", username, email, password, function(error, result) {
 			if(error) {
-				alert(formatError(error));
-				// template.find('#registerError').innerHTML = formatError(error);
-				// $('#registerAlert').show();
+				template.find(".landing-form-errors").innerHTML = "<li>" + formatError(error) + "</li>";
+				$(".landing-form-errors").fadeTo("slow", 1);
 			} else {
 				alert(result);
 
@@ -274,14 +284,18 @@ Template.signup.events({
 });
 
 Template.login.events({
+	"change input": function(event, template) {
+		fadeElement($(".landing-form-errors"));
+	},
 	"submit #login-form": function(event, template) {
 		event.preventDefault();
-		var username = template.find('#username').value,
-				password = template.find('#password').value;
+		var username = template.find("#username").value,
+				password = template.find("#password").value;
 
 		Meteor.loginWithPassword(username, password, function(error) {
 			if(error) { 
-				alert(formatError(error)); 
+				template.find(".landing-form-errors").innerHTML = "<li>" + formatError(error) + "</li>";
+				$(".landing-form-errors").fadeTo("slow", 1);
 			}
 		});
 	}
