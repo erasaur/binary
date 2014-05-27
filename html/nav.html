@@ -4,7 +4,7 @@
 			<a href="{{pathFor 'home'}}" class="navbar-brand">yamcha</a>
 			<ul class="nav navbar-nav navbar-right">
 				{{#if currentUser}}
-					<li><a href="#"><i class="fa fa-search"></i></a></li>
+					<li><a href="#" data-toggle="modal" data-target="#search-modal"><i class="fa fa-search"></i></a></li>
 					<li class="dropdown">
             <a href="#" class="dropdown-toggle" id="nav-profile" data-toggle="dropdown"><i class="fa fa-user"></i></a>
             <div class="dropdown-menu">
@@ -31,5 +31,23 @@
         {{/if}}   
 			</ul>
 		</div>
+	</div>
+
+	<div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content custom">
+	      <div class="modal-header">
+	      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="modalLabel">Search</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form class="form-horizontal" id="create-user-form" role="form">
+						<div class="control-group">
+							<input type="text" class="form-control" placeholder="Start typing here...">
+						</div>
+					</form>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 </template>
