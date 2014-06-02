@@ -2,16 +2,12 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "iron-router": {},
       "bootstrap-3": {},
-      "fast-render": {}
+      "fast-render": {},
+      "iron-router": {},
+      "easy-search": {}
     },
     "packages": {
-      "iron-router": {
-        "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.7.1",
-        "commit": "d1ffb3f06ea4c112132b030f2eb1a70b81675ecb"
-      },
       "bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
         "tag": "v3.1.1-1",
@@ -19,8 +15,18 @@
       },
       "fast-render": {
         "git": "https://github.com/arunoda/meteor-fast-render.git",
-        "tag": "v0.2.2",
-        "commit": "2a7298d72a84b85e989ec2cc9300bbea7c159eb8"
+        "tag": "v0.2.5",
+        "commit": "93e2fb334e55fbe9b5ebb2a2e65964018658f43e"
+      },
+      "iron-router": {
+        "git": "https://github.com/EventedMind/iron-router.git",
+        "tag": "v0.7.1",
+        "commit": "d1ffb3f06ea4c112132b030f2eb1a70b81675ecb"
+      },
+      "easy-search": {
+        "git": "https://github.com/matteodem/meteor-easy-search.git",
+        "tag": "v0.4.0",
+        "commit": "6ab16e6c4b505d6d02de8be7e1633f6561af971f"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",

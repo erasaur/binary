@@ -3,6 +3,10 @@ function validEmail(email) {
 	return re.test(email); 
 }
 
+EasySearch.config({
+	"port": "3000"
+});
+
 Accounts.onCreateUser(function(options, user) {
 	user.profile = options.profile;
 	user.activity = options.activity;
