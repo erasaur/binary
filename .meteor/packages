@@ -4,13 +4,13 @@
 # but you can also edit it by hand.
 
 standard-app-packages
-iron-router
 ui
 spacebars
 bootstrap-3
 less
 accounts-base
 accounts-password
-fast-render
 insecure
 underscore
+iron-router
+easy-search

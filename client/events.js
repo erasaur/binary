@@ -31,6 +31,12 @@ function removeSessionReplies(rows) {
 var	scrolling = false,
 		currentRoute; 
 
+EasySearch.search("topics", "test", function (error, data) {
+	if(error) {
+		alert(error);
+	}
+});
+
 $(window).scroll(function() {
 	scrolling = true; //run function when scroll
 });
@@ -245,6 +251,12 @@ Template.nav.events({
 		Meteor.logout(function(error) {
 			Router.go("home");
 		});
+	},
+	"submit #search-form": function(event, template) {
+		event.preventDefault();
+	},
+	"click .search-link": function(event, template) {
+		$("#search-modal").modal("hide");
 	}
 });
 
@@ -276,6 +288,8 @@ Template.signup.events({
 				Meteor.loginWithPassword(username, password, function(error) {
 					if(error) {
 						alert(formatError(error));
+					} else {
+						Router.go("home");
 					}
 				});
 			}
