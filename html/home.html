@@ -1,46 +1,41 @@
 <template name="home">
-	<div class="col wrapper col-xs-12 col-sm-8 col-sm-offset-2">
-		{{#if currentUser}}
-			<div id="create-topic-container">
-				<h3>New Topic</h3>
-				<form role="form" id="create-topic-form">
-				  <div class="form-group">
-				    <input type="text" class="form-control" id="create-title" placeholder="Ask a question!">
-				  </div>
-				  <button type="submit" class="btn btn-default">Submit</button>
-				</form>
-			</div>
-		{{/if}}
-		
-		{{#if topics.count}}
-			<div id="topics-container">
-				{{#each topics}}
-					<div class="topic">
-						<h3><a href="{{pathFor 'topic'}}">{{title}}</a></h3> 
-						<p>Created by {{owner}} on {{formatDate date}}</p>
-						<p>
-							Pros: {{pro}}
-							Cons: {{con}}
-						</p>
-					</div>
-				{{/each}}
-			</div>
-		{{/if}}
+	<div class="row">
+		<div class="col wrapper col-xs-12 col-sm-8 col-sm-offset-2">
+			{{#if currentUser}}
+				<div id="create-topic-container">
+					<h3>New Topic</h3>
+					<form role="form" id="create-topic-form">
+					  <div class="form-group">
+					    <input type="text" class="form-control" id="create-title" placeholder="Ask a question!">
+					  </div>
+					  <button type="submit" class="btn btn-default">Submit</button>
+					</form>
+				</div>
+			{{/if}}
+			
+			{{#if topics.count}}
+				<div id="topics-container">
+					{{#each topics}}
+						{{> topicItem}}
+					{{/each}}
+				</div>
+			{{/if}}
 
-		{{#if moreTopics}}
-			<div class="show-more">
-				<span class="alert alert-info">Loading more...</span>
-			</div>
-		{{else}}
-			<div class="show-more">
-				<p>No more topics.</p>
-				{{#if currentUser}}	
-					<!-- go to top of page -->
-					<a href="#" class="btn btn-default" id="create-topic">Create one!</a>
-				{{else}}
-					Sign up or log in to create one!
-				{{/if}}
-			</div>
-		{{/if}}
+			{{#if moreTopics}}
+				<div class="show-more">
+					<span class="alert alert-info">Loading more...</span>
+				</div>
+			{{else}}
+				<div class="show-more">
+					<p>No more topics.</p>
+					{{#if currentUser}}	
+						<!-- go to top of page -->
+						<a href="#" class="btn btn-default" id="create-topic">Create one!</a>
+					{{else}}
+						Sign up or log in to create one!
+					{{/if}}
+				</div>
+			{{/if}}
+		</div>
 	</div>
 </template>

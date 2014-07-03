@@ -65,10 +65,20 @@ tr.con4 { background: @con4; }
 .padded {
 	padding: 10px;
 }
+.topicItem {
+	background: white;
+	padding: 10px;
+	margin: 10px 0;
+	color: black;
 
-// ----------------- general stuff --------------------
+	h3 {
+		margin-top: 0;
+	}
+}
 
-html, body, div.container-fluid, div.row {
+// ----------------- general styles --------------------
+
+html, body, .container-fluid, .row {
 	height: 100%;
 }
 input[type="text"], input[type="password"], input[type="email"], input[type="submit"], textarea.form-control, button.btn, a.btn, .alert, .well {
@@ -158,8 +168,18 @@ tr {
 
 // ----------------- profile page ---------------
 .profile-header {
-	width: 100%;
-	margin: 40px auto;
+	height: 300px;
+}
+.profile-avatar {
+	height: 160px;
+	margin: 70px auto;
+	padding: 10px;
+	min-width: 250px;
+	display: table;
+	text-align: center;
+	background: @light-gray;
+	border: 1px solid darken(@light-gray, 20%);
+	border-radius: 4px;
 }
 .profile-nav nav {
 	border-radius: 0;
@@ -175,7 +195,7 @@ tr {
 	}
 }
 .profile-body {
-	padding: 40px;
+	padding: 20px 40px;
 	background: @light-gray;
 }
 
@@ -262,7 +282,7 @@ tr {
 #nav-profile {
 	text-align: center;
 }
-div.container-fluid.wrapper {
+.container-fluid.wrapper {
 	padding: 0;
 	//margin-top: -50px;
 }
@@ -324,7 +344,7 @@ div.container-fluid.wrapper {
 	}
 }
 
-.nav-pills { //underline tabs navbar thing
+.nav-pills.nav-underline { //underline tabs navbar thing
 	text-align: center;
 
 	> li { //for centering the tabs
