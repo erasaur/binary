@@ -1,6 +1,7 @@
 anchor hash
 em vs px
 separate sign up
+color left border of topicItem based on pro > con / con > pro
 
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
 auth certain pages

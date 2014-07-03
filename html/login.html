@@ -1,22 +1,24 @@
 <template name="login">
-	<div class="landing-container">
-		<div class="landing-form-header">
-			<h1>yamcha</h1>
-		</div>
-		<ul class="landing-form-errors"></ul>
-		<div class="landing-form-body">
-			<form id="login-form" role="form">
-				<div class="control-group">
-					<input type="text" class="form-control" id="username" placeholder="Username">
-				</div>
-				<div class="control-group">
-					<input type="password" class="form-control" id="password" placeholder="Password">
-				</div>
-				<button type="submit" class="btn btn-primary">Login</button>
-			</form>
-			<a href="#">Forgot Password?</a>
-			<br>
-			<a href="{{pathFor 'signup'}}">Sign Up</a>
+	<div class="row">
+		<div class="landing-container">
+			<div class="landing-form-header">
+				<h1>yamcha</h1>
+			</div>
+			<ul class="landing-form-errors"></ul>
+			<div class="landing-form-body">
+				<form id="login-form" role="form">
+					<div class="control-group">
+						<input type="text" class="form-control" id="username" placeholder="Username">
+					</div>
+					<div class="control-group">
+						<input type="password" class="form-control" id="password" placeholder="Password">
+					</div>
+					<button type="submit" class="btn btn-primary">Login</button>
+				</form>
+				<a href="#">Forgot Password?</a>
+				<br>
+				<a href="{{pathFor 'signup'}}">Sign Up</a>
+			</div>
 		</div>
 	</div>
 </template>
