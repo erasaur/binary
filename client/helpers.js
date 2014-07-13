@@ -21,6 +21,7 @@ Template.home.helpers({
 	}
 });
 
+Template.nav.indexes = ["topics", "users"];
 Template.nav.helpers({
 	hasNotifications: function() {
 		if(Meteor.user() && Meteor.user().notifications)
