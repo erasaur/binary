@@ -1,0 +1,10 @@
+<template name="topicItem">
+	<a href="{{pathFor 'topic'}}">
+		<div class="topicItem">
+			<h3>{{title}}</h3>
+			<p>description</p>
+			<p>Pro: {{pro}} Con: {{con}}</p>
+			<small>Created by {{owner}} on {{formatDate date}}</small>
+		</div>
+	</a>
+</template>
