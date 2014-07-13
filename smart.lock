@@ -25,8 +25,8 @@
       },
       "easy-search": {
         "git": "https://github.com/matteodem/meteor-easy-search.git",
-        "tag": "v0.4.55",
-        "commit": "2c2a4d2d9a905530dd6f076b585bafbd0c40e5ca"
+        "tag": "v1.0.0",
+        "commit": "d32e13f396bc36560edf64b55a3c2dd17e22c9c7"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
