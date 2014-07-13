@@ -1,40 +1,42 @@
-<template name="topic">
+<template name="topic">	
 	{{#if topic}}
-		<div class="col col-xs-12 col-sm-8 col-sm-offset-2">
-			<h2>{{topic.title}} 
-				{{#if currentUser}}
-					{{#if following}}
-						<button id="unfollow" class="btn btn-primary">Following</button>
-					{{else}}
-						<button id="follow" class="btn btn-default">Follow</button>
+		<div class="row">
+			<div class="col col-xs-12 col-sm-8 col-sm-offset-2">
+				<h2>{{topic.title}} 
+					{{#if currentUser}}
+						{{#if following}}
+							<button id="unfollow" class="btn btn-primary">Following</button>
+						{{else}}
+							<button id="follow" class="btn btn-default">Follow</button>
+						{{/if}}
 					{{/if}}
-				{{/if}}
-			</h2> Created by {{topic.owner}} on {{formatDate this.topic.date}}
-			<div class="vote center">
-				<button class="inc-pro btn btn-success">Pro: {{topic.pro}}</button> <button class="inc-con btn btn-danger">Con: {{topic.con}}</button>
+				</h2> Created by {{topic.owner}} on {{formatDate this.topic.date}}
+				<div class="vote center">
+					<button class="inc-pro btn btn-success">Pro: {{topic.pro}}</button> <button class="inc-con btn btn-danger">Con: {{topic.con}}</button>
+				</div>
+
+				<div class="clearfix">
+					{{#if currentUser}}
+						{{> newComment}}
+					{{else}}
+						Please log in to comment.
+					{{/if}}
+				</div>
 			</div>
 
-			<div class="clearfix">
-				{{#if currentUser}}
-					{{> newComment}}
+			<div class="comments col-xs-12 col-sm-8 col-sm-offset-2">
+				{{#if hasComments}}
+					<table class="comments col-xs-12">
+						<tbody>
+						{{#each comments}}
+							{{> commentRow}}
+						{{/each}}
+						</tbody>
+					</table>
 				{{else}}
-					Please log in to comment.
+					<div class="col">No comments yet.</div>
 				{{/if}}
 			</div>
-		</div>
-
-		<div class="comments col-xs-12 col-sm-8 col-sm-offset-2">
-			{{#if hasComments}}
-				<table class="comments col-xs-12">
-					<tbody>
-					{{#each comments}}
-						{{> commentRow}}
-					{{/each}}
-					</tbody>
-				</table>
-			{{else}}
-				<div class="col">No comments yet.</div>
-			{{/if}}
 		</div>
 	{{/if}}
 </template>

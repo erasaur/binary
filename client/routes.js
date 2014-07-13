@@ -55,7 +55,7 @@ Router.map(function() {
       return [Meteor.subscribe("profileUser", user), Meteor.subscribe("profileUsers", user), Meteor.subscribe("profileComments", user), Meteor.subscribe("profileTopics", user)];
     },
     data: function() {
-      Session.set("currentTab", "topicsTab");
+      Session.set("currentTab", "followersTab");
       return {
         user: Meteor.users.findOne({"username": this.params.username})
       }

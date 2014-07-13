@@ -1,23 +1,25 @@
 <template name="signup">
-	<div class="landing-container">
-		<div class="landing-form-header">
-			<h1>yamcha</h1>
-		</div>
-		<ul class="landing-form-errors"></ul>
-		<div class="landing-form-body">
-			<form id="signup-form" role="form">
-				<div class="control-group">
-					<input type="text" class="form-control" id="create-username" placeholder="Username">
-				</div>
-				<div class="control-group">
-					<input type="email" class="form-control" id="create-email" placeholder="Email">
-				</div>
-				<div class="control-group">
-					<input type="password" class="form-control" id="create-password" placeholder="Password">
-				</div>
-				<button type="submit" class="btn btn-primary">Sign Up</button>
-			</form>
-			Already have an account? <a href="{{pathFor 'login'}}">Log In</a>
+	<div class="row">
+		<div class="landing-container">
+			<div class="landing-form-header">
+				<h1>yamcha</h1>
+			</div>
+			<ul class="landing-form-errors"></ul>
+			<div class="landing-form-body">
+				<form id="signup-form" role="form">
+					<div class="control-group">
+						<input type="text" class="form-control" id="create-username" placeholder="Username">
+					</div>
+					<div class="control-group">
+						<input type="email" class="form-control" id="create-email" placeholder="Email">
+					</div>
+					<div class="control-group">
+						<input type="password" class="form-control" id="create-password" placeholder="Password">
+					</div>
+					<button type="submit" class="btn btn-primary">Sign Up</button>
+				</form>
+				Already have an account? <a href="{{pathFor 'login'}}">Log In</a>
+			</div>
 		</div>
 	</div>
 </template>
