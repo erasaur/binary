@@ -31,12 +31,6 @@ function removeSessionReplies(rows) {
 var	scrolling = false,
 		currentRoute; 
 
-EasySearch.search("topics", "test", function (error, data) {
-	if(error) {
-		alert(error);
-	}
-});
-
 $(window).scroll(function() {
 	scrolling = true; //run function when scroll
 });

@@ -41,20 +41,33 @@
 	        <h4 class="modal-title" id="modalLabel">Search</h4>
 	      </div>
 	      <div class="modal-body">
-	        <form class="form-horizontal" id="search-form" role="form">
+	        <form class="form-horizontal" id="search-form" role="form" autocomplete="off">
 						<div class="control-group">
-							{{> esInput index="topics" classes="form-control" id="search-input" placeholder="Start Typing Here..." }}
+							{{> esInput index=indexes classes="form-control" id="search-input" autocomplete="off" placeholder="Start Typing Here..." }}
 						</div>
-				
-						<ul class="padded">
-							{{#esEach index="topics"}}
-		          	<li><a href="{{pathFor 'topic'}}" class="search-link">{{this.title}}</a></li>
-			        {{/esEach}}
+						
+						<div class="results">
+							<ul>
+								<li>Topics</li>
+								{{#esEach index="topics"}}
+			          	<li><span class="label label-success">{{this.pro}}</span><span class="label label-danger">{{this.con}}</span><a href="{{pathFor 'topic'}}" class="search-link">{{this.title}}</a></li>
+				        {{/esEach}}
 
-			        {{#ifEsHasNoResults index="topics"}}
-			          <li>Nothing to see here.</li>
-			        {{/ifEsHasNoResults}}
-		        </ul>
+				        {{#ifEsHasNoResults index="topics"}}
+				          <li>No search results.</li>
+				        {{/ifEsHasNoResults}}
+			        </ul>
+			        <ul>
+			        	<li>Users</li>
+			        	{{#esEach index="users"}}
+			          	<li><a href="{{pathFor 'profile'}}" class="search-link">{{this.username}}</a></li>
+				        {{/esEach}}
+
+				        {{#ifEsHasNoResults index="users"}}
+				          <li>No search results.</li>
+				        {{/ifEsHasNoResults}}
+			        </ul>
+		        </div>
 					</form>
 	      </div>
 	    </div>

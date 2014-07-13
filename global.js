@@ -3,8 +3,15 @@ CommentsModel = new Meteor.Collection("comments");
 NotificationsModel = new Meteor.Collection("notifications");
 
 EasySearch.createSearchIndex("topics", {
-	"collection": TopicsModel, //maybe merge topics + users here? then in the results, section them off based on attribute [perhaps in the each]
+	"collection": TopicsModel, 
 	"field": "title",
+	"limit": 20,
+	"use": "mongo-db"
+});
+
+EasySearch.createSearchIndex("users", {
+	"collection": Meteor.users,
+	"field": "username",
 	"limit": 20,
 	"use": "mongo-db"
 });

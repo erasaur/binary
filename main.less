@@ -11,6 +11,10 @@
 @con4: rgba(63, 17, 8, 0.3);
 
 @light-gray: rgba(220, 220, 220, 0.3);
+@gray: #828282;
+
+@pro: rgba(183, 255, 76, 0.7);
+@con: rgba(255, 82, 76, 0.5);
 
 // --------------------- colors -----------------------
 
@@ -65,6 +69,26 @@ tr.con4 { background: @con4; }
 .padded {
 	padding: 10px;
 }
+.content-header(@color) {
+	// line-height: 24px;
+	color: @color;
+	font-size: 18px;
+	font-weight: 400;
+}
+.border-radius(@radius) {
+	-webkit-border-radius: @radius;
+     -moz-border-radius: @radius;
+          border-radius: @radius;
+}
+.transition(@type) {
+	-webkit-transition: -webkit-transform .3s @type;
+     -moz-transition:    -moz-transform .3s @type;
+       -o-transition:      -o-transform .3s @type;
+          transition:         transform .3s @type;
+	-webkit-transform: none;
+			-ms-transform: none;
+					transform: none;
+}
 
 // ----------------- general stuff --------------------
 
@@ -72,10 +96,14 @@ html, body, div.container-fluid, div.row {
 	height: 100%;
 }
 input[type="text"], input[type="password"], input[type="email"], input[type="submit"], textarea.form-control, button.btn, a.btn, .alert, .well {
-	border-radius: 1px;
+	.border-radius(1px);
+}
+h3 {
+	.content-header(black);
 }
 a {
 	text-decoration: none !important;
+	color: black;
 }
 textarea {
 	width: 100%;
@@ -96,11 +124,8 @@ ul {
 }
 div.col {
 	background: @light-gray; //rgba(220, 220, 220, 0.3);
-	padding: 20px;
-
-	&.wrapper {
-		padding-top: 50px;
-	}
+	padding: 0 20px;
+	.border-radius(8px 8px 0 0);
 }
 button.btn, button.round {
 	&:active, &:focus {
@@ -112,8 +137,8 @@ button.round {
 	padding: 5px;
   width: 15px;
   height: 15px;
-  border-radius: 50%;
   cursor: pointer;
+  .border-radius(50%);
 }
 td {
 	vertical-align: top;
@@ -154,6 +179,40 @@ tr {
 }
 #create-topic-container {
 	margin-bottom: 40px;
+
+	> h3 {
+		margin-top: 17px;
+	}
+}
+
+// ----------------- search page ----------------
+
+.results {
+	display: table;
+	table-layout: fixed;
+	margin: 20px 0 0;
+	width: 100%;
+
+	ul {
+		position: relative;
+		display: table-cell;
+		overflow: hidden;
+		padding: 5px 15px;
+		border-right: 1px solid @light-gray;
+
+		&:first-of-type a { //topics
+			margin-left: 10px;
+		}
+
+		&:last-of-type { //users
+			width: 33%;
+			border: 0;
+		}
+
+		li:first-of-type {
+			.content-header(@gray);
+		}
+	}
 }
 
 // ----------------- profile page ---------------
@@ -162,7 +221,7 @@ tr {
 	margin: 40px auto;
 }
 .profile-nav nav {
-	border-radius: 0;
+	.border-radius(0);
 
 	ul {
 		width: 100%;
@@ -263,10 +322,11 @@ tr {
 	text-align: center;
 }
 div.container-fluid.wrapper {
-	padding: 0;
+	padding: 20px 0 0;
 	//margin-top: -50px;
 }
 .navbar {
+	margin-top: 20px;
 	margin-bottom: 0;
 }
 .navbar-right {
@@ -281,7 +341,7 @@ div.container-fluid.wrapper {
 	// }
 
 	.navbar-brand, ul.nav > li > a {
-		color: lighten(black, 30%);
+		color: @gray; //lighten(black, 30%)
 		font-size: 1.5em;	
 		background: transparent !important;
 
@@ -296,10 +356,10 @@ div.container-fluid.wrapper {
 	}
 }
 .navbar-nav > li > .dropdown-menu {
-	border-radius: 1px;
 	border-color: darken(@light-gray, 30%);
 	background: @light-gray;
 	box-shadow: none;
+	.border-radius(1px);
 
 	&.notifications {
 		width: 250px;
@@ -335,31 +395,21 @@ div.container-fluid.wrapper {
 
 		> a { //spacing the tabs
 			margin: 20px 20px 40px;
-			border-radius:0px;
 			color: #000 !important;
+			.border-radius(0);
 		}
 	}
 
 	> .active > a, > .active > a:hover, > li > a:hover {
 		text-decoration: none;
-		border-radius: 0px;
 		border-bottom: 4px solid rgba(120, 208, 208, 0.6);
 	  background-color: transparent !important;
+	  .border-radius(0);
 	}
 
 	> .active > a:hover, > li > a:hover {
   	border-bottom: 4px solid rgba(120, 208, 208, 0.8);
 	}
-}
-
-.transition(@type) {
-	-webkit-transition: -webkit-transform .3s @type;
-     -moz-transition:    -moz-transform .3s @type;
-       -o-transition:      -o-transform .3s @type;
-          transition:         transform .3s @type;
-	-webkit-transform: none;
-			-ms-transform: none;
-					transform: none;
 }
 
 .modal.fade .modal-dialog {
@@ -380,10 +430,17 @@ div.container-fluid.wrapper {
 	background: transparent;
 }
 .modal-content {
-	border-radius: 1px;
+	.border-radius(1px);
 	box-shadow: none;
 }
-
+.label.label-success {
+	background-color: @pro;
+	font-weight: 200;
+}
+.label.label-danger {
+	background-color: @con;
+	font-weight: 200;
+}
 
 
 
