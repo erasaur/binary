@@ -69,6 +69,9 @@ tr.con4 { background: @con4; }
 .padded {
 	padding: 10px;
 }
+.header {
+
+}
 .content-header(@color) {
 	// line-height: 24px;
 	color: @color;
@@ -110,6 +113,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="sub
 }
 h3 {
 	.content-header(black);
+	margin-top: 17px;
 }
 a {
 	text-decoration: none !important;
@@ -135,7 +139,14 @@ ul {
 div.col {
 	background: @light-gray; //rgba(220, 220, 220, 0.3);
 	padding: 0 20px;
-	.border-radius(8px 8px 0 0);
+
+	&.header {
+		.border-radius(8px 8px 0 0);
+
+		&:hover {
+			background: darken(@light-gray, 10%);
+		}
+	}
 }
 button.btn, button.round {
 	&:active, &:focus {
@@ -186,13 +197,6 @@ tr {
 .show-more {
 	margin: 80px 0;
 	text-align: center;
-}
-#create-topic-container {
-	margin-bottom: 40px;
-
-	> h3 {
-		margin-top: 17px;
-	}
 }
 
 // ----------------- search page ----------------
@@ -338,72 +342,56 @@ tr {
 .border.con.c4:before { border-bottom-color: @con4; }
 
 // ------------- bootstrap elements (nav, modal, etc) --------------
-#nav-profile {
-	text-align: center;
-}
 .container-fluid.wrapper {
 	padding: 20px 0 0;
 	//margin-top: -50px;
 }
-.navbar {
-	margin-top: 20px;
-	margin-bottom: 0;
-}
 .navbar-right {
 	float: right;
-}
-.navbar-transparent {
-	background: transparent;
-	border: none;
+	margin: 28px 12px;
 
-	// > div.container {
-	// 	width: 1300px;
-	// }
+	> li {
+		width: 2em;
+		display: inline-block;
 
-	.navbar-brand, ul.nav > li > a {
-		color: @gray; //lighten(black, 30%)
-		font-size: 1.5em;	
-		background: transparent !important;
+		> .dropdown-menu {
+			border-color: darken(@light-gray, 30%);
+			background: @light-gray;
+			box-shadow: none;
+			.border-radius(2px);
 
-		&:hover {
-			color: black;
+			&.notifications {
+				width: 250px;
+				height: 400px;
+				overflow-y: auto;	
+			}
+
+			> ul > li > a {
+				display: block;
+				padding: 5px 10px;
+
+				&:hover {
+					background: darken(@light-gray, 10%);
+				}
+			}
+
+			.btn {
+				width: 100%;
+				margin-top: 10px;
+			}
 		}
-	}
-
-	ul.nav > li {
-		width: 50px;
-		display: inline-block; //so the list items don't stack when screen is shrunk
-	}
-}
-.navbar-nav > li > .dropdown-menu {
-	border-color: darken(@light-gray, 30%);
-	background: @light-gray;
-	box-shadow: none;
-	.border-radius(1px);
-
-	&.notifications {
-		width: 250px;
-		height: 400px;
-		overflow-y: auto;	
-	}
-
-	> ul > li {
+		
 		> a {
-			display: block;
-			padding: 5px 10px;
+			color: @gray; //lighten(black, 30%)
+			font-size: 1.5em;	
+			background: transparent !important;
 
 			&:hover {
-				background: darken(@light-gray, 10%);
+				color: black;
 			}
 		}
 	}
-
-	.btn {
-		width: 100%;
-		margin-top: 10px;
-	}
 }
-
 .nav-pills.nav-underline { //underline tabs navbar thing
 	text-align: center;
 
@@ -431,7 +419,14 @@ tr {
   	border-bottom: 4px solid rgba(120, 208, 208, 0.8);
 	}
 }
-
+.dropdown {
+	margin: 0;
+	border: 0;
+}
+.dropdown-menu {
+	min-width:auto;
+  width:100%;
+}
 .modal.fade .modal-dialog {
   .transition(ease-out);
 }

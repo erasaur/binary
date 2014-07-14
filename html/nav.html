@@ -1,5 +1,31 @@
 <template name="nav">
-	<div class="navbar navbar-transparent navbar-fixed-top">
+	<ul class="navbar-right">
+		<li><a href="#" data-toggle="modal" data-target="#search-modal"><i class="fa fa-search"></i></a></li>
+		<li class="dropdown">
+      <a href="#" class="dropdown-toggle" id="nav-profile" data-toggle="dropdown"><i class="fa fa-user"></i></a>
+      <div class="dropdown-menu">
+      	<ul>
+      		<li><a href="{{pathFor 'profile' username=currentUser.username}}"><span>Profile</span></a></li>
+					<li><a href="#" id="logout"><span>Log Out</span></a></li>
+				</ul>
+      </div>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lightbulb-o"></i></a>
+      <div class="dropdown-menu notifications">
+      	<ul>
+      		{{#if hasNotifications}}
+        		{{#each notifications}}
+        			<li><a href="{{url}}"><span>{{message}}</span></a></li>
+						{{/each}}
+					{{else}}
+						<li class="padded">No notifications.</li>
+					{{/if}}
+				</ul>
+      </div>
+    </li>
+  </ul>
+	<!-- <div class="navbar navbar-transparent navbar-fixed-top">
 		<div class="container">
 			<a href="{{pathFor 'home'}}" class="navbar-brand">yamcha</a>
 			<ul class="nav navbar-nav navbar-right">
@@ -31,14 +57,14 @@
         {{/if}}   
 			</ul>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content custom">
 	      <div class="modal-header">
 	      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="modalLabel">Search</h4>
+	        <h3 class="modal-title" id="modalLabel">Search</h3>
 	      </div>
 	      <div class="modal-body">
 	        <form class="form-horizontal" id="search-form" role="form" autocomplete="off">

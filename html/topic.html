@@ -2,15 +2,16 @@
 	{{#if topic}}
 		<div class="row">
 			<div class="col col-xs-12 col-sm-8 col-sm-offset-2">
-				<h2>{{topic.title}} 
-					{{#if currentUser}}
-						{{#if following}}
-							<button id="unfollow" class="btn btn-primary">Following</button>
-						{{else}}
-							<button id="follow" class="btn btn-default">Follow</button>
-						{{/if}}
+				{{#if currentUser}}
+					{{#if following}}
+						<button id="unfollow" class="btn btn-primary">Following</button>
+					{{else}}
+						<button id="follow" class="btn btn-default">Follow</button>
 					{{/if}}
-				</h2> Created by {{topic.owner}} on {{formatDate this.topic.date}}
+				{{/if}}
+				<h3>{{topic.title}} 
+					
+				</h3> Created by {{topic.owner}} on {{formatDate this.topic.date}}
 				<div class="vote center">
 					<button class="inc-pro btn btn-success">Pro: {{topic.pro}}</button> <button class="inc-con btn btn-danger">Con: {{topic.con}}</button>
 				</div>
