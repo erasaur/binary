@@ -22,7 +22,7 @@ Template.home.helpers({
 });
 
 Template.nav.indexes = ["topics", "users"];
-Template.nav.helpers({
+Template.navItems.helpers({
 	hasNotifications: function() {
 		if(Meteor.user() && Meteor.user().notifications)
 			return Meteor.user().notifications.commentReply.length || Meteor.user().notifications.followingUser.length || Meteor.user().notifications.followingTopic.length;

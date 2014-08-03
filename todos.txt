@@ -1,6 +1,6 @@
-anchor hash
+fix search -- can only search currently logged in user 
+fix notifications - comment replies don't get tracked. also, scrollToId may not work with nested comments -- have to open reply boxes
 em vs px
-separate sign up
 color left border of topicItem based on pro > con / con > pro
 
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
