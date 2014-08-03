@@ -1,5 +1,6 @@
 Router.configure({
 	layoutTemplate: "main",
+  loadingTemplate: "loading",
 	yieldTemplates: {
 		"nav": {to: "nav"}
 	},
@@ -18,20 +19,26 @@ Router.onBeforeAction(function() {
   }
 }, {only: ["signup", "login"]});
 
+Router.onBeforeAction("loading", {except: "home"}); //show loading template when waiting for data
+
 Router.onAfterAction(function() {
-  var hash = window.location.hash.substring(1);
-  //console.log(this.data());
-  if(hash && this.ready()) {
-    setTimeout(function() {
-      scrollToId(hash);
-    }, 500);
+  if(this.ready()) {
+    var hash = window.location.hash.substring(1);
+
+    if(hash) {
+      setTimeout(function() {
+        scrollToId(hash);
+      }, 0);
+    }  
   }
 });
 
 Deps.autorun(function() {
   Meteor.subscribe("allTopics", Session.get("topicsLimit"));
-  Meteor.subscribe("currentUser");
 });
+
+Meteor.subscribe("currentUser");
+Meteor.subscribe("allUsernames");
 
 Router.map(function() {
 	this.route("home", { 
@@ -39,15 +46,9 @@ Router.map(function() {
     waitOn: function() {
       return Meteor.subscribe("allTopics", Session.get("topicsLimit"));
     }
-    // cache: true
-		/*before: function() {
-      if(!Meteor.loggingIn() && !Meteor.user()) {
-      	this.redirect('signup');
-      }
-    }*/
   });
-  this.route("signup", {yieldTemplates: {}});
-  this.route("login", {yieldTemplates: {}});
+  this.route("signup", {yieldTemplates: {}}); //don't yield nav
+  this.route("login", {yieldTemplates: {}}); //don't yield nav
   this.route("profile", {
     path: "/:username",
     waitOn: function() {

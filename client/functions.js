@@ -57,8 +57,6 @@ formatError = function(error) {
 };
 
 scrollToId = function(id){
-  Deps.flush(); //immediately render the dom, so we can access $("#" + id)
-
   var comment = $("#" + id);
   $("html,body").animate({ scrollTop: comment.offset().top - 120}, "fast");
   comment.addClass("bg-fade");

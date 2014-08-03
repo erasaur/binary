@@ -69,9 +69,6 @@ tr.con4 { background: @con4; }
 .padded {
 	padding: 10px;
 }
-.header {
-
-}
 .content-header(@color) {
 	// line-height: 24px;
 	color: @color;
@@ -105,7 +102,7 @@ tr.con4 { background: @con4; }
 
 // ----------------- general styles --------------------
 
-html, body, .container-fluid, .row {
+html, body, .container-fluid {
 	height: 100%;
 }
 input[type="text"], input[type="password"], input[type="email"], input[type="submit"], textarea.form-control, button.btn, a.btn, .alert, .well {
@@ -142,6 +139,8 @@ div.col {
 
 	&.header {
 		.border-radius(8px 8px 0 0);
+		z-index: 2;
+		min-height: 50px;
 
 		&:hover {
 			background: darken(@light-gray, 10%);
@@ -342,83 +341,140 @@ tr {
 .border.con.c4:before { border-bottom-color: @con4; }
 
 // ------------- bootstrap elements (nav, modal, etc) --------------
-.container-fluid.wrapper {
-	padding: 20px 0 0;
-	//margin-top: -50px;
+@media (min-width: 768px) {
+	.container-fluid.wrapper {
+		padding: 20px 0 0;
+	}	
 }
-.navbar-right {
-	float: right;
-	margin: 28px 12px;
 
-	> li {
-		width: 2em;
-		display: inline-block;
+// .navbar-right {
+// 	float: right;
+// 	margin: 28px 12px;
 
-		> .dropdown-menu {
-			border-color: darken(@light-gray, 30%);
-			background: @light-gray;
-			box-shadow: none;
-			.border-radius(2px);
+// 	> li {
+// 		width: 2em;
+// 		display: inline-block;
 
-			&.notifications {
-				width: 250px;
-				height: 400px;
-				overflow-y: auto;	
-			}
+// 		> .dropdown-menu {
+// 			border-color: darken(@light-gray, 30%);
+// 			background: @light-gray;
+// 			box-shadow: none;
+// 			.border-radius(2px);
 
-			> ul > li > a {
+// 			&.notifications {
+// 				width: 250px;
+// 				height: 400px;
+// 				overflow-y: auto;	
+// 			}
+
+// 			> ul > li > a {
+// 				display: block;
+// 				padding: 5px 10px;
+
+// 				&:hover {
+// 					background: darken(@light-gray, 10%);
+// 				}
+// 			}
+
+// 			.btn {
+// 				width: 100%;
+// 				margin-top: 10px;
+// 			}
+// 		}
+		
+// 		> a {
+// 			color: @gray; //lighten(black, 30%)
+// 			font-size: 1.5em;	
+// 			background: transparent !important;
+
+// 			&:hover {
+// 				color: black;
+// 			}
+// 		}
+// 	}
+// }
+.navbar-transparent {
+	background: transparent;
+	border: none;
+	z-index: 1;
+
+	.container {
+		margin-top: 20px;
+	}
+}
+.navbar-brand, ul.navbar-nav > li > a {
+	color: @gray;
+	font-size: 1.5em;	
+	background: transparent !important;
+	z-index: 3; 
+	position: relative;
+
+	&:hover {
+		color: black;
+	}
+}
+ul.navbar-nav > li {
+	width: 40px;
+	display: inline-block; //so the list items don't stack when screen is shrunk
+
+	> .dropdown-menu {
+		border-color: darken(@light-gray, 30%);
+		background: @light-gray;
+		box-shadow: none;
+		.border-radius(1px);
+	 
+		&.notifications {
+			width: 250px;
+			height: 400px;
+			overflow-y: auto;	
+		}
+	 
+		> ul > li {
+	 		> a {
 				display: block;
 				padding: 5px 10px;
-
+	 
 				&:hover {
 					background: darken(@light-gray, 10%);
-				}
-			}
+	 			}
+	 		}
+	 	}
 
-			.btn {
-				width: 100%;
-				margin-top: 10px;
-			}
-		}
-		
-		> a {
-			color: @gray; //lighten(black, 30%)
-			font-size: 1.5em;	
-			background: transparent !important;
-
-			&:hover {
-				color: black;
-			}
+		.btn {
+			width: 100%;
+			margin-top: 10px;
 		}
 	}
 }
-.nav-pills.nav-underline { //underline tabs navbar thing
-	text-align: center;
 
-	> li { //for centering the tabs
-		float: none;
-		display: inline-block;
-		*display: inline; //IE7
-    *zoom:1; //IE7
+// .nav-pills.nav-underline { //underline tabs navbar thing
+// 	text-align: center;
 
-		> a { //spacing the tabs
-			margin: 20px 20px 40px;
-			color: #000 !important;
-			.border-radius(0);
-		}
-	}
+// 	> li { //for centering the tabs
+// 		float: none;
+// 		display: inline-block;
+// 		*display: inline; //IE7
+//     *zoom:1; //IE7
 
-	> .active > a, > .active > a:hover, > li > a:hover {
-		text-decoration: none;
-		border-bottom: 4px solid rgba(120, 208, 208, 0.6);
-	  background-color: transparent !important;
-	  .border-radius(0);
-	}
+// 		> a { //spacing the tabs
+// 			margin: 20px 20px 40px;
+// 			color: #000 !important;
+// 			.border-radius(0);
+// 		}
+// 	}
 
-	> .active > a:hover, > li > a:hover {
-  	border-bottom: 4px solid rgba(120, 208, 208, 0.8);
-	}
-}
+// 	> .active > a, > .active > a:hover, > li > a:hover {
+// 		text-decoration: none;
+// 		border-bottom: 4px solid rgba(120, 208, 208, 0.6);
+// 	  background-color: transparent !important;
+// 	  .border-radius(0);
+// 	}
+
+// 	> .active > a:hover, > li > a:hover {
+//   	border-bottom: 4px solid rgba(120, 208, 208, 0.8);
+// 	}
+// }
+
 .dropdown {
 	margin: 0;
 	border: 0;
