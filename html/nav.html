@@ -1,30 +1,4 @@
 <template name="nav">
-	<!-- <ul class="navbar-right">
-		<li><a href="#" data-toggle="modal" data-target="#search-modal"><i class="fa fa-search"></i></a></li>
-		<li class="dropdown">
-      <a href="#" class="dropdown-toggle" id="nav-profile" data-toggle="dropdown"><i class="fa fa-user"></i></a>
-      <div class="dropdown-menu">
-      	<ul>
-      		<li><a href="{{pathFor 'profile' username=currentUser.username}}"><span>Profile</span></a></li>
-					<li><a href="#" id="logout"><span>Log Out</span></a></li>
-				</ul>
-      </div>
-    </li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lightbulb-o"></i></a>
-      <div class="dropdown-menu notifications">
-      	<ul>
-      		{{#if hasNotifications}}
-        		{{#each notifications}}
-        			<li><a href="{{url}}"><span>{{message}}</span></a></li>
-						{{/each}}
-					{{else}}
-						<li class="padded">No notifications.</li>
-					{{/if}}
-				</ul>
-      </div>
-    </li>
-  </ul> -->
   <div class="row visible-xs">
   	<div class="col-xs-12">
 			<a href="{{pathFor 'home'}}" class="navbar-brand">yamcha</a>
