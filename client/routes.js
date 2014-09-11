@@ -1,6 +1,5 @@
 Router.configure({
 	layoutTemplate: "main",
-  loadingTemplate: "loading",
 	yieldTemplates: {
 		"nav": {to: "nav"}
 	},
@@ -18,8 +17,6 @@ Router.onBeforeAction(function() {
     this.redirect("home");
   }
 }, {only: ["signup", "login"]});
-
-//Router.onBeforeAction("loading", {except: "home"}); //show loading template when waiting for data
 
 Router.onAfterAction(function() {
   if(this.ready()) {
