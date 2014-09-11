@@ -25,9 +25,6 @@ Meteor.publish("profileUsers", function(username) { //usernames of all the other
 
 	return Meteor.users.find({"_id": {$in: result}}, {fields: {"username": 1}}); //can't combine this with the return value in publish "profileUser", since the fields we are publishing are different
 });
-Meteor.publish("allUsernames", function() {
-	return Meteor.users.find({}, {fields: {"username": 1}});
-});
 Meteor.publish("allTopics", function(limit) { //publish list of topics sorted by date
 	if (limit > TopicsModel.find().count()) {
 		limit = 0;

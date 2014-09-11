@@ -35,7 +35,6 @@ Deps.autorun(function() {
 });
 
 Meteor.subscribe("currentUser");
-Meteor.subscribe("allUsernames");
 
 Router.map(function() {
 	this.route("home", { 
