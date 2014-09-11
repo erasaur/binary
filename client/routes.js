@@ -19,7 +19,7 @@ Router.onBeforeAction(function() {
   }
 }, {only: ["signup", "login"]});
 
-Router.onBeforeAction("loading", {except: "home"}); //show loading template when waiting for data
+//Router.onBeforeAction("loading", {except: "home"}); //show loading template when waiting for data
 
 Router.onAfterAction(function() {
   if(this.ready()) {

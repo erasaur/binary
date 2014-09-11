@@ -1,3 +1,8 @@
+#iron-router-progress {
+	background-color: #78F7EE;
+	box-shadow: 0 0 5px #B4FCF7;
+}
+
 @pro0: rgba(152, 252, 152, 0.3);
 @pro1: rgba(21, 204, 245, 0.3);
 @pro2: rgba(0, 191, 255, 0.5);
@@ -140,10 +145,15 @@ div.col {
 	&.header {
 		.border-radius(8px 8px 0 0);
 		z-index: 2;
-		min-height: 50px;
+		min-height: 54px;
+		padding: 10px 20px;
 
 		&:hover {
 			background: darken(@light-gray, 10%);
+		}
+
+		> h3 {
+			margin-top: 7px;
 		}
 	}
 }
@@ -346,59 +356,13 @@ tr {
 		padding: 20px 0 0;
 	}	
 }
-
-// .navbar-right {
-// 	float: right;
-// 	margin: 28px 12px;
-
-// 	> li {
-// 		width: 2em;
-// 		display: inline-block;
-
-// 		> .dropdown-menu {
-// 			border-color: darken(@light-gray, 30%);
-// 			background: @light-gray;
-// 			box-shadow: none;
-// 			.border-radius(2px);
-
-// 			&.notifications {
-// 				width: 250px;
-// 				height: 400px;
-// 				overflow-y: auto;	
-// 			}
-
-// 			> ul > li > a {
-// 				display: block;
-// 				padding: 5px 10px;
-
-// 				&:hover {
-// 					background: darken(@light-gray, 10%);
-// 				}
-// 			}
-
-// 			.btn {
-// 				width: 100%;
-// 				margin-top: 10px;
-// 			}
-// 		}
-		
-// 		> a {
-// 			color: @gray; //lighten(black, 30%)
-// 			font-size: 1.5em;	
-// 			background: transparent !important;
-
-// 			&:hover {
-// 				color: black;
-// 			}
-// 		}
-// 	}
-// }
 .navbar-transparent {
 	background: transparent;
 	border: none;
 	z-index: 1;
 
 	.container {
+		width: 100%;
 		margin-top: 20px;
 	}
 }
@@ -413,6 +377,8 @@ tr {
 		color: black;
 	}
 }
+.navbar-brand { padding-right: 10px; }
+ul.navbar-nav { padding-left: 30px; }
 ul.navbar-nav > li {
 	width: 40px;
 	display: inline-block; //so the list items don't stack when screen is shrunk
@@ -446,35 +412,6 @@ ul.navbar-nav > li {
 		}
 	}
 }
-
-// .nav-pills.nav-underline { //underline tabs navbar thing
-// 	text-align: center;
-
-// 	> li { //for centering the tabs
-// 		float: none;
-// 		display: inline-block;
-// 		*display: inline; //IE7
-//     *zoom:1; //IE7
-
-// 		> a { //spacing the tabs
-// 			margin: 20px 20px 40px;
-// 			color: #000 !important;
-// 			.border-radius(0);
-// 		}
-// 	}
-
-// 	> .active > a, > .active > a:hover, > li > a:hover {
-// 		text-decoration: none;
-// 		border-bottom: 4px solid rgba(120, 208, 208, 0.6);
-// 	  background-color: transparent !important;
-// 	  .border-radius(0);
-// 	}
-
-// 	> .active > a:hover, > li > a:hover {
-//   	border-bottom: 4px solid rgba(120, 208, 208, 0.8);
-// 	}
-// }
-
 .dropdown {
 	margin: 0;
 	border: 0;
