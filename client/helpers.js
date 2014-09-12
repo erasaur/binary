@@ -1,12 +1,12 @@
-UI.registerHelper("currentPage", function(path) {
+Template.registerHelper("currentPage", function(path) {
 	return Router.current().route.name == path;
 });
-UI.registerHelper("breaklines", function(text) {
+Template.registerHelper("breaklines", function(text) {
 	text = removeTags(text);
 	text = text.replace(/(\r\n|\n|\r)/gm, "<br>");
 	return text;
 });
-UI.registerHelper("formatDate", function(date) {
+Template.registerHelper("formatDate", function(date) {
 	if(date) {
 		return formatDate(date);
 	}
@@ -76,15 +76,13 @@ Template.topic.helpers({
 		var pros = CommentsModel.find({$and: [
 
 					{"topic": this.topic._id}, 
-					{"side": "pro"}, 
-					{"replyTo": ""} //don't show if its a reply
+					{"side": "pro"}
 
 				]}).fetch(),
 				cons = CommentsModel.find({$and: [
 
 					{"topic": this.topic._id}, 
-					{"side": "con"},
-					{"replyTo": ""}
+					{"side": "con"}
 
 				]}).fetch(),
 				pairs = [],

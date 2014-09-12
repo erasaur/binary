@@ -203,7 +203,7 @@ Template.comment.events({
 
 			//add to the parent of parent's dom element, before the next dom element
 			if(!$("#" + id + "-replies-top").length) {
-				UI.insert(UI.renderWithData(Template.replies, {id: id, side: side, color: cIndex}), parent.parent()[0], parent.next()[0]);
+				Blaze.renderWithData(Template.replies, {id: id, side: side, color: cIndex}, parent.parent()[0], parent.next()[0]);
 			}
 		}
 	},
