@@ -53,16 +53,10 @@ Template.replies.helpers({
 	},
 	replies: function() {
 		var pros = CommentsModel.find({"replyTo": this.id, "side": "pro"}).fetch(),
-				cons = CommentsModel.find({"replyTo": this.id, "side": "con"}).fetch(),
-				pairs = [],
-				longest = Math.max(pros.length, cons.length);
-
-		for(var i=0; i<longest; i++) {
-			pairs.push({"pros": pros[i], "cons": cons[i]});
-		}
-
-		pairs.push({"bottom": true});
-		return pairs;
+				cons = CommentsModel.find({"replyTo": this.id, "side": "con"}).fetch();
+		return _.map(_.zip(pros, cons), function(pair) { 
+			return {"pros": pair[0], "cons": pair[1]};
+		});
 	}
 });
 
@@ -72,16 +66,10 @@ Template.topic.helpers({
 	},
 	comments: function() {
 		var pros = CommentsModel.find({"replyTo": {$nin: Session.get("showingReplies")}, "topic": this.topic._id, "side": "pro"}).fetch(),
-				cons = CommentsModel.find({"replyTo": {$nin: Session.get("showingReplies")}, "topic": this.topic._id, "side": "con"}).fetch(),
-				pairs = [],
-				longest = Math.max(pros.length, cons.length);
-
-		for(var i=0; i<longest; i++) {
-			pairs.push({"pros": pros[i], "cons": cons[i]});
-		}
-
-		pairs.push({"bottom": true}); //dummy row, so we don't have to deal with moveLast
-		return pairs;
+				cons = CommentsModel.find({"replyTo": {$nin: Session.get("showingReplies")}, "topic": this.topic._id, "side": "con"}).fetch();
+		return _.map(_.zip(pros, cons), function(pair) { 
+			return {"pros": pair[0], "cons": pair[1]};
+		});	
 	},
 	following: function() {
 		return Meteor.user().activity.followingTopics && Meteor.user().activity.followingTopics.indexOf(this.topic._id) > -1;
