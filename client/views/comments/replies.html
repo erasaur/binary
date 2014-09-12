@@ -1,0 +1,23 @@
+<template name="replies">
+	<tr id="{{id}}-replies-top" class="border {{side}} c{{color}}"><td colspan="2"></td></tr>
+
+	<tr class="{{id}}-replies {{side}}{{color}}">
+		{{#if currentUser}}
+			<td colspan="2" class="replies-comment">
+				{{> newComment}}
+			</td>
+		{{/if}}
+	</tr>
+
+	{{#if hasReplies}}
+		{{#each replies}}
+			{{> commentRow}}
+		{{/each}}
+	{{else}}
+		<tr class="{{id}}-replies {{side}}{{color}}">
+			<td class="col" colspan="2">No replies.</td>
+		</tr>
+	{{/if}}
+
+	<tr id="{{id}}-replies-bot" class="border"><td colspan="2"></td></tr>
+</template>
