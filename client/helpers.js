@@ -98,7 +98,6 @@ Template.topic.helpers({
 		return pairs;
 	},
 	following: function() {
-		//if(!Meteor.user().activity) return false;
 		return Meteor.user().activity.followingTopics && Meteor.user().activity.followingTopics.indexOf(this.topic._id) > -1;
 	}
 });
@@ -120,9 +119,7 @@ Template.comment.helpers({
 
 Template.profile.helpers({
 	canFollow: function() {
-		if(this.user) {
-			return Meteor.userId() && this.user._id != Meteor.userId();
-		}
+			return this.user && Meteor.userId() && this.user._id != Meteor.userId();
 	},
 	following: function() {
 		return this.user.activity.followers && this.user.activity.followers.indexOf(Meteor.userId()) > -1;
