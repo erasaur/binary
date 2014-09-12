@@ -1,13 +1,10 @@
 <template name="comment">
 	<div id="{{_id}}" class="comment">
 		<div class="comment-header">
-			<b><a href="/{{owner}}">{{owner}}</a></b>
+			<b><a href="{{pathFor 'profile' username=owner}}">{{owner}}</a></b>
 		</div>
-  	<div class="comment-content">
-  		<p class="collapsed">
+  	<div class="comment-content collapsed">
   		{{{breaklines content}}}
-  		</p>
-  		{{#if readMore}}<a href="#" class="read-more">(more)</a>{{/if}}
   	</div>
   	<div class="comment-date">
   		{{formatDate date}}

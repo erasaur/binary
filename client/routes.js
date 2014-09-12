@@ -7,7 +7,7 @@ Router.configure({
 });
 
 Router.onBeforeAction(function() {
-  if(!(Meteor.loggingIn() || Meteor.user())) {
+  if(!Meteor.loggingIn() && !Meteor.user()) {
     this.redirect("signup");
   }
 }, {except: ["signup", "login"]}); //forgot password page
@@ -30,10 +30,7 @@ Router.onAfterAction(function() {
   }
 });
 
-Deps.autorun(function() {
-  Meteor.subscribe("allTopics", Session.get("topicsLimit"));
-});
-
+Meteor.subscribe("allTopics", Session.get("topicsLimit"));
 Meteor.subscribe("currentUser");
 
 Router.map(function() {
