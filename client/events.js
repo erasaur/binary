@@ -5,9 +5,9 @@ function removeSessionReplies(rows) {
 
 	rows.each(function() {
 		var current = this.id;
-		if(current) { //if this particular element has a class
+		if(current) { //if this particular element has an id
 			var temp = current.indexOf("-");
-			if(temp > -1) { //see if it has a "-" in the class. if so, it means it has id-replies-x
+			if(temp > -1) { //see if it has a "-" in the id. if so, it means it has id-replies-x
 				var currentID = current.substring(0, temp); //get the id
 
 				if(ids.indexOf(currentID) < 0) { //if we haven't already seen this id, add it
@@ -144,6 +144,7 @@ Template.comment.events({
 
 			temp = temp.add(top).add(bot); //add self as well as the true last item (the bottom border). nextUntil goes up to but excluding last, so we have to call next() again
 
+			Blaze.remove(Blaze.getView(top.get(0)));
 			//remove temp, and remove from list of showing replies, so the replies can be shown in original positions (when not shown as replies)
 			removeSessionReplies(temp);
 		} else { //we're adding replies
@@ -192,7 +193,6 @@ Template.comment.events({
 					}
 
 					temp = temp.add(top).add(bot); //add self as well as the true last item (the bottom border). nextUntil goes up to but excluding last, so we have to call next() again
-
 					//remove temp, and remove from list of showing replies, so the replies can be shown in original positions (when not shown as replies)
 					removeSessionReplies(temp);
 				});
@@ -203,7 +203,7 @@ Template.comment.events({
 
 			//add to the parent of parent's dom element, before the next dom element
 			if(!$("#" + id + "-replies-top").length) {
-				Blaze.renderWithData(Template.replies, {id: id, side: side, color: cIndex}, parent.parent()[0], parent.next()[0]);
+				console.log(Blaze.renderWithData(Template.replies, {id: id, side: side, color: cIndex}, parent.parent()[0], parent.next()[0]));
 			}
 		}
 	},

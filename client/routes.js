@@ -30,7 +30,10 @@ Router.onAfterAction(function() {
   }
 });
 
-Meteor.subscribe("allTopics", Session.get("topicsLimit"));
+Deps.autorun(function() {
+  Meteor.subscribe("allTopics", Session.get("topicsLimit"));  
+});
+
 Meteor.subscribe("currentUser");
 
 Router.map(function() {
