@@ -24,6 +24,7 @@ function removeSessionReplies(rows) {
 	arr = _.reject(arr, function(num) { return _.contains(ids, num); });
 	Session.set("showingReplies", arr);	
 
+	Blaze.remove(Blaze.getView(rows.get(0)));
 	rows.remove();
 }
 
@@ -144,7 +145,6 @@ Template.comment.events({
 
 			temp = temp.add(top).add(bot); //add self as well as the true last item (the bottom border). nextUntil goes up to but excluding last, so we have to call next() again
 
-			Blaze.remove(Blaze.getView(top.get(0)));
 			//remove temp, and remove from list of showing replies, so the replies can be shown in original positions (when not shown as replies)
 			removeSessionReplies(temp);
 		} else { //we're adding replies
@@ -203,7 +203,7 @@ Template.comment.events({
 
 			//add to the parent of parent's dom element, before the next dom element
 			if(!$("#" + id + "-replies-top").length) {
-				console.log(Blaze.renderWithData(Template.replies, {id: id, side: side, color: cIndex}, parent.parent()[0], parent.next()[0]));
+				Blaze.renderWithData(Template.replies, {id: id, side: side, color: cIndex}, parent.parent()[0], parent.next()[0]);
 			}
 		}
 	},
