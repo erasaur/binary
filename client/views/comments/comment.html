@@ -1,0 +1,28 @@
+<template name="comment">
+	<div id="{{_id}}" class="comment">
+		<div class="comment-header">
+			<b><a href="/{{owner}}">{{owner}}</a></b>
+		</div>
+  	<div class="comment-content">
+  		<p class="collapsed">
+  		{{{breaklines content}}}
+  		</p>
+  		{{#if readMore}}<a href="#" class="read-more">(more)</a>{{/if}}
+  	</div>
+  	<div class="comment-date">
+  		{{formatDate date}}
+  	</div>
+  	<div class="comment-footer">
+  		{{#if currentUser}}
+	  		{{#if liked}}
+	  			<button class="float-left btn btn-sm btn-default unlike-comment">Unlike {{likes}}</button>
+	  		{{else}}
+	  			<button class="float-left btn btn-sm btn-default like-comment"><i class="fa fa-thumbs-o-up"></i> {{likes}}</button>
+	  		{{/if}}
+	  	{{else}}
+	  		<i class="fa fa-thumbs-o-up"></i> {{likes}}
+  		{{/if}}
+  		<button class="btn btn-sm btn-default toggle-replies float-right">{{#if showingReplies}}Hide Replies{{else}}Show Replies{{/if}}</button>
+  	</div>
+	</div>
+</template>

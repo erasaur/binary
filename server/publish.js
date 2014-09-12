@@ -1,6 +1,5 @@
 Meteor.publish("currentUser", function() {
-	if(!this.userId) return null;
-	return Meteor.users.find(this.userId, {fields: {"activity": 1, "notifications": 1}});
+	return this.userId && Meteor.users.find(this.userId, {fields: {"activity": 1, "notifications": 1}});
 });
 Meteor.publish("profileUser", function(username) { //publish specific user (profile page)
 	return Meteor.users.find({"username": username}, {fields: {"username": 1, "profile": 1, "activity": 1}}); //if username is the current user, meteor will not publish duplicate info
