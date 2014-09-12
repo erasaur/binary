@@ -52,8 +52,8 @@ Template.replies.helpers({
 		return CommentsModel.find({$and: [{"replyTo": this.id}, {"side": "pro"}]}).count() || CommentsModel.find({$and: [{"replyTo": this.id}, {"side": "con"}]}).count();
 	},
 	replies: function() {
-		var pros = CommentsModel.find({$and: [{"replyTo": this.id}, {"side": "pro"}]}).fetch(),
-				cons = CommentsModel.find({$and: [{"replyTo": this.id}, {"side": "con"}]}).fetch(),
+		var pros = CommentsModel.find({"replyTo": this.id, "side": "pro"}).fetch(),
+				cons = CommentsModel.find({"replyTo": this.id, "side": "con"}).fetch(),
 				pairs = [],
 				longest = Math.max(pros.length, cons.length);
 
@@ -68,23 +68,11 @@ Template.replies.helpers({
 
 Template.topic.helpers({
 	hasComments: function() {
-		if(this.topic) {
-			return CommentsModel.find({"topic": this.topic._id}).count() > 0;
-		}
+		return this.topic && CommentsModel.find({"topic": this.topic._id}).count() > 0;
 	},
 	comments: function() {
-		var pros = CommentsModel.find({$and: [
-
-					{"topic": this.topic._id}, 
-					{"side": "pro"}
-
-				]}).fetch(),
-				cons = CommentsModel.find({$and: [
-
-					{"topic": this.topic._id}, 
-					{"side": "con"}
-
-				]}).fetch(),
+		var pros = CommentsModel.find({"replyTo": {$nin: Session.get("showingReplies")}, "topic": this.topic._id, "side": "pro"}).fetch(),
+				cons = CommentsModel.find({"replyTo": {$nin: Session.get("showingReplies")}, "topic": this.topic._id, "side": "con"}).fetch(),
 				pairs = [],
 				longest = Math.max(pros.length, cons.length);
 
