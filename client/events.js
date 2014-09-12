@@ -114,13 +114,8 @@ Template.topic.events({
 });
 
 Template.comment.events({
-	"click .read-more": function(event, template) {
-		var target = event.target,
-				text = $(target).prev();
-
-		text.toggleClass("collapsed");
-
-		target.innerText.indexOf("more") > -1 ? target.innerText = "(less)": target.innerText = "(more)";
+	"click .comment-content": function(event, template) {
+		$(event.target).toggleClass("collapsed");
 	},
 	"click .comment-replyto": function(event, template) {
 		event.preventDefault();
@@ -131,7 +126,7 @@ Template.comment.events({
 	"click .toggle-replies": function(event, template) {
 		var id = this._id,
 				parent = $(event.target).closest("tr"), //gets the clicked comment's tr (ie tr before the replies)
-				top = parent.next(), //top border
+				top = parent.next(), //top border of next tr
 				replies = top.next(), 
 				nclass = top.attr("class"),
 				rclass = replies.attr("class"); //replies' class
@@ -154,8 +149,8 @@ Template.comment.events({
 		} else { //we're adding replies
 			if(rclass) { //if row after next has a class
 				if(nclass && nclass.indexOf("border") > -1 && rclass.indexOf("replies ") > -1) { //next row element is a top border (aka switching sides)
-					var theID = top.attr("id"),
-							theID = "#" + theID.substring(0, theID.length - 3) + "bot"; //id-replies-top -> id-replies-bot
+					var theID = top.attr("id");
+					theID = "#" + theID.substring(0, theID.length - 3) + "bot"; //id-replies-top -> id-replies-bot
 
 					var rows = top.nextUntil(theID).andSelf().add(theID);
 
