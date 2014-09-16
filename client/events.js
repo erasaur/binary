@@ -17,12 +17,12 @@ function removeSessionReplies(rows) {
 		}
 	});
 
-	var arr = Session.get("showingReplies");
+	var arr = SessionAmplify.get("showingReplies");
 	arr = _.extend([], arr);
 
 	//remove all the ids that are contained in the set of ids we are removing
 	arr = _.reject(arr, function(num) { return _.contains(ids, num); });
-	Session.set("showingReplies", arr);	
+	SessionAmplify.set("showingReplies", arr);	
 
 	Blaze.remove(Blaze.getView(rows.get(0)));
 	rows.remove();
@@ -164,10 +164,10 @@ Template.comment.events({
 			}
 
 			//add id to list of comments that are showing replies, so we can remove replies from original position and show in the replies box instead (prevent duplicates showing)
-			var arr = Session.get("showingReplies");
+			var arr = SessionAmplify.get("showingReplies");
 			arr = _.extend([], arr);
 			arr.push(id.toString());
-			Session.set("showingReplies", arr);
+			SessionAmplify.set("showingReplies", arr);
 
 			if(!parent.attr("class")) { //if parent is not a reply comment-row
 				//get siblings' (the ones with empty or no class, ie the ones that are not replies) ids
@@ -178,7 +178,7 @@ Template.comment.events({
 					ids.push($(this).attr("id"));
 				});
 
-				var showing = Session.get("showingReplies");
+				var showing = SessionAmplify.get("showingReplies");
 				//if siblings ids are contained within ids that are showing replies, then close that sibling's replies
 				ids = _.filter(ids, function(num) { return showing.indexOf(num) > -1; });
 

@@ -65,8 +65,8 @@ Template.topic.helpers({
 		return this.topic && CommentsModel.find({"topic": this.topic._id}).count() > 0;
 	},
 	comments: function() {
-		var pros = CommentsModel.find({"replyTo": {$nin: Session.get("showingReplies")}, "topic": this.topic._id, "side": "pro"}).fetch(),
-				cons = CommentsModel.find({"replyTo": {$nin: Session.get("showingReplies")}, "topic": this.topic._id, "side": "con"}).fetch();
+		var pros = CommentsModel.find({"replyTo": {$nin: SessionAmplify.get("showingReplies")}, "topic": this.topic._id, "side": "pro"}).fetch(),
+				cons = CommentsModel.find({"replyTo": {$nin: SessionAmplify.get("showingReplies")}, "topic": this.topic._id, "side": "con"}).fetch();
 		return _.map(_.zip(pros, cons), function(pair) { 
 			return {"pros": pair[0], "cons": pair[1]};
 		});	
@@ -81,7 +81,7 @@ Template.comment.helpers({
 		return CommentsModel.findOne({"topic": this.topic}).replies.length;
 	},
 	showingReplies: function() {
-		return Session.get("showingReplies").indexOf(this._id) > -1;
+		return SessionAmplify.get("showingReplies").indexOf(this._id) > -1;
 	},
 	readMore: function() {
 		return this.content.split("\n").length > 5 || this.content.length > 200;
