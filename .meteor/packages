@@ -14,4 +14,5 @@ meteor-platform
 blaze
 matteodem:easy-search
 mrt:iron-router-progress
+mrt:session-amplify
 

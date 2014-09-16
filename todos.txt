@@ -1,3 +1,4 @@
+use router controllers ?
 optimize pub/subs
 fix search -- can only search currently logged in user 
 fix notifications - comment replies don't get tracked. also, scrollToId may not work with nested comments -- have to open reply boxes
