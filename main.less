@@ -100,9 +100,7 @@ tr.con4 { background: @con4; }
 	margin: 10px 0;
 	color: black;
 
-	h3 {
-		margin-top: 0;
-	}
+	h3 { margin-top: 0; }
 }
 
 // ----------------- general styles --------------------
@@ -148,12 +146,16 @@ div.col {
 		min-height: 54px;
 		padding: 10px 20px;
 
-		&:hover {
-			background: darken(@light-gray, 10%);
-		}
+		&:hover { background: darken(@light-gray, 10%); }
 
 		> h3 {
 			margin-top: 7px;
+			display: inline-block;
+		}
+		> .dropdown .btn {
+			border: none;
+			background: transparent;
+			&:active { box-shadow: none; }
 		}
 	}
 }
@@ -172,15 +174,11 @@ button.round {
 }
 td {
 	vertical-align: top;
-	&.col {
-		padding: 10px;
-	}
+	&.col { padding: 10px; }
 }
 tr {
 	background: @light-gray;
-	&.collapse {
-		height: 0;
-	}
+	&.collapse { height: 0; }
 }
 
 // ------------- signup/login page --------------
