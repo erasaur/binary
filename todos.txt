@@ -1,16 +1,16 @@
+---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
+meteor stubs -- have meteor methods on client and server (see discover meteor)
+- sync client/server side collections
+separate events/helpers into individual files (see discover meteor)
 use router controllers ?
-optimize pub/subs
-fix search -- can only search currently logged in user 
-fix notifications - comment replies don't get tracked. also, scrollToId may not work with nested comments -- have to open reply boxes
+optimize pub/subs (see discover meteor)
+fix notifications - comment replies don't get tracked.
 em vs px
 color left border of topicItem based on pro > con / con > pro
-
----------------------------------------------------------------------- TODO -------------------------------------------------------------------------
+searching topics pro/con icons should be fixed width
 auth certain pages
 better way to do form alerts (home/signup modals)
 improve topics.js vote function
-meteor stubs -- have meteor methods on client and server (see meteor.methods in meteor docs)
-- sync client/server side collections
 remove the js files for comments, topics, etc?
 test the router for loading template, not found template, etc. need to do subscriptions for notfound template
 implement use of enter to submit forms (maybe not for sign up form -- less risk of bots signing up? add captcha maybe?)

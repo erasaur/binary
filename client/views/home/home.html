@@ -1,7 +1,16 @@
 <template name="home">
 	<div class="row">
 		<div class="col header col-xs-12 col-sm-8 col-sm-offset-2">
-			<h3>Popular Topics</h3>
+			<h3>Topics</h3>
+			<span class="dropdown">
+			  <button class="btn btn-default dropdown-toggle" type="button" id="topicCategoryMenu" data-toggle="dropdown">
+			    Popular <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" role="menu" aria-labelledby="topicCategoryMenu">
+			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Following</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Invited</a></li>
+			  </ul>
+			</span>
 		</div>
 		<div class="col col-xs-12 col-sm-8 col-sm-offset-2">
 			{{#if topics.count}}
