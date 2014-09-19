@@ -1,7 +1,7 @@
-//formatDate()
+//for use with formatDate function
 var months = [ "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" ];
 
-//removeTags()
+//regex for removeTags function
 var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
 var tagOrComment = new RegExp(
   '<(?:'
@@ -16,7 +16,7 @@ var tagOrComment = new RegExp(
   + ')>',
   'gi');
 
-removeTags = function(html) {
+removeTags = function (html) {
   var oldHtml;
   do {
     oldHtml = html;
@@ -25,7 +25,7 @@ removeTags = function(html) {
   return html.replace(/</g, '&lt;');
 };
 
-formatDate = function(date) {
+formatDate = function (date) {
 	var hours = date.getHours(), 
 			minutes = date.getMinutes(), 
 			ampm = hours >= 12 ? 'PM' : 'AM';
@@ -40,7 +40,15 @@ formatDate = function(date) {
   return hours + ':' + minutes + ampm + ' - ' + day + ' ' + months[month] + ' ' + year;
 };
 
-idToCollection = function(ids, collection) {
+fadeElement = function (elem) {
+  if(elem.css("opacity") > 0) {
+    elem.fadeOut("slow", function() {
+      elem.html("");
+    });
+  }
+};
+
+idToCollection = function (ids, collection) {
 	var result = [];
 	_.each(ids, function(id) {
 		result.push(collection.findOne({"_id": id}));
@@ -48,14 +56,14 @@ idToCollection = function(ids, collection) {
 	return result;
 };
 
-formatError = function(error) {
+formatError = function (error) {
   var e = String(error).split(' ');
   e.shift(); //remove first element (the Error: part)
   e.pop(); //remove last element (the [403] part)
   return e.join(' ');
 };
 
-scrollToId = function(id){
+scrollToId = function (id){
   var comment = $("#" + id);
   $("html,body").animate({ scrollTop: comment.offset().top - 120}, "fast");
   comment.addClass("bg-fade");

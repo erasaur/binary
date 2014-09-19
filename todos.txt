@@ -1,3 +1,15 @@
+include all nested reply boxes inside existing reply template.
+removing the top level template should remove nested replies.
+removing nested replies has no effect on top level template.
+
+
+can use template.firstNode to access the top level template's info.
+can use Blaze.render() to render a template, and can use Blaze.remove(view) to kill a reply template. (maybe store all the reply templates 'view' object open within an array, so the view can be removed)
+
+
+
+
+
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
 meteor stubs -- have meteor methods on client and server (see discover meteor)
 - sync client/server side collections
@@ -5,6 +17,7 @@ separate events/helpers into individual files (see discover meteor)
 use router controllers ?
 optimize pub/subs (see discover meteor)
 fix notifications - comment replies don't get tracked.
+fade modal background when clicking a link inside it (search box)
 em vs px
 color left border of topicItem based on pro > con / con > pro
 searching topics pro/con icons should be fixed width

@@ -15,7 +15,8 @@
 @con3: rgba(112, 49, 18, 0.3);
 @con4: rgba(63, 17, 8, 0.3);
 
-@light-gray: rgba(220, 220, 220, 0.3);
+@light-gray: rgba(220, 220, 220, 0.5);
+// @light-gray: rgb(245, 245, 245);
 @gray: #828282;
 
 @pro: rgba(183, 255, 76, 0.7);
@@ -379,27 +380,11 @@ ul.navbar-nav > li {
 	display: inline-block; //so the list items don't stack when screen is shrunk
 
 	> .dropdown-menu {
-		border-color: darken(@light-gray, 30%);
-		background: @light-gray;
-		box-shadow: none;
-		.border-radius(1px);
-	 
-		&.notifications {
+	 	&.notifications {
 			width: 250px;
 			height: 400px;
 			overflow-y: auto;	
 		}
-	 
-		> ul > li {
-	 		> a {
-				display: block;
-				padding: 5px 10px;
-	 
-				&:hover {
-					background: darken(@light-gray, 10%);
-	 			}
-	 		}
-	 	}
 
 		.btn {
 			width: 100%;
@@ -414,6 +399,22 @@ ul.navbar-nav > li {
 .dropdown-menu {
 	min-width:auto;
   width:100%;
+
+  border-color: darken(@light-gray, 30%);
+		background: @light-gray;
+		box-shadow: none;
+		.border-radius(1px);
+
+		> ul > li {
+	 		> a {
+				display: block;
+				padding: 5px 10px;
+	 
+				&:hover {
+					background: darken(@light-gray, 10%);
+	 			}
+	 		}
+	 	}
 }
 .modal-open.modal, .btn:focus, a:focus {
   outline: none !important;
