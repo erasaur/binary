@@ -1,4 +1,4 @@
-var cIndex = 0; //color index -- global var
+var cIndex = 0; //color index
 
 function removeSessionReplies(rows) { 
 	var ids = [];
@@ -28,42 +28,18 @@ function removeSessionReplies(rows) {
 	rows.remove();
 }
 
-//for use with infinite scrolling
-var	scrolling = false,
-		currentRoute; 
-
-$(window).scroll(function() {
-	scrolling = true; //run function when scroll
-});
-
-//handles infinite scrolling on events page
-setInterval(function() {
-	currentRoute = Router.current().route.name;
-	if(scrolling && currentRoute === "home") {
-		scrolling = false;
-
-		//if we scrolled to 250px above bottom && have loaded enough topics to meet the limit
-		if(TopicsModel.find().count === Session.get("topicsLimit") && $(window).scrollTop() + window.innerHeight >= $(document).height() - 250) {
-			Session.set("topicsLimit", Session.get("topicsLimit") + 10); //fetch more topics from server
-		}
-	}
-}, 300);
-
-Template.home.events({
-	"click #create-topic": function(event, template) {
-		$("html,body").animate({ scrollTop: 0}, "fast");
+Template.comment.helpers({
+	hasReplies: function() {
+		return CommentsModel.findOne({"topic": this.topic}).replies.length;
 	},
-	"submit #create-topic-form": function(event, template) {
-		event.preventDefault();
-		var title = template.find("#create-title").value;
-
-		Meteor.call("newTopic", title, Meteor.userId(), Meteor.user().username, function(error, result) {
-			if(error) {
-				alert(formatError(error));
-			} else {
-				$("#create-title").val("");
-			}
-		});
+	showingReplies: function() {
+		return SessionAmplify.get("showingReplies").indexOf(this._id) > -1;
+	},
+	readMore: function() {
+		return this.content.split("\n").length > 5 || this.content.length > 200;
+	},
+	liked: function() {
+		return Meteor.user().activity.liked && Meteor.user().activity.liked.indexOf(this._id) > -1;
 	}
 });
 
@@ -92,25 +68,6 @@ Template.newComment.events({
 		var t = $(event.target);
 		t.toggleClass("btn-success");
 		t.toggleClass("btn-danger");
-	}
-});
-
-Template.topic.events({
-	"click .inc-pro": function(event, template) {
-		if(Session.get("currentTopic") && Meteor.user()) {
-			Discuss.Topics.vote(Session.get("currentTopic"), Meteor.userId(), "pro");
-		}
-	},
-	"click .inc-con": function(event, template) {
-		if(Session.get("currentTopic") && Meteor.user()) {
-			Discuss.Topics.vote(Session.get("currentTopic"), Meteor.userId(), "con");
-		}
-	},
-	"click #follow": function(event, template) {
-		Meteor.call("followTopic", Meteor.userId(), this.topic._id);
-	},
-	"click #unfollow": function(event, template) {
-		Meteor.call("unfollowTopic", Meteor.userId(), this.topic._id);
 	}
 });
 
@@ -214,117 +171,3 @@ Template.comment.events({
 		Meteor.call("unlikeComment", Meteor.userId(), this._id, this.owner);
 	}
 });
-
-Template.nav.events({
-	"DOMMouseScroll .notifications, mousewheel .notifications": function(event, template) {
-		var target = event.currentTarget,
-				$target = $(target),
-				scrollTop = target.scrollTop,
-				scrollHeight = target.scrollHeight,
-				delta = event.originalEvent.wheelDelta,
-				up = delta > 0;
-
-		if(!up && -delta > scrollHeight - target.clientHeight - scrollTop) {
-			$target.scrollTop(scrollHeight);
-			event.stopPropagation();
-			event.preventDefault();
-			event.returnValue = false;
-		} else if (up && delta > scrollTop) {
-			$target.scrollTop(0);
-			event.stopPropagation();
-			event.preventDefault();
-			event.returnValue = false;
-		}
-	},
-	"click #logout": function(event, template) {
-		Meteor.logout(function(error) {
-			Router.go("home");
-		});
-	},
-	"submit #search-form": function(event, template) {
-		event.preventDefault();
-	},
-	"click .search-link": function(event, template) {
-		$("#search-modal").modal("hide");
-	}
-});
-
-function fadeElement(elem) {
-	if(elem.css("opacity") > 0) {
-		elem.fadeOut("slow", function() {
-			elem.html("");
-		});
-	}
-}
-
-Template.signup.events({
-	"change input": function(event, template) {
-		fadeElement($(".landing-form-errors"));	
-	},
-	"submit #signup-form": function(event, template) {
-		event.preventDefault();
-		var username = template.find("#create-username").value,
-				email = template.find("#create-email").value,
-				password = template.find("#create-password").value;
-
-		Meteor.call("newUser", username, email, password, function(error, result) {
-			if(error) {
-				template.find(".landing-form-errors").innerHTML = "<li>" + formatError(error) + "</li>";
-				$(".landing-form-errors").fadeTo("slow", 1);
-			} else {
-				alert(result);
-
-				Meteor.loginWithPassword(username, password, function(error) {
-					if(error) {
-						alert(formatError(error));
-					} else {
-						Router.go("home");
-					}
-				});
-			}
-		});
-	}
-});
-
-Template.login.events({
-	"change input": function(event, template) {
-		fadeElement($(".landing-form-errors"));
-	},
-	"submit #login-form": function(event, template) {
-		event.preventDefault();
-		var username = template.find("#username").value,
-				password = template.find("#password").value;
-
-		Meteor.loginWithPassword(username, password, function(error) {
-			if(error) { 
-				template.find(".landing-form-errors").innerHTML = "<li>" + formatError(error) + "</li>";
-				$(".landing-form-errors").fadeTo("slow", 1);
-			}
-		});
-	}
-});
-
-Template.profile.events({
-	"click .navbar-tab": function(event, template) {
-		Session.set("currentTab", event.target.id);
-	},
-	"click #follow": function(event, template) {
-		Meteor.call("newFollower", Meteor.userId(), this.user._id);
-	},
-	"click #unfollow": function(event, template) {
-		Meteor.call("removeFollower", Meteor.userId(), this.user._id);
-	}
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
