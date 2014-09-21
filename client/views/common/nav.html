@@ -1,28 +1,31 @@
 <template name="nav">
-  <div class="row visible-xs">
-  	<div class="col-xs-12">
-			<a href="{{pathFor 'home'}}" class="navbar-brand">yamcha</a>
-			<div class="pull-right">
-				{{> navItems}}
-			</div>
+  <div class="visible-xs">
+  	<div class="navbar-collapsed">
+			<div class="navbar-items">
+        {{> navItems}}
+      </div>
+      <a href="{{pathFor 'home'}}" class="navbar-brand">yamcha</a>
 		</div>
   </div>
-	<div class="navbar navbar-transparent navbar-fixed-top hidden-xs">
-		<div class="container row">
-			<div class="col-sm-2">
-				<a href="{{pathFor 'home'}}" class="navbar-brand pull-right">yamcha</a>
+	<div class="hidden-xs">
+		<div class="navbar-transparent">
+
+      <!-- navbar brand container -->
+			<div class="col-sm-2"> 
+				<a href="{{pathFor 'home'}}" class="navbar-brand">yamcha</a>
 			</div>
-			<div class="col-sm-2 col-sm-offset-8">
-				<div class="pull-left">
-					{{> navItems}}
-				</div>
+
+      <!-- navbar items container -->
+			<div class="col-sm-2 col-sm-offset-8 navbar-items">
+				{{> navItems}}
 			</div>
+
 		</div>
 	</div>
 </template>
 
 <template name="navItems">
-	<ul class="nav navbar-nav navbar-right">
+	<ul class="nav navbar-nav">
 		{{#if currentUser}}
 			<li class="dropdown">
         <a href="#" class="dropdown-toggle" id="nav-profile" data-toggle="dropdown"><i class="fa fa-user"></i></a>

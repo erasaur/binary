@@ -140,7 +140,8 @@ ul {
 div.col {
 	background: @light-gray; //rgba(220, 220, 220, 0.3);
 	padding: 10px 20px;
-	z-index: 2;
+	position: relative;
+	margin-top: -65px;
 	.border-radius(8px 8px 0 0);
 }
 button.btn, button.round {
@@ -336,14 +337,9 @@ tr {
 	}	
 }
 .navbar-transparent {
-	background: transparent;
-	border: none;
-	z-index: 1;
-
-	.container {
-		width: 100%;
-		margin-top: 20px;
-	}
+	position: static; 
+	width: 100%; 
+	margin-top: 20px;
 }
 .navbar-brand, ul.navbar-nav > li > a {
 	color: @gray;
@@ -351,17 +347,28 @@ tr {
 	background: transparent !important;
 	position: relative;
 
-	&:hover {
-		color: black;
-	}
+	&:hover { color: black; }
 }
-.navbar-brand { padding-right: 10px; }
-ul.navbar-nav { padding-left: 30px; }
-ul.navbar-nav > li {
+.navbar-brand { 
+	float: right; 
+	padding: 0 20px 0 0; //right
+	margin: 15px 0 0 0; //top
+}
+.navbar-items { padding: 0; }
+.navbar-nav { 
+	float: left; 
+	padding: 0 0 0 20px; //left
+	margin: 0;
+	position: relative;
+}
+.navbar-nav > li {
 	width: 40px;
 	display: inline-block; //so the list items don't stack when screen is shrunk
 
 	> .dropdown-menu {
+		right: 0;
+		left: auto;
+		
 	 	&.notifications {
 			width: 250px;
 			height: 400px;
@@ -374,9 +381,22 @@ ul.navbar-nav > li {
 		}
 	}
 }
-.dropdown { 
-	margin: 0; border: 0;
+.navbar-collapsed {
+	width: 100%;
+	padding: 15px 20px;
+
+	> .navbar-brand {
+		float: left; 
+		margin: 0; padding: 0;
+		height: 1.5em;
+	}
+	> .navbar-items {
+		float: right;
+		margin-top: -7.5px;
+		.navbar-nav { padding: 0; }
+	}
 }
+.dropdown {  margin: 0; border: 0; }
 .dropdown-menu {
 	min-width:auto;
   width:100%;
