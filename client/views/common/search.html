@@ -1,0 +1,49 @@
+<template name="searchInput">
+  <form class="form-horizontal" id="search-form" role="form">
+    <div class="control-group">
+      {{> esInput index=indexes classes="form-control" id="search-input" placeholder="Filter by category or keyword..."}}      
+    </div>
+  </form>
+</template>
+
+<template name="searchResults">
+  <div class="results">
+    <!-- show topic categories -->
+    <ul>
+      <li>Topics</li>
+      {{#ifEsInputIsEmpty index="topics" id="search-input"}}
+        <li>Search for topics.</li>
+      {{/ifEsInputIsEmpty}}
+
+      {{#ifEsIsSearching index="topics"}}
+        <li>Working on it...</li>
+      {{else}}
+        {{#esEach index="topics" id="search-input"}}
+          <li><span class="label label-success">{{this.pro}}</span><span class="label label-danger">{{this.con}}</span><a href="{{pathFor 'topic'}}" class="search-link">{{this.title}}</a></li>
+        {{/esEach}}
+      {{/ifEsIsSearching}}
+
+      {{#ifEsHasNoResults index="topics" id="search-input"}}
+        <li>No search results.</li>
+      {{/ifEsHasNoResults}}
+    </ul>
+    <ul>
+      <li>Users</li>
+      {{#ifEsInputIsEmpty index="users" id="search-input"}}
+        <li>Search for users.</li>
+      {{/ifEsInputIsEmpty}}
+
+      {{#ifEsIsSearching index="users"}}
+        <li>Working on it...</li>
+      {{else}}
+        {{#esEach index="users" id="search-input"}}
+          <li><a href="{{pathFor 'profile'}}" class="search-link">{{this.username}}</a></li>
+        {{/esEach}}
+      {{/ifEsIsSearching}}
+
+      {{#ifEsHasNoResults index="users" id="search-input"}}
+        <li>No search results.</li>
+      {{/ifEsHasNoResults}}
+    </ul>
+  </div>
+</template>

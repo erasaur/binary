@@ -141,24 +141,9 @@ div.col {
 	background: @light-gray; //rgba(220, 220, 220, 0.3);
 	padding: 0 20px;
 
-	&.header {
-		.border-radius(8px 8px 0 0);
-		z-index: 2;
-		min-height: 54px;
-		padding: 10px 20px;
-
-		&:hover { background: darken(@light-gray, 10%); }
-
-		> h3 {
-			margin-top: 7px;
-			display: inline-block;
-		}
-		> .dropdown .btn {
-			border: none;
-			background: transparent;
-			&:active { box-shadow: none; }
-		}
-	}
+	.border-radius(8px 8px 0 0);
+	z-index: 2;
+	padding: 10px 20px;
 }
 button.btn, button.round {
 	&:active, &:focus {
