@@ -8,9 +8,6 @@ Template.home.helpers({
 });
 
 Template.home.events({
-	"click #create-topic": function(event, template) {
-		$("html,body").animate({ scrollTop: 0}, "fast");
-	},
 	"submit #create-topic-form": function(event, template) {
 		event.preventDefault();
 		var title = template.find("#create-title").value;

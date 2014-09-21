@@ -1,4 +1,3 @@
-Template.nav.indexes = ["topics", "users"];
 Template.navItems.helpers({
 	hasNotifications: function() {
 		if(Meteor.user() && Meteor.user().notifications)
@@ -25,6 +24,7 @@ Template.navItems.helpers({
 });
 
 Template.nav.events({
+	//prevent page from scrolling when mouse is in notifications box
 	"DOMMouseScroll .notifications, mousewheel .notifications": function(event, template) {
 		var target = event.currentTarget,
 				$target = $(target),
@@ -49,11 +49,5 @@ Template.nav.events({
 		Meteor.logout(function(error) {
 			Router.go("home");
 		});
-	},
-	"submit #search-form": function(event, template) {
-		event.preventDefault();
-	},
-	"click .search-link": function(event, template) {
-		$("#search-modal").modal("hide");
 	}
 });

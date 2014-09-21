@@ -1,41 +1,28 @@
 <template name="home">
 	<div class="row">
-		<div class="col header col-xs-12 col-sm-8 col-sm-offset-2">
-			<h3>Topics</h3>
-			<span class="dropdown">
-			  <button class="btn btn-default dropdown-toggle" type="button" id="topicCategoryMenu" data-toggle="dropdown">
-			    Popular <span class="caret"></span>
-			  </button>
-			  <ul class="dropdown-menu" role="menu" aria-labelledby="topicCategoryMenu">
-			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Popular</a></li>
-			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Following</a></li>
-			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Invited</a></li>
-			  </ul>
-			</span>
-		</div>
 		<div class="col col-xs-12 col-sm-8 col-sm-offset-2">
-			{{#if topics.count}}
-				<div id="topics-container">
-					{{#each topics}}
-						{{> topicItem}}
-					{{/each}}
-				</div>
-			{{/if}}
+			{{> searchInput}}
 
-			{{#if moreTopics}}
-				<div class="show-more">
-					<span class="alert alert-info">Loading more...</span>
-				</div>
+			{{#if searching}}
+				{{> searchResults}}
 			{{else}}
-				<div class="show-more">
-					<p>No more topics.</p>
-					{{#if currentUser}}	
-						<!-- go to top of page -->
-						<a href="#" class="btn btn-default" id="create-topic">Create one!</a>
-					{{else}}
-						Sign up or log in to create one!
-					{{/if}}
-				</div>
+				{{#if topics.count}}
+					<div id="topics-container">
+						{{#each topics}}
+							{{> topicItem}}
+						{{/each}}
+					</div>
+				{{/if}}
+
+				{{#if moreTopics}}
+					<div class="show-more">
+						<span class="alert alert-info">Loading more...</span>
+					</div>
+				{{else}}
+					<div class="show-more">
+						<p>No more topics.</p>
+					</div>
+				{{/if}}
 			{{/if}}
 		</div>
 	</div>

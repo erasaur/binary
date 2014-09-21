@@ -19,69 +19,11 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content custom">
-	      <div class="modal-header">
-	      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h3 class="modal-title" id="modalLabel">Search</h3>
-	      </div>
-	      <div class="modal-body">
-	        <form class="form-horizontal" id="search-form" role="form">
-						<div class="control-group">
-							{{> esInput index=indexes classes="form-control" id="search-input" placeholder="Start Typing Here..."}}
-						</div>
-						
-						<div class="results">
-							<ul>
-								<li>Topics</li>
-								{{#ifEsInputIsEmpty index="topics" id="search-input"}}
-									<li>Search for topics.</li>
-								{{/ifEsInputIsEmpty}}
-
-								{{#ifEsIsSearching index="topics"}}
-									<li>Working on it...</li>
-								{{else}}
-									{{#esEach index="topics" id="search-input"}}
-				          	<li><span class="label label-success">{{this.pro}}</span><span class="label label-danger">{{this.con}}</span><a href="{{pathFor 'topic'}}" class="search-link">{{this.title}}</a></li>
-					        {{/esEach}}
-								{{/ifEsIsSearching}}
-
-				        {{#ifEsHasNoResults index="topics" id="search-input"}}
-				          <li>No search results.</li>
-				        {{/ifEsHasNoResults}}
-			        </ul>
-			        <ul>
-			        	<li>Users</li>
-								{{#ifEsInputIsEmpty index="users" id="search-input"}}
-									<li>Search for users.</li>
-								{{/ifEsInputIsEmpty}}
-
-								{{#ifEsIsSearching index="users"}}
-									<li>Working on it...</li>
-								{{else}}
-									{{#esEach index="users" id="search-input"}}
-				          	<li><a href="{{pathFor 'profile'}}" class="search-link">{{this.username}}</a></li>
-					        {{/esEach}}
-								{{/ifEsIsSearching}}
-
-				        {{#ifEsHasNoResults index="users" id="search-input"}}
-				          <li>No search results.</li>
-				        {{/ifEsHasNoResults}}
-			        </ul>
-		        </div>
-					</form>
-	      </div>
-	    </div>
-	  </div>
-	</div>
 </template>
 
 <template name="navItems">
 	<ul class="nav navbar-nav navbar-right">
 		{{#if currentUser}}
-			<li><a href="#" data-toggle="modal" data-target="#search-modal"><i class="fa fa-search"></i></a></li>
 			<li class="dropdown">
         <a href="#" class="dropdown-toggle" id="nav-profile" data-toggle="dropdown"><i class="fa fa-user"></i></a>
         <div class="dropdown-menu">
