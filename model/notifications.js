@@ -1,1 +1,1 @@
-NotificationsModel = new Meteor.Collection("notifications");
+NotificationsModel = new Mongo.Collection("notifications");

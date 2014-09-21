@@ -1,4 +1,4 @@
-TopicsModel = new Meteor.Collection("topics");
+TopicsModel = new Mongo.Collection("topics");
 
 TopicsModel.initEasySearch("title", {
 	"limit": 20,
