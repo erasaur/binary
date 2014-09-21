@@ -1,3 +1,8 @@
+/** 
+ * comment template
+ * 
+ */
+
 include all nested reply boxes inside existing reply template.
 removing the top level template should remove nested replies.
 removing nested replies has no effect on top level template.
@@ -8,9 +13,43 @@ can use Blaze.render() to render a template, and can use Blaze.remove(view) to k
 
 
 
+Error 1:
 
+---------------------------
+|           | con comment | A
+---------------------------
+--------------------^------
+|                replies  | B
+---------------------------
+
+adding a comment to A in the con column will cause it to become like:
+
+---------------------------
+|           | con comment | A
+|           | con comment |
+---------------------------
+--------------------^------
+|                replies  | B
+---------------------------
+
+when it should be like:
+
+---------------------------
+|           | con comment | A
+---------------------------
+--------------------^------
+|                replies  | B
+---------------------------
+---------------------------
+|           | con comment | A
+---------------------------
+
+in this state, when adding another con comment, there is a scrollTo error: 'newComment': TypeError: Cannot read property 'top' of undefined
 
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
+all website content should have same z index as the page header, otherwise navbar covers it
+
+switch from using meteor error
 meteor stubs -- have meteor methods on client and server (see discover meteor)
 - sync client/server side collections
 separate events/helpers into individual files (see discover meteor)
