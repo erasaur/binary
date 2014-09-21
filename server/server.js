@@ -3,7 +3,7 @@ function validEmail(email) {
 	return re.test(email); 
 }
 
-Accounts.onCreateUser(function(options, user) {
+Accounts.onCreateUser(function (options, user) {
 	user.profile = options.profile;
 	user.activity = options.activity;
 	user.notifications = options.notifications;
@@ -11,33 +11,45 @@ Accounts.onCreateUser(function(options, user) {
 	return user;
 });
 
-Meteor.methods({
-	newUser: function(username, email, password) {		
-		var errors = [];
+Accounts.validateNewUser(function (user) {
+	var error;
+	var username = user.username,
+			email = user.email,
+			password = user.password;
 
-		if(username && email && password) {			
-			if(!validEmail(email)) {
-				errors.push("The email entered is invalid.");
-			} else if(password.length < 6) {
-				errors.push("Your password must be at least 6 characters long."); 
-			}
-		} else { //fields not filled in
-			errors.push("Please fill in all of the fields!");
-		}
-		
-		if(errors.length > 0) {
-			throw new Meteor.Error(403, errors[0]);
-		} else {
-			Accounts.createUser({
-				"username": username, 
-				"email": email, 
-				"password": password, 
-				"profile": {}, 
-				"activity": {"likes": 0, "liked": [], "followers": [], "following": [], "followingTopics": [], "topics": []}, 
-				"notifications": {"commentReply": [], "followingUser": [], "followingTopic": []}
-			});
-			return "Success! Your account '" + username + "' has been created.";
-		}
+	if (username && email && password) {
+		if (username.length < 3)
+			error = "Username must be 3 characters or longer.";
+		else if (!validEmail(email))
+			error = "Did you mis-type your email?";
+		else if(password.length < 6)
+			error = "Your password must be at least 6 characters long."; 
+	} else //fields not filled in
+		error = "Please fill in all of the fields.";
+	
+	if(!error) return true;
+	throw new Meteor.Error(403, error);
+});
+
+Meteor.methods({
+	newUser: function (username, email, password) {		
+		Accounts.createUser({
+			"username": username, 
+			"email": email, 
+			"password": password, 
+			"profile": {}, 
+			"activity": {"likes": 0, 
+									 "liked": [], 
+									 "followers": [], 
+									 "following": [], 
+									 "followingTopics": [], 
+									 "topics": []
+									}, 
+			"notifications": {"commentReply": [], "followingUser": [], "followingTopic": []}
+		}, function (error) {
+			if (!error)
+				return "Success! Your account '" + username + "' has been created.";
+		});
 	},
 	newTopic: function(title, userid, owner) {
 		var errors = [];
@@ -54,7 +66,14 @@ Meteor.methods({
 		if(errors.length > 0) {
 			throw new Meteor.Error(403, errors[0]);
 		} else {
-			var topic = TopicsModel.insert({"title": title, "owner": owner, "date": new Date(), "pro": 0, "con": 0, "proUsers": [], "conUsers": [], "followers": []});
+			var topic = TopicsModel.insert({"title": title, 
+																			"owner": owner, 
+																			"date": new Date(), 
+																			"pro": 0, "con": 0, 
+																			"proUsers": [], 
+																			"conUsers": [], 
+																			"followers": []
+																		});
 
 			Meteor.call("newNotification", "newTopic", owner, {"topicID": topic, "topic": title});
 
@@ -66,7 +85,7 @@ Meteor.methods({
 			Meteor.users.update({"_id": userid}, {$addToSet: {"activity.topics": topic}});
 			var result = CommentsModel.insert({"owner": owner, "topic": topic, "date": new Date(), "content": content, "side": side, "likes": 0, "replyTo": replyTo, "replies": []});
 
-			var r = replyToUser ? Meteor.users.findOne({"username": replyToUser})._id:"";
+			var r = replyToUser && Meteor.users.findOne({"username": replyToUser})._id || "";
 			Meteor.call("newNotification", "newComment", userid, {"replyTo": r, "comment": result, "topic": topic});
 
 			return result;

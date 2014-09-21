@@ -139,11 +139,9 @@ ul {
 }
 div.col {
 	background: @light-gray; //rgba(220, 220, 220, 0.3);
-	padding: 0 20px;
-
-	.border-radius(8px 8px 0 0);
-	z-index: 2;
 	padding: 10px 20px;
+	z-index: 2;
+	.border-radius(8px 8px 0 0);
 }
 button.btn, button.round {
 	&:active, &:focus {
@@ -351,7 +349,6 @@ tr {
 	color: @gray;
 	font-size: 1.5em;	
 	background: transparent !important;
-	z-index: 3; 
 	position: relative;
 
 	&:hover {
@@ -377,29 +374,28 @@ ul.navbar-nav > li {
 		}
 	}
 }
-.dropdown {
-	margin: 0;
-	border: 0;
+.dropdown { 
+	margin: 0; border: 0;
 }
 .dropdown-menu {
 	min-width:auto;
   width:100%;
 
   border-color: darken(@light-gray, 30%);
-		background: @light-gray;
-		box-shadow: none;
-		.border-radius(1px);
+	background: @light-gray;
+	box-shadow: none;
+	.border-radius(1px);
 
-		> ul > li {
-	 		> a {
-				display: block;
-				padding: 5px 10px;
-	 
-				&:hover {
-					background: darken(@light-gray, 10%);
-	 			}
-	 		}
-	 	}
+	> ul > li {
+ 		> a {
+			display: block;
+			padding: 5px 10px;
+ 
+			&:hover {
+				background: darken(@light-gray, 10%);
+ 			}
+ 		}
+ 	}
 }
 .modal-open.modal, .btn:focus, a:focus {
   outline: none !important;
