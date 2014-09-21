@@ -1,7 +1,9 @@
 Template.navItems.helpers({
 	hasNotifications: function() {
 		if(Meteor.user() && Meteor.user().notifications)
-			return Meteor.user().notifications.commentReply.length || Meteor.user().notifications.followingUser.length || Meteor.user().notifications.followingTopic.length;
+			return Meteor.user().notifications.commentReply.length || 
+						 Meteor.user().notifications.followingUser.length || 
+						 Meteor.user().notifications.followingTopic.length;
 	},
 	notifications: function() {
 		if(Meteor.user() && Meteor.user().notifications) {
