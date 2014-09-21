@@ -20,8 +20,8 @@ Yamcha.Topics = {
 
 		//assume we clicked on pro
 		var t = TopicsModel.findOne({"_id": id});
-		if(t[second].indexOf(user) == -1) { //didn't vote con already
-			if(t[first].indexOf(user) != -1) { //voted pro already, so unvote
+		if(t[second].indexOf(user) === -1) { //didn't vote con already
+			if(t[first].indexOf(user) !== -1) { //voted pro already, so unvote
 				TopicsModel.update({"_id": id}, {$inc: formatField(side, -1)});
 				TopicsModel.update({"_id": id}, {$pull: formatField(first, user)});
 			} else { //didn't vote at all yet, so vote
@@ -58,9 +58,12 @@ Template.topic.helpers({
 		 *
 		 * pair - array that contains the comment object
 		 */
-		return _.map(_.zip(pros, cons), function(pair) { 
+		var comments = _.map(_.zip(pros, cons), function(pair) { 
 			return {"pros": pair[0], "cons": pair[1]};
-		});	
+		});
+		//a dummy row that solves comment rendering (see docs error 1)
+		comments.push({"bottom": true});	
+		return comments;
 	},
 	following: function() {
 		return Meteor.user().activity.followingTopics && Meteor.user().activity.followingTopics.indexOf(this.topic._id) > -1;
@@ -69,14 +72,12 @@ Template.topic.helpers({
 
 Template.topic.events({
 	"click .inc-pro": function(event, template) {
-		if(Session.get("currentTopic") && Meteor.user()) {
+		if(Session.get("currentTopic") && Meteor.userId())
 			Yamcha.Topics.vote(Session.get("currentTopic"), Meteor.userId(), "pro");
-		}
 	},
 	"click .inc-con": function(event, template) {
-		if(Session.get("currentTopic") && Meteor.user()) {
+		if(Session.get("currentTopic") && Meteor.userId())
 			Yamcha.Topics.vote(Session.get("currentTopic"), Meteor.userId(), "con");
-		}
 	},
 	"click #follow": function(event, template) {
 		Meteor.call("followTopic", Meteor.userId(), this.topic._id);
@@ -85,3 +86,11 @@ Template.topic.events({
 		Meteor.call("unfollowTopic", Meteor.userId(), this.topic._id);
 	}
 });
+
+
+
+
+
+
+
+

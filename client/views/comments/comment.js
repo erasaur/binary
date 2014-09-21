@@ -1,68 +1,58 @@
 var cIndex = 0; //color index
 
 function removeSessionReplies(rows) { 
-	var ids = [];
+	var ids = [], //all the ids present in rows
+			arr; //temporary array, stores ids in session with row ids removed
 
 	rows.each(function() {
-		var current = this.id;
-		if(current) { //if this particular element has an id
-			var temp = current.indexOf("-");
-			if(temp > -1) { //see if it has a "-" in the id. if so, it means it has id-replies-x
-				var currentID = current.substring(0, temp); //get the id
-
-				if(ids.indexOf(currentID) < 0) { //if we haven't already seen this id, add it
-					ids.push(currentID);
-				}
-			}
+		if(this.id && this.id.indexOf("-") > -1) { 
+			ids.push(this.id.substring(0, this.id.indexOf("-")));
 		}
 	});
 
-	var arr = SessionAmplify.get("showingReplies");
-	arr = _.extend([], arr);
+	ids = _.uniq(ids);
+	arr = SessionAmplify.get("showingReplies").slice(); //convert to array
+	//remove all the ids that are contained in the set of ids to remove
+	arr = _.difference(arr, ids);
 
-	//remove all the ids that are contained in the set of ids we are removing
-	arr = _.reject(arr, function(num) { return _.contains(ids, num); });
-	SessionAmplify.set("showingReplies", arr);	
-
-	Blaze.remove(Blaze.getView(rows.get(0)));
-	rows.remove();
+	SessionAmplify.set("showingReplies", arr); //update session
+	rows.remove(); //remove rows
 }
 
 Template.comment.helpers({
-	hasReplies: function() {
+	hasReplies: function () {
 		return CommentsModel.findOne({"topic": this.topic}).replies.length;
 	},
-	showingReplies: function() {
+	showingReplies: function () {
 		return SessionAmplify.get("showingReplies").indexOf(this._id) > -1;
 	},
-	readMore: function() {
+	readMore: function () {
 		return this.content.split("\n").length > 5 || this.content.length > 200;
 	},
-	liked: function() {
+	liked: function () {
 		return Meteor.user().activity.liked && Meteor.user().activity.liked.indexOf(this._id) > -1;
 	}
 });
 
 Template.newComment.events({
 	"click .post-comment": function(event, template) {
-		if(Session.get("currentTopic")) {
-			var siblings = $(event.target).siblings(),
-					input = $(siblings[0]),
-					comment = input.val(),
-					side = $(siblings[1]).hasClass("btn-success") ? "pro":"con",
-					replyTo = this.id || "",
-					replyToUser = (replyTo == "") ? "":CommentsModel.findOne({"_id": replyTo}).owner;
+		if(!Session.get("currentTopic")) return;
 
-			Meteor.call("newComment", Meteor.userId(), Meteor.user().username, Session.get("currentTopic"), comment, side, replyTo, replyToUser, function(error, result) {
-				if(error) {
-					alert(formatError(error));
-				} else {
-					scrollToId(result);
-				}
-			});
+		var siblings = $(event.target).siblings(),
+				input = $(siblings[0]),
+				comment = input.val(),
+				side = $(siblings[1]).hasClass("btn-success") ? "pro":"con",
+				replyTo = this.id || "",
+				replyToUser = replyTo && CommentsModel.findOne({"_id": replyTo}).owner;
 
-			input.val("");
-		}
+		Meteor.call("newComment", Meteor.userId(), Meteor.user().username, Session.get("currentTopic"), comment, side, replyTo, replyToUser, function(error, result) {
+			if(error)
+				alert(formatError(error));
+			else
+				scrollToId(result);
+		});
+
+		input.val("");
 	},
 	"click .post-side": function(event, template) {
 		var t = $(event.target);
@@ -71,97 +61,110 @@ Template.newComment.events({
 	}
 });
 
+Template.commentRow.destroyed = function () {
+	console.log('destroyed');
+}
+
+/** 
+ * removes the reply box and any nested replies.
+ * finds the top of the replies box using the id in format of:
+ * - "#{{id}}-replies-top"
+ * and iterates through dom until finding:
+ * - "#{{id}}-replies-bot"
+ * 
+ * removes all rows within the two with jQuery, and calls
+ * Blaze.remove to stop tracking these rows
+ *
+ * id [string] the id of the parent reply box to remove
+ */
+function closeReplies (id) {
+	var repliesTop = $("#" + id + "-replies-top");
+	var replies = repliesTop.nextUntil("#" + id + "-replies-bot");
+
+	//replies.last() is the element before the element in the selector
+	var repliesBot = replies.last().next();
+	
+	//add back the top and last element
+	replies = replies.add(repliesTop).add(repliesBot);
+
+	//when rendering replies, we collapse the parent rows' bottom border
+	//to avoid having two borders' worth of padding.
+	//check to see if we need to uncollapse the next border now that we're
+	//removing the replies.
+	var nextBorder = repliesBot.next().next(); //next() is dummy row
+	if (nextBorder.hasClass("collapse")) 
+		nextBorder.removeClass("collapse");
+
+	//remove the reply ids from session, so they reappear as normal comments
+	removeSessionReplies(replies); 
+}
+
 Template.comment.events({
 	"click .comment-content": function(event, template) {
 		$(event.target).toggleClass("collapsed");
 	},
 	"click .comment-replyto": function(event, template) {
 		event.preventDefault();
-		if(this.replyTo) {
+		if(this.replyTo)
 			scrollToId(this.replyTo);
-		}
 	},
 	"click .toggle-replies": function(event, template) {
-		var id = this._id,
-				parent = $(event.target).closest("tr"), //gets the clicked comment's tr (ie tr before the replies)
-				top = parent.next(), //top border of next tr
-				replies = top.next(), 
-				nclass = top.attr("class"),
-				rclass = replies.attr("class"); //replies' class
+		var self = this; //store the reference because context changes when rendering template
 
-		if (replies.length && replies.hasClass(id + "-replies")) { //if we're closing replies
-			//get everything within the borders of this reply box (including any nested replies)
-			var temp = top.nextUntil("#" + id + "-replies-bot");
+		var	parentRow = $(event.target).closest("tr"), //gets the clicked comment's tr (ie tr before the replies)
+				nextRow = parentRow.next(), //top border of next tr
+				repliesRow = nextRow.next();
 
-			//check for a potential border of the upper/surrounding level of replies
-			var bot = temp.last().next(),
-					pot = bot.next().next(); //temp.last().next() is the bot border. next().next() is replies bottom. next().next().next() is (potentially) a collapsed border
-			if (pot.attr("class") && pot.attr("class").indexOf("collapse") > -1) {
-				pot.removeClass("collapse"); //since we're removing this reply box and its borders, we need to un-collapse the previous border
-			}
+		var	nextClass = nextRow.attr("class"),
+				repliesClass = repliesRow.attr("class"); //replies' class
 
-			temp = temp.add(top).add(bot); //add self as well as the true last item (the bottom border). nextUntil goes up to but excluding last, so we have to call next() again
+		//closing replies
+		if (repliesRow.length && repliesRow.hasClass(self._id + "-replies")) {
+			closeReplies(self._id);
+			return;
+		}
 
-			//remove temp, and remove from list of showing replies, so the replies can be shown in original positions (when not shown as replies)
-			removeSessionReplies(temp);
-		} else { //we're adding replies
-			if(rclass) { //if row after next has a class
-				if(nclass && nclass.indexOf("border") > -1 && rclass.indexOf("replies ") > -1) { //next row element is a top border (aka switching sides)
-					var theID = top.attr("id");
-					theID = "#" + theID.substring(0, theID.length - 3) + "bot"; //id-replies-top -> id-replies-bot
+		//switching replies
+		if (nextRow.hasClass("border") && repliesClass && repliesClass.indexOf("replies ") > -1) {
+			var tempId = nextRow.attr("id"); //get the dom id
+			tempId = tempId.substring(0, tempId.indexOf("-")); //extract the id from dom id
 
-					var rows = top.nextUntil(theID).andSelf().add(theID);
+			closeReplies(tempId);
+		}
+		//collapse border if the row is a border, since new replies will have own border 
+		else if (repliesRow.hasClass("border"))
+			repliesRow.addClass("collapse");
 
-					//remove rows, and remove from list of showing replies, so the replies can be shown in original positions (when not shown as replies)
-					removeSessionReplies(rows); 
-				} 
-				else if(rclass.indexOf("border") > -1) { //its a bottom border... we need to collapse it
-					replies.addClass("collapse"); //set height = 0, since we'll be adding another set of replies (which has its own top border)
-				}
-			}
+		//add id to array of replies that are showing
+		var arr = SessionAmplify.get("showingReplies").slice();
+		arr.push(self._id.toString());
 
-			//add id to list of comments that are showing replies, so we can remove replies from original position and show in the replies box instead (prevent duplicates showing)
-			var arr = SessionAmplify.get("showingReplies");
-			arr = _.extend([], arr);
-			arr.push(id.toString());
-			SessionAmplify.set("showingReplies", arr);
+		SessionAmplify.set("showingReplies", arr);
 
-			if(!parent.attr("class")) { //if parent is not a reply comment-row
-				//get siblings' (the ones with empty or no class, ie the ones that are not replies) ids
-				var siblings = parent.siblings("tr[class=''], tr:not([class])").children("td").children("div.comment"),
-						ids = [];
+		//if parent does not have a class, it's not a reply comment-row
+		//meaning we're opening a top level reply. in which case,
+		//we have to close any other top-level replies
+		if(!parentRow.attr("class")) {
+			var siblings = parentRow.siblings("tr[class=''], tr:not([class])")
+															.children("td")
+															.children("div.comment");
 
-				siblings.each(function() {
-					ids.push($(this).attr("id"));
-				});
+			//pluck the id attribute from siblings, and return the ids that
+			//are present in the array of showingReplies
+			var ids = _.intersection(arr, _.pluck(siblings, "id"));
+			_.each(ids, function(id) {
+				closeReplies(id); //close all ids in the result set
+			});
+		}
 
-				var showing = SessionAmplify.get("showingReplies");
-				//if siblings ids are contained within ids that are showing replies, then close that sibling's replies
-				ids = _.filter(ids, function(num) { return showing.indexOf(num) > -1; });
+		cIndex = (cIndex >= 4) ? 0 : cIndex + 1; //update the color index
 
-				_.each(ids, function(id) {
-					top = $("#" + id + "-replies-top");
-					var	temp = top.nextUntil("#" + id + "-replies-bot"),
-							bot = temp.last().next(),
-							pot = bot.next();
-
-					if (pot.attr("class") && pot.attr("class").indexOf("collapse") > -1) {
-						pot.removeClass("collapse"); //since we're removing this reply box and its borders, we need to un-collapse the previous border
-					}
-
-					temp = temp.add(top).add(bot); //add self as well as the true last item (the bottom border). nextUntil goes up to but excluding last, so we have to call next() again
-					//remove temp, and remove from list of showing replies, so the replies can be shown in original positions (when not shown as replies)
-					removeSessionReplies(temp);
-				});
-			}
-
-			cIndex = (cIndex >= 4) ? 0 : cIndex + 1;
-			var side = this.side; //have to do this because Meteor.render changes the context or something
-
-			//add to the parent of parent's dom element, before the next dom element
-			if(!$("#" + id + "-replies-top").length) {
-				Blaze.renderWithData(Template.replies, {id: id, side: side, color: cIndex}, parent.parent()[0], parent.next()[0]);
-			}
+		//finally add the replies
+		if(!$("#" + self._id + "-replies-top").length) {
+			Blaze.renderWithData(Template.replies, //template to render
+																			{id: self._id, side: self.side, color: cIndex}, //data context
+																			parentRow.parent().get(0), //the parent to render in
+																			parentRow.next().get(0)); //insert before this
 		}
 	},
 	"click .like-comment": function(event, template) {
@@ -171,3 +174,15 @@ Template.comment.events({
 		Meteor.call("unlikeComment", Meteor.userId(), this._id, this.owner);
 	}
 });
+
+
+
+
+
+
+
+
+
+
+
+

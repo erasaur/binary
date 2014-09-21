@@ -13,8 +13,11 @@ Template.replies.helpers({
 		 *
 		 * pair - array that contains the comment object
 		 */
-		return _.map(_.zip(pros, cons), function(pair) {
+		var comments = _.map(_.zip(pros, cons), function(pair) {
 			return {"pros": pair[0], "cons": pair[1]};
 		});
+		//a dummy row that solves comment rendering (see docs error 1)
+		comments.push({"bottom": true});
+		return comments;
 	}
 });

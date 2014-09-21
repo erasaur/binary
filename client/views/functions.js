@@ -48,12 +48,12 @@ fadeElement = function (elem) {
   }
 };
 
+/*
+Takes an array of _ids and a collection name
+Returns a collection of associated cursors
+*/
 idToCollection = function (ids, collection) {
-	var result = [];
-	_.each(ids, function(id) {
-		result.push(collection.findOne({"_id": id}));
-	});
-	return result;
+  return collection.find({ "_id": { $in: ids } });
 };
 
 formatError = function (error) {
