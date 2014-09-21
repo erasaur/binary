@@ -1,1 +1,1 @@
-CommentsModel = new Meteor.Collection("comments");
+CommentsModel = new Mongo.Collection("comments");
