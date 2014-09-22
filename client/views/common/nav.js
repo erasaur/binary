@@ -7,8 +7,8 @@ Template.navItems.helpers({
 	},
 	notifications: function() {
 		if(Meteor.user() && Meteor.user().notifications) {
-			var result = [],
-					notif = Meteor.user().notifications;
+			var result = [];
+			var	notif = Meteor.user().notifications;
 
 			result = notif.commentReply.concat(notif.followingUser);
 
@@ -28,12 +28,12 @@ Template.navItems.helpers({
 Template.nav.events({
 	//prevent page from scrolling when mouse is in notifications box
 	"DOMMouseScroll .notifications, mousewheel .notifications": function(event, template) {
-		var target = event.currentTarget,
-				$target = $(target),
-				scrollTop = target.scrollTop,
-				scrollHeight = target.scrollHeight,
-				delta = event.originalEvent.wheelDelta,
-				up = delta > 0;
+		var target = event.currentTarget;
+		var	$target = $(target);
+		var	scrollTop = target.scrollTop;
+		var	scrollHeight = target.scrollHeight;
+		var	delta = event.originalEvent.wheelDelta;
+		var	up = delta > 0;
 
 		if(!up && -delta > scrollHeight - target.clientHeight - scrollTop) {
 			$target.scrollTop(scrollHeight);
