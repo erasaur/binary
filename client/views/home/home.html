@@ -1,29 +1,33 @@
 <template name="home">
-	<div class="row">
+	<div class="row full-height">
 		<div class="col col-xs-12 col-sm-8 col-sm-offset-2">
 			{{> searchInput}}
-
+			
 			{{#if searching}}
-				{{> searchResults}}
+				{{#AnimateWithVelocity}}
+					{{> searchResults}}
+				{{/AnimateWithVelocity}}
 			{{else}}
-				{{#if topics.count}}
-					<div id="topics-container">
-						{{#each topics}}
-							{{> topicItem}}
-						{{/each}}
-					</div>
-				{{/if}}
+				{{#AnimateWithVelocity}}
+					{{#if topics.count}}
+						<div data-animate data-duration="500" id="topics-container">
+							{{#each topics}}
+								{{> topicItem}}
+							{{/each}}
+						</div>
+					{{/if}}
 
-				{{#if moreTopics}}
-					<div class="show-more">
-						<span class="alert alert-info">Loading more...</span>
-					</div>
-				{{else}}
-					<div class="show-more">
-						<p>No more topics.</p>
-					</div>
-				{{/if}}
-			{{/if}}
+					{{#if moreTopics}}
+						<div class="show-more">
+							<span class="alert alert-info">Loading more...</span>
+						</div>
+					{{else}}
+						<div class="show-more">
+							<p>No more topics.</p>
+						</div>
+					{{/if}}
+				{{/AnimateWithVelocity}}
+			{{/if}}			
 		</div>
 	</div>
 

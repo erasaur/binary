@@ -1,6 +1,8 @@
 #iron-router-progress {
 	background-color: #78F7EE;
 	box-shadow: 0 0 5px #B4FCF7;
+
+	&:before { display: none !important; }
 }
 
 @pro0: rgba(152, 252, 152, 0.3);
@@ -106,7 +108,7 @@ tr.con4 { background: @con4; }
 
 // ----------------- general styles --------------------
 
-html, body, .container-fluid {
+html, body, .container-fluid.wrapper {
 	height: 100%;
 }
 input[type="text"], input[type="password"], input[type="email"], input[type="submit"], textarea.form-control, button.btn, a.btn, .alert, .well {
@@ -141,7 +143,7 @@ div.col {
 	background: @light-gray; //rgba(220, 220, 220, 0.3);
 	padding: 10px 20px;
 	position: relative;
-	margin-top: -65px;
+	height: 100%;
 	.border-radius(8px 8px 0 0);
 }
 button.btn, button.round {
@@ -164,6 +166,10 @@ td {
 tr {
 	background: @light-gray;
 	&.collapse { height: 0; }
+}
+@media (min-width: 768px) {
+	.container-fluid.wrapper { padding: 0; }	
+	div.col { margin-top: -65px; }
 }
 
 // ------------- signup/login page --------------
@@ -194,14 +200,15 @@ tr {
 // ----------------- search page ----------------
 
 .results {
-	display: table;
-	table-layout: fixed;
+	// display: table;
+	// table-layout: fixed;
 	margin: 20px 0 0;
 	width: 100%;
+	height: 100%;
 
 	ul {
 		position: relative;
-		display: table-cell;
+		// display: table-cell;
 		overflow: hidden;
 		padding: 5px 15px;
 		border-right: 1px solid @light-gray;
@@ -331,10 +338,15 @@ tr {
 .border.con.c4:before { border-bottom-color: @con4; }
 
 // ------------- bootstrap elements (nav, modal, etc) --------------
-@media (min-width: 768px) {
-	.container-fluid.wrapper {
-		padding: 20px 0 0;
-	}	
+.form-group.has-feedback { 
+	margin: 0;
+	> input { padding-right: 12px; }
+	.form-control-feedback { 
+		right: 0; 
+		color: @gray;
+
+		&:hover { cursor: pointer; }
+	}
 }
 .navbar-transparent {
 	position: static; 
@@ -368,7 +380,7 @@ tr {
 	> .dropdown-menu {
 		right: 0;
 		left: auto;
-		
+
 	 	&.notifications {
 			width: 250px;
 			height: 400px;

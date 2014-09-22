@@ -16,7 +16,7 @@ Meteor.publish("topicComments", function(topic) { //publish by topic. sort by li
 	return CommentsModel.find({"topic": topic}, {sort: {"likes": -1}}); //perhaps limit? display comments currently in the session of shown replies?
 });
 Meteor.publish("allTopics", function(limit) { //publish list of topics sorted by date
-	if (limit > TopicsModel.find().count()) {
+	if (limit > TopicsModel.find().count() || !limit) {
 		limit = 0;
 	}
 	return TopicsModel.find({}, {limit: limit, sort: {"date": -1}});

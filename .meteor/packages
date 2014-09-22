@@ -15,4 +15,5 @@ blaze
 matteodem:easy-search
 mrt:iron-router-progress
 mrt:session-amplify
+mrt:animation-helper-velocity
 
