@@ -4,15 +4,16 @@
 			<div class="col col-xs-12 col-sm-8 col-sm-offset-2">
 				{{#if currentUser}}
 					{{#if following}}
-						<button id="unfollow" class="btn btn-primary">Following</button>
+						<button id="unfollow" class="primary-button">Following</button>
 					{{else}}
-						<button id="follow" class="btn btn-default">Follow</button>
+						<button id="follow" class="default-button">Follow</button>
 					{{/if}}
 				{{/if}}
 			
 				<h3>{{topic.title}}</h3> Created by {{topic.owner}} on {{formatDate this.topic.date}}
 				<div class="vote center">
-					<button class="inc-pro btn btn-success">Pro: {{topic.pro}}</button> <button class="inc-con btn btn-danger">Con: {{topic.con}}</button>
+					<button id="vote-pro" class="pro-label">Pro: {{topic.pro}}</button> 
+					<button id="vote-con" class="con-label">Con: {{topic.con}}</button>
 				</div>
 
 				<div class="clearfix">
@@ -39,17 +40,6 @@
 			</div>
 		</div>
 	{{/if}}
-</template>
-
-<template name="topicItem">
-	<a href="{{pathFor 'topic'}}">
-		<div class="topicItem">
-			<h3>{{title}}</h3>
-			<p>description</p>
-			<p>Pro: {{pro}} Con: {{con}}</p>
-			<small>Created by {{owner}} on {{formatDate date}}</small>
-		</div>
-	</a>
 </template>
 
 

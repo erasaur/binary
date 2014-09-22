@@ -71,11 +71,11 @@ Template.topic.helpers({
 });
 
 Template.topic.events({
-	"click .inc-pro": function(event, template) {
+	"click #vote-pro": function(event, template) {
 		if(Session.get("currentTopic") && Meteor.userId())
 			Yamcha.Topics.vote(Session.get("currentTopic"), Meteor.userId(), "pro");
 	},
-	"click .inc-con": function(event, template) {
+	"click #vote-con": function(event, template) {
 		if(Session.get("currentTopic") && Meteor.userId())
 			Yamcha.Topics.vote(Session.get("currentTopic"), Meteor.userId(), "con");
 	},
