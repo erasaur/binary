@@ -11,15 +11,25 @@ Template.home.searching = function () {
   return searching;
 }
 
+function stopSearching () {
+  $("#search-input").val('').blur();
+  searching = false;
+  searchDeps.changed();
+}
+
+Template.nav.events({
+  "click .navbar-brand": function () {
+    stopSearching();
+  }
+});
+
 Template.searchInput.events({
   "focus #search-input": function (event, template) {
     searching = true;
     searchDeps.changed();
   },
   "click #search-cancel": function (event, template) {
-    $("#search-input").val('').blur();
-    searching = false;
-    searchDeps.changed();
+    stopSearching(); 
   }
 });
 
