@@ -108,8 +108,32 @@ tr.con4 { background: @con4; }
 
 // ----------------- general styles --------------------
 
-html, body, .container-fluid.wrapper {
+html {
 	height: 100%;
+}
+body {
+	min-height: 100%;
+	height: 100%;
+}
+@media (min-width: 768px) {
+	body { padding-top: 20px; }	//no top padding when xs
+}
+.container-fluid {
+	height: 100%;
+  width: 100%;
+  display: table;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+}
+.row.full-height {
+	height: 100%;
+	display: table-row;
+}
+.col.full-height {
+	height: 100%;
+	display: table-cell;
+	float: none;
 }
 input[type="text"], input[type="password"], input[type="email"], input[type="submit"], textarea.form-control, button.btn, a.btn, .alert, .well {
 	.border-radius(1px);
@@ -142,8 +166,6 @@ ul {
 div.col {
 	background: @light-gray; //rgba(220, 220, 220, 0.3);
 	padding: 10px 20px;
-	position: relative;
-	height: 100%;
 	.border-radius(8px 8px 0 0);
 }
 button.btn, button.round {
@@ -166,10 +188,6 @@ td {
 tr {
 	background: @light-gray;
 	&.collapse { height: 0; }
-}
-@media (min-width: 768px) {
-	.container-fluid.wrapper { padding: 0; }	
-	div.col { margin-top: -65px; }
 }
 
 // ------------- signup/login page --------------
@@ -199,32 +217,41 @@ tr {
 
 // ----------------- search page ----------------
 
-.results {
-	// display: table;
-	// table-layout: fixed;
-	margin: 20px 0 0;
+#search-results, #topic-categories {
+	display: table;
+	margin: 40px 0;
 	width: 100%;
-	height: 100%;
 
 	ul {
-		position: relative;
-		// display: table-cell;
+		display: table-cell;
 		overflow: hidden;
-		padding: 5px 15px;
-		border-right: 1px solid @light-gray;
+	}
+}
 
-		&:first-of-type a { //topics
-			margin-left: 10px;
-		}
+#search-results ul {
+	&:first-of-type a { //topics
+		margin-left: 10px;
+	}
 
-		&:last-of-type { //users
-			width: 33%;
-			border: 0;
-		}
+	&:last-of-type { //users
+		width: 33%;
+		border: 0;
+	}
 
-		li:first-of-type {
-			.content-header(@gray);
-		}
+	li:first-of-type {
+		.content-header(@gray);
+	}
+}
+
+#topic-categories ul {
+	width: 33%;
+	border-right: 1px solid @light-gray;
+
+	&:last-of-type { border: 0; }
+	li { text-align: center; }
+	a { 
+		.content-header(@gray); 
+		&:hover { color: black; }
 	}
 }
 
@@ -349,9 +376,8 @@ tr {
 	}
 }
 .navbar-transparent {
-	position: static; 
+	position: absolute; 
 	width: 100%; 
-	margin-top: 20px;
 }
 .navbar-brand, ul.navbar-nav > li > a {
 	color: @gray;

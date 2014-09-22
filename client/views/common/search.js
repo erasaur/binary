@@ -1,6 +1,12 @@
 var searching = false;
 var searchDeps = new Deps.Dependency();
 
+function stopSearching () {
+  $("#search-input").val('').blur();
+  searching = false;
+  searchDeps.changed();
+}
+
 Template.searchInput.indexes = ["topics", "users"];
 Template.searchInput.searching = function () {
   searchDeps.depend();
@@ -9,12 +15,6 @@ Template.searchInput.searching = function () {
 Template.home.searching = function () {
   searchDeps.depend();
   return searching;
-}
-
-function stopSearching () {
-  $("#search-input").val('').blur();
-  searching = false;
-  searchDeps.changed();
 }
 
 Template.nav.events({

@@ -47,6 +47,9 @@ when it should be like:
 in this state, when adding another con comment, there is a scrollTo error: 'newComment': TypeError: Cannot read property 'top' of undefined
 
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
+
+get the main content column to span full height, use jquery is best
+
 use sessions only for variables that should be global, otherwise use deps or reactive var
 
 switch from using meteor error
