@@ -1,5 +1,5 @@
-var scrolling = false,
-    currentRoute; 
+var scrolling = false;
+var currentRoute; 
 
 $(window).scroll(function() {
   scrolling = true; //run function when scroll

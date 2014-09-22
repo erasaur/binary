@@ -1,6 +1,6 @@
 Template.profile.helpers({
 	canFollow: function() {
-			return this.user && Meteor.userId() && this.user._id != Meteor.userId();
+		return this.user && Meteor.userId() && this.user._id != Meteor.userId();
 	},
 	following: function() {
 		return this.user.activity.followers && this.user.activity.followers.indexOf(Meteor.userId()) > -1;
@@ -9,17 +9,13 @@ Template.profile.helpers({
 		return Session.equals("currentTab", tab);
 	},
 	likes: function() {
-		if(this.user) {
-			return this.user.activity.likes || 0;
-		}
+		return this.user && this.user.activity.likes || 0;
 	}
 });
 
 Template.profileLiked.helpers({
 	likes: function() {
-		if(this.user) {
-			return this.user.activity.likes || 0;
-		}
+		return this.user && this.user.activity.likes || 0;
 	},
 	liked: function() {
 		return idToCollection(this.user.activity.liked, CommentsModel);
@@ -28,9 +24,7 @@ Template.profileLiked.helpers({
 
 Template.profileComments.helpers({
 	comments: function() {
-		if(this.user) { 
-			return CommentsModel.find({"owner": this.user.username});
-		}
+		return this.user && CommentsModel.find({"owner": this.user.username});
 	},
 	title: function() {
 		return TopicsModel.findOne({"_id": this.topic}).title;
@@ -42,9 +36,7 @@ Template.profileTopics.helpers({
 		return idToCollection(this.user.activity.topics, TopicsModel);
 	},
 	created: function() {
-		if(this.user) {
-			return TopicsModel.find({"owner": this.user.username});
-		}
+		return this.user && TopicsModel.find({"owner": this.user.username});
 	}
 });
 

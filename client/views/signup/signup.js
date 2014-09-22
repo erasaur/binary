@@ -4,9 +4,9 @@ Template.signup.events({
 	},
 	"submit #signup-form": function(event, template) {
 		event.preventDefault();
-		var username = template.find("#create-username").value,
-				email = template.find("#create-email").value,
-				password = template.find("#create-password").value;
+		var username = template.find("#create-username").value;
+		var	email = template.find("#create-email").value;
+		var	password = template.find("#create-password").value;
 
 		Meteor.call("newUser", username, email, password, function(error, result) {
 			if(error) {

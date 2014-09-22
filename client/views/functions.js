@@ -26,16 +26,16 @@ removeTags = function (html) {
 };
 
 formatDate = function (date) {
-	var hours = date.getHours(), 
-			minutes = date.getMinutes(), 
-			ampm = hours >= 12 ? 'PM' : 'AM';
+	var hours = date.getHours();
+	var	minutes = date.getMinutes();
+	var	ampm = hours >= 12 ? 'PM' : 'AM';
 
   hours = hours % 12 || 12; //the hour '0' should be '12'
   minutes = minutes < 10 ? '0' + minutes : minutes;
 
-  var month = date.getMonth(),
-  		day = date.getDate(),
-  		year = date.getFullYear();
+  var month = date.getMonth();
+  var	day = date.getDate();
+  var	year = date.getFullYear();
 
   return hours + ':' + minutes + ampm + ' - ' + day + ' ' + months[month] + ' ' + year;
 };
