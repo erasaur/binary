@@ -103,7 +103,9 @@ Meteor.methods({
 		if(type === "newComment") {
 			var topic = TopicsModel.findOne({"_id": options.topic}).title;
 			var	username = Meteor.users.findOne(user).username;
-			var	notobj = {"url": "/topics/" + options.topic + "#" + options.comment, "message": username + " replied to your comment in '" + topic + "'", "read": false};
+			var	notobj = {"url": "/topics/" + options.topic + "#" + options.comment, 
+										"message": username + " replied to your comment in '" + topic + "'", 
+										"read": false};
 			var	notif;
 
 			//"user replied to your comment"
