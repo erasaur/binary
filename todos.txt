@@ -47,7 +47,7 @@ when it should be like:
 in this state, when adding another con comment, there is a scrollTo error: 'newComment': TypeError: Cannot read property 'top' of undefined
 
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
-all website content should have same z index as the page header, otherwise navbar covers it
+use sessions only for variables that should be global, otherwise use deps or reactive var
 
 switch from using meteor error
 meteor stubs -- have meteor methods on client and server (see discover meteor)
@@ -63,7 +63,6 @@ searching topics pro/con icons should be fixed width
 auth certain pages
 better way to do form alerts (home/signup modals)
 improve topics.js vote function
-remove the js files for comments, topics, etc?
 test the router for loading template, not found template, etc. need to do subscriptions for notfound template
 implement use of enter to submit forms (maybe not for sign up form -- less risk of bots signing up? add captcha maybe?)
 make a footer type thing (some space from the bottom)
@@ -73,17 +72,6 @@ be consistent with database -- use id or username to store relationships?? eg ow
 - better to move to _id's, if we want to allow users to change their username in the future.
 
 edit/remove comments, edit/remove topics
-
-searching topics
-
-possibly: for the replies helper: show only the replies that are also in Session.get("showingReplies") array. or come up with some other way to make the shown replies only for current browser, not for global. right now it's global b/c it's taking all replies that has replyTo some id.
-
-fix: don't show comments that are already shown as replies.
-scrollTo new comment -- make sure to choose only the closest one (get current comment, pass as a param perhaps)
-- potential error if using replies box in anyway (replies box is removed if it is the last row)
-
-
-one client's updates screw up another client's layout. test on multiple browsers
 
 sorting by popular, newest, etc. for newest, might be best not to do auto-updates -- comments keep moving around too much
 
@@ -96,9 +84,6 @@ SEO
 benchmark website
 
 meteor permissions (allow, deny, etc)
-
-
-move followers, following, followingtopics etc not very important for security stuff into profile, so we don't have to publish so many fields?
 
 
 if user has 10 new updates, and we're planning on only storing 5, send only the 5 newest updates.
@@ -126,7 +111,14 @@ notification system:
 - when the notification page is viewed, all the notifications are marked as "read" (and perhaps delete notifications after 3 days)
 
 ---------------------------------------------------------------------- DONE -------------------------------------------------------------------------
-
+possibly: for the replies helper: show only the replies that are also in Session.get("showingReplies") array. or come up with some other way to make the shown replies only for current browser, not for global. right now it's global b/c it's taking all replies that has replyTo some id.
+searching topics
+fix: don't show comments that are already shown as replies.
+scrollTo new comment -- make sure to choose only the closest one (get current comment, pass as a param perhaps)
+- potential error if using replies box in anyway (replies box is removed if it is the last row)
+one client's updates screw up another client's layout. test on multiple browsers
+move followers, following, followingtopics etc not very important for security stuff into profile, so we don't have to publish so many fields?
+all website content should have same z index as the page header, otherwise navbar covers it
 optimize jquery selectors ("div.class"). can use id's for replies now, since no duplicate comments allowed at same time. scrollTo function also can use id's
 optimize subscription/publications -- only publish needed documents, not the entire database (which would take a lot of time/memory)
 
