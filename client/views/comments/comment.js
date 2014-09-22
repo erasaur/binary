@@ -1,8 +1,8 @@
 var cIndex = 0; //color index
 
 function removeSessionReplies(rows) { 
-	var ids = [], //all the ids present in rows
-			arr; //temporary array, stores ids in session with row ids removed
+	var ids = []; //all the ids present in rows
+	var	arr; //temporary array, stores ids in session with row ids removed
 
 	rows.each(function() {
 		if(this.id && this.id.indexOf("-") > -1) { 
@@ -38,12 +38,12 @@ Template.newComment.events({
 	"click .post-comment": function(event, template) {
 		if(!Session.get("currentTopic")) return;
 
-		var siblings = $(event.target).siblings(),
-				input = $(siblings[0]),
-				comment = input.val(),
-				side = $(siblings[1]).hasClass("btn-success") ? "pro":"con",
-				replyTo = this.id || "",
-				replyToUser = replyTo && CommentsModel.findOne({"_id": replyTo}).owner;
+		var siblings = $(event.target).siblings();
+		var	input = $(siblings[0]);
+		var comment = input.val();
+		var	side = $(siblings[1]).hasClass("btn-success") ? "pro" : "con";
+		var	replyTo = this.id;
+		var	replyToUser = replyTo && CommentsModel.findOne({"_id": replyTo}).owner;
 
 		Meteor.call("newComment", Meteor.userId(), Meteor.user().username, Session.get("currentTopic"), comment, side, replyTo, replyToUser, function(error, result) {
 			if(error)

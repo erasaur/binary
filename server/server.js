@@ -13,9 +13,9 @@ Accounts.onCreateUser(function (options, user) {
 
 Accounts.validateNewUser(function (user) {
 	var error;
-	var username = user.username,
-			email = user.email,
-			password = user.password;
+	var username = user.username;
+	var	email = user.email;
+	var	password = user.password;
 
 	if (username && email && password) {
 		if (username.length < 3)
@@ -83,8 +83,14 @@ Meteor.methods({
 	newComment: function(userid, owner, topic, content, side, replyTo, replyToUser) {
 		if(content) {
 			Meteor.users.update({"_id": userid}, {$addToSet: {"activity.topics": topic}});
-			var result = CommentsModel.insert({"owner": owner, "topic": topic, "date": new Date(), "content": content, "side": side, "likes": 0, "replyTo": replyTo, "replies": []});
-
+			var result = CommentsModel.insert({"owner": owner, 
+																				 "topic": topic, 
+																				 "date": new Date(), 
+																				 "content": content, 
+																				 "side": side, 
+																				 "likes": 0, 
+																				 "replyTo": replyTo, 
+																				 "replies": []});
 			var r = replyToUser && Meteor.users.findOne({"username": replyToUser})._id || "";
 			Meteor.call("newNotification", "newComment", userid, {"replyTo": r, "comment": result, "topic": topic});
 
@@ -95,10 +101,10 @@ Meteor.methods({
 	},
 	newNotification: function(type, user, options) {
 		if(type === "newComment") {
-			var topic = TopicsModel.findOne({"_id": options.topic}).title,
-					username = Meteor.users.findOne(user).username,
-					notobj = {"url": "/topics/" + options.topic + "#" + options.comment, "message": username + " replied to your comment in '" + topic + "'", "read": false},
-					notif;
+			var topic = TopicsModel.findOne({"_id": options.topic}).title;
+			var	username = Meteor.users.findOne(user).username;
+			var	notobj = {"url": "/topics/" + options.topic + "#" + options.comment, "message": username + " replied to your comment in '" + topic + "'", "read": false};
+			var	notif;
 
 			//"user replied to your comment"
 			if(options.replyTo && options.replyTo !== user) { //if some guy replies to himself, no notification
