@@ -157,12 +157,13 @@ body {
   box-sizing: border-box;
   padding: 0;
 }
-.row.full-height {
+.full-height {
 	height: 100%;
+}
+.row.full-height {
 	display: table-row;
 }
 .col.full-height {
-	height: 100%;
 	display: table-cell;
 	float: none;
 }
@@ -212,12 +213,11 @@ button.round {
 }
 td {
 	vertical-align: top;
-	&.col { padding: 10px; }
+	&.col-pro, &.col-con { padding: 10px; }
+	&.col-pro { padding-left: 0; }
+	&.col-con { padding-right: 0; }
 }
-tr {
-	background: @light-gray;
-	&.collapse { height: 0; }
-}
+tr.collapse { height: 0; }
 
 // ------------- signup/login page --------------
 .landing-container {
@@ -327,13 +327,15 @@ tr {
 .replies-bottom {
 	height: 0;
 }
+.no-comments {
+	padding: 10px 20px;
+}
 .comments {
-	padding: 0;
 	table-layout: fixed;
+	width: 100%;
 }
 .comment {
 	padding: 0;
-	//min-height: 240px;
 	background: #fff;
 }
 .comment-header {

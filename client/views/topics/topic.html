@@ -1,7 +1,7 @@
 <template name="topic">	
 	{{#if topic}}
-		<div class="row">
-			<div class="col col-xs-12 col-sm-8 col-sm-offset-2">
+		<div class="row full-height">
+			<div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
 				{{#if currentUser}}
 					{{#if following}}
 						<button id="unfollow" class="primary-button">Following</button>
@@ -23,11 +23,9 @@
 						Please log in to comment.
 					{{/if}}
 				</div>
-			</div>
-
-			<div class="comments col-xs-12 col-sm-8 col-sm-offset-2">
+	
 				{{#if hasComments}}
-					<table class="comments col-xs-12">
+					<table class="comments">
 						<tbody>
 						{{#each comments}}
 							{{> commentRow}}
@@ -35,7 +33,7 @@
 						</tbody>
 					</table>
 				{{else}}
-					<div class="col">No comments yet.</div>
+					<div class="no-comments">No comments yet.</div>	
 				{{/if}}
 			</div>
 		</div>
