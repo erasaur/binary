@@ -2,14 +2,14 @@
 	{{#unless bottom}}
 		<tr class="{{#if ../side}}{{../side}}{{../color}}{{/if}}">
 			{{#if pros}}
-				<td class="col col-xs-6" style="padding-left: 20px;">{{> comment pros}}</td>
+				<td class="col-pro col-xs-6">{{> comment pros}}</td>
 			{{else}}
-				<td class="col col-xs-6"></td>
+				<td class="col-pro col-xs-6"></td>
 			{{/if}}
 			{{#if cons}}
-				<td class="col col-xs-6" style="padding-right: 20px;">{{> comment cons}}</td>
+				<td class="col-con col-xs-6">{{> comment cons}}</td>
 			{{else}}
-				<td class="col col-xs-6"></td>
+				<td class="col-con col-xs-6"></td>
 			{{/if}}
 		</tr>
 	{{else}}
