@@ -17,14 +17,16 @@
 @con3: rgba(112, 49, 18, 0.3);
 @con4: rgba(63, 17, 8, 0.3);
 
-@light-gray: rgba(220, 220, 220, 0.5);
-// @light-gray: rgb(245, 245, 245);
+@light-gray: rgba(220, 220, 220, 0.5); // @light-gray: rgb(245, 245, 245);
 @gray: #828282;
 
-@main: #3E82E7; //main color
+@background-color: #fff;
+@primary-color: #3E82E7; //main color
+@pro-color: #91F230; //rgba(171, 252, 90, 0.7);
+@con-color: #FF524C; //rgba(255, 82, 76, 0.5);
 
-@pro: #91F230; //rgba(171, 252, 90, 0.7);
-@con: #FF524C; //rgba(255, 82, 76, 0.5);
+@top-padding: 20px;
+@col-padding-side: 20px;
 
 // --------------------- colors -----------------------
 
@@ -76,9 +78,6 @@ tr.con4 { background: @con4; }
 	}
 	*zoom: 1;
 }
-.padded {
-	padding: 10px;
-}
 .content-header(@color) {
 	// line-height: 24px;
 	color: @color;
@@ -98,6 +97,12 @@ tr.con4 { background: @con4; }
 	-webkit-transform: none;
 			-ms-transform: none;
 					transform: none;
+}
+.gradient(@colorA, @colorB, @colorC) {
+	background: -webkit-linear-gradient(@colorA, @colorB, @colorC); // Safari 5.1 to 6.0
+	background: -o-linear-gradient(@colorA, @colorB, @colorC); // Opera 11.1 to 12.0
+	background: -moz-linear-gradient(@colorA, @colorB, @colorC); // Firefox 3.6 to 15
+	background: linear-gradient(@colorA, @colorB, @colorC);
 }
 .topic-item {
 	padding: 10px;
@@ -126,18 +131,19 @@ tr.con4 { background: @con4; }
 	padding: .2em .6em;
 	border-radius: .25em;
 }
-.pro-label { .popout-button(@pro); }
-.con-label { .popout-button(@con); }
-.default-button { .popout-button(@main); }
+.pro-label { .popout-button(@pro-color); }
+.con-label { .popout-button(@con-color); }
+.default-button { .popout-button(@primary-color); }
 .primary-button { 
-	.popout-button(@main); 
-	background: darken(@main, 10%);
+	.popout-button(@primary-color); 
+	background: darken(@primary-color, 10%);
+	border-bottom: none;
 }
 
 // ----------------- media queries ---------------------
 
 @media (min-width: 768px) {
-	body { padding-top: 20px; }	//no top padding when xs
+	body { padding-top: @top-padding; }	//no top padding when xs
 }
 
 // ----------------- general styles --------------------
@@ -148,6 +154,7 @@ html {
 body {
 	min-height: 100%;
 	height: 100%;
+	// background-color: @background-color;
 }
 .container-fluid {
 	height: 100%;
@@ -197,8 +204,11 @@ ul {
 }
 div.col {
 	background: @light-gray; //rgba(220, 220, 220, 0.3);
-	padding: 10px 20px;
+	padding: 0;
 	.border-radius(8px 8px 0 0);
+}
+.col-content {
+	padding: 10px @col-padding-side;
 }
 button {
 	&:active, &:focus { outline: none !important; }
@@ -214,8 +224,8 @@ button.round {
 td {
 	vertical-align: top;
 	&.col-pro, &.col-con { padding: 10px; }
-	&.col-pro { padding-left: 0; }
-	&.col-con { padding-right: 0; }
+	&.col-pro { padding-left: @col-padding-side; }
+	&.col-con { padding-right: @col-padding-side; }
 }
 tr.collapse { height: 0; }
 
@@ -322,14 +332,11 @@ tr.collapse { height: 0; }
 	padding: 40px;
 }
 .replies-comment {
-	padding: 15px 20px 0;
+	padding: 15px @col-padding-side 0;
 }
-.replies-bottom {
-	height: 0;
-}
-.no-comments {
-	padding: 10px 20px;
-}
+// .replies-bottom {
+// 	height: 0;
+// }
 .comments {
 	table-layout: fixed;
 	width: 100%;
@@ -364,9 +371,60 @@ tr.collapse { height: 0; }
 	background: darken(@light-gray, 20%);
 }
 
-// ------------------ border caret thing -------------------
+// ------------------ reply box border -------------------
+.rounded-border-bottom(@color) when (@side = "left") {
+  // border: solid 16px transparent;
+  // border-style: solid none;
+  // border-top: none;
+  // border-@{side}: none;
+  // background-color: darken(@color, 10%);
+  // border-bottom-@{side}-radius: 16px;
+  display: table-row;
+}
+.rounded-border-bottom(@color) when (@side = "right") {
+	border: solid 10px transparent;
+  background-color: darken(@color, 30%);
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+.defineVars(@num) { @proNum: 'pro@{num}'; @conNum: 'con@{num}' }
+.generate-borders(4);
+.generate-borders(@n, @i: 0) when (@i =< @n) {
+	.defineVars(@i);
+
+	.replies-bottom.pro@{i}-bg { //bg color
+		background: @@proNum;
+	}
+	.replies-bottom td.pro@{i}-left {
+		@side: "left"; .rounded-border-bottom(@@proNum);
+	}
+	.replies-bottom td.pro@{i}-right {
+		@side: "right"; .rounded-border-bottom(@@proNum);
+	}
+	.replies-bottom.con@{i}-bg {
+		background: @@conNum;
+	}
+	.replies-bottom td.con@{i}-left {
+		@side: "left"; .rounded-border-bottom(@@conNum);
+	}
+	.replies-bottom td.con@{i}-right {
+		@side: "right"; .rounded-border-bottom(@@conNum);
+	}
+
+	.generate-borders(@n, (@i + 1));
+}
+.replies-bottom {
+	display: table;
+  float: left;
+  width: 200%;
+}
+.replies-bottom.N-b { 
+	td:first-of-type { @side: "left"; .rounded-border-bottom(@light-gray); } //todo fix color
+	td:last-of-type { @side: "right"; .rounded-border-bottom(@light-gray); }
+}
+
 .border {
-	background: transparent; 
+	background: transparent;
 	height: 30px;
 
 	&:before {
@@ -376,13 +434,16 @@ tr.collapse { height: 0; }
 	  position: absolute;
 	  border: 15px solid transparent;
 	}
-	&.pro:before {
-		left: 10%;
-	}
-	&.con:before {
-		left: 85%;
-	}
+	&.pro:before { left: 12%; }
+	&.con:before { left: 85%; }
 }
+
+// .border-top {
+// 	background: linear-gradient(transparent, rgba(220, 220, 220, 0.6), rgb(160, 160, 160));
+// }
+// .border-bot {
+// 	background: linear-gradient(rgb(160, 160, 160), rgba(220, 220, 220, 0.6), transparent);
+// }
 
 .border.pro.c0:before { border-bottom-color: @pro0; }
 .border.pro.c1:before { border-bottom-color: @pro1; }
@@ -511,11 +572,11 @@ tr.collapse { height: 0; }
 	box-shadow: none;
 }
 .label.label-success {
-	background-color: @pro;
+	background-color: @pro-color;
 	font-weight: 200;
 }
 .label.label-danger {
-	background-color: @con;
+	background-color: @con-color;
 	font-weight: 200;
 }
 

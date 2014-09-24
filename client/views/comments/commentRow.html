@@ -13,6 +13,9 @@
 			{{/if}}
 		</tr>
 	{{else}}
-		<tr class="replies-bottom"></tr>
+		<tr class="replies-bottom {{#if ../replyToColor}}{{../replyToColor}}{{/if}}">
+			<td class="{{#if ../side}}{{../side}}{{../color}}-left{{/if}}"></td>
+			<td class="{{#if ../side}}{{../side}}{{../color}}-right{{/if}}"></td>
+		</tr>
 	{{/unless}}
 </template>

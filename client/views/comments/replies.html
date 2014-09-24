@@ -1,5 +1,7 @@
 <template name="replies">
-	<tr id="{{id}}-replies-top" class="border {{side}} c{{color}}"><td colspan="2"></td></tr>
+	<tr id="{{id}}-replies-top" class="border {{side}} c{{color}} {{prevColor}}">
+		<td colspan="2"></td>
+	</tr>
 
 	<tr class="{{id}}-replies {{side}}{{color}}">
 		{{#if currentUser}}
@@ -9,15 +11,15 @@
 		{{/if}}
 	</tr>
 
-	{{#if hasReplies}}
-		{{#each replies}}
-			{{> commentRow}}
-		{{/each}}
-	{{else}}
+	{{#unless hasReplies}}
 		<tr class="{{id}}-replies {{side}}{{color}}">
 			<td class="col" colspan="2">No replies.</td>
 		</tr>
-	{{/if}}
+	{{/unless}}
 
-	<tr id="{{id}}-replies-bot" class="border"><td colspan="2"></td></tr>
+	{{#each replies}}
+		{{> commentRow}}
+	{{/each}}
+
+	<tr id="{{id}}-replies-bot" class="border {{prevColor}}"><td colspan="2"></td></tr>
 </template>
