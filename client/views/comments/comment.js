@@ -61,9 +61,9 @@ Template.newComment.events({
 	}
 });
 
-Template.commentRow.destroyed = function () {
-	console.log('destroyed');
-}
+// Template.commentRow.destroyed = function () {
+// 	console.log('destroyed');
+// }
 
 /** 
  * removes the reply box and any nested replies.
@@ -91,9 +91,9 @@ function closeReplies (id) {
 	//to avoid having two borders' worth of padding.
 	//check to see if we need to uncollapse the next border now that we're
 	//removing the replies.
-	var nextBorder = repliesBot.next().next(); //next() is dummy row
-	if (nextBorder.hasClass("collapse")) 
-		nextBorder.removeClass("collapse");
+	// var nextBorder = repliesBot.next().next(); //next() is dummy row
+	// if (nextBorder.hasClass("collapse")) 
+	// 	nextBorder.removeClass("collapse");
 
 	//remove the reply ids from session, so they reappear as normal comments
 	removeSessionReplies(replies); 
@@ -132,8 +132,8 @@ Template.comment.events({
 			closeReplies(tempId);
 		}
 		//collapse border if the row is a border, since new replies will have own border 
-		else if (repliesRow.hasClass("border"))
-			repliesRow.addClass("collapse");
+		// else if (repliesRow.hasClass("border"))
+		// 	repliesRow.addClass("collapse");
 
 		//add id to array of replies that are showing
 		var arr = SessionAmplify.get("showingReplies").slice();
@@ -159,12 +159,17 @@ Template.comment.events({
 
 		cIndex = (cIndex >= 4) ? 0 : cIndex + 1; //update the color index
 
+		// get the bg of the tr that houses the comment for which we are toggling replies
+		// or return "N" if there is no bg (top level of comments)
+		var replyTo = $("#" + self._id).closest("tr").attr("class"); 
+		var replyToColor = replyTo || "N"; 
+
 		//finally add the replies
 		if(!$("#" + self._id + "-replies-top").length) {
 			Blaze.renderWithData(Template.replies, //template to render
-																			{id: self._id, side: self.side, color: cIndex}, //data context
-																			parentRow.parent().get(0), //the parent to render in
-																			parentRow.next().get(0)); //insert before this
+													{id: self._id, side: self.side, color: cIndex, replyToColor: replyToColor}, //data context
+													parentRow.parent().get(0), //the parent to render in
+													parentRow.next().get(0)); //insert before this
 		}
 	},
 	"click .like-comment": function(event, template) {

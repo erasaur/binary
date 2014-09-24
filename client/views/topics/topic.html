@@ -2,26 +2,28 @@
 	{{#if topic}}
 		<div class="row full-height">
 			<div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
-				{{#if currentUser}}
-					{{#if following}}
-						<button id="unfollow" class="primary-button">Following</button>
-					{{else}}
-						<button id="follow" class="default-button">Follow</button>
-					{{/if}}
-				{{/if}}
-			
-				<h3>{{topic.title}}</h3> Created by {{topic.owner}} on {{formatDate this.topic.date}}
-				<div class="vote center">
-					<button id="vote-pro" class="pro-label">Pro: {{topic.pro}}</button> 
-					<button id="vote-con" class="con-label">Con: {{topic.con}}</button>
-				</div>
-
-				<div class="clearfix">
+				<div class="col-content">
 					{{#if currentUser}}
-						{{> newComment}}
-					{{else}}
-						Please log in to comment.
+						{{#if following}}
+							<button id="unfollow" class="primary-button">Following</button>
+						{{else}}
+							<button id="follow" class="default-button">Follow</button>
+						{{/if}}
 					{{/if}}
+				
+					<h3>{{topic.title}}</h3> Created by {{topic.owner}} on {{formatDate this.topic.date}}
+					<div class="vote center">
+						<button id="vote-pro" class="pro-label">Pro: {{topic.pro}}</button> 
+						<button id="vote-con" class="con-label">Con: {{topic.con}}</button>
+					</div>
+
+					<div class="clearfix">
+						{{#if currentUser}}
+							{{> newComment}}
+						{{else}}
+							Please log in to comment.
+						{{/if}}
+					</div>
 				</div>
 	
 				{{#if hasComments}}
@@ -33,7 +35,7 @@
 						</tbody>
 					</table>
 				{{else}}
-					<div class="no-comments">No comments yet.</div>	
+					<div class="col-content">No comments yet.</div>	
 				{{/if}}
 			</div>
 		</div>
