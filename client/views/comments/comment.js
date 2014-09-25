@@ -49,7 +49,7 @@ Template.newComment.events({
 			if(error)
 				alert(formatError(error));
 			else
-				setTimeout(scrollToId(result), 0);
+				scrollToId(result);
 		});
 
 		input.val("");
