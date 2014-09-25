@@ -1,0 +1,48 @@
+table {
+  border-spacing: 0
+}
+
+tr.replies-bottom {
+  border: 20px solid ____
+  border-top, left: 0
+  border-radius: 8
+}
+
+.replies-bottom td { //causes some ugly darkening due to color overlap, might have to do some color mixing
+  background-color: ____
+  border-bottom-left-radius: 16px
+}
+
+alternatively, use a gradient for the border (bg color of next row -> transparent)
+or, use an image that can be colored with css filters
+
+alternative:
+tr.replies-bottom {
+  display: table;
+  float: left;
+  width: 200%;
+  background: rgba(21, 204, 245, 0.3);
+}
+.replies-bottom td:left {
+  display: table-row;
+}
+.replies-bottom td:right { 
+  border: solid 10px transparent
+  background-color: rgb(151, 72, 37)
+  border-bottom-left-radius: 16px
+  border-bottom-right-radius: 16px
+}
+
+
+
+
+
+
+
+
+border: solid 5px transparent;
+    border-style: solid none;
+    border-top: none;
+    background-color: rgb(113, 201, 230);
+    border-right: none;
+    border-bottom-right-radius: 8px;
