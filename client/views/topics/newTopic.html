@@ -1,0 +1,25 @@
+<template name="newTopic">
+  <div class="modal fade" id="new-topic-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content custom">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3 class="modal-title" id="modalLabel">Create Topic</h3>
+        </div>
+        <div class="modal-body">
+          <form role="form" id="create-topic-form">
+            <div class="form-group">
+              <label for="create-title">Topic</label>
+              <input type="text" class="form-control" id="create-title" placeholder="Ask a question!">
+            </div>
+            <div class="form-group">
+              <label for="create-description">Description</label>
+              <textarea class="form-control" id="create-description" placeholder="Some context for the topic would be nice."></textarea>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

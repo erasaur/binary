@@ -22,11 +22,15 @@
 
 		</div>
 	</div>
+  {{> newTopic}}
 </template>
 
 <template name="navItems">
 	<ul class="nav navbar-nav">
 		{{#if currentUser}}
+      <li class="dropdown">
+        <a href="#" data-toggle="modal" data-target="#new-topic-modal"><i class="fa fa-plus"></i></a>
+      </li>
 			<li class="dropdown">
         <a href="#" class="dropdown-toggle" id="nav-profile" data-toggle="dropdown"><i class="fa fa-user"></i></a>
         <div class="dropdown-menu">
