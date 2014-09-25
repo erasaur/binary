@@ -12,11 +12,11 @@ function removeSessionReplies(rows) {
 
 	ids = _.uniq(ids);
 	arr = SessionAmplify.get("showingReplies").slice(); //convert to array
-	//remove all the ids that are contained in the set of ids to remove
+	// remove all the ids that are contained in the set of ids to remove
 	arr = _.difference(arr, ids);
 
-	SessionAmplify.set("showingReplies", arr); //update session
-	rows.remove(); //remove rows
+	rows.remove(); // remove rows
+	SessionAmplify.set("showingReplies", arr); // update session
 }
 
 Template.comment.helpers({
@@ -49,7 +49,7 @@ Template.newComment.events({
 			if(error)
 				alert(formatError(error));
 			else
-				scrollToId(result);
+				setTimeout(scrollToId(result), 0);
 		});
 
 		input.val("");
@@ -81,19 +81,19 @@ function closeReplies (id) {
 	var repliesTop = $("#" + id + "-replies-top");
 	var replies = repliesTop.nextUntil("#" + id + "-replies-bot");
 
-	//replies.last() is the element before the element in the selector
+	// replies.last() is the element before the element in the selector
 	var repliesBot = replies.last().next();
 	
-	//add back the top and last element
+	// add back the top and last element
 	replies = replies.add(repliesTop).add(repliesBot);
 
-	//when rendering replies, we collapse the parent rows' bottom border
-	//to avoid having two borders' worth of padding.
-	//check to see if we need to uncollapse the next border now that we're
-	//removing the replies.
+	// when rendering replies, we collapse the parent rows' bottom border
+	// to avoid having two borders' worth of padding.
+	// check to see if we need to uncollapse the next border now that we're
+	// removing the replies.
 	// var nextBorder = repliesBot.next().next(); //next() is dummy row
 	// if (nextBorder.hasClass("collapse")) 
-	// 	nextBorder.removeClass("collapse");
+	//   nextBorder.removeClass("collapse");
 
 	//remove the reply ids from session, so they reappear as normal comments
 	removeSessionReplies(replies); 
@@ -118,39 +118,37 @@ Template.comment.events({
 		var	nextClass = nextRow.attr("class"),
 				repliesClass = repliesRow.attr("class"); //replies' class
 
-		//closing replies
+		// closing replies
 		if (repliesRow.length && repliesRow.hasClass(self._id + "-replies")) {
 			closeReplies(self._id);
 			return;
 		}
 
-		//switching replies
+		// switching replies
 		if (nextRow.hasClass("border") && repliesClass && repliesClass.indexOf("replies ") > -1) {
 			var tempId = nextRow.attr("id"); //get the dom id
 			tempId = tempId.substring(0, tempId.indexOf("-")); //extract the id from dom id
 
 			closeReplies(tempId);
 		}
-		//collapse border if the row is a border, since new replies will have own border 
+		// collapse border if the row is a border, since new replies will have own border 
 		// else if (repliesRow.hasClass("border"))
-		// 	repliesRow.addClass("collapse");
+		//   repliesRow.addClass("collapse");
 
-		//add id to array of replies that are showing
+		// add id to array of replies that are showing
 		var arr = SessionAmplify.get("showingReplies").slice();
 		arr.push(self._id.toString());
 
-		SessionAmplify.set("showingReplies", arr);
-
-		//if parent does not have a class, it's not a reply comment-row
-		//meaning we're opening a top level reply. in which case,
-		//we have to close any other top-level replies
+		// if parent does not have a class, it's not a reply comment-row
+		// meaning we're opening a top level reply. in which case,
+		// we have to close any other top-level replies
 		if(!parentRow.attr("class")) {
 			var siblings = parentRow.siblings("tr[class=''], tr:not([class])")
 															.children("td")
 															.children("div.comment");
 
-			//pluck the id attribute from siblings, and return the ids that
-			//are present in the array of showingReplies
+			// pluck the id attribute from siblings, and return the ids that
+			// are present in the array of showingReplies
 			var ids = _.intersection(arr, _.pluck(siblings, "id"));
 			_.each(ids, function(id) {
 				closeReplies(id); //close all ids in the result set
@@ -164,13 +162,16 @@ Template.comment.events({
 		var replyTo = $("#" + self._id).closest("tr").attr("class"); 
 		var replyToColor = replyTo || "N"; 
 
-		//finally add the replies
+		// finally add the replies
 		if(!$("#" + self._id + "-replies-top").length) {
 			Blaze.renderWithData(Template.replies, //template to render
 													{id: self._id, side: self.side, color: cIndex, replyToColor: replyToColor}, //data context
 													parentRow.parent().get(0), //the parent to render in
 													parentRow.next().get(0)); //insert before this
 		}
+
+		// done adding replies, set the session
+		SessionAmplify.set("showingReplies", arr);
 	},
 	"click .like-comment": function(event, template) {
 		Meteor.call("likeComment", Meteor.userId(), this._id, this.owner);

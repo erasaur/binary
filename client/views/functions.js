@@ -48,22 +48,24 @@ fadeElement = function (elem) {
   }
 };
 
-/*
-Takes an array of _ids and a collection name
-Returns a collection of associated cursors
-*/
+/**
+ * Takes an array of _ids and a collection name
+ * Returns a collection of associated cursors
+ */
 idToCollection = function (ids, collection) {
   return collection.find({ "_id": { $in: ids } });
 };
 
 formatError = function (error) {
   var e = String(error).split(' ');
-  e.shift(); //remove first element (the Error: part)
-  e.pop(); //remove last element (the [403] part)
+  e.shift(); // remove first element (the Error: part)
+  e.pop(); // remove last element (the [403] part)
   return e.join(' ');
 };
 
 scrollToId = function (id){
+  Deps.flush(); // ensure that dom is ready first
+
   var comment = $("#" + id);
   $("html,body").animate({ scrollTop: comment.offset().top - 120}, "fast");
   comment.addClass("bg-fade");

@@ -4,8 +4,14 @@ Template.replies.helpers({
 					 CommentsModel.find({$and: [{"replyTo": this.id}, {"side": "con"}]}).count();
 	},
 	replies: function () {
-		var pros = CommentsModel.find({"replyTo": this.id, "side": "pro"}).fetch();
-		var	cons = CommentsModel.find({"replyTo": this.id, "side": "con"}).fetch();
+		var pros = CommentsModel.find({
+								"replyTo": this.id, 
+								"side": "pro"
+							}).fetch();
+		var	cons = CommentsModel.find({
+								"replyTo": this.id, 
+								"side": "con"
+							}).fetch();
 
 		/** 
 		 * Combines the pro and con comments into an array of objects
