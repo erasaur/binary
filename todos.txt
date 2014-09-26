@@ -48,8 +48,7 @@ in this state, when adding another con comment, there is a scrollTo error: 'newC
 
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
 
-get the main content column to span full height, use jquery is best
-
+sanitize all inputs (newComment, newTopic, etc.)
 use sessions only for variables that should be global, otherwise use deps or reactive var
 
 switch from using meteor error
@@ -114,6 +113,7 @@ notification system:
 - when the notification page is viewed, all the notifications are marked as "read" (and perhaps delete notifications after 3 days)
 
 ---------------------------------------------------------------------- DONE -------------------------------------------------------------------------
+get the main content column to span full height
 possibly: for the replies helper: show only the replies that are also in Session.get("showingReplies") array. or come up with some other way to make the shown replies only for current browser, not for global. right now it's global b/c it's taking all replies that has replyTo some id.
 searching topics
 fix: don't show comments that are already shown as replies.
