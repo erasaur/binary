@@ -69,7 +69,7 @@ Router.map(function() {
       SessionAmplify.set("showingReplies", []);
   		Session.set("currentTopic", this.params._id);
 			return {
-        topic: TopicsModel.findOne({"_id": this.params._id})
+        topic: Topics.findOne({"_id": this.params._id})
       }
   	}
   });

@@ -1,14 +1,14 @@
 Template.replies.helpers({
 	hasReplies: function () {
-		return CommentsModel.find({$and: [{"replyTo": this.id}, {"side": "pro"}]}).count() || 
-					 CommentsModel.find({$and: [{"replyTo": this.id}, {"side": "con"}]}).count();
+		return Comments.find({$and: [{"replyTo": this.id}, {"side": "pro"}]}).count() || 
+					 Comments.find({$and: [{"replyTo": this.id}, {"side": "con"}]}).count();
 	},
 	replies: function () {
-		var pros = CommentsModel.find({
+		var pros = Comments.find({
 								"replyTo": this.id, 
 								"side": "pro"
 							}).fetch();
-		var	cons = CommentsModel.find({
+		var	cons = Comments.find({
 								"replyTo": this.id, 
 								"side": "con"
 							}).fetch();

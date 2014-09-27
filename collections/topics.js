@@ -1,6 +1,6 @@
-TopicsModel = new Mongo.Collection("topics");
+Topics = new Mongo.Collection("topics");
 
-TopicsModel.initEasySearch("title", {
+Topics.initEasySearch("title", {
 	"limit": 20,
 	"use": "mongo-db"
 });

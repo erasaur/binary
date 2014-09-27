@@ -19,35 +19,35 @@ Yamcha.Topics = {
 		}
 
 		//assume we clicked on pro
-		var t = TopicsModel.findOne({"_id": id});
+		var t = Topics.findOne({"_id": id});
 		if(t[second].indexOf(user) === -1) { //didn't vote con already
 			if(t[first].indexOf(user) !== -1) { //voted pro already, so unvote
-				TopicsModel.update({"_id": id}, {$inc: formatField(side, -1)});
-				TopicsModel.update({"_id": id}, {$pull: formatField(first, user)});
+				Topics.update({"_id": id}, {$inc: formatField(side, -1)});
+				Topics.update({"_id": id}, {$pull: formatField(first, user)});
 			} else { //didn't vote at all yet, so vote
-				TopicsModel.update({"_id": id}, {$inc: formatField(side, 1)});
-				TopicsModel.update({"_id": id}, {$push: formatField(first, user)});
+				Topics.update({"_id": id}, {$inc: formatField(side, 1)});
+				Topics.update({"_id": id}, {$push: formatField(first, user)});
 			}
 		} else { //voted con already, so switch
-			TopicsModel.update({"_id": id}, {$inc: formatField(opposite, -1)});
-			TopicsModel.update({"_id": id}, {$pull: formatField(second, user)});
-			TopicsModel.update({"_id": id}, {$inc: formatField(side, 1)});
-			TopicsModel.update({"_id": id}, {$push: formatField(first, user)});
+			Topics.update({"_id": id}, {$inc: formatField(opposite, -1)});
+			Topics.update({"_id": id}, {$pull: formatField(second, user)});
+			Topics.update({"_id": id}, {$inc: formatField(side, 1)});
+			Topics.update({"_id": id}, {$push: formatField(first, user)});
 		}
 	}
 }
 
 Template.topic.helpers({
 	hasComments: function() {
-		return this.topic && CommentsModel.find({"topic": this.topic._id}).count() > 0;
+		return this.topic && Comments.find({"topic": this.topic._id}).count() > 0;
 	},
 	comments: function() {
-		var pros = CommentsModel.find({
+		var pros = Comments.find({
 								"replyTo": {$nin: SessionAmplify.get("showingReplies")}, 
 								"topic": this.topic._id, 
 								"side": "pro"
 							}).fetch();
-		var	cons = CommentsModel.find({
+		var	cons = Comments.find({
 								"replyTo": {$nin: SessionAmplify.get("showingReplies")}, 
 								"topic": this.topic._id, 
 								"side": "con"

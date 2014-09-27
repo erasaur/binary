@@ -21,7 +21,7 @@ function removeSessionReplies(rows) {
 
 Template.comment.helpers({
 	hasReplies: function () {
-		return CommentsModel.findOne({"topic": this.topic}).replies.length;
+		return Comments.findOne({"topic": this.topic}).replies.length;
 	},
 	showingReplies: function () {
 		return SessionAmplify.get("showingReplies").indexOf(this._id) > -1;
@@ -43,7 +43,7 @@ Template.newComment.events({
 		var comment = input.val();
 		var	side = $(siblings[1]).hasClass("btn-success") ? "pro" : "con";
 		var	replyTo = this.id;
-		var	replyToUser = replyTo && CommentsModel.findOne({"_id": replyTo}).owner;
+		var	replyToUser = replyTo && Comments.findOne({"_id": replyTo}).owner;
 
 		Meteor.call("newComment", Meteor.userId(), Meteor.user().username, Session.get("currentTopic"), comment, side, replyTo, replyToUser, function(error, result) {
 			if(error)
