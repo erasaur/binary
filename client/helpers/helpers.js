@@ -6,7 +6,7 @@ UI.registerHelper("breaklines", function(text) {
   return breaklines(text);
 });
 UI.registerHelper("formatDate", function(date) {
-	return date && formatDate(date);
+	return formatDate(date);
 });
 
 //pass in an ID from handlebars, and get a collection back
