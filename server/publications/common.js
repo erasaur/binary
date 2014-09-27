@@ -11,24 +11,24 @@ Meteor.publish("currentUser", function() {
 Meteor.publish("allTopics", function(limit) {
   
   // set the topic display limit
-  if (limit > TopicsModel.find().count() || !limit)
+  if (limit > Topics.find().count() || !limit)
     limit = 0;
 
   // get the topics cursor and store the ids
-  var topics = TopicsModel.find({}, {limit: limit, sort: {"date": -1}});
+  var topics = Topics.find({}, {limit: limit, sort: {"date": -1}});
   var topicIds = _.pluck(topics.fetch(), "_id");
 
   // get the top comment id of each topic
   var commentIds = [];
   for (var i = topicIds.length - 1; i >= 0; i--) {
-    var comment = CommentsModel.findOne({ "topic": topicIds[i] },
+    var comment = Comments.findOne({ "topic": topicIds[i] },
                                         { sort: {"likes": -1} });
     if (comment)
       commentIds.push(comment._id);
   }
 
   // find the top comments
-  var topComments = CommentsModel.find({"_id": {$in: commentIds}});
+  var topComments = Comments.find({"_id": {$in: commentIds}});
 
   return [topics, topComments];
 });

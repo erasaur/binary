@@ -56,7 +56,7 @@ Meteor.methods({
 
 		//enter the date as well
 		if(title) {
-			if(TopicsModel.find({"title": title}).count() > 0) {
+			if(Topics.find({"title": title}).count() > 0) {
 				errors.push("There is already a question with that title.");
 			}
 		} else {
@@ -66,7 +66,7 @@ Meteor.methods({
 		if(errors.length > 0) {
 			throw new Meteor.Error(403, errors[0]);
 		} else {
-			var topic = TopicsModel.insert({"title": title, 
+			var topic = Topics.insert({"title": title, 
 																			"owner": owner, 
 																			"date": new Date(), 
 																			"pro": 0, "con": 0, 
@@ -83,7 +83,7 @@ Meteor.methods({
 	newComment: function(userid, owner, topic, content, side, replyTo, replyToUser) {
 		if(content) {
 			Meteor.users.update({"_id": userid}, {$addToSet: {"activity.topics": topic}});
-			var result = CommentsModel.insert({"owner": owner, 
+			var result = Comments.insert({"owner": owner, 
 																				 "topic": topic, 
 																				 "date": new Date(), 
 																				 "content": content, 
@@ -101,7 +101,7 @@ Meteor.methods({
 	},
 	newNotification: function(type, user, options) {
 		if(type === "newComment") {
-			var topic = TopicsModel.findOne({"_id": options.topic}).title;
+			var topic = Topics.findOne({"_id": options.topic}).title;
 			var	username = Meteor.users.findOne(user).username;
 			var	notobj = {"url": "/topics/" + options.topic + "#" + options.comment, 
 										"message": username + " replied to your comment in '" + topic + "'", 
@@ -176,24 +176,24 @@ Meteor.methods({
 		Meteor.users.update({"_id": following}, {$pull: {"activity.followers": user}});
 	},
 	likeComment: function(user, comment, owner) {
-		CommentsModel.update({"_id": comment}, {$inc: {"likes": 1}});
+		Comments.update({"_id": comment}, {$inc: {"likes": 1}});
 		Meteor.users.update({"_id": Meteor.users.findOne({"username": owner})._id}, {$inc: {"activity.likes": 1}});
 		Meteor.users.update({"_id": user}, {$addToSet: {"activity.liked": comment}});
 	},
 	unlikeComment: function(user, comment, owner) {
 		var owner = Meteor.users.findOne({"username": owner});
-		CommentsModel.update({"_id": comment}, {$inc: {"likes": -1}});
+		Comments.update({"_id": comment}, {$inc: {"likes": -1}});
 		if(owner.activity.likes > 0) {
 			Meteor.users.update({"_id": owner._id}, {$inc: {"activity.likes": -1}});	
 		}
 		Meteor.users.update({"_id": user}, {$pull: {"activity.liked": comment}});
 	},
 	followTopic: function(user, topic) {
-		TopicsModel.update({"_id": topic}, {$addToSet: {"followers": user}});
+		Topics.update({"_id": topic}, {$addToSet: {"followers": user}});
 		Meteor.users.update({"_id": user}, {$addToSet: {"activity.followingTopics": topic}});
 	},
 	unfollowTopic: function(user, topic) {
-		TopicsModel.update({"_id": topic}, {$pull: {"followers": user}});
+		Topics.update({"_id": topic}, {$pull: {"followers": user}});
 		Meteor.users.update({"_id": user}, {$pull: {"activity.followingTopics": topic}});
 	}
 });

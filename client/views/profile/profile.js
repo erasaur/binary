@@ -18,25 +18,25 @@ Template.profileLiked.helpers({
 		return this.user && this.user.activity.likes || 0;
 	},
 	liked: function() {
-		return idToCollection(this.user.activity.liked, CommentsModel);
+		return idToCollection(this.user.activity.liked, Comments);
 	}
 })
 
 Template.profileComments.helpers({
 	comments: function() {
-		return this.user && CommentsModel.find({"owner": this.user.username});
+		return this.user && Comments.find({"owner": this.user.username});
 	},
 	title: function() {
-		return TopicsModel.findOne({"_id": this.topic}).title;
+		return Topics.findOne({"_id": this.topic}).title;
 	}
 });
 
 Template.profileTopics.helpers({
 	topics: function() {
-		return idToCollection(this.user.activity.topics, TopicsModel);
+		return idToCollection(this.user.activity.topics, Topics);
 	},
 	created: function() {
-		return this.user && TopicsModel.find({"owner": this.user.username});
+		return this.user && Topics.find({"owner": this.user.username});
 	}
 });
 
