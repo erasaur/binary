@@ -2,7 +2,6 @@ UI.registerHelper("currentPage", function(path) {
 	return Router.current().route.name === path;
 });
 UI.registerHelper("breaklines", function(text) {
-	// return text && removeTags(text).replace(/(\r\n|\n|\r)/gm, "<br>");
   return breaklines(text);
 });
 UI.registerHelper("formatDate", function(date) {
