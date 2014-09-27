@@ -76,7 +76,7 @@ Meteor.methods({
 
 			Meteor.call("newNotification", "newTopic", owner, {"topicID": topic, "topic": title});
 
-			return "Success! Your topic has been created.";
+			return topic;
 		}
 	},
 	newComment: function(userid, owner, topic, content, side, replyTo, replyToUser) {
