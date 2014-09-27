@@ -17,6 +17,7 @@ ctl-helper@1.0.3
 ctl@1.0.1
 ddp@1.0.9
 deps@1.0.4
+djedi:sanitize-html@1.3.0
 ejson@1.0.3
 email@1.0.3
 fastclick@1.0.0

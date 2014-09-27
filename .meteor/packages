@@ -18,4 +18,5 @@ mrt:session-amplify
 mrt:animation-helper-velocity
 matb33:collection-hooks
 aldeed:collection2
+djedi:sanitize-html
 
