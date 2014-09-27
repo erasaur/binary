@@ -1,5 +1,7 @@
 accounts-base@1.1.1
 accounts-password@1.0.2
+aldeed:collection2@2.1.0
+aldeed:simple-schema@1.0.3
 amplify@1.0.0
 application-configuration@1.0.2
 autoupdate@1.1.1
