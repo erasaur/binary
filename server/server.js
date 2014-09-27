@@ -67,13 +67,12 @@ Meteor.methods({
 			throw new Meteor.Error(403, errors[0]);
 		} else {
 			var topic = Topics.insert({"title": title, 
-																			"owner": owner, 
-																			"date": new Date(), 
-																			"pro": 0, "con": 0, 
-																			"proUsers": [], 
-																			"conUsers": [], 
-																			"followers": []
-																		});
+																"owner": owner, 
+																"date": new Date(), 
+																"pro": 0, "con": 0, 
+																"proUsers": [], 
+																"conUsers": [], 
+																"followers": []});
 
 			Meteor.call("newNotification", "newTopic", owner, {"topicID": topic, "topic": title});
 
@@ -84,13 +83,13 @@ Meteor.methods({
 		if(content) {
 			Meteor.users.update({"_id": userid}, {$addToSet: {"activity.topics": topic}});
 			var result = Comments.insert({"owner": owner, 
-																				 "topic": topic, 
-																				 "date": new Date(), 
-																				 "content": content, 
-																				 "side": side, 
-																				 "likes": 0, 
-																				 "replyTo": replyTo, 
-																				 "replies": []});
+																	 "topic": topic, 
+																	 "date": new Date(), 
+																	 "content": content, 
+																	 "side": side, 
+																	 "likes": 0, 
+																	 "replyTo": replyTo, 
+																	 "replies": []});
 			var r = replyToUser && Meteor.users.findOne({"username": replyToUser})._id || "";
 			Meteor.call("newNotification", "newComment", userid, {"replyTo": r, "comment": result, "topic": topic});
 
