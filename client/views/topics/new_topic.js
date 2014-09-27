@@ -9,7 +9,9 @@ Template.newTopic.events({
         alert(formatError(error));
       else {
         $("#create-title").val("");
-        // $("#create-description").val("");
+        $("#create-description").val("");
+        $("#new-topic-modal").modal("hide");
+        scrollToId(result);
       }
     });
   }
