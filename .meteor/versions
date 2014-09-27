@@ -50,6 +50,7 @@ mongo-livedata@1.0.5
 mongo@1.0.6
 mrt:animation-helper-velocity@0.1.4
 mrt:iron-router-progress@0.9.2
+mrt:moment@2.8.1
 mrt:session-amplify@0.1.1
 mrt:underscore-string-latest@2.3.3
 npm-bcrypt@0.7.7
