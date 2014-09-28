@@ -15,20 +15,26 @@ Meteor.publish("allTopics", function(limit) {
     limit = 0;
 
   // get the topics cursor and store the ids
-  var topics = Topics.find({}, {limit: limit, sort: {"date": -1}});
+  var topics = Topics.find({}, {limit: limit, sort: {"createdAt": -1}});
   var topicIds = _.pluck(topics.fetch(), "_id");
+
+  // get the owners of each topic
+  var userIds = _.pluck(topics.fetch(), "userId");
+  var users = Meteor.users.find({"_id": {$in: userIds}});
 
   // get the top comment id of each topic
   var commentIds = [];
+
   for (var i = topicIds.length - 1; i >= 0; i--) {
-    var comment = Comments.findOne({ "topic": topicIds[i] },
-                                        { sort: {"likes": -1} });
+    var comment = Comments.findOne({"topicId": topicIds[i]},
+                                   {sort: {"likes": -1}});
     if (comment)
       commentIds.push(comment._id);
   }
 
+
   // find the top comments
   var topComments = Comments.find({"_id": {$in: commentIds}});
 
-  return [topics, topComments];
+  return [topics, topComments, users];
 });

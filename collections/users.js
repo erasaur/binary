@@ -1,50 +1,50 @@
-// var Schema = {};
+var Schema = {};
 
-// Schema.User = new SimpleSchema({
-//   _id: {
-//     type: String,
-//     optional: true
-//   },
-//   username: {
-//     type: String,
-//     regEx: /^[a-z0-9A-Z_]{3,15}$/
-//   },
-//   emails: {
-//     type: [Object]
-//   },
-//   "emails.$.address": {
-//     type: String,
-//     regEx: SimpleSchema.RegEx.Email
-//   },
-//   "emails.$.verified": {
-//     type: Boolean
-//   },
-//   createdAt: {
-//     type: Date
-//   },
-//   profile: { // public and modifiable
-//     type: Object,
-//     optional: true,
-//     blackbox: true
-//   },
-//   data: { // public but not modifiable
-//     type: Object,
-//     optional: true,
-//     blackbox: true
-//   },
-//   votes: { // used for votes only
-//     type: Object,
-//     optional: true,
-//     blackbox: true
-//   },
-//   services: {
-//     type: Object,
-//     optional: true,
-//     blackbox: true
-//   }
-// });
+Schema.User = new SimpleSchema({
+  _id: {
+    type: String,
+    optional: true
+  },
+  username: {
+    type: String,
+    min: 3,
+    regEx: /^[a-z0-9A-Z_]{3,15}$/
+  },
+  emails: {
+    type: [Object]
+  },
+  "emails.$.address": {
+    type: String,
+    regEx: SimpleSchema.RegEx.Email
+  },
+  "emails.$.verified": {
+    type: Boolean
+  },
+  createdAt: {
+    type: Date
+  },
+  profile: { // public and modifiable
+    type: Object,
+    optional: true,
+    blackbox: true
+  },
+  activity: { // public but not modifiable
+    type: Object,
+    optional: true,
+    blackbox: true
+  },
+  notifications: {
+    type: Object,
+    optional: true,
+    blackbox: true
+  },
+  services: {
+    type: Object,
+    blackbox: true
+  }
+});
 
-// // Meteor.users.attachSchema(Schema.User);
+Meteor.users.attachSchema(Schema.User);
 
 // Meteor.users.deny({
 //   update: function(userId, post, fieldNames) {
@@ -68,3 +68,18 @@ Meteor.users.initEasySearch("username", {
 	"limit": 20,
 	"use": "mongo-db"
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

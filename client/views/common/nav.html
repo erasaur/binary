@@ -35,7 +35,7 @@
         <a href="#" class="dropdown-toggle" id="nav-profile" data-toggle="dropdown"><i class="fa fa-user"></i></a>
         <div class="dropdown-menu">
         	<ul>
-        		<li><a href="{{pathFor 'profile' username=currentUser.username}}"><span>Profile</span></a></li>
+        		<li><a href="{{pathFor 'profile' _id=currentUser._id}}"><span>Profile</span></a></li>
 						<li><a href="#" id="logout"><span>Log Out</span></a></li>
 					</ul>
         </div>

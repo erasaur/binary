@@ -4,7 +4,7 @@ Template.newTopic.events({
     var title = template.find("#create-title").value;
     // var description = template.find("#create-description").value;
 
-    Meteor.call("newTopic", title, Meteor.userId(), Meteor.user().username, function(error, result) {
+    Meteor.call("newTopic", Meteor.userId(), title, function(error, result) {
       if(error)
         alert(formatError(error));
       else {

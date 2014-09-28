@@ -5,7 +5,7 @@ function formatField(variable, value) {
 }
 
 Yamcha.Topics = {
-	vote: function(id, user, side) {
+	vote: function(topicId, userId, side) {
 		var first, second, opposite;
 
 		if(side == "pro") {
@@ -19,37 +19,37 @@ Yamcha.Topics = {
 		}
 
 		//assume we clicked on pro
-		var t = Topics.findOne({"_id": id});
-		if(t[second].indexOf(user) === -1) { //didn't vote con already
-			if(t[first].indexOf(user) !== -1) { //voted pro already, so unvote
-				Topics.update({"_id": id}, {$inc: formatField(side, -1)});
-				Topics.update({"_id": id}, {$pull: formatField(first, user)});
+		var t = Topics.findOne(topicId);
+		if(t[second].indexOf(userId) === -1) { //didn't vote con already
+			if(t[first].indexOf(userId) !== -1) { //voted pro already, so unvote
+				Topics.update(topicId, {$inc: formatField(side, -1)});
+				Topics.update(topicId, {$pull: formatField(first, userId)});
 			} else { //didn't vote at all yet, so vote
-				Topics.update({"_id": id}, {$inc: formatField(side, 1)});
-				Topics.update({"_id": id}, {$push: formatField(first, user)});
+				Topics.update(topicId, {$inc: formatField(side, 1)});
+				Topics.update(topicId, {$push: formatField(first, userId)});
 			}
 		} else { //voted con already, so switch
-			Topics.update({"_id": id}, {$inc: formatField(opposite, -1)});
-			Topics.update({"_id": id}, {$pull: formatField(second, user)});
-			Topics.update({"_id": id}, {$inc: formatField(side, 1)});
-			Topics.update({"_id": id}, {$push: formatField(first, user)});
+			Topics.update(topicId, {$inc: formatField(opposite, -1)});
+			Topics.update(topicId, {$pull: formatField(second, userId)});
+			Topics.update(topicId, {$inc: formatField(side, 1)});
+			Topics.update(topicId, {$push: formatField(first, userId)});
 		}
 	}
 }
 
 Template.topic.helpers({
 	hasComments: function() {
-		return this.topic && Comments.find({"topic": this.topic._id}).count() > 0;
+		return this.topic && Comments.find({"topicId": this.topic._id}).count() > 0;
 	},
 	comments: function() {
 		var pros = Comments.find({
 								"replyTo": {$nin: SessionAmplify.get("showingReplies")}, 
-								"topic": this.topic._id, 
+								"topicId": this.topic._id, 
 								"side": "pro"
 							}).fetch();
 		var	cons = Comments.find({
 								"replyTo": {$nin: SessionAmplify.get("showingReplies")}, 
-								"topic": this.topic._id, 
+								"topicId": this.topic._id, 
 								"side": "con"
 							}).fetch();
 

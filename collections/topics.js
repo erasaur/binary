@@ -3,7 +3,7 @@ TopicSchema = new SimpleSchema({
     type: String,
     optional: true
   },
-  owner: {
+  userId: {
     type: String
   },
   title: {
@@ -13,7 +13,7 @@ TopicSchema = new SimpleSchema({
     type: String,
     optional: true
   },
-  date: {
+  createdAt: {
     type: Date
   },
   pro: {
@@ -47,3 +47,14 @@ Topics.initEasySearch("title", {
 	"limit": 20,
 	"use": "mongo-db"
 });
+
+
+
+
+
+
+
+
+
+
+

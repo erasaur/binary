@@ -44,18 +44,18 @@ Router.map(function() {
   this.route("signup", {yieldTemplates: {}}); //don't yield nav
   this.route("login", {yieldTemplates: {}}); //don't yield nav
   this.route("profile", {
-    path: "/:username",
+    path: "/users/:_id",
     waitOn: function () {
-      var user = this.params.username;
-      return [Meteor.subscribe("profileUser", user), 
-              Meteor.subscribe("profileUsers", user), 
-              Meteor.subscribe("profileComments", user), 
-              Meteor.subscribe("profileTopics", user)];
+      var userId = this.params._id;
+      return [Meteor.subscribe("profileUser", userId), 
+              Meteor.subscribe("profileUsers", userId), 
+              Meteor.subscribe("profileComments", userId), 
+              Meteor.subscribe("profileTopics", userId)];
     },
     data: function () {
       Session.set("currentTab", "followersTab");
       return {
-        user: Meteor.users.findOne({"username": this.params.username})
+        user: Meteor.users.findOne(this.params._id)
       }
     }
   });
@@ -69,7 +69,7 @@ Router.map(function() {
       SessionAmplify.set("showingReplies", []);
   		Session.set("currentTopic", this.params._id);
 			return {
-        topic: Topics.findOne({"_id": this.params._id})
+        topic: Topics.findOne(this.params._id)
       }
   	}
   });

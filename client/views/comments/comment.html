@@ -1,13 +1,13 @@
 <template name="comment">
 	<div id="{{_id}}" class="comment">
 		<div class="comment-header">
-			<b><a href="{{pathFor 'profile' username=owner}}">{{owner}}</a></b>
+			<b><a href="{{pathFor 'profile'}}">{{formatName _id}}</a></b>
 		</div>
   	<div class="comment-content collapsed">
   		{{{breaklines content}}}
   	</div>
   	<div class="comment-date">
-  		{{formatDate date}}
+  		{{formatDate createdAt}}
   	</div>
   	<div class="comment-footer">
   		{{#if currentUser}}
