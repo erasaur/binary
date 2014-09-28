@@ -11,7 +11,7 @@
 						{{/if}}
 					{{/if}}
 				
-					<h3>{{topic.title}}</h3> Posted {{formatDate topic.date}} by {{topic.owner}}
+					<h3>{{topic.title}}</h3> Posted {{formatDate topic.createdAt}} by {{formatName topic.userId}}
 					<div class="vote center">
 						<button id="vote-pro" class="pro-label">Pro: {{topic.pro}}</button> 
 						<button id="vote-con" class="con-label">Con: {{topic.con}}</button>

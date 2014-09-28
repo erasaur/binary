@@ -34,3 +34,13 @@ Template.replies.helpers({
 		return prevClass && (prevClass.substr(prevClass.indexOf(" ") + 1, 3) + prevClass.substr(-1, 1));
 	}
 });
+
+
+
+
+
+
+
+
+
+

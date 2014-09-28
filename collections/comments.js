@@ -3,19 +3,19 @@ CommentSchema = new SimpleSchema({
     type: String,
     optional: true
   },
+  userId: {
+    type: String
+  },
   content: {
     type: String
   },
-  date: {
+  createdAt: {
     type: Date
   },
   likes: { //scoring system ?
     type: Number,
     min: 0,
     optional: true
-  },
-  owner: {
-    type: String
   },
   replies: {
     type: [String]
@@ -27,7 +27,7 @@ CommentSchema = new SimpleSchema({
   side: {
     type: String
   },
-  topic: {
+  topicId: {
     type: String
   }
 });

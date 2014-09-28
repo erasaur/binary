@@ -20,14 +20,8 @@ function removeSessionReplies(rows) {
 }
 
 Template.comment.helpers({
-	hasReplies: function () {
-		return Comments.findOne({"topic": this.topic}).replies.length;
-	},
 	showingReplies: function () {
 		return SessionAmplify.get("showingReplies").indexOf(this._id) > -1;
-	},
-	readMore: function () {
-		return this.content.split("\n").length > 5 || this.content.length > 200;
 	},
 	liked: function () {
 		return Meteor.user().activity.liked && Meteor.user().activity.liked.indexOf(this._id) > -1;
@@ -39,13 +33,13 @@ Template.newComment.events({
 		if(!Session.get("currentTopic")) return;
 
 		var siblings = $(event.target).siblings();
-		var	input = $(siblings[0]);
-		var comment = input.val();
+		var input = $(siblings[0]);
+		var content = input.val();
 		var	side = $(siblings[1]).hasClass("btn-success") ? "pro" : "con";
 		var	replyTo = this.id;
-		var	replyToUser = replyTo && Comments.findOne({"_id": replyTo}).owner;
+		var	replyToUser = replyTo && Comments.findOne(replyTo).userId;
 
-		Meteor.call("newComment", Meteor.userId(), Meteor.user().username, Session.get("currentTopic"), comment, side, replyTo, replyToUser, function(error, result) {
+		Meteor.call("newComment", Meteor.userId(), Session.get("currentTopic"), content, side, replyTo, replyToUser, function(error, result) {
 			if(error)
 				alert(formatError(error));
 			else
@@ -150,7 +144,7 @@ Template.comment.events({
 			// pluck the id attribute from siblings, and return the ids that
 			// are present in the array of showingReplies
 			var ids = _.intersection(arr, _.pluck(siblings, "id"));
-			_.each(ids, function(id) {
+			_.each(ids, function (id) {
 				closeReplies(id); //close all ids in the result set
 			});
 		}
@@ -174,10 +168,10 @@ Template.comment.events({
 		SessionAmplify.set("showingReplies", arr);
 	},
 	"click .like-comment": function(event, template) {
-		Meteor.call("likeComment", Meteor.userId(), this._id, this.owner);
+		Meteor.call("likeComment", Meteor.userId(), this._id, this.userId);
 	},
 	"click .unlike-comment": function(event, template) {
-		Meteor.call("unlikeComment", Meteor.userId(), this._id, this.owner);
+		Meteor.call("unlikeComment", Meteor.userId(), this._id, this.userId);
 	}
 });
 

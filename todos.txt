@@ -48,6 +48,11 @@ in this state, when adding another con comment, there is a scrollTo error: 'newC
 
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
 
+for routes to topic/user, publish the cursor rather than an object with the cursor
+is this.userId already available in publish?
+combine publications (eg profileUser, can publish user and topics and comments at once)
+add comment ids to comment replies array
+
 sanitize all inputs (newComment, newTopic, etc.)
 use sessions only for variables that should be global, otherwise use deps or reactive var
 
