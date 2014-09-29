@@ -295,7 +295,37 @@ tr.collapse { height: 0; }
 }
 
 // ----------------- profile page ---------------
+ul.nav-buttons {
+	list-style: none;
+  padding: 0;
+  margin: 0;
 
+  li {
+    width: 25%;
+    float: left;
+    height: 60px;
+    text-align: center;
+
+    border: 1px solid @light-gray;
+    border-right: none;
+    border-bottom: none;
+    &:first-of-type { border-left: none; }
+
+    &:hover { background: @light-gray; }
+
+    > a {
+      display: block;
+      padding: 20px 10%;
+      height: 100%;
+
+      &.selected { background: darken(@light-gray, 10%); }
+    }
+  }
+}
+.page-nav {
+	padding: 0;
+	border-bottom: 20px solid @background-color;
+}
 
 // --------------- topic/comment page --------------
 .vote {
