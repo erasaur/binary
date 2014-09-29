@@ -1,15 +1,6 @@
-/**
- * All non page-specific publications
- */
+// Publish list of topics (sorted by date) and top comment for each
 
-// Publish current user
-Meteor.publish("currentUser", function() {
-  return Meteor.users.find(this.userId, {fields: {"activity": 1, "notifications": 1}});
-});
-
-// Publish all topics (sorted by date) and top comment for each
-Meteor.publish("allTopics", function(limit) {
-  
+Meteor.publish("allTopics", function(limit) {  
   // set the topic display limit
   if (limit > Topics.find().count() || !limit)
     limit = 0;
@@ -31,7 +22,6 @@ Meteor.publish("allTopics", function(limit) {
     if (comment)
       commentIds.push(comment._id);
   }
-
 
   // find the top comments
   var topComments = Comments.find({"_id": {$in: commentIds}});
