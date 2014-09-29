@@ -6,7 +6,7 @@ Meteor.publish("singleTopic", function (topicId) {
   var userIds = _.pluck(comments.fetch(), "userId"); // comment owners
 
   // add topic owner to list of userIds
-  var topicOwner = Meteor.users.findOne({"activity.topics": topicId})["_id"];
+  var topicOwner = Topics.findOne(topicId).userId;
   userIds.push(topicOwner);
 
   // owners of all comments
