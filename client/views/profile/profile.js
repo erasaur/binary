@@ -5,22 +5,28 @@ Template.profile.helpers({
 	following: function () {
 		return this.user.activity.followers && this.user.activity.followers.indexOf(Meteor.userId()) > -1;
 	},
-	currentTab: function (tab) {
-		return Session.equals("currentTab", tab);
+	currentTab: function () {
+		return Session.get("currentTab");
+	},
+	isCurrentTab: function (tab) {
+		return Session.equals("currentTab", tab) ? "active" : "";
 	},
 	likes: function () {
 		return this.user && this.user.activity.likes || 0;
 	}
 });
 
-Template.profileLiked.helpers({
-	likes: function () {
-		return this.user && this.user.activity.likes || 0;
+Template.profile.events({
+	"click li": function (event, template) {
+		Session.set("currentTab", event.target.id);
 	},
-	liked: function () {
-		return idToCollection(this.user.activity.liked, Comments);
+	"click #follow": function (event, template) {
+		Meteor.call("newFollower", Meteor.userId(), this.user._id);
+	},
+	"click #unfollow": function (event, template) {
+		Meteor.call("removeFollower", Meteor.userId(), this.user._id);
 	}
-})
+});
 
 Template.profileComments.helpers({
 	comments: function () {
@@ -28,39 +34,35 @@ Template.profileComments.helpers({
 	},
 	title: function () {
 		return Topics.findOne(this.topicId).title;
+	},
+	liked: function () {
+		if (this.user && this.user.activity)
+			return Comments.find({"_id": {$in: this.user.activity.liked}});
+		return [];
 	}
 });
 
 Template.profileTopics.helpers({
 	topics: function () {
-		return idToCollection(this.user.activity.topicsDiscussed, Topics);
+		if (this.user && this.user.activity)
+			return Topics.find({"_id": {$in: this.user.activity.topicsDiscussed}});
+		return [];
 	},
 	created: function () {
 		return this.user && Topics.find({"userId": this.user._id});
 	}
 });
 
-Template.profileFollowing.helpers({
+Template.profileUsers.helpers({
 	following: function () {
-		return idToCollection(this.user.activity.following, Meteor.users);
-	}
-});
-
-Template.profileFollowers.helpers({
+		if (this.user && this.user.activity)
+			return Meteor.users.find({"_id": {$in: this.user.activity.following}});
+		return [];
+	},
 	followers: function () {
-		return idToCollection(this.user.activity.followers, Meteor.users);
-	}
-});
-
-Template.profile.events({
-	"click .navbar-tab": function(event, template) {
-		Session.set("currentTab", event.target.id);
-	},
-	"click #follow": function(event, template) {
-		Meteor.call("newFollower", Meteor.userId(), this.user._id);
-	},
-	"click #unfollow": function(event, template) {
-		Meteor.call("removeFollower", Meteor.userId(), this.user._id);
+		if (this.user && this.user.activity)
+			return Meteor.users.find({"_id": {$in: this.user.activity.followers}});
+		return [];
 	}
 });
 

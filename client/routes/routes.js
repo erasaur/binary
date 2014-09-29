@@ -49,7 +49,7 @@ Router.map(function() {
       return Meteor.subscribe("userProfile", this.params._id);
     },
     data: function () {
-      Session.set("currentTab", "followersTab");
+      Session.set("currentTab", "profileComments");
       return {
         user: Meteor.users.findOne(this.params._id)
       }

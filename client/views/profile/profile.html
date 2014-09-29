@@ -1,157 +1,98 @@
 <template name="profile">
 	{{#if user}}
-		<div class="row profile-header">
-			<div class="col-xs-12">
-				<div class="profile-avatar">
-					<h2>{{user.username}}</h2>
-					<p>Reputation: {{likes}}</p>
-					{{#if canFollow}}
-						{{#if following}}
-							<button id="unfollow" class="btn btn-primary">Following</button>
-						{{else}}
-							<button id="follow" class="btn btn-default">Follow</button>
+		<div class="row full-height">
+			<div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
+				<div class="col-content">
+					<div class="profile-header">
+						{{#if canFollow}}
+							{{#if following}}
+								<button id="unfollow" class="primary-button">Following</button>
+							{{else}}
+								<button id="follow" class="default-button">Follow</button>
+							{{/if}}
 						{{/if}}
-					{{/if}}
+
+						<h3>{{user.username}}</h3>
+						<p>Reputation: {{likes}}</p>
+						<ul class="nav nav-tabs" role="tablist">
+						  <li class="{{isCurrentTab 'profileComments'}}"><a href="#" id="profileComments">Comments</a></li>
+						  <li class="{{isCurrentTab 'profileTopics'}}"><a href="#" id="profileTopics">Topics</a></li>
+						  <li class="{{isCurrentTab 'profileUsers'}}"><a href="#" id="profileUsers">Users</a></li>
+						</ul>
+					</div>
+					<div class="profile-body">
+						{{> UI.dynamic template=currentTab data=user}}
+					</div>
 				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-2 col-xs-offset-2 profile-nav">
-				<ul class="nav nav-pills nav-stacked">
-				  <li class="navbar-tab {{#if currentTab 'followersTab'}}active{{/if}}"><a href="#" id="followersTab">Followers</a></li>
-				  <li class="navbar-tab {{#if currentTab 'followingTab'}}active{{/if}}"><a href="#" id="followingTab">Following</a></li>
-				  <li class="navbar-tab {{#if currentTab 'topicsTab'}}active{{/if}}"><a href="#" id="topicsTab">Topics</a></li>
-				  <li class="navbar-tab {{#if currentTab 'commentsTab'}}active{{/if}}"><a href="#" id="commentsTab">Comments</a></li>
-				  <li class="navbar-tab {{#if currentTab 'likedTab'}}active{{/if}}"><a href="#" id="likedTab">Likes</a></li>
-				</ul>
-			</div>
-			<div class="col-xs-6 profile-body">
-				{{#if currentTab 'followersTab'}}
-					{{> profileFollowers}}
-				{{/if}}
-				{{#if currentTab 'followingTab'}}
-					{{> profileFollowing}}
-				{{/if}}
-				{{#if currentTab 'topicsTab'}}
-					{{> profileTopics}}
-				{{/if}}
-				{{#if currentTab 'commentsTab'}}
-					{{> profileComments}}
-				{{/if}}
-				{{#if currentTab 'likedTab'}}
-					{{> profileLiked}}
-				{{/if}}
 			</div>
 		</div>
 	{{/if}}
 </template>
 
-<template name="profileLiked">
-	<ul class="nav nav-pills nav-underline">
-		<li><a href="#liked" data-toggle="tab">Comments {{user.username}} Liked</a></li>
-	</ul>
-
-	<div class="tab-content">
-		<div class="tab-pane" id="liked">
-			{{#if liked}}
-				{{#each liked}}
-					<div>
-						<b><a href="{{pathFor 'profile' username=owner}}">{{owner}}</a></b>:
-						<p class="well">{{{breaklines content}}}</p>
-					</div>
-				{{/each}}
-			{{else}}
-				This user has not liked anything yet.
-			{{/if}}
-		</div>
-	</div>
-</template>
-
 <template name="profileComments">
-	<ul class="nav nav-pills nav-underline">
-		<li class="active"><a href="#comments" data-toggle="tab">Comments Posted</a></li>
-	</ul>
+	<h3>Comments Posted</h3>
+	{{#if comments.count}}
+		{{#each comments}}
+			<div>
+				In <b><a href="{{pathFor 'topic' _id=topicId}}">{{title}}</a></b>:
+				<p class="well">{{{breaklines content}}}</p>
+			</div>
+		{{/each}}
+	{{else}}
+		{{user.username}} has not posted any comments yet.
+	{{/if}}
 
-	<div class="tab-content">
-		<div class="tab-pane active" id="comments">
-			{{#if comments.count}}
-				{{#each comments}}
-					<div>
-						In <b><a href="{{pathFor 'topic' _id=topicId}}">{{title}}</a></b>:
-						<p class="well">{{{breaklines content}}}</p>
-					</div>
-				{{/each}}
-			{{else}}
-				This user has not posted any comments yet.
-			{{/if}}
-		</div>
-	</div>
+	<h3>Comments Liked</h3>
+	{{#if liked.count}}
+		{{#each liked}}
+			<div>
+				<b><a href="{{pathFor 'profile' _id=userId}}">{{userId}}</a></b>:
+				<p class="well">{{{breaklines content}}}</p>
+			</div>
+		{{/each}}
+	{{else}}
+		{{user.username}} has not liked anything yet.
+	{{/if}}
 </template>
 
 <template name="profileTopics">
-	<ul class="nav nav-pills nav-underline">
-		<li class="active"><a href="#topics-discussed" data-toggle="tab">Topics Discussed</a></li>
-		<li><a href="#topics-created" data-toggle="tab">Topics Created</a></li>
-	</ul>
+	<h3>Topics Discussed</h3>
+	{{#if topics.count}}
+		{{#each topics}}
+			{{> topicItem}}
+		{{/each}}
+	{{else}}
+		This user has not discussed any topics yet.
+	{{/if}}
 
-	<div class="tab-content">
-		<div class="tab-pane active" id="topics-discussed">
-			{{#if topics}}
-				{{#each topics}}
-					{{> topicItem}}
-				{{/each}}
-			{{else}}
-				This user has not discussed any topics yet.
-			{{/if}}
-		</div>
-		<div class="tab-pane" id="topics-created">
-			{{#if created.count}}
-				<ul>
-				{{#each created}}
-					{{> topicItem}}
-				{{/each}}
-				</ul>
-			{{else}}
-				This user has not created any topics yet.
-			{{/if}}
-		</div>
-	</div>
+	<h3>Topics Created</h3>	
+	{{#if created.count}}
+		{{#each created}}
+			{{> topicItem}}
+		{{/each}}
+	{{else}}
+		This user has not created any topics yet.
+	{{/if}}
 </template>
 
-<template name="profileFollowers">
-	<ul class="nav nav-pills nav-underline">
-		<li class="active"><a href="#followers" data-toggle="tab">Followers</a></li>
-	</ul>
-
-	<div class="tab-content">
-		<div class="tab-pane active" id="followers">
-			{{#if followers}}
-				{{#each followers}}
-					<a href="{{pathFor 'profile'}}">{{username}}</a>
-				{{/each}}
-			{{else}}
-				This user has no followers.
-			{{/if}}
-		</div>
-	</div>
-</template>
-
-<template name="profileFollowing">
-	<ul class="nav nav-pills nav-underline">
-		<li class="active"><a href="#following" data-toggle="tab">Following</a></li>
-	</ul>
-
-	<div class="tab-content">
-		<div class="tab-pane active" id="following">
-			{{#if following}}
-				{{#each following}}
-					<a href="{{pathFor 'profile'}}">{{username}}</a>
-				{{/each}}
-			{{else}}
-				This user is not following anybody. Suggest some?
-			{{/if}}
-		</div>
-	</div>
+<template name="profileUsers">
+	<h3>Followers</h3>
+	{{#if followers.count}}
+		{{#each followers}}
+			<a href="{{pathFor 'profile'}}">{{username}}</a>
+		{{/each}}
+	{{else}}
+		This user has no followers.
+	{{/if}}
+		
+	<h3>Following</h3>
+	{{#if following.count}}
+		{{#each following}}
+			<a href="{{pathFor 'profile'}}">{{username}}</a>
+		{{/each}}
+	{{else}}
+		This user is not following anybody. Suggest some?
+	{{/if}}
 </template>
 
 
