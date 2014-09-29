@@ -61,7 +61,6 @@ Router.map(function() {
   		return Meteor.subscribe("singleTopic", this.params._id);
   	},
   	data: function () {
-      SessionAmplify.set("showingReplies", []);
   		Session.set("currentTopic", this.params._id);
 			return {
         topic: Topics.findOne(this.params._id)

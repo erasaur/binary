@@ -46,6 +46,38 @@ when it should be like:
 
 in this state, when adding another con comment, there is a scrollTo error: 'newComment': TypeError: Cannot read property 'top' of undefined
 
+
+Error 2:
+
+SessionAmplify is reset when content dynamically appears
+
+User A:
+
+-----------------------------
+| pro comment |             | A
+-----------------------------
+--------------------^--------
+|                 replies   | B
+-----------------------------
+
+User B posts something inside box B
+
+-----------------------------
+| pro comment |             | A
+-----------------------------
+--------------------^--------
+| new comment |   replies   | B
+-----------------------------
+
+User A sees this:
+
+-----------------------------
+| pro comment | new comment | A
+-----------------------------
+--------------------^--------
+| new comment |   replies   | B
+-----------------------------
+
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
 
 what happens if comments shift while a replybox is shown? (eg a comment suddenly becomes more popular and displaces it at the top)

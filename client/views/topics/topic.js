@@ -43,12 +43,12 @@ Template.topic.helpers({
 	},
 	comments: function() {
 		var pros = Comments.find({
-								"replyTo": {$nin: SessionAmplify.get("showingReplies")}, 
+								"replyTo": {$nin: UserSession.get("showingReplies")}, 
 								"topicId": this.topic._id, 
 								"side": "pro"
 							}).fetch();
 		var	cons = Comments.find({
-								"replyTo": {$nin: SessionAmplify.get("showingReplies")}, 
+								"replyTo": {$nin: UserSession.get("showingReplies")}, 
 								"topicId": this.topic._id, 
 								"side": "con"
 							}).fetch();
