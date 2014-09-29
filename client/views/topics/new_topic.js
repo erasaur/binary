@@ -5,13 +5,15 @@ Template.newTopic.events({
     // var description = template.find("#create-description").value;
 
     Meteor.call("newTopic", Meteor.userId(), title, function(error, result) {
-      if(error)
+      if (error)
         alert(formatError(error));
       else {
         $("#create-title").val("");
         $("#create-description").val("");
         $("#new-topic-modal").modal("hide");
-        scrollToId(result);
+
+        if (getCurrentRoute() === "home")
+          scrollToId(result);
       }
     });
   }

@@ -1,5 +1,5 @@
 UI.registerHelper("currentPage", function (path) {
-	return Router.current().route.name === path;
+	return getCurrentRoute() === path;
 });
 UI.registerHelper("breaklines", function (text) {
   return breaklines(text);
