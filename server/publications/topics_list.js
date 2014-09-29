@@ -1,6 +1,6 @@
 // Publish list of topics (sorted by date) and top comment for each
 
-Meteor.publish("allTopics", function(limit) {  
+Meteor.publish("topicsList", function(limit) {  
   // set the topic display limit
   if (limit > Topics.find().count() || !limit)
     limit = 0;

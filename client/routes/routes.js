@@ -38,7 +38,7 @@ Router.map(function() {
 	this.route("home", { 
 		path: "/",
     waitOn: function () {
-      return Meteor.subscribe("allTopics", Session.get("topicsLimit"));
+      return Meteor.subscribe("topicsList", Session.get("topicsLimit"));
     }
   });
   this.route("signup", {yieldTemplates: {}}); //don't yield nav
