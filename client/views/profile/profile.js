@@ -33,7 +33,7 @@ Template.profileComments.helpers({
 
 Template.profileTopics.helpers({
 	topics: function () {
-		return idToCollection(this.user.activity.topics, Topics);
+		return idToCollection(this.user.activity.topicsDiscussed, Topics);
 	},
 	created: function () {
 		return this.user && Topics.find({"userId": this.user._id});

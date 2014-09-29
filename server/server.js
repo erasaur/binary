@@ -27,7 +27,7 @@ Meteor.methods({
 										 "followers": [], 
 										 "following": [], 
 										 "followingTopics": [], 
-										 "topics": []
+										 "topicsDiscussed": []
 										}, 
 				"notifications": {"commentReply": [], "followingUser": [], "followingTopic": []}
 			});
@@ -38,7 +38,7 @@ Meteor.methods({
 		var errors = [];
 
 		//enter the date as well
-		if(title) {
+		if (title) {
 			if(Topics.find({"title": title}).count() > 0) {
 				errors.push("There is already a question with that title.");
 			}
@@ -46,7 +46,7 @@ Meteor.methods({
 			errors.push("Please fill in all of the fields!");
 		}
 
-		if(errors.length > 0) {
+		if (errors.length > 0) {
 			throw new Meteor.Error(403, errors[0]);
 		} else {
 			var topicId = Topics.insert({"title": title, 
@@ -64,8 +64,8 @@ Meteor.methods({
 		}
 	},
 	newComment: function(userId, topicId, content, side, replyTo, replyToUser) {
-		if(content) {
-			Meteor.users.update(userId, {$addToSet: {"activity.topics": topicId}});
+		if (content) {
+			Meteor.users.update(userId, {$addToSet: {"activity.topicsDiscussed": topicId}});
 			var commentId = Comments.insert({"userId": userId, 
 																			 "topicId": topicId, 
 																			 "createdAt": new Date(), 
@@ -127,6 +127,7 @@ Meteor.methods({
 
 			notobj.url = "/topics/" + options.topicId;
 			notobj.message = "A new comment was posted in '" + topicTitle + "'";
+			
 			// notify people who are following the topic in which there is the new comment, 
 			// but not if they have already been notified via the user whom they are following
 			_.each(_.difference(topicFollowers, followers), function (id) {
