@@ -11,7 +11,8 @@ Meteor.publish("topicsList", function(limit) {
 
   // get the owners of each topic
   var userIds = _.pluck(topics.fetch(), "userId");
-  var users = Meteor.users.find({"_id": {$in: userIds}});
+  var users = Meteor.users.find({"_id": {$in: userIds}}, 
+                                {fields: {"username": 1}});
 
   // get the top comment id of each topic
   var commentIds = [];
