@@ -11,17 +11,17 @@ function removeSessionReplies(rows) {
 	});
 
 	ids = _.uniq(ids);
-	arr = SessionAmplify.get("showingReplies").slice(); //convert to array
+	arr = UserSession.get("showingReplies").slice(); //convert to array
 	// remove all the ids that are contained in the set of ids to remove
 	arr = _.difference(arr, ids);
 
 	rows.remove(); // remove rows
-	SessionAmplify.set("showingReplies", arr); // update session
+	UserSession.set("showingReplies", arr); // update session
 }
 
 Template.comment.helpers({
 	showingReplies: function () {
-		return SessionAmplify.get("showingReplies").indexOf(this._id) > -1;
+		return UserSession.get("showingReplies").indexOf(this._id) > -1;
 	},
 	liked: function () {
 		return Meteor.user().activity.liked && Meteor.user().activity.liked.indexOf(this._id) > -1;
@@ -130,7 +130,7 @@ Template.comment.events({
 		//   repliesRow.addClass("collapse");
 
 		// add id to array of replies that are showing
-		var arr = SessionAmplify.get("showingReplies").slice();
+		var arr = UserSession.get("showingReplies").slice();
 		arr.push(self._id.toString());
 
 		// if parent does not have a class, it's not a reply comment-row
@@ -148,7 +148,7 @@ Template.comment.events({
 				closeReplies(id); //close all ids in the result set
 			});
 		}
-
+		
 		cIndex = (cIndex >= 4) ? 0 : cIndex + 1; //update the color index
 
 		// get the bg of the tr that houses the comment for which we are toggling replies
@@ -165,7 +165,7 @@ Template.comment.events({
 		}
 
 		// done adding replies, set the session
-		SessionAmplify.set("showingReplies", arr);
+		UserSession.set("showingReplies", arr);
 	},
 	"click .like-comment": function(event, template) {
 		Meteor.call("likeComment", Meteor.userId(), this._id, this.userId);

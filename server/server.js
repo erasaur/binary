@@ -27,7 +27,7 @@ Meteor.methods({
 										 "followers": [], 
 										 "following": [], 
 										 "followingTopics": [], 
-										 "topicsDiscussed": []
+										 "discussedTopics": []
 										}, 
 				"notifications": {"commentReply": [], "followingUser": [], "followingTopic": []}
 			});
@@ -65,7 +65,7 @@ Meteor.methods({
 	},
 	newComment: function(userId, topicId, content, side, replyTo, replyToUser) {
 		if (content) {
-			Meteor.users.update(userId, {$addToSet: {"activity.topicsDiscussed": topicId}});
+			Meteor.users.update(userId, {$addToSet: {"activity.discussedTopics": topicId}});
 			var commentId = Comments.insert({"userId": userId, 
 																			 "topicId": topicId, 
 																			 "createdAt": new Date(), 

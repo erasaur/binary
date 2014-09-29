@@ -294,7 +294,18 @@ tr.collapse { height: 0; }
 	}
 }
 
-// ----------------- profile page ---------------
+// ----------------- general page ---------------
+.page-header {
+	margin: 0;
+	border: none;
+}
+.page-header-buttons {
+	height: 40px;
+	> i.fa-chevron-left { padding: 10px 0; }
+}
+.page-header-content {
+
+}
 ul.nav-buttons {
 	list-style: none;
   padding: 0;
@@ -325,6 +336,16 @@ ul.nav-buttons {
 .page-nav {
 	padding: 0;
 	border-bottom: 20px solid @background-color;
+}
+.page-body-header {
+	background: @light-gray;
+	
+	h3 { display: inline-block; }
+	.dropdown .btn.dropdown-toggle {
+		border: none;
+		background: transparent;
+		&:active { box-shadow: none; }
+	}
 }
 
 // --------------- topic/comment page --------------

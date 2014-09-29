@@ -2,26 +2,33 @@
 	{{#if user}}
 		<div class="row full-height">
 			<div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
-				<div class="col-content profile-header">
-					{{#if canFollow}}
-						{{#if following}}
-							<button id="unfollow" class="primary-button">Following</button>
-						{{else}}
-							<button id="follow" class="default-button">Follow</button>
-						{{/if}}
-					{{/if}}
-					<h3>{{user.username}}</h3>
-					<p>Reputation: {{likes}}</p>
+				<div class="col-content page-header">
+					<div class="page-header-buttons">
+						<i class="fa fa-chevron-left"></i>
+						<div class="float-right">
+							{{#if canFollow}}
+								{{#if following}}
+									<button id="unfollow" class="primary-button">Following</button>
+								{{else}}
+									<button id="follow" class="default-button">Follow</button>
+								{{/if}}
+							{{/if}}
+						</div>
+					</div>
+					<div class="page-header-content">
+						<h3>{{user.username}}</h3>
+						<p>Reputation: {{likes}}</p>
+					</div>
 				</div>
 				<div class="col-content page-nav">
 					<ul class="nav-buttons clearfix">
-					  <li class="{{isCurrentTab 'profileComments'}}"><a href="#" id="profileComments">Comments</a></li>
-					  <li class="{{isCurrentTab 'profileTopics'}}"><a href="#" id="profileTopics">Topics</a></li>
-					  <li class="{{isCurrentTab 'profileUsers'}}"><a href="#" id="profileUsers">Users</a></li>
+					  <li class="nav-button {{isCurrentTab 'profileComments'}}"><a href="#" id="profileComments">Comments</a></li>
+					  <li class="nav-button {{isCurrentTab 'profileTopics'}}"><a href="#" id="profileTopics">Topics</a></li>
+					  <li class="nav-button {{isCurrentTab 'profileUsers'}}"><a href="#" id="profileUsers">Users</a></li>
 					  <li class=""><a href="#">Temporary</a></li>
 					</ul>
 				</div>
-				<div class="col-content profile-body">
+				<div class="page-body">
 					{{> UI.dynamic template=currentTab data=user}}
 				</div>
 			</div>
@@ -30,49 +37,57 @@
 </template>
 
 <template name="profileComments">
-	<h3>Comments Posted</h3>
-	{{#if comments.count}}
-		{{#each comments}}
-			<div>
-				In <b><a href="{{pathFor 'topic' _id=topicId}}">{{title}}</a></b>:
-				<p class="well">{{{breaklines content}}}</p>
-			</div>
-		{{/each}}
-	{{else}}
-		{{user.username}} has not posted any comments yet.
-	{{/if}}
+	<div class="col-content page-body-header">
+		<h3>Comments</h3>
+		<span class="dropdown">
+		  <button class="btn btn-default dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+		    {{commentCategory}} <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Created</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Liked</a></li>
+		  </ul>
+		</span>
+	</div>
 
-	<h3>Comments Liked</h3>
-	{{#if liked.count}}
-		{{#each liked}}
-			<div>
-				<b><a href="{{pathFor 'profile' _id=userId}}">{{userId}}</a></b>:
-				<p class="well">{{{breaklines content}}}</p>
-			</div>
-		{{/each}}
-	{{else}}
-		{{user.username}} has not liked anything yet.
-	{{/if}}
+	<div class="col-content page-body-content">
+		{{#if comments.count}}
+			{{#each comments}}
+				<div>
+					<b><a href="{{pathFor 'profile' _id=userId}}">{{userId}}</a></b>:
+					<p class="well">{{{breaklines content}}}</p>
+				</div>
+			{{/each}}
+		{{else}}
+			Nothing to see here!
+		{{/if}}
+	</div>
 </template>
 
 <template name="profileTopics">
-	<h3>Topics Discussed</h3>
-	{{#if topics.count}}
-		{{#each topics}}
-			{{> topicItem}}
-		{{/each}}
-	{{else}}
-		This user has not discussed any topics yet.
-	{{/if}}
+	<div class="col-content page-body-header">
+		<h3>Topics</h3>
+		<span class="dropdown">
+		  <button class="btn btn-default dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+		    {{topicCategory}} <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Discussed</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Created</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Following</a></li>
+		  </ul>
+		</span>
+	</div>
 
-	<h3>Topics Created</h3>	
-	{{#if created.count}}
-		{{#each created}}
-			{{> topicItem}}
-		{{/each}}
-	{{else}}
-		This user has not created any topics yet.
-	{{/if}}
+	<div class="col-content page-body-content">
+		{{#if topics.count}}
+			{{#each topics}}
+				{{> topicItem}}
+			{{/each}}
+		{{else}}
+			Nothing to see here!
+		{{/if}}
+	</div>
 </template>
 
 <template name="profileUsers">
