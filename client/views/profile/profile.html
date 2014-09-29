@@ -2,27 +2,27 @@
 	{{#if user}}
 		<div class="row full-height">
 			<div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
-				<div class="col-content">
-					<div class="profile-header">
-						{{#if canFollow}}
-							{{#if following}}
-								<button id="unfollow" class="primary-button">Following</button>
-							{{else}}
-								<button id="follow" class="default-button">Follow</button>
-							{{/if}}
+				<div class="col-content profile-header">
+					{{#if canFollow}}
+						{{#if following}}
+							<button id="unfollow" class="primary-button">Following</button>
+						{{else}}
+							<button id="follow" class="default-button">Follow</button>
 						{{/if}}
-
-						<h3>{{user.username}}</h3>
-						<p>Reputation: {{likes}}</p>
-						<ul class="nav nav-tabs" role="tablist">
-						  <li class="{{isCurrentTab 'profileComments'}}"><a href="#" id="profileComments">Comments</a></li>
-						  <li class="{{isCurrentTab 'profileTopics'}}"><a href="#" id="profileTopics">Topics</a></li>
-						  <li class="{{isCurrentTab 'profileUsers'}}"><a href="#" id="profileUsers">Users</a></li>
-						</ul>
-					</div>
-					<div class="profile-body">
-						{{> UI.dynamic template=currentTab data=user}}
-					</div>
+					{{/if}}
+					<h3>{{user.username}}</h3>
+					<p>Reputation: {{likes}}</p>
+				</div>
+				<div class="col-content page-nav">
+					<ul class="nav-buttons clearfix">
+					  <li class="{{isCurrentTab 'profileComments'}}"><a href="#" id="profileComments">Comments</a></li>
+					  <li class="{{isCurrentTab 'profileTopics'}}"><a href="#" id="profileTopics">Topics</a></li>
+					  <li class="{{isCurrentTab 'profileUsers'}}"><a href="#" id="profileUsers">Users</a></li>
+					  <li class=""><a href="#">Temporary</a></li>
+					</ul>
+				</div>
+				<div class="col-content profile-body">
+					{{> UI.dynamic template=currentTab data=user}}
 				</div>
 			</div>
 		</div>
