@@ -77,7 +77,7 @@
 			{{#if comments.count}}
 				{{#each comments}}
 					<div>
-						In <b><a href="{{pathFor 'topic' _id=topic}}">{{title}}</a></b>:
+						In <b><a href="{{pathFor 'topic' _id=topicId}}">{{title}}</a></b>:
 						<p class="well">{{{breaklines content}}}</p>
 					</div>
 				{{/each}}

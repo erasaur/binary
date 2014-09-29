@@ -46,11 +46,7 @@ Router.map(function() {
   this.route("profile", {
     path: "/users/:_id",
     waitOn: function () {
-      var userId = this.params._id;
-      return [Meteor.subscribe("profileUser", userId), 
-              Meteor.subscribe("profileUsers", userId), 
-              Meteor.subscribe("profileComments", userId), 
-              Meteor.subscribe("profileTopics", userId)];
+      return Meteor.subscribe("userProfile", this.params._id);
     },
     data: function () {
       Session.set("currentTab", "followersTab");
@@ -62,8 +58,7 @@ Router.map(function() {
   this.route("topic", { 
   	path: "/topics/:_id",
   	waitOn: function () {
-  		return [Meteor.subscribe("topicComments", this.params._id), 
-              Meteor.subscribe("topicUsers", this.params._id)];
+  		return Meteor.subscribe("singleTopic", this.params._id);
   	},
   	data: function () {
       SessionAmplify.set("showingReplies", []);
