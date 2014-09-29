@@ -67,7 +67,8 @@ Template.topic.helpers({
 		return comments;
 	},
 	following: function() {
-		return Meteor.user().activity.followingTopics && Meteor.user().activity.followingTopics.indexOf(this.topic._id) > -1;
+		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.followingTopics)
+			return Meteor.user().activity.followingTopics.indexOf(this.topic._id) > -1;
 	}
 });
 
