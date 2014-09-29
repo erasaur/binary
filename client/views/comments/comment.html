@@ -1,7 +1,7 @@
 <template name="comment">
 	<div id="{{_id}}" class="comment">
 		<div class="comment-header">
-			<b><a href="{{pathFor 'profile'}}">{{formatName _id}}</a></b>
+			<b><a href="{{pathFor 'profile'}}">{{formatName userId}}</a></b>
 		</div>
   	<div class="comment-content collapsed">
   		{{{breaklines content}}}

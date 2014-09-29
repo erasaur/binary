@@ -48,6 +48,7 @@ in this state, when adding another con comment, there is a scrollTo error: 'newC
 
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
 
+what happens if comments shift while a replybox is shown? (eg a comment suddenly becomes more popular and displaces it at the top)
 for routes to topic/user, publish the cursor rather than an object with the cursor
 is this.userId already available in publish?
 combine publications (eg profileUser, can publish user and topics and comments at once)
