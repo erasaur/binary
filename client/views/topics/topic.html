@@ -3,12 +3,10 @@
 		<div class="row full-height">
 			<div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
 				<div class="col-content">
-					{{#if currentUser}}
-						{{#if following}}
-							<button id="unfollow" class="primary-button">Following</button>
-						{{else}}
-							<button id="follow" class="default-button">Follow</button>
-						{{/if}}
+					{{#if following}}
+						<button id="unfollow" class="primary-button">Following</button>
+					{{else}}
+						<button id="follow" class="default-button">Follow</button>
 					{{/if}}
 				
 					<h3>{{topic.title}}</h3> Posted {{formatDate topic.createdAt}} by {{formatName topic.userId}}
@@ -18,11 +16,7 @@
 					</div>
 
 					<div class="clearfix">
-						{{#if currentUser}}
-							{{> newComment}}
-						{{else}}
-							Please log in to comment.
-						{{/if}}
+						{{> newComment}}
 					</div>
 				</div>
 	
