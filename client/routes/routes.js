@@ -29,7 +29,7 @@ Router.onAfterAction(function () {
 });
 
 Deps.autorun(function () {
-  Meteor.subscribe("allTopics", Session.get("topicsLimit"));  
+  Meteor.subscribe("topicsList", Session.get("topicsLimit"));  
 });
 
 Meteor.subscribe("currentUser");
