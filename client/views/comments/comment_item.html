@@ -1,0 +1,17 @@
+<!-- simplified for use with profile page -->
+<template name="commentItem">
+  <div class="comment">
+    <div class="comment-header">
+      <b><a href="{{pathFor 'profile' _id=userId}}">{{formatName userId}}</a></b>
+    </div>
+    <div class="comment-content collapsed">
+      {{{breaklines content}}}
+    </div>
+    <div class="comment-date">
+      {{formatDate createdAt}}
+    </div>
+    <div class="comment-footer">
+      <i class="fa fa-thumbs-o-up"></i> {{likes}}
+    </div>
+  </div>
+</template>

@@ -53,10 +53,7 @@
 	<div class="col-content page-body-content">
 		{{#if comments.count}}
 			{{#each comments}}
-				<div>
-					<b><a href="{{pathFor 'profile' _id=userId}}">{{formatName userId}}</a></b>:
-					<p class="well">{{{breaklines content}}}</p>
-				</div>
+				{{> commentItem}}
 			{{/each}}
 		{{else}}
 			Nothing to see here!
