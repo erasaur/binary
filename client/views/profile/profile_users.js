@@ -1,12 +1,8 @@
 Template.profileUsers.helpers({
   following: function () {
-    if (this.user && this.user.activity)
-      return Meteor.users.find({"_id": {$in: this.user.activity.following}});
-    return [];
+    return this.activity && Meteor.users.find({"_id": {$in: this.activity.following}});
   },
   followers: function () {
-    if (this.user && this.user.activity)
-      return Meteor.users.find({"_id": {$in: this.user.activity.followers}});
-    return [];
+    return this.activity && Meteor.users.find({"_id": {$in: this.activity.followers}});
   }
 });

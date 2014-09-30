@@ -52,9 +52,7 @@ Router.map(function() {
     },
     data: function () {
       Session.set("currentTab", "profileComments");
-      return {
-        user: Meteor.users.findOne(this.params._id)
-      }
+      return Meteor.users.findOne(this.params._id);
     }
   });
   this.route("topic", { 
@@ -62,6 +60,9 @@ Router.map(function() {
   	waitOn: function () {
   		return Meteor.subscribe("singleTopic", this.params._id);
   	},
+    // action: function () { // set sessions here ?
+
+    // },
   	data: function () {
       Session.set("currentTopic", this.params._id);
 			return Topics.findOne(this.params._id);
