@@ -16,8 +16,7 @@ Meteor.publish("userProfile", function (userId) {
   if (user && user.activity)  
     commentIds = user.activity.liked;
 
-  var comments = Comments.find({$or: [{"userId": userId}, {"_id": {$in: commentIds}}]}, 
-                               {fields: {"_id": 1, "userId": 1, "content": 1, "topicId": 1}});
+  var comments = Comments.find({$or: [{"userId": userId}, {"_id": {$in: commentIds}}]});
 
   /** 
    * Publish all topics created by user, or 
