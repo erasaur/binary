@@ -7,7 +7,7 @@ $(window).scroll(function() {
 
 //handles infinite scrolling on events page
 setInterval(function() {
-  currentRoute = Router.current().route.name;
+  currentRoute = getCurrentRoute();
   if(scrolling && currentRoute === "home") {
     scrolling = false;
 

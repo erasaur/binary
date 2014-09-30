@@ -20,3 +20,5 @@ aldeed:collection2
 djedi:sanitize-html
 mrt:moment
 benjaminrh:user-session
+mrt:publish-with-relations
+
