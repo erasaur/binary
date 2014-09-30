@@ -62,6 +62,7 @@ Router.map(function() {
   	},
   	data: function () {
   		Session.set("currentTopic", this.params._id);
+      UserSession.set("showingReplies", []);
 			return {
         topic: Topics.findOne(this.params._id)
       }
