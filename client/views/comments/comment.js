@@ -1,6 +1,6 @@
 var cIndex = 0; //color index
 
-function removeSessionReplies(rows) { 
+function removeSessionReplies (rows) { 
 	var ids = []; //all the ids present in rows
 	var	arr; //temporary array, stores ids in session with row ids removed
 
@@ -11,17 +11,17 @@ function removeSessionReplies(rows) {
 	});
 
 	ids = _.uniq(ids);
-	arr = UserSession.get("showingReplies").slice(); //convert to array
+	arr = SessionAmplify.get("showingReplies"); //convert to array
 	// remove all the ids that are contained in the set of ids to remove
 	arr = _.difference(arr, ids);
 
 	rows.remove(); // remove rows
-	UserSession.set("showingReplies", arr); // update session
+	SessionAmplify.set("showingReplies", arr); // update session
 }
 
 Template.comment.helpers({
 	showingReplies: function () {
-		return UserSession.get("showingReplies").indexOf(this._id) > -1;
+		return SessionAmplify.get("showingReplies").indexOf(this._id) > -1;
 	},
 	liked: function () {
 		return Meteor.user().activity.liked && Meteor.user().activity.liked.indexOf(this._id) > -1;
@@ -29,7 +29,7 @@ Template.comment.helpers({
 });
 
 Template.newComment.events({
-	"click .post-comment": function(event, template) {
+	"click .post-comment": function (event, template) {
 		if(!Session.get("currentTopic")) return;
 
 		var siblings = $(event.target).siblings();
@@ -94,15 +94,15 @@ function closeReplies (id) {
 }
 
 Template.comment.events({
-	"click .comment-content": function(event, template) {
+	"click .comment-content": function (event, template) {
 		$(event.target).toggleClass("collapsed");
 	},
-	"click .comment-replyto": function(event, template) {
+	"click .comment-replyto": function (event, template) {
 		event.preventDefault();
 		if(this.replyTo)
 			scrollToId(this.replyTo);
 	},
-	"click .toggle-replies": function(event, template) {
+	"click .toggle-replies": function (event, template) {
 		var self = this; //store the reference because context changes when rendering template
 
 		var	parentRow = $(event.target).closest("tr"), //gets the clicked comment's tr (ie tr before the replies)
@@ -129,10 +129,6 @@ Template.comment.events({
 		// else if (repliesRow.hasClass("border"))
 		//   repliesRow.addClass("collapse");
 
-		// add id to array of replies that are showing
-		var arr = UserSession.get("showingReplies").slice();
-		arr.push(self._id.toString());
-
 		// if parent does not have a class, it's not a reply comment-row
 		// meaning we're opening a top level reply. in which case,
 		// we have to close any other top-level replies
@@ -143,34 +139,42 @@ Template.comment.events({
 
 			// pluck the id attribute from siblings, and return the ids that
 			// are present in the array of showingReplies
+			var arr = SessionAmplify.get("showingReplies");
+			
 			var ids = _.intersection(arr, _.pluck(siblings, "id"));
 			_.each(ids, function (id) {
 				closeReplies(id); //close all ids in the result set
 			});
 		}
 		
+		// add this id to list of showingReplies
+		var arr = SessionAmplify.get("showingReplies");
+		arr.push(self._id.toString());
+
+		// set the session
+		SessionAmplify.set("showingReplies", arr);
+		scrollToId(self._id);
+
 		cIndex = (cIndex >= 4) ? 0 : cIndex + 1; //update the color index
 
 		// get the bg of the tr that houses the comment for which we are toggling replies
 		// or return "N" if there is no bg (top level of comments)
-		var replyTo = $("#" + self._id).closest("tr").attr("class"); 
-		var replyToColor = replyTo || "N"; 
+		var replyTo = $("#" + self._id).closest("tr");
+		var replyToClass = replyTo.attr("class"); 
+		var replyToColor = replyToClass || "N"; 
 
 		// finally add the replies
 		if(!$("#" + self._id + "-replies-top").length) {
 			Blaze.renderWithData(Template.replies, //template to render
 													{id: self._id, side: self.side, color: cIndex, replyToColor: replyToColor}, //data context
-													parentRow.parent().get(0), //the parent to render in
-													parentRow.next().get(0)); //insert before this
+													replyTo.parent().get(0), //the parent to render in
+													replyTo.next().get(0)); //insert before this
 		}
-
-		// done adding replies, set the session
-		UserSession.set("showingReplies", arr);
 	},
-	"click .like-comment": function(event, template) {
+	"click .like-comment": function (event, template) {
 		Meteor.call("likeComment", Meteor.userId(), this._id, this.userId);
 	},
-	"click .unlike-comment": function(event, template) {
+	"click .unlike-comment": function (event, template) {
 		Meteor.call("unlikeComment", Meteor.userId(), this._id, this.userId);
 	}
 });
