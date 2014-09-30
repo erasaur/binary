@@ -39,17 +39,17 @@ Yamcha.Topics = {
 
 Template.topic.helpers({
 	hasComments: function() {
-		return this.topic && Comments.find({"topicId": this.topic._id}).count() > 0;
+		return Comments.find({"topicId": this._id}).count() > 0;
 	},
 	comments: function() {
 		var pros = Comments.find({
 								"replyTo": {$nin: UserSession.get("showingReplies")}, 
-								"topicId": this.topic._id, 
+								"topicId": this._id, 
 								"side": "pro"
 							}).fetch();
 		var	cons = Comments.find({
 								"replyTo": {$nin: UserSession.get("showingReplies")}, 
-								"topicId": this.topic._id, 
+								"topicId": this._id, 
 								"side": "con"
 							}).fetch();
 
@@ -68,7 +68,7 @@ Template.topic.helpers({
 	},
 	following: function() {
 		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.followingTopics)
-			return Meteor.user().activity.followingTopics.indexOf(this.topic._id) > -1;
+			return Meteor.user().activity.followingTopics.indexOf(this._id) > -1;
 	}
 });
 
@@ -82,10 +82,10 @@ Template.topic.events({
 			Yamcha.Topics.vote(Session.get("currentTopic"), Meteor.userId(), "con");
 	},
 	"click #follow": function(event, template) {
-		Meteor.call("followTopic", Meteor.userId(), this.topic._id);
+		Meteor.call("followTopic", Meteor.userId(), this._id);
 	},
 	"click #unfollow": function(event, template) {
-		Meteor.call("unfollowTopic", Meteor.userId(), this.topic._id);
+		Meteor.call("unfollowTopic", Meteor.userId(), this._id);
 	}
 });
 
