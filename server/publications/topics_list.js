@@ -1,6 +1,6 @@
 // Publish list of topics (sorted by date) and top comment for each
 
-Meteor.publish("topicsList", function(limit) {  
+Meteor.publish("topicsList", function (limit) {  
   // set the topic display limit
   if (limit > Topics.find().count() || !limit)
     limit = 0;
@@ -29,3 +29,24 @@ Meteor.publish("topicsList", function(limit) {
 
   return [topics, topComments, users];
 });
+
+// Meteor.publish("topicsList", function (limit) {
+//   Meteor.publishWithRelations({
+//     handle: this,
+//     collection: Topics,
+//     options: { limit: limit },
+//     mappings: [{
+//       key: "userId", collection: Meteor.users, // publish topic owner
+//       options: { fields: { "username": 1 } }
+//     }, {
+//       reverse: true, // use the comments topicId to match this _id
+//       key: "topicId",
+//       collection: Comments,
+//       options: { sort: { "likes": -1 }, limit: 1 },
+//       mappings: [{
+//         key: "userId", collection: Meteor.users, // publish comment owners
+//         options: { fields: { "username": 1 }, limit: 1 }
+//       }]
+//     }]
+//   });
+// });
