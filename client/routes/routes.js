@@ -6,6 +6,8 @@ Router.configure({
   notFoundTemplate: "notFound"
 });
 
+Router.onBeforeAction("dataNotFound");
+
 Router.onBeforeAction(function () {
   if(!Meteor.loggingIn() && !Meteor.user())
     this.redirect("signup");
@@ -61,11 +63,8 @@ Router.map(function() {
   		return Meteor.subscribe("singleTopic", this.params._id);
   	},
   	data: function () {
-  		Session.set("currentTopic", this.params._id);
-      UserSession.set("showingReplies", []);
-			return {
-        topic: Topics.findOne(this.params._id)
-      }
+      Session.set("currentTopic", this.params._id);
+			return Topics.findOne(this.params._id);
   	}
   });
   this.route("notFound", {

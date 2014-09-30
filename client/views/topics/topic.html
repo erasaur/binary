@@ -1,39 +1,37 @@
 <template name="topic">	
-	{{#if topic}}
-		<div class="row full-height">
-			<div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
-				<div class="col-content">
-					{{#if following}}
-						<button id="unfollow" class="primary-button">Following</button>
-					{{else}}
-						<button id="follow" class="default-button">Follow</button>
-					{{/if}}
-				
-					<h3>{{topic.title}}</h3> Posted {{formatDate topic.createdAt}} by {{formatName topic.userId}}
-					<div class="vote center">
-						<button id="vote-pro" class="pro-label">Pro: {{topic.pro}}</button> 
-						<button id="vote-con" class="con-label">Con: {{topic.con}}</button>
-					</div>
-
-					<div class="clearfix">
-						{{> newComment}}
-					</div>
-				</div>
-	
-				{{#if hasComments}}
-					<table class="comments">
-						<tbody>
-						{{#each comments}}
-							{{> commentRow}}
-						{{/each}}
-						</tbody>
-					</table>
+	<div class="row full-height">
+		<div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
+			<div class="col-content">
+				{{#if following}}
+					<button id="unfollow" class="primary-button">Following</button>
 				{{else}}
-					<div class="col-content">No comments yet.</div>	
+					<button id="follow" class="default-button">Follow</button>
 				{{/if}}
+			
+				<h3>{{title}}</h3> Posted {{formatDate createdAt}} by {{formatName userId}}
+				<div class="vote center">
+					<button id="vote-pro" class="pro-label">Pro: {{pro}}</button> 
+					<button id="vote-con" class="con-label">Con: {{con}}</button>
+				</div>
+
+				<div class="clearfix">
+					{{> newComment}}
+				</div>
 			</div>
+
+			{{#if hasComments}}
+				<table class="comments">
+					<tbody>
+					{{#each comments}}
+						{{> commentRow}}
+					{{/each}}
+					</tbody>
+				</table>
+			{{else}}
+				<div class="col-content">No comments yet.</div>	
+			{{/if}}
 		</div>
-	{{/if}}
+	</div>
 </template>
 
 
