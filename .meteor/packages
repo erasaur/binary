@@ -21,4 +21,5 @@ djedi:sanitize-html
 mrt:moment
 benjaminrh:user-session
 mrt:publish-with-relations
+mrt:session-amplify
 
