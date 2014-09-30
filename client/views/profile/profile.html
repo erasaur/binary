@@ -54,7 +54,7 @@
 		{{#if comments.count}}
 			{{#each comments}}
 				<div>
-					<b><a href="{{pathFor 'profile' _id=userId}}">{{userId}}</a></b>:
+					<b><a href="{{pathFor 'profile' _id=userId}}">{{../username}}</a></b>:
 					<p class="well">{{{breaklines content}}}</p>
 				</div>
 			{{/each}}
