@@ -50,8 +50,10 @@ Router.map(function() {
     waitOn: function () {
       return Meteor.subscribe("userProfile", this.params._id);
     },
-    data: function () {
+    onRun: function () {
       Session.set("currentTab", "profileComments");
+    },
+    data: function () {
       return Meteor.users.findOne(this.params._id);
     }
   });
