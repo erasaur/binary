@@ -60,11 +60,12 @@ Router.map(function() {
   	waitOn: function () {
   		return Meteor.subscribe("singleTopic", this.params._id);
   	},
-    // action: function () { // set sessions here ?
-
-    // },
-  	data: function () {
+    onRun: function () {
       Session.set("currentTopic", this.params._id);
+      SessionAmplify.set("showingReplies", []);
+    },
+  	data: function () {
+      console.log("data");
 			return Topics.findOne(this.params._id);
   	}
   });
