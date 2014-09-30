@@ -86,23 +86,27 @@
 </template>
 
 <template name="profileUsers">
-	<h3>Followers</h3>
-	{{#if followers.count}}
-		{{#each followers}}
-			<a href="{{pathFor 'profile'}}">{{username}}</a>
-		{{/each}}
-	{{else}}
-		This user has no followers.
-	{{/if}}
-		
-	<h3>Following</h3>
-	{{#if following.count}}
-		{{#each following}}
-			<a href="{{pathFor 'profile'}}">{{username}}</a>
-		{{/each}}
-	{{else}}
-		This user is not following anybody. Suggest some?
-	{{/if}}
+	<div class="col-content page-body-header">
+		<h3>People</h3>
+		<span class="dropdown">
+		  <button class="btn btn-default dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+		    {{userCategory}} <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Followers</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Following</a></li>
+		  </ul>
+		</span>
+	</div>
+	<div class="col-content page-body-content">
+		{{#if users.count}}
+			{{#each users}}
+				<a href="{{pathFor 'profile'}}">{{username}}</a>
+			{{/each}}
+		{{else}}
+			Nothing to see here!
+		{{/if}}
+	</div>
 </template>
 
 
