@@ -20,13 +20,11 @@
 			</div>
 
 			{{#if hasComments}}
-				<table class="comments">
-					<tbody>
+				<div class="comment-container main">
 					{{#each comments}}
 						{{> commentRow}}
 					{{/each}}
-					</tbody>
-				</table>
+				</div>
 			{{else}}
 				<div class="col-content">No comments yet.</div>	
 			{{/if}}

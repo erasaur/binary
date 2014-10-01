@@ -1,25 +1,17 @@
 <template name="replies">
-	<tr id="{{id}}-replies-top" class="border {{side}} c{{color}} {{prevColor}}">
-		<td colspan="2"></td>
-	</tr>
-
-	<tr class="{{id}}-replies {{side}}{{color}}">
+	<div id="{{id}}-replies" class="comment-container {{#if side}}{{side}}{{color}}{{/if}}">
 		{{#if currentUser}}
-			<td colspan="2" class="replies-comment">
+			<div class="comment-replies clearfix">
 				{{> newComment}}
-			</td>
+			</div>
 		{{/if}}
-	</tr>
 
-	{{#unless hasReplies}}
-		<tr class="{{id}}-replies {{side}}{{color}}">
-			<td class="col" colspan="2"><div class="col-content">No replies.</div></td>
-		</tr>
-	{{/unless}}
+		{{#unless hasReplies}}
+			<div class="col-content">No replies.</div>
+		{{/unless}}
 
-	{{#each replies}}
-		{{> commentRow}}
-	{{/each}}
-
-	<tr id="{{id}}-replies-bot" class="border {{prevColor}}"><td colspan="2"></td></tr>
+		{{#each replies}}
+			{{> commentRow}}
+		{{/each}}
+	</div>
 </template>

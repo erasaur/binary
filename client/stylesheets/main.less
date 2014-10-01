@@ -28,19 +28,6 @@
 @top-padding: 20px;
 @col-padding-side: 20px;
 
-// --------------------- colors -----------------------
-
-tr.pro0 { background: @pro0; }
-tr.pro1 { background: @pro1; }
-tr.pro2 { background: @pro2; }
-tr.pro3 { background: @pro3; }
-tr.pro4 { background: @pro4; }
-
-tr.con0 { background: @con0; }
-tr.con1 { background: @con1; }
-tr.con2 { background: @con2; }
-tr.con3 { background: @con3; }
-tr.con4 { background: @con4; }
 
 // --------------- bg color fade effect ---------------
 
@@ -221,13 +208,6 @@ button.round {
   cursor: pointer;
   .border-radius(50%);
 }
-td {
-	vertical-align: top;
-	&.col-pro, &.col-con { padding: 10px; }
-	&.col-pro { padding-left: @col-padding-side; }
-	&.col-con { padding-right: @col-padding-side; }
-}
-tr.collapse { height: 0; }
 
 // ------------- signup/login page --------------
 .landing-container {
@@ -352,14 +332,59 @@ ul.nav-buttons {
 .vote {
 	padding: 40px;
 }
-.replies-comment {
-	padding: 15px @col-padding-side 0;
+.comment-replies {
+	padding: 0 @col-padding-side;
 }
-// .replies-bottom {
-// 	height: 0;
-// }
-.comments {
-	table-layout: fixed;
+.comment-container:before {
+	content: " ";
+  height: 0px;
+  width: 0;
+  position: relative;
+  top: -35px;
+  border: 22px solid transparent;
+}
+.comment-container {
+	margin: 20px 0;
+	padding-bottom: 1px;
+	box-shadow: 0px 7px 6px -3px rgba(0,0,0,0.3), 0px -5px 6px -3px rgba(0,0,0,0.3);;
+	border-top: none;
+}
+.comment-container.main {
+	margin-top: 0;
+	&:before { content: none; }
+	box-shadow: none;
+}
+.comment-container.pro0:before { left: 12%; border-bottom-color: @pro0; }
+.comment-container.pro1:before { left: 12%; border-bottom-color: @pro1; }
+.comment-container.pro2:before { left: 12%; border-bottom-color: @pro2; }
+.comment-container.pro3:before { left: 12%; border-bottom-color: @pro3; }
+.comment-container.pro4:before { left: 12%; border-bottom-color: @pro4; }
+.comment-container.con0:before { left: 85%; border-bottom-color: @con0; }
+.comment-container.con1:before { left: 85%; border-bottom-color: @con1; }
+.comment-container.con2:before { left: 85%; border-bottom-color: @con2; }
+.comment-container.con3:before { left: 85%; border-bottom-color: @con3; }
+.comment-container.con4:before { left: 85%; border-bottom-color: @con4; }
+
+.pro0 { background: @pro0; }
+.pro1 { background: @pro1; }
+.pro2 { background: @pro2; }
+.pro3 { background: @pro3; }
+.pro4 { background: @pro4; }
+
+.con0 { background: @con0; }
+.con1 { background: @con1; }
+.con2 { background: @con2; }
+.con3 { background: @con3; }
+.con4 { background: @con4; }
+
+.col-pro, .col-con { 
+	padding: 10px; 
+}
+.col-pro { padding-left: @col-padding-side; }
+.col-con { padding-right: @col-padding-side; }
+
+.comment-row {
+	padding: 0;
 	width: 100%;
 }
 .comment {
@@ -444,38 +469,6 @@ ul.nav-buttons {
 	td:last-of-type { @side: "right"; .rounded-border-bottom(@light-gray); }
 }
 
-.border {
-	background: transparent;
-	height: 30px;
-
-	&:before {
-		content: " ";
-	  height: 0;
-	  width: 0;
-	  position: absolute;
-	  border: 15px solid transparent;
-	}
-	&.pro:before { left: 12%; }
-	&.con:before { left: 85%; }
-}
-
-// .border-top {
-// 	background: linear-gradient(transparent, rgba(220, 220, 220, 0.6), rgb(160, 160, 160));
-// }
-// .border-bot {
-// 	background: linear-gradient(rgb(160, 160, 160), rgba(220, 220, 220, 0.6), transparent);
-// }
-
-.border.pro.c0:before { border-bottom-color: @pro0; }
-.border.pro.c1:before { border-bottom-color: @pro1; }
-.border.pro.c2:before { border-bottom-color: @pro2; }
-.border.pro.c3:before { border-bottom-color: @pro3; }
-.border.pro.c4:before { border-bottom-color: @pro4; }
-.border.con.c0:before { border-bottom-color: @con0; }
-.border.con.c1:before { border-bottom-color: @con1; }
-.border.con.c2:before { border-bottom-color: @con2; }
-.border.con.c3:before { border-bottom-color: @con3; }
-.border.con.c4:before { border-bottom-color: @con4; }
 
 // ------------- bootstrap elements (nav, modal, etc) --------------
 .form-group.has-feedback { 
