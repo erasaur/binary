@@ -63,10 +63,10 @@ Router.map(function() {
   		return Meteor.subscribe("singleTopic", this.params._id);
   	},
     onRun: function () {
-      Session.set("currentTopic", this.params._id);
       SessionAmplify.set("showingReplies", []);
     },
   	data: function () {
+      Session.set("currentTopic", this.params._id);
 			return Topics.findOne(this.params._id);
   	}
   });
