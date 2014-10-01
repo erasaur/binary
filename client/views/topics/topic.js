@@ -63,7 +63,7 @@ Template.topic.helpers({
 			return {"pros": pair[0], "cons": pair[1]};
 		});
 		//a dummy row that solves comment rendering (see docs error 1)
-		comments.push({"bottom": true});	
+		comments.push({"bottom": true});
 		return comments;
 	},
 	following: function() {

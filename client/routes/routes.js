@@ -67,7 +67,6 @@ Router.map(function() {
       SessionAmplify.set("showingReplies", []);
     },
   	data: function () {
-      console.log("data");
 			return Topics.findOne(this.params._id);
   	}
   });

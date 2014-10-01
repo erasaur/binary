@@ -1,21 +1,18 @@
 <template name="commentRow">
 	{{#unless bottom}}
-		<tr class="{{#if ../side}}{{../side}}{{../color}}{{/if}}">
+		<div class="comment-row clearfix">
 			{{#if pros}}
-				<td class="col-pro col-xs-6">{{> comment pros}}</td>
+				<div class="col-pro col-xs-6">{{> comment pros}}</div>
 			{{else}}
-				<td class="col-pro col-xs-6"></td>
+				<div class="col-pro col-xs-6"></div>
 			{{/if}}
 			{{#if cons}}
-				<td class="col-con col-xs-6">{{> comment cons}}</td>
+				<div class="col-con col-xs-6">{{> comment cons}}</div>
 			{{else}}
-				<td class="col-con col-xs-6"></td>
+				<div class="col-con col-xs-6"></div>
 			{{/if}}
-		</tr>
+		</div>
 	{{else}}
-		<tr class="replies-bottom {{#if ../replyToColor}}{{../replyToColor}}{{/if}}">
-			<td class="{{#if ../side}}{{../side}}{{../color}}-left{{/if}}"></td>
-			<td class="{{#if ../side}}{{../side}}{{../color}}-right{{/if}}"></td>
-		</tr>
+		<div class="comment-row"></div>
 	{{/unless}}
 </template>

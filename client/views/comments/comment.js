@@ -59,38 +59,49 @@ Template.newComment.events({
 // 	console.log('destroyed');
 // }
 
-/** 
- * removes the reply box and any nested replies.
- * finds the top of the replies box using the id in format of:
- * - "#{{id}}-replies-top"
- * and iterates through dom until finding:
- * - "#{{id}}-replies-bot"
- * 
- * removes all rows within the two with jQuery, and calls
- * Blaze.remove to stop tracking these rows
+/**
+ * Takes an arbitrary div and recursively removes
+ * all reply boxes of equal or deeper nesting, and 
+ * updates the session array appropriately
  *
- * id [string] the id of the parent reply box to remove
+ * commentRow [jQuery obj]
  */
-function closeReplies (id) {
-	var repliesTop = $("#" + id + "-replies-top");
-	var replies = repliesTop.nextUntil("#" + id + "-replies-bot");
+function closeReplies (commentRow) {
+	if (!commentRow) return;
 
-	// replies.last() is the element before the element in the selector
-	var repliesBot = replies.last().next();
-	
-	// add back the top and last element
-	replies = replies.add(repliesTop).add(repliesBot);
+	// get all siblings that are reply boxes
+	var siblings = commentRow.siblings(".comment-container");
+	// id of the top level reply being closed
+	var closingReply;
 
-	// when rendering replies, we collapse the parent rows' bottom border
-	// to avoid having two borders' worth of padding.
-	// check to see if we need to uncollapse the next border now that we're
-	// removing the replies.
-	// var nextBorder = repliesBot.next().next(); //next() is dummy row
-	// if (nextBorder.hasClass("collapse")) 
-	//   nextBorder.removeClass("collapse");
+	// walk through each sibling (should only be one; opening multiple
+	// replies of same level isn't possible since all siblings
+	// are removed) and store the comment id. then traverse children 
+	// of each sibling recursively. subsequently remove the stored ids
+	// from session, and finally remove siblings from dom
+	if (siblings.length) {
+		var ids = [];
+		var siblingId;
 
-	//remove the reply ids from session, so they reappear as normal comments
-	removeSessionReplies(replies); 
+		siblings.each(function () {
+			siblingId = $(this).attr("id");
+			siblingId = siblingId.substring(0, siblingId.indexOf("-"));
+			ids.push(siblingId);
+
+			if (siblings.length === 1)
+				closingReply = siblingId;
+
+			if ($(this).children(".comment-container").length)
+				closeReplies($(this).children().first());
+		});
+
+		var showingReplies = SessionAmplify.get("showingReplies");
+		showingReplies = _.difference(showingReplies, ids);
+		SessionAmplify.set("showingReplies", showingReplies);
+		siblings.remove();
+	}
+
+	return closingReply;
 }
 
 Template.comment.events({
@@ -105,71 +116,27 @@ Template.comment.events({
 	"click .toggle-replies": function (event, template) {
 		var self = this; //store the reference because context changes when rendering template
 
-		var	parentRow = $(event.target).closest("tr"), //gets the clicked comment's tr (ie tr before the replies)
-				nextRow = parentRow.next(), //top border of next tr
-				repliesRow = nextRow.next();
+		// remove replies on equal or deeper level than commentRow
+		var commentRow = $(event.target).closest(".comment-row");
+		var closingReply = closeReplies(commentRow);
 
-		var	nextClass = nextRow.attr("class"),
-				repliesClass = repliesRow.attr("class"); //replies' class
+		if (closingReply && closingReply === self._id) return;
 
-		// closing replies
-		if (repliesRow.length && repliesRow.hasClass(self._id + "-replies")) {
-			closeReplies(self._id);
-			return;
-		}
-
-		// switching replies
-		if (nextRow.hasClass("border") && repliesClass && repliesClass.indexOf("replies ") > -1) {
-			var tempId = nextRow.attr("id"); //get the dom id
-			tempId = tempId.substring(0, tempId.indexOf("-")); //extract the id from dom id
-
-			closeReplies(tempId);
-		}
-		// collapse border if the row is a border, since new replies will have own border 
-		// else if (repliesRow.hasClass("border"))
-		//   repliesRow.addClass("collapse");
-
-		// if parent does not have a class, it's not a reply comment-row
-		// meaning we're opening a top level reply. in which case,
-		// we have to close any other top-level replies
-		if(!parentRow.attr("class")) {
-			var siblings = parentRow.siblings("tr[class=''], tr:not([class])")
-															.children("td")
-															.children("div.comment");
-
-			// pluck the id attribute from siblings, and return the ids that
-			// are present in the array of showingReplies
-			var arr = SessionAmplify.get("showingReplies");
-			
-			var ids = _.intersection(arr, _.pluck(siblings, "id"));
-			_.each(ids, function (id) {
-				closeReplies(id); //close all ids in the result set
-			});
-		}
-		
-		// add this id to list of showingReplies
 		var arr = SessionAmplify.get("showingReplies");
 		arr.push(self._id.toString());
-
-		// set the session
 		SessionAmplify.set("showingReplies", arr);
+
+		//update the color index
+		cIndex = (cIndex >= 4) ? 0 : cIndex + 1; 
+
+		// add the replies
 		scrollToId(self._id);
+		var replyTo = $("#" + self._id).closest(".comment-row");
+		Blaze.renderWithData(Template.replies, //template to render
+												{id: self._id, side: self.side, color: cIndex}, //data context
+												replyTo.parent().get(0), // insert within
+												replyTo.next().get(0)); // insert before
 
-		cIndex = (cIndex >= 4) ? 0 : cIndex + 1; //update the color index
-
-		// get the bg of the tr that houses the comment for which we are toggling replies
-		// or return "N" if there is no bg (top level of comments)
-		var replyTo = $("#" + self._id).closest("tr");
-		var replyToClass = replyTo.attr("class"); 
-		var replyToColor = replyToClass || "N"; 
-
-		// finally add the replies
-		if(!$("#" + self._id + "-replies-top").length) {
-			Blaze.renderWithData(Template.replies, //template to render
-													{id: self._id, side: self.side, color: cIndex, replyToColor: replyToColor}, //data context
-													replyTo.parent().get(0), //the parent to render in
-													replyTo.next().get(0)); //insert before this
-		}
 	},
 	"click .like-comment": function (event, template) {
 		Meteor.call("likeComment", Meteor.userId(), this._id, this.userId);
