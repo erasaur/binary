@@ -3,15 +3,15 @@
 		<div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
 			<div class="col-content">
 				{{#if following}}
-					<button id="unfollow" class="primary-button">Following</button>
+					<button id="unfollow" class="btn btn-primary">Following</button>
 				{{else}}
-					<button id="follow" class="default-button">Follow</button>
+					<button id="follow" class="btn btn-default">Follow</button>
 				{{/if}}
 			
 				<h3>{{title}}</h3> Posted {{formatDate createdAt}} by {{formatName userId}}
 				<div class="vote center">
-					<button id="vote-pro" class="pro-label">Pro: {{pro}}</button> 
-					<button id="vote-con" class="con-label">Con: {{con}}</button>
+					<button id="vote-pro" class="btn btn-pro">Pro: {{pro}}</button> 
+					<button id="vote-con" class="btn btn-con">Con: {{con}}</button>
 				</div>
 
 				<div class="clearfix">

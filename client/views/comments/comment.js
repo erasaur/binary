@@ -29,13 +29,13 @@ Template.comment.helpers({
 });
 
 Template.newComment.events({
-	"click .post-comment": function (event, template) {
+	"click .js-post-comment": function (event, template) {
 		if(!Session.get("currentTopic")) return;
 
 		var siblings = $(event.target).siblings();
 		var input = $(siblings[0]);
 		var content = input.val();
-		var	side = $(siblings[1]).hasClass("btn-success") ? "pro" : "con";
+		var	side = $(siblings[1]).hasClass("btn-pro") ? "pro" : "con";
 		var	replyTo = this.id;
 		var	replyToUser = replyTo && Comments.findOne(replyTo).userId;
 
@@ -48,10 +48,10 @@ Template.newComment.events({
 
 		input.val("");
 	},
-	"click .post-side": function(event, template) {
+	"click .js-post-side": function(event, template) {
 		var t = $(event.target);
-		t.toggleClass("btn-success");
-		t.toggleClass("btn-danger");
+		t.toggleClass("btn-pro");
+		t.toggleClass("btn-con");
 	}
 });
 
@@ -108,12 +108,12 @@ Template.comment.events({
 	"click .comment-content": function (event, template) {
 		$(event.target).toggleClass("collapsed");
 	},
-	"click .comment-replyto": function (event, template) {
-		event.preventDefault();
-		if(this.replyTo)
-			scrollToId(this.replyTo);
-	},
-	"click .toggle-replies": function (event, template) {
+	// "click .comment-replyto": function (event, template) {
+	// 	event.preventDefault();
+	// 	if(this.replyTo)
+	// 		scrollToId(this.replyTo);
+	// },
+	"click .js-toggle-replies": function (event, template) {
 		var self = this; //store the reference because context changes when rendering template
 
 		// remove replies on equal or deeper level than commentRow
@@ -138,10 +138,10 @@ Template.comment.events({
 												replyTo.next().get(0)); // insert before
 
 	},
-	"click .like-comment": function (event, template) {
+	"click .js-like-comment": function (event, template) {
 		Meteor.call("likeComment", Meteor.userId(), this._id, this.userId);
 	},
-	"click .unlike-comment": function (event, template) {
+	"click .js-unlike-comment": function (event, template) {
 		Meteor.call("unlikeComment", Meteor.userId(), this._id, this.userId);
 	}
 });

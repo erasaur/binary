@@ -20,10 +20,10 @@
 				</div>
 			</div>
 			<div class="col-content page-nav">
-				<ul class="nav-buttons clearfix">
-				  <li class="nav-button {{isCurrentTab 'profileComments'}}"><a href="#" id="profileComments">Comments</a></li>
-				  <li class="nav-button {{isCurrentTab 'profileTopics'}}"><a href="#" id="profileTopics">Topics</a></li>
-				  <li class="nav-button {{isCurrentTab 'profileUsers'}}"><a href="#" id="profileUsers">Users</a></li>
+				<ul class="page-nav-buttons clearfix">
+				  <li class="js-nav-button {{isCurrentTab 'profileComments'}}"><a href="#" id="profileComments">Comments</a></li>
+				  <li class="js-nav-button {{isCurrentTab 'profileTopics'}}"><a href="#" id="profileTopics">Topics</a></li>
+				  <li class="js-nav-button {{isCurrentTab 'profileUsers'}}"><a href="#" id="profileUsers">Users</a></li>
 				  <li class=""><a href="#">Temporary</a></li>
 				</ul>
 			</div>
@@ -38,7 +38,7 @@
 	<div class="col-content page-body-header">
 		<h3>Comments</h3>
 		<span class="dropdown">
-		  <button class="btn btn-default dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
 		    {{commentCategory}} <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
@@ -63,7 +63,7 @@
 	<div class="col-content page-body-header">
 		<h3>Topics</h3>
 		<span class="dropdown">
-		  <button class="btn btn-default dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
 		    {{topicCategory}} <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
@@ -89,7 +89,7 @@
 	<div class="col-content page-body-header">
 		<h3>People</h3>
 		<span class="dropdown">
-		  <button class="btn btn-default dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
 		    {{userCategory}} <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">

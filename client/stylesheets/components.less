@@ -1,0 +1,355 @@
+@import "includes";
+
+// general helper classes ----------------------------
+
+.center {
+  text-align: center;
+}
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
+.clearfix {
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+  *zoom: 1;
+}
+
+// buttons -------------------------------------------
+
+.btn {
+  border: none;
+  color: white !important;
+  box-shadow: none;
+  padding: .2em .6em;
+  border-radius: .25em;
+}
+.btn.btn-pro { .popout-button(@pro-color); }
+.btn.btn-con { .popout-button(@con-color); }
+.btn.btn-default {
+  .popout-button(@primary-color);
+}
+.btn.btn-primary { 
+  .popout-button(darken(@primary-color, 10%));
+  border-bottom: none;
+}
+.round {
+  margin: 10px;
+  padding: 5px;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  .border-radius(50%);
+}
+
+// general layout components -------------------------
+
+.container-fluid {
+  height: 100%;
+  width: 100%;
+  display: table;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+}
+.col {
+  background: @light-gray; 
+  padding: 0;
+  .border-radius(8px 8px 0 0);
+}
+.col-content {
+  padding: 10px @col-padding-side;
+}
+.full-height {
+  height: 100%;
+}
+.row.full-height {
+  display: table-row;
+}
+.col.full-height {
+  display: table-cell;
+  float: none;
+}
+.page-header {
+  margin: 0;
+  border: none;
+}
+.page-header-buttons {
+  height: 40px;
+  > i.fa-chevron-left { padding: 10px 0; }
+}
+.page-nav {
+  padding: 0;
+  border-bottom: 20px solid @background-color;
+}
+.page-nav-buttons {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.page-nav-buttons li {
+  float: left;
+  width: 25%;
+  height: 60px;
+  text-align: center;
+  border: 1px solid @light-gray;
+  border-right: none;
+  border-bottom: none;
+  &:first-of-type { border-left: none; }
+  &:hover { background: @light-gray; }
+}
+.page-nav-buttons a {
+  display: block;
+  padding: 20px 10%;
+  height: 100%;
+  &.selected { background: darken(@light-gray, 10%); }
+}
+.page-body-header {
+  background: @light-gray;
+}
+.page-body-header h3 { 
+  display: inline-block; 
+}
+.page-body-header .dropdown-toggle {
+  border: none;
+  background: transparent;
+  &:active { box-shadow: none; }
+}
+.dropdown { 
+  margin: 0; border: 0; 
+}
+.dropdown-menu {
+  min-width:auto;
+  width:100%;
+  border-color: darken(@light-gray, 30%);
+  background: @light-gray;
+  box-shadow: none;
+  .border-radius(1px);
+}
+.dropdown-menu a {
+  display: block;
+  padding: 5px 10px;
+  &:hover { background: darken(@light-gray, 10%); }
+}
+
+// navbar --------------------------------------------
+
+.form-group.has-feedback { 
+  margin: 0;
+}
+.form-group.has-feedback input { 
+  padding-right: 0px; 
+}
+.form-control-feedback { 
+  right: 0; 
+  color: @gray;
+  &:hover { cursor: pointer; }
+}
+.navbar-transparent {
+  position: absolute; 
+  width: 100%; 
+}
+.navbar-brand, ul.navbar-nav > li > a {
+  color: @gray;
+  font-size: 1.5em; 
+  background: transparent !important;
+  position: relative;
+
+  &:hover { color: black; }
+}
+.navbar-brand { 
+  float: right; 
+  padding: 0 20px 0 0; //right
+  margin: 15px 0 0 0; //top
+}
+.navbar-items { padding: 0; }
+.navbar-nav { 
+  float: left; 
+  padding: 0 0 0 20px; //left
+  margin: 0;
+  position: relative;
+}
+.navbar-nav > li {
+  width: 40px;
+  display: inline-block; //so the list items don't stack when screen is shrunk
+
+  > .dropdown-menu {
+    right: 0;
+    left: auto;
+
+    &.notifications {
+      width: 250px;
+      height: 400px;
+      overflow-y: auto; 
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+}
+.navbar-collapsed {
+  width: 100%;
+  padding: 15px 20px;
+
+  > .navbar-brand {
+    float: left; 
+    margin: 0; padding: 0;
+    height: 1.5em;
+  }
+  > .navbar-items {
+    float: right;
+    margin-top: -7.5px;
+    .navbar-nav { padding: 0; }
+  }
+}
+
+
+// topic page ----------------------------------------
+
+.vote {
+  padding: 40px;
+}
+.show-more {
+  margin: 80px 0;
+  text-align: center;
+}
+.topic-item {
+  padding: 10px;
+  margin: 10px 0;
+  color: black;
+  height: 80px;
+  overflow: auto;
+
+  h3 { margin-top: 0; }
+  .topic-item-left { 
+    float: left;  
+    width: 80%;
+  }
+  .topic-item-right {
+    float: right;
+  }
+}
+
+// landing page --------------------------------------
+
+.landing-container {
+  width: 300px;
+  margin: 100px auto;
+  padding: 20px 40px;
+}
+.landing-form-errors > li {
+  text-align: center;
+  padding: 0 20px 20px;
+}
+.landing-form-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.landing-form-body > form > button {
+  width: 100%;
+  margin: 20px 0 10px;
+}
+
+// search page ---------------------------------------
+
+#search-results, 
+#topic-categories {
+  display: table;
+  margin: 40px 0;
+  width: 100%;
+}
+#topic-categories ul {
+  display: table-cell;
+  overflow: hidden;
+}
+#search-results ul {
+  &:first-of-type a { //topics
+    margin-left: 10px;
+  }
+
+  &:last-of-type { //users
+    width: 33%;
+    border: 0;
+  }
+}
+#search-results ul li:first-of-type {
+  .content-header(@gray);
+}
+#topic-categories ul {
+  width: 33%;
+  border-right: 1px solid @light-gray;
+
+  &:last-of-type { border: 0; }
+}
+#topic-categories ul li {
+  text-align: center;
+}
+#topic-categories ul a {
+  .content-header(@gray); 
+  &:hover { color: black; }
+}
+
+// iron router loader --------------------------------
+
+#iron-router-progress {
+  background-color: #78F7EE;
+  box-shadow: 0 0 5px #B4FCF7;
+
+  &:before { display: none !important; }
+}
+
+// modal ---------------------------------------------
+
+.modal-open.modal {
+  outline: none !important;
+}
+.modal-backdrop {
+  background: white;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+.modal-dialog {
+  background: transparent;
+}
+.modal.fade .modal-dialog {
+  .transition(ease-out);
+}
+.modal.in .modal-dialog {
+  .transition(ease-in-out);
+}
+.modal-content {
+  .border-radius(1px);
+  box-shadow: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
