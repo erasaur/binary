@@ -1,6 +1,6 @@
 Router.configure({
 	layoutTemplate: "main",
-	yieldTemplates: {
+	yieldRegions: {
 		"nav": {to: "nav"}
 	},
   notFoundTemplate: "notFound"
