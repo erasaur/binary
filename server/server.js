@@ -58,7 +58,7 @@ Meteor.methods({
 																   "followers": []
 																  });
 
-			Meteor.call("newNotification", "newTopic", userId, {"topicId": topicId, "topicTitle": title});
+			Meteor.call("newNotification", "newTopic", userId, { "topicId": topicId, "topicTitle": title });
 
 			return topicId;
 		}
@@ -75,6 +75,8 @@ Meteor.methods({
 																			 "replyTo": replyTo, 
 																			 "replies": []
 																			});
+			if (replyTo)
+				Comments.update(replyTo, { $addToSet: { "replies": commentId } });
 
 			Meteor.call("newNotification", "newComment", userId, 
 									{"replyTo": replyToUser || "", "commentId": commentId, "topicId": topicId});
