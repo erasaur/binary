@@ -1,33 +1,66 @@
 <template name="topic">	
 	<div class="row full-height">
 		<div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
-			<div class="col-content">
-				{{#if following}}
-					<button id="unfollow" class="btn btn-primary">Following</button>
-				{{else}}
-					<button id="follow" class="btn btn-default">Follow</button>
-				{{/if}}
-			
-				<h3>{{title}}</h3> Posted {{formatDate createdAt}} by {{formatName userId}}
-				<div class="vote center">
-					<button id="vote-pro" class="btn btn-pro">Pro: {{pro}}</button> 
-					<button id="vote-con" class="btn btn-con">Con: {{con}}</button>
+			<div class="col-content page-header">
+
+				<div class="page-header-buttons">
+					<i class="fa fa-chevron-left"></i>
+					<div class="float-right">
+					{{#if following}}
+						<button id="unfollow" class="btn btn-primary">Following</button>
+					{{else}}
+						<button id="follow" class="btn btn-default">Follow</button>
+					{{/if}}
+					</div>
 				</div>
 
-				<div class="clearfix">
+				<div class="page-header-content">
+					<h3>{{title}}</h3>
+					<div class="vote center">
+						<button id="vote-pro" class="btn btn-pro">Pro: {{pro}}</button> 
+						<button id="vote-con" class="btn btn-con">Con: {{con}}</button>
+					</div>
+				</div>
+
+			</div>
+			
+			<div class="col-content page-nav">
+				<ul class="page-nav-buttons clearfix">
+				  <li class="js-nav-button"><a href="#" id="topicComments">Comments</a></li>
+				  <li class="js-nav-button"><a href="#">Hello</a></li>
+				  <li class="js-nav-button"><a href="#">Created by {{formatName userId}}</a></li>
+				  <li class="js-nav-button"><a href="#">Created {{formatDate createdAt}}</a></li>
+				</ul>
+			</div>
+			
+			<div class="page-body">
+				<div class="col-content page-body-header">
+					<h3>Comments</h3>
+					<span class="dropdown">
+					  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+					    Top <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Newest</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Liked</a></li>
+					  </ul>
+					</span>
+				</div>
+
+				<div class="col-content clearfix">
 					{{> newComment}}
 				</div>
-			</div>
 
-			{{#if hasComments}}
-				<div class="comment-container main">
-					{{#each comments}}
-						{{> commentRow}}
-					{{/each}}
-				</div>
-			{{else}}
-				<div class="col-content">No comments yet.</div>	
-			{{/if}}
+				{{#if hasComments}}
+					<div class="comment-container main">
+						{{#each comments}}
+							{{> commentRow}}
+						{{/each}}
+					</div>
+				{{else}}
+					<div class="col-content">No comments yet.</div>	
+				{{/if}}
+			</div>
 		</div>
 	</div>
 </template>
