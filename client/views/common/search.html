@@ -45,8 +45,8 @@
         {{else}}
           {{#esEach index="topics" id="search-input"}}
             <li>
-              <span class="label label-success">{{this.pro}}</span>
-              <span class="label label-danger">{{this.con}}</span>
+              <span class="btn btn-pro">{{this.pro}}</span>
+              <span class="btn btn-con">{{this.con}}</span>
               <a href="{{pathFor 'topic'}}" class="search-link">{{this.title}}</a>
             </li>
           {{/esEach}}

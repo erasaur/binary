@@ -1,0 +1,93 @@
+// fonts
+// @fontSize-small
+// @fontSize-base
+// @fontSize-large
+
+// line heights
+// @lineHeight-tight
+// @lineHeight-base
+// @lineHeight-loose
+
+// paddings
+@top-padding: 20px;
+@col-padding-side: 20px;
+
+// margins
+
+// colors 
+@pro0: rgb(153, 218, 213);
+@pro1: rgb(200, 230, 200);
+@pro2: rgb(180, 236, 252);
+@pro3: rgb(203, 224, 172);
+@pro4: rgb(124, 178, 211);
+
+@con0: rgb(238, 121, 137);
+@con1: rgb(245, 181, 135);
+@con2: rgb(228, 103, 87);
+@con3: rgb(218, 127, 154);
+@con4: rgb(225, 150, 206);
+
+@light-gray: rgba(220, 220, 220, 0.5);
+@gray: rgb(160, 160, 160);
+@light-primary-color: rgb(127, 175, 247);
+@primary-color: rgb(62, 130, 231);
+
+@background-color: rgb(255, 255, 255);
+@pro-color: rgb(146, 240, 52);
+@con-color: rgb(255, 82, 76);
+
+// bg color fade effect ----------------------------
+
+@-webkit-keyframes target-fade {
+  0% { background-color: rgba(202, 245, 245, .6); }
+  100% { background-color: #fff; }
+}
+@-moz-keyframes target-fade {
+  0% { background-color: rgba(202, 245, 245, .6); }
+  100% { background-color: #fff; }
+}
+
+// mixins --------------------------------------------
+
+.bg-fade {
+  -webkit-animation: target-fade 2s 1;
+  -moz-animation: target-fade 2s 1;
+}
+.content-header(@color) {
+  // line-height: 24px;
+  color: @color;
+  font-size: 18px;
+  font-weight: 400;
+}
+.border-radius(@radius) {
+  -webkit-border-radius: @radius;
+     -moz-border-radius: @radius;
+          border-radius: @radius;
+}
+.transition(@type) {
+  -webkit-transition: -webkit-transform .3s @type;
+     -moz-transition:    -moz-transform .3s @type;
+       -o-transition:      -o-transform .3s @type;
+          transition:         transform .3s @type;
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none;
+}
+.popout-button(@color) {
+  background: fade(@color, 80%); //rgba(@color, 0.8)
+  border-bottom: 4px solid darken(@color, 10%);
+  &:hover { background: @color; }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -15,7 +15,7 @@ Template.profile.helpers({
 });
 
 Template.profile.events({
-	"click .nav-button": function (event, template) {
+	"click .js-nav-button": function (event, template) {
 		Session.set("currentTab", event.target.id);
 	},
 	"click #follow": function (event, template) {

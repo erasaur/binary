@@ -80,6 +80,7 @@ User A sees this:
 
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
 
+replace unicode with downloaded font/font awesome (eg the search bar "x")
 what happens if comments shift while a replybox is shown? (eg a comment suddenly becomes more popular and displaces it at the top)
 for routes to topic/user, publish the cursor rather than an object with the cursor
 is this.userId already available in publish?
