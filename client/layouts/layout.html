@@ -1,0 +1,15 @@
+<template name="pageLayout">
+  <div class="row full-height">
+    <div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
+      <div class="col-content page-header">
+        {{> yield "header"}}
+      </div>
+      <div class="col-content page-nav">
+        {{> yield "nav"}}
+      </div>
+      <div class="page-body">
+        {{> yield "body"}}
+      </div>
+    </div>
+  </div>
+</template>
