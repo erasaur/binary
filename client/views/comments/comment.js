@@ -1,30 +1,12 @@
 var cIndex = 0; //color index
 
-function removeSessionReplies (rows) { 
-	var ids = []; //all the ids present in rows
-	var	arr; //temporary array, stores ids in session with row ids removed
-
-	rows.each(function() {
-		if(this.id && this.id.indexOf("-") > -1) { 
-			ids.push(this.id.substring(0, this.id.indexOf("-")));
-		}
-	});
-
-	ids = _.uniq(ids);
-	arr = SessionAmplify.get("showingReplies"); //convert to array
-	// remove all the ids that are contained in the set of ids to remove
-	arr = _.difference(arr, ids);
-
-	rows.remove(); // remove rows
-	SessionAmplify.set("showingReplies", arr); // update session
-}
-
 Template.comment.helpers({
 	showingReplies: function () {
 		return SessionAmplify.get("showingReplies").indexOf(this._id) > -1;
 	},
 	liked: function () {
-		return Meteor.user().activity.liked && Meteor.user().activity.liked.indexOf(this._id) > -1;
+		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.liked)
+			return Meteor.user().activity.liked.indexOf(this._id) > -1;
 	}
 });
 
@@ -80,8 +62,8 @@ function closeReplies (commentRow) {
 	// of each sibling recursively. subsequently remove the stored ids
 	// from session, and finally remove siblings from dom
 	if (siblings.length) {
-		var ids = [];
-		var siblingId;
+		var ids = []; // the ids of replies being closed
+		var siblingId; // temporary var to simplify substringing
 
 		siblings.each(function () {
 			siblingId = $(this).attr("id");
