@@ -8,6 +8,9 @@ Template.comment.helpers({
 	liked: function () {
 		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.liked)
 			return Meteor.user().activity.liked.indexOf(this._id) > -1;
+	},
+	numReplies: function () {
+		return this.replies && this.replies.length;
 	}
 });
 
