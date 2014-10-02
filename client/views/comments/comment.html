@@ -19,7 +19,13 @@
 	  	{{else}}
 	  		<i class="fa fa-thumbs-o-up"></i> {{likes}}
   		{{/if}}
-  		<button class="btn btn-default js-toggle-replies float-right">{{#if showingReplies}}Hide Replies{{else}}Show Replies{{/if}}</button>
+  		<button class="btn btn-default js-toggle-replies float-right">
+        {{#if showingReplies}}
+          Hide Replies
+        {{else}}
+          Show Replies ({{numReplies}})
+        {{/if}}
+      </button>
   	</div>
 	</div>
 </template>
