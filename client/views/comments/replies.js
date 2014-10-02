@@ -26,12 +26,6 @@ Template.replies.helpers({
 		// a dummy row that solves comment rendering problem (see docs error 1)
 		comments.push({"bottom": true});
 		return comments;
-	},
-	prevColor: function () {
-		var prevRow = $("#" + this.id).closest("tr");
-		var prevClass = prevRow.attr("class");
-
-		return prevClass && (prevClass.substr(prevClass.indexOf(" ") + 1, 3) + prevClass.substr(-1, 1));
 	}
 });
 
