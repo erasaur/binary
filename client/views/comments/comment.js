@@ -1,4 +1,5 @@
-var cIndex = 0; //color index
+// number of colors for each side. so: pro0, pro1, pro2, pro3
+var numColors = 4; 
 
 Template.comment.helpers({
 	showingReplies: function () {
@@ -109,13 +110,13 @@ Template.comment.events({
 		SessionAmplify.set("showingReplies", arr);
 
 		//update the color index
-		cIndex = (cIndex >= 4) ? 0 : cIndex + 1; 
+		var color = (arr.length - 1) % numColors; 
 
 		// add the replies
 		scrollToId(self._id);
 		var replyTo = $("#" + self._id).closest(".comment-row");
 		Blaze.renderWithData(Template.replies, //template to render
-												{id: self._id, side: self.side, color: cIndex}, //data context
+												{id: self._id, side: self.side, color: color}, //data context
 												replyTo.parent().get(0), // insert within
 												replyTo.next().get(0)); // insert before
 
