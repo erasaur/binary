@@ -2,11 +2,11 @@ Template.signup.events({
 	"input input": function (event, template) {
 		fadeElement($(".landing-form-errors"));	
 	},
-	"submit #signup-form": function (event, template) {
+	"submit #js-signup-form": function (event, template) {
 		event.preventDefault();
-		var username = template.find("#create-username").value;
-		var	email = template.find("#create-email").value;
-		var	password = template.find("#create-password").value;
+		var username = template.find("#js-create-username").value;
+		var	email = template.find("#js-create-email").value;
+		var	password = template.find("#js-create-password").value;
 
 		Meteor.call("newUser", username, email, password, function (error, result) {
 			if(error) {
