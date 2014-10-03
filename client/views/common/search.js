@@ -36,8 +36,5 @@ Template.searchInput.events({
 Template.searchResults.events({
   "submit #js-search-form": function (event, template) {
     event.preventDefault();
-  },
-  "click .js-search-link": function (event, template) {
-    $("#search-modal").modal("hide");
   }
 });
