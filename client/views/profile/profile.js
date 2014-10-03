@@ -26,6 +26,9 @@ Template.profileButtons.events({
 	},
 	"click #js-unfollow": function (event, template) {
 		Meteor.call("removeFollower", Meteor.userId(), this._id);
+	},
+	"click #js-settings": function (event, template) {
+		Router.go(getSettingsRoute(this._id));
 	}
 });
 
