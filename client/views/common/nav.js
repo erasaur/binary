@@ -47,7 +47,7 @@ Template.nav.events({
 			event.returnValue = false;
 		}
 	},
-	"click #logout": function(event, template) {
+	"click #js-logout": function(event, template) {
 		Meteor.logout(function(error) {
 			Router.go("home");
 		});
