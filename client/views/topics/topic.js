@@ -38,10 +38,10 @@ Yamcha.Topics = {
 }
 
 Template.topic.helpers({
-	numComments: function() {
-		return Comments.find({"topicId": this._id}).count();
+	hasComments: function () {
+		return Comments.find({"topicId": this._id}).count() > -1;
 	},
-	comments: function() {
+	comments: function () {
 		var pros = Comments.find({
 								"replyTo": {$nin: SessionAmplify.get("showingReplies")}, 
 								"topicId": this._id, 
@@ -65,26 +65,38 @@ Template.topic.helpers({
 		//a dummy row that solves comment rendering (see docs error 1)
 		comments.push({"bottom": true});
 		return comments;
-	},
-	following: function() {
+	}
+});
+
+Template.topicNav.helpers({
+	numComments: function () {
+		return Comments.find({"topicId": this._id}).count();
+	}
+});
+
+Template.topicButtons.helpers({
+	following: function () {
 		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.followingTopics)
 			return Meteor.user().activity.followingTopics.indexOf(this._id) > -1;
 	}
 });
 
-Template.topic.events({
-	"click #vote-pro": function(event, template) {
+Template.topicHeader.events({
+	"click #js-vote-pro": function(event, template) {
 		if(Session.get("currentTopic") && Meteor.userId())
 			Yamcha.Topics.vote(Session.get("currentTopic"), Meteor.userId(), "pro");
 	},
-	"click #vote-con": function(event, template) {
+	"click #js-vote-con": function(event, template) {
 		if(Session.get("currentTopic") && Meteor.userId())
 			Yamcha.Topics.vote(Session.get("currentTopic"), Meteor.userId(), "con");
-	},
-	"click #follow": function(event, template) {
+	}
+});
+
+Template.topicButtons.events({
+	"click #js-follow": function(event, template) {
 		Meteor.call("followTopic", Meteor.userId(), this._id);
 	},
-	"click #unfollow": function(event, template) {
+	"click #js-unfollow": function(event, template) {
 		Meteor.call("unfollowTopic", Meteor.userId(), this._id);
 	}
 });

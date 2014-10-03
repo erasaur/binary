@@ -1,28 +1,37 @@
-Template.profile.helpers({
+Template.profileButtons.helpers({
 	canFollow: function () {
 		return Meteor.userId() && this._id != Meteor.userId();
 	},
 	following: function () {
 		return this.activity && this.activity.followers && 
 			this.activity.followers.indexOf(Meteor.userId()) > -1;
-	},
+	}
+});
+
+Template.profile.helpers({
 	currentTab: function () {
 		return Session.get("currentTab");
-	},
+	}
+});
+
+Template.profileNav.helpers({
 	isCurrentTab: function (tab) {
 		return Session.equals("currentTab", tab) ? "active" : "";
 	}
 });
 
-Template.profile.events({
-	"click .js-nav-button": function (event, template) {
-		Session.set("currentTab", event.target.id);
-	},
-	"click #follow": function (event, template) {
+Template.profileButtons.events({
+	"click #js-follow": function (event, template) {
 		Meteor.call("newFollower", Meteor.userId(), this._id);
 	},
-	"click #unfollow": function (event, template) {
+	"click #js-unfollow": function (event, template) {
 		Meteor.call("removeFollower", Meteor.userId(), this._id);
+	}
+});
+
+Template.profileNav.events({
+	"click .js-nav-button": function (event, template) {
+		Session.set("currentTab", event.target.id);
 	}
 });
 
