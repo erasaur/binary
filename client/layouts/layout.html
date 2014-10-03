@@ -1,14 +1,26 @@
 <template name="pageLayout">
-  <div class="row full-height">
-    <div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
-      <div class="col-content page-header">
-        {{> yield "header"}}
-      </div>
-      <div class="col-content page-nav">
-        {{> yield "nav"}}
-      </div>
-      <div class="page-body">
-        {{> yield "body"}}
+  <div class="container-fluid wrapper">
+    {{> yield "nav"}}
+
+    <div class="row full-height">
+      <div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="col-content page-header">
+          <div class="page-header-buttons">
+            <i class="fa fa-chevron-left"></i>
+            <div class="float-right">
+              {{> yield "pageButtons"}}
+            </div>
+          </div>
+          <div class="page-header-content">
+            {{> yield "pageHeader"}}
+          </div>
+        </div>
+        <div class="col-content page-nav">
+          {{> yield "pageNav"}}
+        </div>
+        <div class="page-body">
+          {{> yield}}
+        </div>
       </div>
     </div>
   </div>

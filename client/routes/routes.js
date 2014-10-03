@@ -3,10 +3,12 @@ Router.configure({
 	yieldTemplates: {
 		"nav": {to: "nav"}
 	},
+  loadingTemplate: "loading",
   notFoundTemplate: "notFound"
 });
 
 Router.onBeforeAction("dataNotFound");
+Router.onBeforeAction("loading");
 
 Router.onBeforeAction(function () {
   if(!Meteor.loggingIn() && !Meteor.user())
@@ -38,15 +40,22 @@ Meteor.subscribe("currentUser");
 
 Router.map(function() {
 	this.route("home", { 
-		path: "/",
+    path: "/",
     waitOn: function () {
       return Meteor.subscribe("topicsList", Session.get("topicsLimit"));
-    }
+    }		
   });
   this.route("signup", {yieldTemplates: {}}); //don't yield nav
   this.route("login", {yieldTemplates: {}}); //don't yield nav
   this.route("profile", {
     path: "/users/:_id",
+    layoutTemplate: "pageLayout",
+    yieldTemplates: { 
+      "nav": { to: "nav" },
+      "profileButtons": { to: "pageButtons" },
+      "profileHeader": { to: "pageHeader" },
+      "profileNav": { to: "pageNav" } 
+    },
     waitOn: function () {
       return Meteor.subscribe("userProfile", this.params._id);
     },
@@ -55,10 +64,17 @@ Router.map(function() {
     },
     data: function () {
       return Meteor.users.findOne(this.params._id);
-    }
+    }  
   });
   this.route("topic", { 
   	path: "/topics/:_id",
+    layoutTemplate: "pageLayout",
+    yieldTemplates: { 
+      "nav": { to: "nav" },
+      "topicButtons": { to: "pageButtons" },
+      "topicHeader": { to: "pageHeader" },
+      "topicNav": { to: "pageNav" } 
+    },
   	waitOn: function () {
   		return Meteor.subscribe("singleTopic", this.params._id);
   	},

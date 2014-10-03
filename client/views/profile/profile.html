@@ -1,37 +1,31 @@
 <template name="profile">
-	<div class="row full-height">
-		<div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
-			<div class="col-content page-header">
-				<div class="page-header-buttons">
-					<i class="fa fa-chevron-left"></i>
-					<div class="float-right">
-						{{#if canFollow}}
-							{{#if following}}
-								<button id="unfollow" class="btn btn-primary">Following</button>
-							{{else}}
-								<button id="follow" class="btn btn-default">Follow</button>
-							{{/if}}
-						{{/if}}
-					</div>
-				</div>
-				<div class="page-header-content">
-					<h3>{{username}}</h3>
-					<p>Reputation: {{activity.likes}}</p>
-				</div>
-			</div>
-			<div class="col-content page-nav">
-				<ul class="page-nav-buttons clearfix">
-				  <li class="js-nav-button {{isCurrentTab 'profileComments'}}"><a href="#" id="profileComments">Comments</a></li>
-				  <li class="js-nav-button {{isCurrentTab 'profileTopics'}}"><a href="#" id="profileTopics">Topics</a></li>
-				  <li class="js-nav-button {{isCurrentTab 'profileUsers'}}"><a href="#" id="profileUsers">Users</a></li>
-				  <li class=""><a href="#">Temporary</a></li>
-				</ul>
-			</div>
-			<div class="page-body">
-				{{> UI.dynamic template=currentTab data=this}}
-			</div>
-		</div>
-	</div>
+	{{> UI.dynamic template=currentTab data=this}}
+</template>
+
+<template name="profileButtons">
+	{{#if canFollow}}
+		{{#if following}}
+			<button id="js-unfollow" class="btn btn-primary">Following</button>
+		{{else}}
+			<button id="js-follow" class="btn btn-default">Follow</button>
+		{{/if}}
+	{{else}}
+		<i class="fa fa-cog fa-lg"></i>
+	{{/if}}
+</template>
+
+<template name="profileHeader">
+	<h3>{{username}}</h3>
+	<p>Reputation: {{activity.likes}}</p>
+</template>
+
+<template name="profileNav">
+	<ul class="page-nav-buttons clearfix">
+	  <li class="js-nav-button {{isCurrentTab 'profileComments'}}"><a href="#" id="profileComments">Comments</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'profileTopics'}}"><a href="#" id="profileTopics">Topics</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'profileUsers'}}"><a href="#" id="profileUsers">Users</a></li>
+	  <li class=""><a href="#">Temporary</a></li>
+	</ul>
 </template>
 
 <template name="profileComments">
