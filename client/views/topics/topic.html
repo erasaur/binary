@@ -26,8 +26,8 @@
 			
 			<div class="col-content page-nav">
 				<ul class="page-nav-buttons clearfix">
-				  <li class="js-nav-button"><a href="#" id="topicComments">Comments</a></li>
-				  <li class="js-nav-button"><a href="#">Hello</a></li>
+				  <li class="js-nav-button"><a href="#" id="topicComments">Comments {{numComments}}</a></li>
+				  <li class="js-nav-button"><a href="#">Followers {{followers.length}}</a></li>
 				  <li class="js-nav-button"><a href="#">Created by {{formatName userId}}</a></li>
 				  <li class="js-nav-button"><a href="#">Created {{formatDate createdAt}}</a></li>
 				</ul>
@@ -51,7 +51,7 @@
 					{{> newComment}}
 				</div>
 
-				{{#if hasComments}}
+				{{#if numComments}}
 					<div class="comment-container main">
 						{{#each comments}}
 							{{> commentRow}}
