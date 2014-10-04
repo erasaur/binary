@@ -8,8 +8,12 @@ Template.newTopic.events({
     };
 
     Meteor.call("newTopic", topic, function(error, result) {
-      if (error)
-        alert(formatError(error));
+      if (error) {
+        throwError(formatError(error));
+        clearSeenErrors();
+        if (error.error == 603)
+          Router.go(getTopicRoute(error.details));
+      }
       else {
         $("#js-create-title").val("");
         $("#js-create-description").val("");
