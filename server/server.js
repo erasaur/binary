@@ -22,46 +22,63 @@ Meteor.methods({
 				"email": email, 
 				"password": password, 
 				"profile": {}, 
-				"activity": {"likes": 0, 
-										 "liked": [], 
-										 "followers": [], 
-										 "following": [], 
-										 "followingTopics": [], 
-										 "discussedTopics": []
+				"activity": {
+											"likes": 0, 
+											"liked": [], 
+											"followers": [], 
+											"following": [], 
+											"followingTopics": [], 
+											"discussedTopics": []
 										}, 
 				"notifications": {"commentReply": [], "followingUser": [], "followingTopic": []}
 			});
 			return "Success! Your account '" + username + "' has been created.";
 		}
 	},
-	newTopic: function(userId, title) {
-		var errors = [];
+	newTopic: function(topic) {
+		var title = topic.title;
+		var description = topic.description;
+		var userId = this.userId;
 
-		//enter the date as well
-		if (title) {
-			if(Topics.find({"title": title}).count() > 0) {
-				errors.push("There is already a question with that title.");
-			}
-		} else {
-			errors.push("Please fill in all of the fields!");
-		}
+		if (!title)
+			throw new Meteor.Error(602, "Please enter a title.");
 
-		if (errors.length > 0) {
-			throw new Meteor.Error(403, errors[0]);
-		} else {
-			var topicId = Topics.insert({"title": title, 
-																   "userId": userId, 
-																   "createdAt": new Date(), 
-																   "pro": 0, "con": 0, 
-																   "proUsers": [], 
-																   "conUsers": [], 
-																   "followers": []
-																  });
+		//check if title exists
+		else if (Topics.find({"title": title}).count() > 0)
+			throw new Meteor.Error(603, "Sorry, there is already a topic with that title.");
 
-			Meteor.call("newNotification", "newTopic", userId, { "topicId": topicId, "topicTitle": title });
+		// if(!isAdmin(Meteor.user())){
+  //     // check that user waits more than X seconds between posts
+  //     if(!this.isSimulation && timeSinceLastPost < postInterval)
+  //       throw new Meteor.Error(604, i18n.t('Please wait ')+(postInterval-timeSinceLastPost)+i18n.t(' seconds before posting again'));
 
-			return topicId;
-		}
+  //     // check that the user doesn't post more than Y posts per day
+  //     if(!this.isSimulation && numberOfPostsInPast24Hours > maxPostsPer24Hours)
+  //       throw new Meteor.Error(605, i18n.t('Sorry, you cannot submit more than ')+maxPostsPer24Hours+i18n.t(' posts per day'));
+  //   }
+
+    var properties = {
+      title: title,
+      description: description,
+      userId: userId,
+      createdAt: new Date(),
+      // author: getDisplayNameById(userId),
+      // category: category,
+      // baseScore: 0,
+      // score: 0,
+      // commentsCount: 0,
+      pro: 0,
+      con: 0,
+      proUsers: [],
+      conUsers: [],
+      followers: []
+    };
+
+		var topicId = Topics.insert(properties);
+
+		Meteor.call("newNotification", "newTopic", userId, { "topicId": topicId, "topicTitle": title });
+
+		return topicId;
 	},
 	newComment: function(userId, topicId, content, side, replyTo, replyToUser) {
 		if (content) {
