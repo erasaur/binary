@@ -5,7 +5,7 @@
       <b><a href="{{pathFor 'profile' _id=userId}}">{{formatName userId}}</a></b>
     </div>
     <div class="comment-content">
-      {{{breaklines content}}}
+      {{{formatContent content}}}
     </div>
     <div class="comment-date">
       {{formatDate createdAt}}
