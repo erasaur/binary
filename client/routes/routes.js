@@ -9,6 +9,7 @@ Router.configure({
 
 Router.onBeforeAction("dataNotFound");
 Router.onBeforeAction("loading");
+Router.onBeforeAction(clearSeenErrors);
 
 Router.onBeforeAction(function () {
   if(!Meteor.loggingIn() && !Meteor.user())

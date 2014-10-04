@@ -35,7 +35,7 @@ Meteor.methods({
 			return "Success! Your account '" + username + "' has been created.";
 		}
 	},
-	newTopic: function(topic) {
+	newTopic: function (topic) {
 		var title = topic.title;
 		var description = topic.description;
 		var userId = this.userId;
@@ -44,9 +44,13 @@ Meteor.methods({
 			throw new Meteor.Error(602, "Please enter a title.");
 
 		//check if title exists
-		else if (Topics.find({"title": title}).count() > 0)
-			throw new Meteor.Error(603, "Sorry, there is already a topic with that title.");
+		else {
+			var topicWithTitle = Topics.find({"title": title});
 
+			if (typeof topicWithTitle !== "undefined")
+				throw new Meteor.Error(603, "Sorry, there is already a topic with that title.", topicWithTitle._id);
+		}
+		
 		// if(!isAdmin(Meteor.user())){
   //     // check that user waits more than X seconds between posts
   //     if(!this.isSimulation && timeSinceLastPost < postInterval)
