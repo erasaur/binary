@@ -10,26 +10,15 @@
 }
 .comment-container {
   margin: 20px 0;
-  // padding: 20px 0;
   padding-bottom: 1px;
   box-shadow: 0px -5px 6px -3px rgba(0,0,0,0.3), 0px 7px 6px -3px rgba(0,0,0,0.3);
+  .border-radius(@main-radius);
 }
 .comment-container.main {
   margin-top: 0;
   box-shadow: none;
   &:before { content: none; }
 }
-
-// .comment-container.pro0:before { left: 12%; border-bottom-color: @pro0; }
-// .comment-container.pro1:before { left: 12%; border-bottom-color: @pro1; }
-// .comment-container.pro2:before { left: 12%; border-bottom-color: @pro2; }
-// .comment-container.pro3:before { left: 12%; border-bottom-color: @pro3; }
-// .comment-container.pro4:before { left: 12%; border-bottom-color: @pro4; }
-// .comment-container.con0:before { left: 85%; border-bottom-color: @con0; }
-// .comment-container.con1:before { left: 85%; border-bottom-color: @con1; }
-// .comment-container.con2:before { left: 85%; border-bottom-color: @con2; }
-// .comment-container.con3:before { left: 85%; border-bottom-color: @con3; }
-// .comment-container.con4:before { left: 85%; border-bottom-color: @con4; }
 
 .comment-container.pro0:before { left: 12%; color: @pro0; }
 .comment-container.pro1:before { left: 12%; color: @pro1; }
@@ -58,15 +47,15 @@
 .comment-con { 
   padding: 10px; 
 }
-.comment-pro { padding-left: @col-padding-side; }
-.comment-con { padding-right: @col-padding-side; }
+.comment-pro { padding-left: @main-padding; }
+.comment-con { padding-right: @main-padding; }
 
 .comment-row {
   padding: 0;
   width: 100%;
 }
 .comment-replies {
-  padding: 0 @col-padding-side;
+  padding: 0 @main-padding;
 }
 
 // comment card display ------------------------------

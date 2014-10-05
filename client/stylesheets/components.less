@@ -29,7 +29,7 @@
   color: white !important;
   box-shadow: none;
   padding: .2em .6em;
-  border-radius: .25em;
+  border-radius: @main-radius;
 }
 .btn.btn-pro { .popout-button(@pro-color); }
 .btn.btn-con { .popout-button(@con-color); }
@@ -60,15 +60,18 @@
   padding: 0;
 }
 .col {
-  background: @light-gray; 
+  // background: @light-gray; 
   padding: 0;
-  .border-radius(8px 8px 0 0);
 }
 .col-content {
-  padding: 10px @col-padding-side;
+  padding: @main-padding;
 }
 .full-height {
   height: 100%;
+}
+.page-head, .page-body {
+  background: @light-gray;
+  .border-radius(@main-radius);
 }
 .page-header {
   margin: 0;
@@ -78,7 +81,6 @@
   height: 40px;
 }
 .page-header-buttons i {
-  padding: 10px 0;
   color: @gray;
   &:hover { 
     cursor: pointer; 
@@ -87,7 +89,7 @@
 }
 .page-nav {
   padding: 0;
-  border-bottom: 20px solid @background-color;
+  margin-bottom: 20px;
 }
 .page-nav-buttons {
   list-style: none;
@@ -102,18 +104,24 @@
   border: 1px solid @light-gray;
   border-right: none;
   border-bottom: none;
-  &:first-of-type { border-left: none; }
+  &:first-of-type { 
+    border-radius: 0 0 0 @main-radius;
+    border-left: none; 
+  }
+  &:last-of-type {
+    border-radius: 0 0 @main-radius 0;
+  }
   &:hover { background: @light-gray; }
 }
 .page-nav-buttons a {
   display: block;
-  padding: 20px 10%;
+  padding: @main-padding 10%;
   height: 100%;
   &.selected { background: darken(@light-gray, 10%); }
 }
-.page-body-header {
-  background: @light-gray;
-}
+// .page-body-header {
+//   background: @light-gray;
+// }
 .page-body-header h3 { 
   display: inline-block; 
 }
@@ -126,12 +134,12 @@
   margin: 0; border: 0; 
 }
 .dropdown-menu {
-  min-width:auto;
-  width:100%;
+  min-width: auto;
+  width: 100%;
   border-color: darken(@light-gray, 30%);
   background: @light-gray;
   box-shadow: none;
-  .border-radius(1px);
+  .border-radius(@main-radius);
 }
 .dropdown-menu a {
   display: block;
@@ -166,39 +174,38 @@
 }
 .navbar-brand { 
   float: right; 
-  padding: 0 20px 0 0; //right
+  padding: 0;
+  padding-right: @main-padding;
   margin: 15px 0 0 0; //top
 }
 .navbar-items { padding: 0; }
 .navbar-nav { 
   float: left; 
-  padding: 0 0 0 20px; //left
+  padding: 0;
+  padding-left: @main-padding;
   margin: 0;
   position: relative;
 }
 .navbar-nav > li {
   width: 40px;
   display: inline-block; //so the list items don't stack when screen is shrunk
-
-  > .dropdown-menu {
-    right: 0;
-    left: auto;
-
-    &.notifications {
-      width: 250px;
-      height: 400px;
-      overflow-y: auto; 
-    }
-
-    .btn {
-      width: 100%;
-      margin-top: 10px;
-    }
-  }
+}
+.navbar-nav .dropdown-menu {
+  right: 0;
+  left: auto;
+}
+.navbar-nav .dropdown-menu.notifications {
+  width: 250px;
+  height: 400px;
+  overflow-y: auto; 
+}
+.navbar-nav .dropdown-menu .btn {
+  width: 100%;
+  margin-top: 10px;
 }
 .navbar-collapsed {
   width: 100%;
-  padding: 15px 20px;
+  padding: @main-padding;
 
   > .navbar-brand {
     float: left; 
@@ -210,6 +217,12 @@
     margin-top: -7.5px;
     .navbar-nav { padding: 0; }
   }
+}
+
+// settings page -------------------------------------
+
+.page-body.settings {
+  margin-bottom: 20px;
 }
 
 // topic page ----------------------------------------
@@ -243,11 +256,11 @@
 .landing-container {
   width: 300px;
   margin: 100px auto;
-  padding: 20px 40px;
+  padding: @main-padding 40px;
 }
 .landing-form-errors > li {
   text-align: center;
-  padding: 0 20px 20px;
+  padding: 0 @main-padding @main-padding;
 }
 .landing-form-header {
   margin-bottom: 30px;
@@ -255,7 +268,7 @@
 }
 .landing-form-body > form > button {
   width: 100%;
-  margin: 20px 0 10px;
+  margin: @main-padding 0 10px;
 }
 
 // search page ---------------------------------------
@@ -329,7 +342,7 @@
   .transition(ease-in-out);
 }
 .modal-content {
-  .border-radius(1px);
+  .border-radius(@main-radius);
   box-shadow: none;
 }
 

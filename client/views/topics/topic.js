@@ -39,7 +39,7 @@ Yamcha.Topics = {
 
 Template.topic.helpers({
 	hasComments: function () {
-		return Comments.find({"topicId": this._id}).count() > -1;
+		return Comments.find({"topicId": this._id}).count() > 0;
 	},
 	comments: function () {
 		var pros = Comments.find({
