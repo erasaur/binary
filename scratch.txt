@@ -1,3 +1,8 @@
+// global errors - use throwError method
+- please sign in first
+- sorry, you cannot edit/delete this topic/comment
+
+
 table {
   border-spacing: 0
 }

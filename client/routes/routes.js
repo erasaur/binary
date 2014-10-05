@@ -13,6 +13,9 @@ Router.onBeforeAction(clearSeenErrors);
 
 Router.onBeforeAction(function () {
   if(!Meteor.loggingIn() && !Meteor.user())
+    throwError("Please sign in first!");
+    clearSeenErrors();
+
     this.redirect("signup");
 }, {except: ["signup", "login"]}); //forgot password page
 
