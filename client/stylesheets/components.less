@@ -37,8 +37,8 @@
   .popout-button(@primary-color);
 }
 .btn.btn-primary { 
-  .popout-button(darken(@primary-color, 10%));
-  border-bottom: none;
+  .popout-button(@dark-primary-color);
+  background-color: @dark-primary-color; 
 }
 .round {
   margin: 10px;
@@ -69,8 +69,12 @@
 .full-height {
   height: 100%;
 }
-.page-head, .page-body {
+.page-head, 
+.page-body {
   background: @light-gray;
+  // border: 1px solid darken(@light-gray, 5%);
+  // border-bottom: 2px solid darken(@light-gray, 10%);
+  // border-top: none;
   .border-radius(@main-radius);
 }
 .page-header {
@@ -81,7 +85,7 @@
   height: 40px;
 }
 .page-header-buttons i {
-  color: @gray;
+  color: @dark-gray;
   &:hover { 
     cursor: pointer; 
     color: black; 
@@ -101,7 +105,7 @@
   width: 25%;
   height: 60px;
   text-align: center;
-  border: 1px solid @light-gray;
+  border: 1px solid @gray;
   border-right: none;
   border-bottom: none;
   &:first-of-type { 
@@ -111,17 +115,18 @@
   &:last-of-type {
     border-radius: 0 0 @main-radius 0;
   }
-  &:hover { background: @light-gray; }
+  &:hover { background: @gray; }
 }
 .page-nav-buttons a {
   display: block;
   padding: @main-padding 10%;
   height: 100%;
-  &.selected { background: darken(@light-gray, 10%); }
+  &.selected { background: @gray; }
 }
-// .page-body-header {
-//   background: @light-gray;
-// }
+.page-body-header {
+  background: @gray;
+  .border-radius(8px 8px 0 0);
+}
 .page-body-header h3 { 
   display: inline-block; 
 }
@@ -131,12 +136,12 @@
   &:active { box-shadow: none; }
 }
 .dropdown { 
-  margin: 0; border: 0; 
+  margin: 0; 
+  border: none;
 }
 .dropdown-menu {
-  min-width: auto;
   width: 100%;
-  border-color: darken(@light-gray, 30%);
+  border-color: @dark-gray;
   background: @light-gray;
   box-shadow: none;
   .border-radius(@main-radius);
@@ -144,7 +149,7 @@
 .dropdown-menu a {
   display: block;
   padding: 5px 10px;
-  &:hover { background: darken(@light-gray, 10%); }
+  &:hover { background: @gray; }
 }
 
 // navbar --------------------------------------------
@@ -157,7 +162,7 @@
 }
 .form-control-feedback { 
   right: 0; 
-  color: @gray;
+  color: @dark-gray;
   &:hover { cursor: pointer; }
 }
 .navbar-transparent {
@@ -165,7 +170,7 @@
   width: 100%; 
 }
 .navbar-brand, ul.navbar-nav > li > a {
-  color: @gray;
+  color: @dark-gray;
   font-size: 1.5em; 
   background: transparent !important;
   position: relative;
@@ -199,10 +204,6 @@
   height: 400px;
   overflow-y: auto; 
 }
-.navbar-nav .dropdown-menu .btn {
-  width: 100%;
-  margin-top: 10px;
-}
 .navbar-collapsed {
   width: 100%;
   padding: @main-padding;
@@ -223,6 +224,25 @@
 
 .page-body.settings {
   margin-bottom: 20px;
+}
+.list-item {
+  padding: 20px 0; 
+  overflow: hidden; 
+  position: relative;
+}
+.list-item-info {
+  width: 60%; 
+  float: left;
+}
+.list-item-info .form-control {
+  border: none; 
+  background: transparent; 
+  box-shadow: none; 
+  padding: 0;
+}
+.list-item-action {
+  position: absolute; 
+  right: 0; 
 }
 
 // topic page ----------------------------------------
@@ -294,11 +314,11 @@
   }
 }
 #search-results ul li:first-of-type {
-  .content-header(@gray);
+  .content-header(@dark-gray);
 }
 #topic-categories ul {
   width: 33%;
-  border-right: 1px solid @light-gray;
+  border-right: 1px solid @gray;
 
   &:last-of-type { border: 0; }
 }
@@ -306,7 +326,7 @@
   text-align: center;
 }
 #topic-categories ul a {
-  .content-header(@gray); 
+  .content-header(@dark-gray); 
   &:hover { color: black; }
 }
 

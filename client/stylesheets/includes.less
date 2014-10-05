@@ -17,7 +17,7 @@
 
 // margins
 
-// colors 
+// colors --------------------------------------------
 @pro0: rgb(153, 218, 213);
 @pro1: rgb(200, 230, 200);
 @pro2: rgb(180, 236, 252);
@@ -30,10 +30,13 @@
 @con3: rgb(218, 127, 154);
 @con4: rgb(225, 150, 206);
 
-@light-gray: rgba(220, 220, 220, 0.6);
-@gray: rgb(160, 160, 160);
+@light-gray: rgb(235, 235, 235); // rgba(220, 220, 220, 0.6);
+@gray: rgb(225, 225, 225);
+@dark-gray: rgb(160, 160, 160);
+
 @light-primary-color: rgb(127, 175, 247);
 @primary-color: rgb(62, 130, 231);
+@dark-primary-color: rgb(27, 103, 215);
 
 @background-color: rgb(255, 255, 255);
 @pro-color: rgb(146, 240, 52);
@@ -78,7 +81,7 @@
 }
 .popout-button(@color) {
   background: fade(@color, 80%); //rgba(@color, 0.8)
-  border-bottom: 4px solid darken(@color, 10%);
+  border-bottom: 4px solid @color;
   &:hover { background: @color; }
 }
 
