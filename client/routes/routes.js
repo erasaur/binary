@@ -7,18 +7,20 @@ Router.configure({
   notFoundTemplate: "notFound"
 });
 
-Router.onBeforeAction("dataNotFound");
-Router.onBeforeAction("loading");
-
 Router.onBeforeAction(function () {
   if (!Meteor.loggingIn() && !Meteor.user())
     this.redirect("signup");
+
 }, {except: ["signup", "login"]}); //forgot password page
 
 Router.onBeforeAction(function () {
   if (Meteor.user())
     this.redirect("home");
+
 }, {only: ["signup", "login"]});
+
+Router.onBeforeAction("loading");
+Router.onBeforeAction("dataNotFound");
 
 Router.onAfterAction(function () {
   if (this.ready()) {

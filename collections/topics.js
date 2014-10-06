@@ -16,6 +16,14 @@ TopicSchema = new SimpleSchema({
   createdAt: {
     type: Date
   },
+  // commentsCount: {
+  //   type: Number,
+  //   optional: true
+  // },
+  // commenters: {
+  //   type: [String],
+  //   optional: true
+  // },
   pro: {
     type: Number,
     min: 0,

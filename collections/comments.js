@@ -12,11 +12,15 @@ CommentSchema = new SimpleSchema({
   createdAt: {
     type: Date
   },
-  likes: { //scoring system ?
+  upvotes: { // scoring system ?
     type: Number,
     min: 0,
     optional: true
   },
+  // upvoters: {
+  //   type: [String],
+  //   optional: true
+  // },
   replies: {
     type: [String]
   },

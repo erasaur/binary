@@ -23,6 +23,11 @@ Schema.User = new SimpleSchema({
   createdAt: {
     type: Date
   },
+  stats: { // public but not modifiable
+    type: Object,
+    optional: true,
+    blackbox: true
+  },
   profile: { // public and modifiable
     type: Object,
     optional: true,
@@ -33,7 +38,7 @@ Schema.User = new SimpleSchema({
     optional: true,
     blackbox: true
   },
-  notifications: {
+  notifications: { // public but not modifiable
     type: Object,
     optional: true,
     blackbox: true

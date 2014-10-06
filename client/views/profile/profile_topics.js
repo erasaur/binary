@@ -14,7 +14,7 @@ Template.profileTopics.helpers({
       return Topics.find({"userId": this._id});
 
     else if (topicCategory === "Discussed")
-      return this.activity && Topics.find({"_id": {$in: this.activity.discussedTopics}});
+      return this.activity && Topics.find({"_id": {$in: this.activity.discussedTopics}}) || [];
     
     else
       return this.activity && Topics.find({"_id": {$in: this.activity.followingTopics}}) || [];
@@ -23,7 +23,7 @@ Template.profileTopics.helpers({
 
 Template.profileTopics.events({
   "click li[role='presentation']": function (event, template) {
-    topicCategory = event.target.text;
+    topicCategory = event.currentTarget.getAttribute("data-category");
     topicDeps.changed();
   }
 });

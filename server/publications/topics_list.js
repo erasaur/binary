@@ -19,7 +19,7 @@ Meteor.publish("topicsList", function (limit) {
 
   for (var i = topicIds.length - 1; i >= 0; i--) {
     var comment = Comments.findOne({"topicId": topicIds[i]},
-                                   {sort: {"likes": -1}});
+                                   {sort: {"upvotes": -1}});
     if (comment)
       commentIds.push(comment._id);
   }
@@ -42,7 +42,7 @@ Meteor.publish("topicsList", function (limit) {
 //       reverse: true, // use the comments topicId to match this _id
 //       key: "topicId",
 //       collection: Comments,
-//       options: { sort: { "likes": -1 }, limit: 1 },
+//       options: { sort: { "upvotes": -1 }, limit: 1 },
 //       mappings: [{
 //         key: "userId", collection: Meteor.users, // publish comment owners
 //         options: { fields: { "username": 1 }, limit: 1 }

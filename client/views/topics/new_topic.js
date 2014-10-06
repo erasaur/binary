@@ -10,6 +10,7 @@ Template.newTopic.events({
     Meteor.call("newTopic", topic, function(error, result) {
       if (error)
         alert(formatError(error));
+      
       else {
         $("#js-create-title").val("");
         $("#js-create-description").val("");

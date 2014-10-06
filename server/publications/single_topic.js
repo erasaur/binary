@@ -27,7 +27,7 @@ Meteor.publish("singleTopic", function (topicId) {
       reverse: true, // use the comments topicId to match this _id
       key: "topicId",
       collection: Comments,
-      options: { sort: { "likes": -1 } },
+      options: { sort: { "upvotes": -1 } },
       mappings: [{
         key: "userId", collection: Meteor.users, // publish comment owners
         options: { fields: { "username": 1 } }

@@ -5,9 +5,9 @@ Template.comment.helpers({
 	showingReplies: function () {
 		return SessionAmplify.get("showingReplies").indexOf(this._id) > -1;
 	},
-	liked: function () {
-		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.liked)
-			return Meteor.user().activity.liked.indexOf(this._id) > -1;
+	upvoted: function () {
+		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.upvotedComments)
+			return Meteor.user().activity.upvotedComments.indexOf(this._id) > -1;
 	},
 	numReplies: function () {
 		return this.replies && this.replies.length;
@@ -124,11 +124,11 @@ Template.comment.events({
 												replyTo.next().get(0)); // insert before
 
 	},
-	"click .js-like-comment": function (event, template) {
-		Meteor.call("likeComment", Meteor.userId(), this._id, this.userId);
+	"click .js-upvote-comment": function (event, template) {
+		Meteor.call("upvoteComment", Meteor.userId(), this._id, this.userId);
 	},
-	"click .js-unlike-comment": function (event, template) {
-		Meteor.call("unlikeComment", Meteor.userId(), this._id, this.userId);
+	"click .js-downvote-comment": function (event, template) {
+		Meteor.call("downvoteComment", Meteor.userId(), this._id, this.userId);
 	}
 });
 

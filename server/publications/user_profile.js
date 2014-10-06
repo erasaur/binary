@@ -14,7 +14,7 @@ Meteor.publish("userProfile", function (userId) {
   var commentIds = [];
 
   if (user && user.activity)  
-    commentIds = user.activity.liked;
+    commentIds = user.activity.upvotedComments;
 
   var comments = Comments.find({$or: [{"userId": userId}, {"_id": {$in: commentIds}}]});
 
@@ -36,7 +36,7 @@ Meteor.publish("userProfile", function (userId) {
   var userIds = [];
 
   if (user && user.activity)
-    userIds = _.union(user.activity.followers, user.activity.following);
+    userIds = _.union(user.activity.followers, user.activity.followingUsers);
 
   userIds.push(userId); // add back the original user
 
@@ -51,7 +51,7 @@ Meteor.publish("userProfile", function (userId) {
   userIds = _.union(userIds, commentUsers, topicUsers);
 
   var users = Meteor.users.find({"_id": {$in: userIds}}, 
-                                {fields: {"username": 1, "activity": 1}});
+                                {fields: {"username": 1, "stats": 1, "activity": 1}});
 
   return [comments, topics, users];
 });

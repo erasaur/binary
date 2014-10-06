@@ -11,13 +11,13 @@
   	</div>
   	<div class="comment-footer">
   		{{#if currentUser}}
-	  		{{#if liked}}
-	  			<button class="float-left btn btn-default js-unlike-comment">Unlike {{likes}}</button>
+	  		{{#if upvoted}}
+	  			<button class="float-left btn btn-default js-downvote-comment">Unlike {{upvotes}}</button>
 	  		{{else}}
-	  			<button class="float-left btn btn-default js-like-comment"><i class="fa fa-thumbs-o-up"></i> {{likes}}</button>
+	  			<button class="float-left btn btn-default js-upvote-comment"><i class="fa fa-thumbs-o-up"></i> {{upvotes}}</button>
 	  		{{/if}}
 	  	{{else}}
-	  		<i class="fa fa-thumbs-o-up"></i> {{likes}}
+	  		<i class="fa fa-thumbs-o-up"></i> {{upvotes}}
   		{{/if}}
 
   		<button class="btn btn-default js-toggle-replies float-right">
