@@ -1,0 +1,11 @@
+<template name="notifications">
+  <ul>
+    {{#if hasNotifications}}
+      {{#each notifications}}
+        <li><a href="{{url}}"><span>{{message}}</span></a></li>
+      {{/each}}
+    {{else}}
+      <li>No notifications.</li>
+    {{/if}}
+  </ul>
+</template>
