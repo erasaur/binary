@@ -1,5 +1,7 @@
 <template name="profile">
-	{{> UI.dynamic template=currentTab data=this}}
+	<div class="col-content page-body">
+		{{> UI.dynamic template=currentTab data=this}}
+	</div>
 </template>
 
 <template name="profileButtons">
@@ -29,7 +31,7 @@
 </template>
 
 <template name="profileComments">
-	<div class="col-content page-body-header">
+	<div class="page-body-header">
 		<h3>Comments</h3>
 		<span class="dropdown">
 		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
@@ -42,19 +44,23 @@
 		</span>
 	</div>
 
-	<div class="col-content page-body-content">
+	<div class="page-body-content">
+		<div class="list">
 		{{#if comments.count}}
 			{{#each comments}}
 				{{> commentItem}}
 			{{/each}}
 		{{else}}
-			Nothing to see here!
+			<div class="list-item">
+				Nothing to see here!
+			</div>
 		{{/if}}
+		</div>
 	</div>
 </template>
 
 <template name="profileTopics">
-	<div class="col-content page-body-header">
+	<div class="page-body-header">
 		<h3>Topics</h3>
 		<span class="dropdown">
 		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
@@ -68,19 +74,23 @@
 		</span>
 	</div>
 
-	<div class="col-content page-body-content">
+	<div class="page-body-content">
+		<div class="list">
 		{{#if topics.count}}
 			{{#each topics}}
 				{{> topicItem}}
 			{{/each}}
 		{{else}}
-			Nothing to see here!
+			<div class="list-item">
+				Nothing to see here!
+			</div>
 		{{/if}}
+		</div>
 	</div>
 </template>
 
 <template name="profileUsers">
-	<div class="col-content page-body-header">
+	<div class="page-body-header">
 		<h3>People</h3>
 		<span class="dropdown">
 		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
@@ -92,14 +102,20 @@
 		  </ul>
 		</span>
 	</div>
-	<div class="col-content page-body-content">
+	<div class="page-body-content">
+		<div class="list">
 		{{#if users.count}}
 			{{#each users}}
-				<a href="{{pathFor 'profile'}}">{{username}}</a>
+				<div class="list-item">
+					<a href="{{pathFor 'profile'}}">{{username}}</a>
+				</div>
 			{{/each}}
 		{{else}}
-			Nothing to see here!
+			<div class="list-item">
+				Nothing to see here!
+			</div>
 		{{/if}}
+		</div>
 	</div>
 </template>
 

@@ -72,11 +72,11 @@
           <div class="list">
             <div class="list-item">
               <div class="list-item-info">
-                <label for="js-notifications-toggle">Notifications</label>
-                <p class="help-block">Whether or not to receive notifications at all</p>
+                <label>Notifications</label>
+                <p class="help-block">Turn all notifications on/off</p>
               </div>
               <div class="list-item-action">
-                <div class="btn-group">
+                <div id="js-notif-toggle" class="btn-group">
                   <button type="button" class="btn btn-primary">On</button>
                   <button type="button" class="btn btn-default">Off</button>
                 </div>
@@ -84,27 +84,64 @@
             </div>
             <div class="list-item">
               <div class="list-item-info">
-                <label for="js-account-password">Password</label>
-                <input type="password" class="form-control" id="js-account-password" placeholder="Password">
+                <label>Following Users' Comments</label>
+                <p class="help-block">Get notified when someone you are following posts a new comment</p>
               </div>
               <div class="list-item-action">
-                <button class="btn btn-default">Save</button>
+                <div id="js-notif-followingUser-comments" class="btn-group">
+                  <button type="button" class="btn btn-primary">On</button>
+                  <button type="button" class="btn btn-default">Off</button>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="page-body-content">
-            <form role="form">
-              <div class="form-group">
-                <label for="js-account-email">Email</label>
-                <input type="email" class="form-control" id="js-account-email" placeholder="Email">
+            <div class="list-item">
+              <div class="list-item-info">
+                <label>Following Users' Topics</label>
+                <p class="help-block">Get notified when someone you are following creates a new topic</p>
               </div>
-              <div class="form-group">
-                <label for="js-account-password">Password</label>
-                <input type="password" class="form-control" id="js-account-password">
+              <div class="list-item-action">
+                <div id="js-notif-followingUser-topics" class="btn-group">
+                  <button type="button" class="btn btn-primary">On</button>
+                  <button type="button" class="btn btn-default">Off</button>
+                </div>
               </div>
-              <button type="submit" class="btn btn-default">Submit</button>
-            </form>
+            </div>
+            <div class="list-item">
+              <div class="list-item-info">
+                <label>Comment Replies</label>
+                <p class="help-block">Get notified whenever someone replies to your comment</p>
+              </div>
+              <div class="list-item-action">
+                <div id="js-notif-ownComment-replies" class="btn-group">
+                  <button type="button" class="btn btn-primary">On</button>
+                  <button type="button" class="btn btn-default">Off</button>
+                </div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="list-item-info">
+                <label>Topic Comments</label>
+                <p class="help-block">Get notified whenever someone posts a comment in your topic</p>
+              </div>
+              <div class="list-item-action">
+                <div id="js-notif-ownTopic-comments" class="btn-group">
+                  <button type="button" class="btn btn-primary">On</button>
+                  <button type="button" class="btn btn-default">Off</button>
+                </div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="list-item-info">
+                <label>Following Topics</label>
+                <p class="help-block">Get notified when someone posts a comment in a topic you are following</p>
+              </div>
+              <div class="list-item-action">
+                <div id="js-notif-followingTopic-comments" class="btn-group">
+                  <button type="button" class="btn btn-primary">On</button>
+                  <button type="button" class="btn btn-default">Off</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

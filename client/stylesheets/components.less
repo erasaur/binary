@@ -72,10 +72,10 @@
 .page-head, 
 .page-body {
   background: @light-gray;
+  .border-radius(@main-radius);
   // border: 1px solid darken(@light-gray, 5%);
   // border-bottom: 2px solid darken(@light-gray, 10%);
   // border-top: none;
-  .border-radius(@main-radius);
 }
 .page-header {
   margin: 0;
@@ -121,20 +121,21 @@
   display: block;
   padding: @main-padding 10%;
   height: 100%;
-  &.selected { background: @gray; }
 }
-.page-body-header {
+.page-nav-buttons li.selected {
   background: @gray;
-  .border-radius(8px 8px 0 0);
 }
 .page-body-header h3 { 
-  display: inline-block; 
+  display: inline-block;
 }
 .page-body-header .dropdown-toggle {
   border: none;
   background: transparent;
   &:active { box-shadow: none; }
 }
+
+// dropdown ------------------------------------------
+
 .dropdown { 
   margin: 0; 
   border: none;
@@ -150,6 +151,29 @@
   display: block;
   padding: 5px 10px;
   &:hover { background: @gray; }
+}
+
+// list (borrowed heavily from medium) ---------------
+
+.list-item {
+  padding: 20px 0;
+  overflow: hidden; 
+  position: relative;
+  color: black;
+}
+.list-item-info {
+  width: 80%; 
+  float: left;
+}
+.list-item-info .form-control {
+  border: none; 
+  background: transparent; 
+  box-shadow: none; 
+  padding: 0;
+}
+.list-item-action {
+  position: absolute; 
+  right: 0; 
 }
 
 // navbar --------------------------------------------
@@ -207,42 +231,21 @@
 .navbar-collapsed {
   width: 100%;
   padding: @main-padding;
-
-  > .navbar-brand {
-    float: left; 
-    margin: 0; padding: 0;
-    height: 1.5em;
-  }
-  > .navbar-items {
-    float: right;
-    margin-top: -7.5px;
-    .navbar-nav { padding: 0; }
-  }
+}
+.navbar-collapsed .navbar-brand {
+  float: left; 
+  margin: 0; padding: 0;
+  height: 1.5em;
+}
+.navbar-collapsed .navbar-items {
+  float: right;
+  margin-top: -7.5px;
 }
 
 // settings page -------------------------------------
 
 .page-body.settings {
   margin-bottom: 20px;
-}
-.list-item {
-  padding: 20px 0; 
-  overflow: hidden; 
-  position: relative;
-}
-.list-item-info {
-  width: 60%; 
-  float: left;
-}
-.list-item-info .form-control {
-  border: none; 
-  background: transparent; 
-  box-shadow: none; 
-  padding: 0;
-}
-.list-item-action {
-  position: absolute; 
-  right: 0; 
 }
 
 // topic page ----------------------------------------
@@ -253,22 +256,6 @@
 .show-more {
   margin: 80px 0;
   text-align: center;
-}
-.topic-item {
-  padding: 10px;
-  margin: 10px 0;
-  color: black;
-  height: 80px;
-  overflow: auto;
-
-  h3 { margin-top: 0; }
-  .topic-item-left { 
-    float: left;  
-    width: 80%;
-  }
-  .topic-item-right {
-    float: right;
-  }
 }
 
 // landing page --------------------------------------

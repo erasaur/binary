@@ -16,7 +16,7 @@ Template.profile.helpers({
 
 Template.profileNav.helpers({
 	isCurrentTab: function (tab) {
-		return Session.equals("currentTab", tab) ? "active" : "";
+		return Session.equals("currentTab", tab) ? "selected" : "";
 	}
 });
 

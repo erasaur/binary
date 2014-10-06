@@ -1,30 +1,32 @@
 <template name="topic">	
-	<div class="col-content page-body-header">
-		<h3>Comments</h3>
-		<span class="dropdown">
-		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
-		    Top <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Newest</a></li>
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Liked</a></li>
-		  </ul>
-		</span>
-	</div>
-
-	<div class="col-content clearfix">
-		{{> newComment}}
-	</div>
-
-	{{#if hasComments}}
-		<div class="comment-container main">
-			{{#each comments}}
-				{{> commentRow}}
-			{{/each}}
+	<div class="page-body">
+		<div class="col-content page-body-header">
+			<h3>Comments</h3>
+			<span class="dropdown">
+			  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+			    Top <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
+			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Newest</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Liked</a></li>
+			  </ul>
+			</span>
 		</div>
-	{{else}}
-		<div class="col-content">No comments yet.</div>	
-	{{/if}}
+
+		<div class="col-content clearfix">
+			{{> newComment}}
+		</div>
+
+		{{#if hasComments}}
+			<div class="comment-container main">
+				{{#each comments}}
+					{{> commentRow}}
+				{{/each}}
+			</div>
+		{{else}}
+			<div class="col-content">No comments yet.</div>	
+		{{/if}}
+	</div>
 </template>
 
 <template name="topicButtons">
@@ -41,7 +43,11 @@
 		<button id="js-vote-pro" class="btn btn-pro">Pro: {{pro}}</button> 
 		<button id="js-vote-con" class="btn btn-con">Con: {{con}}</button>
 	</div>
-	<p>{{{formatContent description}}}</p>
+	<p>
+		{{#if description}}
+			{{{formatContent description}}}
+		{{/if}}
+	</p>
 </template>
 
 <template name="topicNav">
