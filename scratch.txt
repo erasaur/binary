@@ -1,6 +1,11 @@
-// global errors - use throwError method
-- please sign in first
-- sorry, you cannot edit/delete this topic/comment
+topicCount
+commentCount
+activity.likes -> reputation
+activity.liked -> activity.upvotedComments
+activity.following -> activity.followingUsers
+
+
+
 
 
 table {
