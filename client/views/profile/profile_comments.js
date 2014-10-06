@@ -12,14 +12,14 @@ Template.profileComments.helpers({
     // data context (this) is the user
     if (commentCategory === "Created")
       return Comments.find({"userId": this._id});
-    else
-      return this.activity && Comments.find({"_id": {$in: this.activity.liked}}) || [];
+      
+    return this.activity && Comments.find({"_id": {$in: this.activity.upvotedComments}}) || [];
   }
 });
 
 Template.profileComments.events({
   "click li[role='presentation']": function (event, template) {
-    commentCategory = event.target.text;
+    commentCategory = event.currentTarget.getAttribute("data-category");
     commentDeps.changed();
   }
 });

@@ -9,18 +9,17 @@ Template.profileUsers.helpers({
   users: function () {
     userDeps.depend();
     
-    if (this.activity) {
-      return userCategory === "Followers" ? 
-        Meteor.users.find({"_id": {$in: this.activity.followers}}) : 
-        Meteor.users.find({"_id": {$in: this.activity.following}});
-    }
-    return [];
+    if (userCategory === "Followers")
+      return this.activity && Meteor.users.find({"_id": {$in: this.activity.followers}}) || [];
+
+    else
+      return this.activity && Meteor.users.find({"_id": {$in: this.activity.followingUsers}}) || [];
   }
 });
 
 Template.profileUsers.events({
   "click li[role='presentation']": function (event, template) {
-    userCategory = event.target.text;
+    userCategory = event.currentTarget.getAttribute("data-category");
     userDeps.changed();
   }
 });

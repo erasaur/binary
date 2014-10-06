@@ -18,14 +18,14 @@
 
 <template name="profileHeader">
 	<h3>{{username}}</h3>
-	<p>Reputation: {{activity.likes}}</p>
+	<p>Reputation: {{stats.reputation}}</p>
 </template>
 
 <template name="profileNav">
 	<ul class="page-nav-buttons clearfix">
-	  <li class="js-nav-button {{isCurrentTab 'profileComments'}}"><a href="#" id="profileComments">Comments</a></li>
-	  <li class="js-nav-button {{isCurrentTab 'profileTopics'}}"><a href="#" id="profileTopics">Topics</a></li>
-	  <li class="js-nav-button {{isCurrentTab 'profileUsers'}}"><a href="#" id="profileUsers">Users</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'profileComments'}}" data-tab="profileComments"><a href="#">Comments</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'profileTopics'}}" data-tab="profileTopics"><a href="#">Topics</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'users'}}" data-tab="profileUsers"><a href="#">Users</a></li>
 	  <li class=""><a href="#">Temporary</a></li>
 	</ul>
 </template>
@@ -38,8 +38,8 @@
 		    {{commentCategory}} <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Created</a></li>
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Liked</a></li>
+		    <li role="presentation" data-category="Created"><a role="menuitem" tabindex="-1" href="#">Created</a></li>
+		    <li role="presentation" data-category="Upvoted"><a role="menuitem" tabindex="-1" href="#">Upvoted</a></li>
 		  </ul>
 		</span>
 	</div>
@@ -67,9 +67,9 @@
 		    {{topicCategory}} <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Discussed</a></li>
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Created</a></li>
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Following</a></li>
+		    <li role="presentation" data-category="Discussed"><a role="menuitem" tabindex="-1" href="#">Discussed</a></li>
+		    <li role="presentation" data-category="Created"><a role="menuitem" tabindex="-1" href="#">Created</a></li>
+		    <li role="presentation" data-category="Following"><a role="menuitem" tabindex="-1" href="#">Following</a></li>
 		  </ul>
 		</span>
 	</div>
@@ -97,8 +97,8 @@
 		    {{userCategory}} <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Followers</a></li>
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Following</a></li>
+		    <li role="presentation" data-category="Followers"><a role="menuitem" tabindex="-1" href="#">Followers</a></li>
+		    <li role="presentation" data-category="Following"><a role="menuitem" tabindex="-1" href="#">Following</a></li>
 		  </ul>
 		</span>
 	</div>

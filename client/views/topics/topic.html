@@ -8,7 +8,7 @@
 			  </button>
 			  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
 			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Newest</a></li>
-			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Liked</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Upvoted</a></li>
 			  </ul>
 			</span>
 		</div>
@@ -43,11 +43,12 @@
 		<button id="js-vote-pro" class="btn btn-pro">Pro: {{pro}}</button> 
 		<button id="js-vote-con" class="btn btn-con">Con: {{con}}</button>
 	</div>
-	<p>
-		{{#if description}}
+	
+	{{#if description}}
+		<p>
 			{{{formatContent description}}}
-		{{/if}}
-	</p>
+		</p>
+	{{/if}}
 </template>
 
 <template name="topicNav">

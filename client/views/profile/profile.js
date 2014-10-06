@@ -34,7 +34,7 @@ Template.profileButtons.events({
 
 Template.profileNav.events({
 	"click .js-nav-button": function (event, template) {
-		Session.set("currentTab", event.target.id);
+		Session.set("currentTab", event.currentTarget.getAttribute("data-tab"));
 	}
 });
 
