@@ -13,6 +13,18 @@ function leaf (obj, path) {
   return res;
 }
 
+// button jquery object
+function displaySaved ($button) {
+  var button = $button.find('span');
+  var text = button.text(); // original text to be restored
+
+  button.fadeOut(300, function () {
+    button.text('Saved!').fadeIn(300).delay(2000).fadeOut(300, function () {
+      button.text(text).fadeIn(300);
+    });
+  });
+}
+
 Template.settings.helpers({
   "isEnabled": function (option) {
     if (Meteor.user())
@@ -25,59 +37,52 @@ Template.settings.helpers({
 });
 
 Template.settings.events({
-  "click button[data-action]": function (event, template) {
+  "click button[data-action='toggle-setting']": function (event, template) {
     var button = event.currentTarget;
     var action = button.getAttribute('data-action');
     var actionValue = button.getAttribute('data-action-value');
 
-    if (action === 'toggle-setting') {
-      // construct the query key
-      actionValue = actionValue.replace(/-/g, '.');
-      actionValue = 'profile.notifications.' + actionValue;
+    // construct the query key
+    actionValue = actionValue.replace(/-/g, '.');
+    actionValue = 'profile.notifications.' + actionValue;
 
-      // get the numeric value of toggle (0 or 1)
-      var newValue = parseInt(button.getAttribute('value'));
+    // get the numeric value of toggle (0 or 1)
+    var newValue = parseInt(button.getAttribute('value'));
 
-      // { 'profile.notifications.xxx.xxx': true }
-      var newPreferences = {};
-      newPreferences[properties] = !!newValue; // coerce to boolean
+    // { 'profile.notifications.xxx.xxx': true }
+    var newPreferences = {};
+    newPreferences[actionValue] = !!newValue; // coerce to boolean
 
-      Meteor.call('changePreferences', newPreferences);
-    } 
-
-    else if (action === 'edit-password') {
-      // display inputs for changing password
-      $('#js-edit-newPassword').slideDown('fast', function () {
-        $('#js-edit-password').removeAttr('disabled').val('').focus();
-        $('#js-btn-edit-password').hide();
-        $('#js-btn-save-password').show();
-      });
-    }
-
-    else {
-      var fieldName = action.substring(action.indexOf('-') + 1); // edit-xxx -> xxx
-      var fieldId = '#js-' + action; // js-edit-xxx
-      var newValue = template.find(fieldId).value;
-
-      var method = 'change' + fieldName.charAt(0).toUpperCase() + fieldName.substring(1);
-
-      Meteor.call(method, newValue, function (error) {
-        if (error)
-          alert('Sorry, please try to stick to alphanumeric characters, hyphens, periods, and apostrophes!');
-        else {
-          var btnText = $(button).find('span');
-          btnText.fadeOut(300, function () {
-            btnText.text('Saved!').fadeIn(300).delay(2000).fadeOut(300, function () {
-              btnText.text('Save').fadeIn(300);
-            });
-          });
-        }
-      });
-    }
+    Meteor.call('changePreferences', newPreferences);
   },
-  "click #js-btn-save-password": function (event, template) {
-    var oldPassword = template.find('#js-edit-password').value;
-    var newPassword = template.find('#js-edit-newPassword').value;
+  "click #js-edit-name, click #js-edit-bio, click #js-edit-email": function (event, template) {
+    var target = event.currentTarget;
+    var id = target.id;
+    var fieldName = id.substring(id.lastIndexOf('-') + 1); // js-edit-xxx -> xxx
+    var fieldId = '#js-' + fieldName; // js-xxx
+    var newValue = template.find(fieldId).value;
+
+    var method = 'change' + fieldName.charAt(0).toUpperCase() + fieldName.substring(1);
+
+    Meteor.call(method, newValue, function (error) {
+      if (error)
+        alert('Sorry, please try to stick to alphanumeric characters, hyphens, periods, and apostrophes!');
+      else {
+        displaySaved($(target));
+      }
+    });
+  },
+  "click #js-edit-password": function (event, template) {
+    // display inputs for changing password
+    $('#js-newPassword').slideDown('fast', function () {
+      $('#js-password').removeAttr('disabled').val('').focus();
+      $('#js-edit-password').hide();
+      $('#js-save-password').show();
+    });
+  },
+  "click #js-save-password": function (event, template) {
+    var oldPassword = template.find('#js-password').value;
+    var newPassword = template.find('#js-newPassword').value;
 
     if (newPassword.length < 6)
       alert('Your password must be at least 6 characters long.');
@@ -86,11 +91,13 @@ Template.settings.events({
         if (error)
           alert('Please verify that you have entered the correct password.');
         else {
-          $('#js-edit-newPassword').slideUp('fast', function () {
-            $('#js-edit-password').prop('disabled', true).val('○○○○○○○');
-            $('#js-edit-newPassword').val('');
-            $('#js-btn-save-password').hide();
-            $('#js-btn-edit-password').show();
+          $('#js-newPassword').slideUp('fast', function () {
+            $('#js-password').prop('disabled', true).val('○○○○○○○');
+            $('#js-newPassword').val('');
+            $('#js-save-password').hide();
+
+            displaySaved($('#js-edit-password'));
+            $('#js-edit-password').show();
           });
         }
       });  
