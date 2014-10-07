@@ -9,24 +9,28 @@
             {{> searchResults}}
           {{/AnimateWithVelocity}}
         {{else}}
-          <div class="page-head">
-            <div class="col-content page-header">
-              <div class="page-header-buttons">
-                <i id="js-back" class="fa fa-chevron-left"></i>
-                <div class="float-right">
-                  {{> yield "pageButtons"}}
+          {{#AnimateWithVelocity}}
+            <div data-animate data-duration="500">
+              <div class="page-head">
+                <div class="col-content page-header">
+                  <div class="page-header-buttons">
+                    <i id="js-back" class="fa fa-chevron-left"></i>
+                    <div class="float-right">
+                      {{> yield "pageButtons"}}
+                    </div>
+                  </div>
+                  <div class="page-header-content">
+                    {{> yield "pageHeader"}}
+                  </div>
+                </div>
+                <div class="col-content page-nav">
+                  {{> yield "pageNav"}}
                 </div>
               </div>
-              <div class="page-header-content">
-                {{> yield "pageHeader"}}
-              </div>
-            </div>
-            <div class="col-content page-nav">
-              {{> yield "pageNav"}}
-            </div>
-          </div>
 
-          {{> yield}}
+              {{> yield}}
+            </div>
+          {{/AnimateWithVelocity}}
         {{/if}}
       </div>
     </div>

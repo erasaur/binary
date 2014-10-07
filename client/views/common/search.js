@@ -7,15 +7,21 @@ function stopSearching () {
   searchDeps.changed();
 }
 
-Template.searchInput.indexes = ["topics", "users"];
-Template.searchInput.searching = function () {
-  searchDeps.depend();
-  return searching;  
+function startSearching () {
+  searching = true;
+  searchDeps.changed();
 }
-Template.home.searching = function () {
+
+function isSearching () {
   searchDeps.depend();
   return searching;
 }
+
+Template.searchInput.indexes = ["topics", "users"];
+
+Template.searchInput.searching = isSearching;
+Template.mainLayout.searching = isSearching;
+Template.pageLayout.searching = isSearching;
 
 Template.nav.events({
   "click .navbar-brand": function () {
@@ -25,8 +31,7 @@ Template.nav.events({
 
 Template.searchInput.events({
   "focus #js-search-input": function (event, template) {
-    searching = true;
-    searchDeps.changed();
+    startSearching();
   },
   "click #js-search-cancel": function (event, template) {
     stopSearching(); 
