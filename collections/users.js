@@ -1,5 +1,49 @@
 var Schema = {};
 
+Schema.UserProfileNotifications = new SimpleSchema({
+  enabled: { // enable notifications
+    type: Boolean
+  },
+  comments: { // new comments in own topic
+    type: Boolean
+  },
+  replies: { // new replies to own comments
+    type: Boolean
+  },
+  followers: { // new followers
+    type: Boolean
+  },
+  "followingTopics.comments": { // new comments in following topics
+    type: Boolean
+  },
+  "followingUsers.comments": { // new comments by following users
+    type: Boolean
+  },
+  "followingUsers.topics": { // new topics by following users
+    type: Boolean
+  }
+});
+
+Schema.UserProfile = new SimpleSchema({
+  name: {
+    type: String,
+    regEx: /^([a-zA-Z]+(\s{0,1})[a-zA-Z0-9.'-]+(\s{0,1})[a-zA-Z0-9.'-]*){3,25}$/
+  },
+  email: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Email,
+    optional: true
+  },
+  bio: {
+    type: String,
+    optional: true
+  },
+  notifications: {
+    type: Schema.UserProfileNotifications,
+    optional: true
+  }
+});
+
 Schema.User = new SimpleSchema({
   _id: {
     type: String,
@@ -7,11 +51,11 @@ Schema.User = new SimpleSchema({
   },
   username: {
     type: String,
-    min: 3,
     regEx: /^[a-z0-9A-Z_]{3,15}$/
   },
   emails: {
-    type: [Object]
+    type: [Object],
+    optional: true
   },
   "emails.$.address": {
     type: String,
@@ -29,9 +73,8 @@ Schema.User = new SimpleSchema({
     blackbox: true
   },
   profile: { // public and modifiable
-    type: Object,
-    optional: true,
-    blackbox: true
+    type: Schema.UserProfile,
+    optional: true
   },
   activity: { // public but not modifiable
     type: Object,

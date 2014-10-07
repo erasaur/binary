@@ -1,8 +1,8 @@
-topicCount
-commentCount
-activity.likes -> reputation
-activity.liked -> activity.upvotedComments
-activity.following -> activity.followingUsers
++ stats.topicCount
++ stats.commentCount
+- activity.likes -> stats.reputation
+- activity.liked -> activity.upvotedComments
+- activity.following -> activity.followingUsers
 
 
 
