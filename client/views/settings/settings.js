@@ -67,9 +67,8 @@ Template.settings.events({
     Meteor.call(method, newValue, function (error) {
       if (error)
         alert('Sorry, please try to stick to alphanumeric characters, hyphens, periods, and apostrophes!');
-      else {
+      else
         displaySaved($(target));
-      }
     });
   },
   "click #js-edit-password": function (event, template) {
