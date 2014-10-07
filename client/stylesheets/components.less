@@ -142,6 +142,7 @@
 }
 .dropdown-menu {
   width: 100%;
+  margin-top: 10px;
   border-color: @dark-gray;
   background: @light-gray;
   box-shadow: none;
@@ -190,38 +191,46 @@
   &:hover { cursor: pointer; }
 }
 .navbar-transparent {
-  position: absolute; 
   width: 100%; 
 }
-.navbar-brand, ul.navbar-nav > li > a {
+.navbar-transparent .col-sm-2, 
+.navbar-transparent .col-sm-8 {
+  padding: 0;
+}
+.navbar-transparent .col-sm-8 {
+  margin-bottom: 20px;
+}
+.navbar-brand, 
+.navbar-nav > li > a { // increased specificity to override bootstrap
   color: @dark-gray;
   font-size: 1.5em; 
   background: transparent !important;
   position: relative;
+  padding: 0;
 
   &:hover { color: black; }
 }
 .navbar-brand { 
   float: right; 
-  padding: 0;
   padding-right: @main-padding;
-  margin: 15px 0 0 0; //top
+  margin-top: 5px;
+  height: auto;
 }
-.navbar-items { padding: 0; }
 .navbar-nav { 
+  margin-top: 5px;
   float: left; 
-  padding: 0;
   padding-left: @main-padding;
-  margin: 0;
   position: relative;
 }
 .navbar-nav > li {
   width: 40px;
   display: inline-block; //so the list items don't stack when screen is shrunk
 }
-.navbar-nav .dropdown-menu {
+.navbar-nav > li > .dropdown-menu { // increased specificity to override bootstrap
   right: 0;
   left: auto;
+  margin-top: 10px;
+  .border-radius(@main-radius);
 }
 .navbar-nav .dropdown-menu.notifications {
   width: 250px;
