@@ -9,7 +9,7 @@ Meteor.methods({
 
 		// check if title already exists
 		else {
-			var topicWithTitle = Topics.find({ "title": title });
+			var topicWithTitle = Topics.findOne({ "title": title });
 
 			if (typeof topicWithTitle !== "undefined")
 				throw new Meteor.Error(603, "Sorry, there is already a topic with that title.", topicWithTitle._id);
