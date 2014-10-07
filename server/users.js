@@ -53,13 +53,8 @@ Accounts.onCreateUser(function (options, user) {
 
 Meteor.methods({
   newUser: function (username, email, password) {   
-    var error;
-    
     if (password.length < 6)
-      error = "Your password must be at least 6 characters long.";
-
-    if (!!error)
-      throw new Meteor.Error(403, error);
+      throw new Meteor.Error("Your password must be at least 6 characters long.");
     else {
       Accounts.createUser({
         "username": username, 
@@ -79,7 +74,10 @@ Meteor.methods({
     Meteor.users.update(Meteor.userId(), { $set: { 'profile.bio': newBio } });
   },
   changeEmail: function (newEmail) {
-    Meteor.users.update(Meteor.userId(), { $set: { 'emails': [{ 'address': newEmail }] } });
+    Meteor.users.update(Meteor.userId(), { $set: { 
+      'emails': [{ 'address': newEmail, 'verified': false }], 
+      'profile.email': newEmail 
+    } });
   },
   changePreferences: function (newPreferences) {
     Meteor.users.update(Meteor.userId(), { $set: newPreferences });
