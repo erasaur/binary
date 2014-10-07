@@ -12,10 +12,10 @@
               <div class="list-item-info">
                 <label for="js-edit-name">Name</label>
                 <input type="text" id="js-edit-name" class="form-control" 
-                placeholder="Name" value="{{currentUser.profile.name}}">
+                placeholder="Name" value="{{currentUser.profile.name}}" maxlength="25">
               </div>
               <div class="list-item-action">
-                <button class="btn btn-default" data-action="edit-name">Save</button>
+                <button class="btn btn-default" data-action="edit-name"><span>Save</span></button>
               </div>
             </div>
             <div class="list-item">
@@ -25,7 +25,7 @@
                 placeholder="Bio" value="{{currentUser.profile.bio}}">
               </div>
               <div class="list-item-action">
-                <button class="btn btn-default" data-action="edit-bio">Save</button>
+                <button class="btn btn-default" data-action="edit-bio"><span>Save</span></button>
               </div>
             </div>
             <!-- <div class="list-item">
@@ -35,7 +35,7 @@
                 <p class="help-block">Example block-level help text here.</p>
               </div>
               <div class="list-item-action">
-                <button class="btn btn-default" data-action="edit-avatar">Save</button>
+                <button class="btn btn-default" data-action="edit-avatar"><span>Save</span></button>
               </div>
             </div> -->
           </div>
@@ -52,16 +52,18 @@
                 <input type="email" class="form-control" id="js-edit-email" placeholder="Email" value="{{currentUser.profile.email}}">
               </div>
               <div class="list-item-action">
-                <button class="btn btn-default" data-action="edit-email">Save</button>
+                <button class="btn btn-default" data-action="edit-email"><span>Save</span></button>
               </div>
             </div>
             <div class="list-item">
               <div class="list-item-info">
                 <label for="js-edit-password">Password</label>
-                <input type="password" class="form-control" id="js-edit-password" disabled placeholder="Password" value="○○○○○○○">
+                <input type="password" class="form-control" id="js-edit-password" disabled placeholder="Current Password" value="○○○○○○○">
+                <input type="password" class="form-control" id="js-edit-newPassword" placeholder="New Password" style="display: none;">
               </div>
               <div class="list-item-action">
-                <button class="btn btn-default" data-action="edit-password">Edit</button>
+                <button class="btn btn-default" id="js-btn-edit-password" data-action="edit-password"><span>Edit</span></button>
+                <button class="btn btn-default" id="js-btn-save-password" style="display: none;"><span>Save</span></button>
               </div>
             </div>
           </div>

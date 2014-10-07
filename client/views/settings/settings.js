@@ -26,17 +26,17 @@ Template.settings.helpers({
 
 Template.settings.events({
   "click button[data-action]": function (event, template) {
-    var action = event.target.getAttribute('data-action');
+    var button = event.currentTarget;
+    var action = button.getAttribute('data-action');
+    var actionValue = button.getAttribute('data-action-value');
 
     if (action === 'toggle-setting') {
-      var properties = event.target.getAttribute('data-action-value');
-      properties = properties.replace(/-/g, '.');
-
       // construct the query key
-      properties = 'profile.notifications.' + properties;
+      actionValue = actionValue.replace(/-/g, '.');
+      actionValue = 'profile.notifications.' + actionValue;
 
       // get the numeric value of toggle (0 or 1)
-      var newValue = parseInt(event.target.getAttribute('value'));
+      var newValue = parseInt(button.getAttribute('value'));
 
       // { 'profile.notifications.xxx.xxx': true }
       var newPreferences = {};
@@ -44,19 +44,77 @@ Template.settings.events({
 
       Meteor.call('changePreferences', newPreferences);
     } 
-    else if (action === 'edit-account-password') {
-      // show another input
-    }
-    else {
-      var fieldId = '#js-' + action; // js-edit-xxx
-      var newValue = template.find(fieldId).value;
-      var fieldName = action.substring(action.indexOf('-') + 1); // edit-xxx -> xxx
 
-      var method = 'change' + fieldName.charAt(0).toUpperCase() + fieldName.substring(1);
-      Meteor.call(method, newValue, function (error) {
-        if (error)
-          alert('Sorry, please try to stick to alphanumeric characters!');
+    else if (action === 'edit-password') {
+      // display inputs for changing password
+      $('#js-edit-newPassword').slideDown('fast', function () {
+        $('#js-edit-password').removeAttr('disabled').val('').focus();
+        $('#js-btn-edit-password').hide();
+        $('#js-btn-save-password').show();
       });
     }
+
+    else {
+      var fieldName = action.substring(action.indexOf('-') + 1); // edit-xxx -> xxx
+      var fieldId = '#js-' + action; // js-edit-xxx
+      var newValue = template.find(fieldId).value;
+
+      var method = 'change' + fieldName.charAt(0).toUpperCase() + fieldName.substring(1);
+
+      Meteor.call(method, newValue, function (error) {
+        if (error)
+          alert('Sorry, please try to stick to alphanumeric characters, hyphens, periods, and apostrophes!');
+        else {
+          var btnText = $(button).find('span');
+          btnText.fadeOut(300, function () {
+            btnText.text('Saved!').fadeIn(300).delay(2000).fadeOut(300, function () {
+              btnText.text('Save').fadeIn(300);
+            });
+          });
+        }
+      });
+    }
+  },
+  "click #js-btn-save-password": function (event, template) {
+    var oldPassword = template.find('#js-edit-password').value;
+    var newPassword = template.find('#js-edit-newPassword').value;
+
+    if (newPassword.length < 6)
+      alert('Your password must be at least 6 characters long.');
+    else {
+      Accounts.changePassword(oldPassword, newPassword, function (error) {
+        if (error)
+          alert('Please verify that you have entered the correct password.');
+        else {
+          $('#js-edit-newPassword').slideUp('fast', function () {
+            $('#js-edit-password').prop('disabled', true).val('○○○○○○○');
+            $('#js-edit-newPassword').val('');
+            $('#js-btn-save-password').hide();
+            $('#js-btn-edit-password').show();
+          });
+        }
+      });  
+    }
   }
-})
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
