@@ -1,5 +1,5 @@
 Router.configure({
-	layoutTemplate: "main",
+	layoutTemplate: "mainLayout",
 	yieldTemplates: {
 		"nav": {to: "nav"}
 	},

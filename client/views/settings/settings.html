@@ -1,176 +1,162 @@
-<template name="settings">
-  <div class="row full-height">
-    <div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
-      <div class="col-content page-body settings">
-        <div class="page-header-buttons">
-          <i id="js-back" class="fa fa-chevron-left"></i>
+<template name="settings">  
+  <div class="col-content page-body settings">
+    <div class="page-header-buttons">
+      <i id="js-back" class="fa fa-chevron-left"></i>
+    </div>
+    <div class="page-body-content">
+      <h3>Profile</h3>
+      <div class="list">
+        <div class="list-item">
+          <div class="list-item-info">
+            <label for="js-edit-name">Name</label>
+            <input type="text" id="js-name" class="form-control" 
+            placeholder="Name" value="{{currentUser.profile.name}}" maxlength="25">
+          </div>
+          <div class="list-item-action">
+            <button id="js-edit-name" class="btn btn-default"><span>Save</span></button>
+          </div>
         </div>
-        <div class="page-body-content">
-          <h3>Profile</h3>
-          <div class="list">
-            <div class="list-item">
-              <div class="list-item-info">
-                <label for="js-edit-name">Name</label>
-                <input type="text" id="js-name" class="form-control" 
-                placeholder="Name" value="{{currentUser.profile.name}}" maxlength="25">
-              </div>
-              <div class="list-item-action">
-                <button id="js-edit-name" class="btn btn-default"><span>Save</span></button>
-              </div>
-            </div>
-            <div class="list-item">
-              <div class="list-item-info">
-                <label for="js-edit-bio">Bio</label>
-                <input type="text" id="js-bio" class="form-control" 
-                placeholder="Bio" value="{{currentUser.profile.bio}}">
-              </div>
-              <div class="list-item-action">
-                <button id="js-edit-bio" class="btn btn-default"><span>Save</span></button>
-              </div>
-            </div>
-            <!-- <div class="list-item">
-              <div class="list-item-info">
-                <label for="js-edit-avatar">Avatar</label>
-                <input type="file" id="js-avatar">
-                <p class="help-block">Example block-level help text here.</p>
-              </div>
-              <div class="list-item-action">
-                <button id="js-edit-avatar" class="btn btn-default"><span>Save</span></button>
-              </div>
-            </div> -->
+        <div class="list-item">
+          <div class="list-item-info">
+            <label for="js-edit-bio">Bio</label>
+            <input type="text" id="js-bio" class="form-control" 
+            placeholder="Bio" value="{{currentUser.profile.bio}}">
+          </div>
+          <div class="list-item-action">
+            <button id="js-edit-bio" class="btn btn-default"><span>Save</span></button>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="col-content page-body settings">
-        <div class="page-body-content">
-          <h3>Account</h3>
-          <div class="list">
-            <div class="list-item">
-              <div class="list-item-info">
-                <label for="js-edit-email">Email</label>
-                <input type="email" class="form-control" id="js-email" placeholder="Email" value="{{currentUser.profile.email}}">
-              </div>
-              <div class="list-item-action">
-                <button id="js-edit-email" class="btn btn-default"><span>Save</span></button>
-              </div>
-            </div>
-            <div class="list-item">
-              <div class="list-item-info">
-                <label for="js-edit-password">Password</label>
-                <input type="password" class="form-control" id="js-password" disabled placeholder="Current Password" value="○○○○○○○">
-                <input type="password" class="form-control" id="js-newPassword" placeholder="New Password" style="display: none;">
-              </div>
-              <div class="list-item-action">
-                <button class="btn btn-default" id="js-edit-password"><span>Edit</span></button>
-                <button class="btn btn-default" id="js-save-password" style="display: none;"><span>Save</span></button>
-              </div>
-            </div>
+  <div class="col-content page-body settings">
+    <div class="page-body-content">
+      <h3>Account</h3>
+      <div class="list">
+        <div class="list-item">
+          <div class="list-item-info">
+            <label for="js-edit-email">Email</label>
+            <input type="email" class="form-control" id="js-email" placeholder="Email" value="{{currentUser.profile.email}}">
+          </div>
+          <div class="list-item-action">
+            <button id="js-edit-email" class="btn btn-default"><span>Save</span></button>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-item-info">
+            <label for="js-edit-password">Password</label>
+            <input type="password" class="form-control" id="js-password" disabled placeholder="Current Password" value="○○○○○○○">
+            <input type="password" class="form-control" id="js-newPassword" placeholder="New Password" style="display: none;">
+          </div>
+          <div class="list-item-action">
+            <button class="btn btn-default" id="js-edit-password"><span>Edit</span></button>
+            <button class="btn btn-default" id="js-save-password" style="display: none;"><span>Save</span></button>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="col-content page-body settings">
-        <div class="page-body-content">
-          <h3>Notifications</h3>
-          <div class="list">
-            <div class="list-item">
-              <div class="list-item-info">
-                <label>Notifications</label>
-                <p class="help-block">Turn all notifications on/off</p>
-              </div>
-              <div class="list-item-action">
-                <div class="btn-group">
-                  <button type="button" class="btn {{isEnabled 'enabled'}}" data-action="toggle-setting" 
-                  data-action-value="enabled" value="1">On</button>
-                  <button type="button" class="btn {{unlessEnabled 'enabled'}}" data-action="toggle-setting" 
-                  data-action-value="enabled" value="0">Off</button>
-                </div>
-              </div>
+  <div class="col-content page-body settings">
+    <div class="page-body-content">
+      <h3>Notifications</h3>
+      <div class="list">
+        <div class="list-item">
+          <div class="list-item-info">
+            <label>Notifications</label>
+            <p class="help-block">Turn all notifications on/off</p>
+          </div>
+          <div class="list-item-action">
+            <div class="btn-group">
+              <button type="button" class="btn {{isEnabled 'enabled'}}" data-action="toggle-setting" 
+              data-action-value="enabled" value="1">On</button>
+              <button type="button" class="btn {{unlessEnabled 'enabled'}}" data-action="toggle-setting" 
+              data-action-value="enabled" value="0">Off</button>
             </div>
-            <div class="list-item">
-              <div class="list-item-info">
-                <label>Followers</label>
-                <p class="help-block">Get notified when you gain a new follower</p>
-              </div>
-              <div class="list-item-action">
-                <div class="btn-group">
-                  <button type="button" class="btn {{isEnabled 'followers'}}" data-action="toggle-setting" 
-                  data-action-value="followers" value="1">On</button>
-                  <button type="button" class="btn {{unlessEnabled 'followers'}}" data-action="toggle-setting" 
-                  data-action-value="followers" value="0">Off</button>
-                </div>
-              </div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-item-info">
+            <label>Followers</label>
+            <p class="help-block">Get notified when you gain a new follower</p>
+          </div>
+          <div class="list-item-action">
+            <div class="btn-group">
+              <button type="button" class="btn {{isEnabled 'followers'}}" data-action="toggle-setting" 
+              data-action-value="followers" value="1">On</button>
+              <button type="button" class="btn {{unlessEnabled 'followers'}}" data-action="toggle-setting" 
+              data-action-value="followers" value="0">Off</button>
             </div>
-            <div class="list-item">
-              <div class="list-item-info">
-                <label>Following Users' Comments</label>
-                <p class="help-block">Get notified when someone you are following posts a new comment</p>
-              </div>
-              <div class="list-item-action">
-                <div class="btn-group">
-                  <button type="button" class="btn {{isEnabled 'followingUsers.comments'}}" data-action="toggle-setting" 
-                  data-action-value="followingUsers-comments" value="1">On</button>
-                  <button type="button" class="btn {{unlessEnabled 'followingUsers.comments'}}" data-action="toggle-setting" 
-                  data-action-value="followingUsers-comments" value="0">Off</button>
-                </div>
-              </div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-item-info">
+            <label>Following Users' Comments</label>
+            <p class="help-block">Get notified when someone you are following posts a new comment</p>
+          </div>
+          <div class="list-item-action">
+            <div class="btn-group">
+              <button type="button" class="btn {{isEnabled 'followingUsers.comments'}}" data-action="toggle-setting" 
+              data-action-value="followingUsers-comments" value="1">On</button>
+              <button type="button" class="btn {{unlessEnabled 'followingUsers.comments'}}" data-action="toggle-setting" 
+              data-action-value="followingUsers-comments" value="0">Off</button>
             </div>
-            <div class="list-item">
-              <div class="list-item-info">
-                <label>Following Users' Topics</label>
-                <p class="help-block">Get notified when someone you are following creates a new topic</p>
-              </div>
-              <div class="list-item-action">
-                <div class="btn-group">
-                  <button type="button" class="btn {{isEnabled 'followingUsers.topics'}}" data-action="toggle-setting" 
-                  data-action-value="followingUsers-topics" value="1">On</button>
-                  <button type="button" class="btn {{unlessEnabled 'followingUsers.topics'}}" data-action="toggle-setting" 
-                  data-action-value="followingUsers-topics" value="0">Off</button>
-                </div>
-              </div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-item-info">
+            <label>Following Users' Topics</label>
+            <p class="help-block">Get notified when someone you are following creates a new topic</p>
+          </div>
+          <div class="list-item-action">
+            <div class="btn-group">
+              <button type="button" class="btn {{isEnabled 'followingUsers.topics'}}" data-action="toggle-setting" 
+              data-action-value="followingUsers-topics" value="1">On</button>
+              <button type="button" class="btn {{unlessEnabled 'followingUsers.topics'}}" data-action="toggle-setting" 
+              data-action-value="followingUsers-topics" value="0">Off</button>
             </div>
-            <div class="list-item">
-              <div class="list-item-info">
-                <label>Comment Replies</label>
-                <p class="help-block">Get notified whenever someone replies to your comment</p>
-              </div>
-              <div class="list-item-action">
-                <div class="btn-group">
-                  <button type="button" class="btn {{isEnabled 'replies'}}" data-action="toggle-setting" 
-                  data-action-value="replies" value="1">On</button>
-                  <button type="button" class="btn {{unlessEnabled 'replies'}}" data-action="toggle-setting" 
-                  data-action-value="replies" value="0">Off</button>
-                </div>
-              </div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-item-info">
+            <label>Comment Replies</label>
+            <p class="help-block">Get notified whenever someone replies to your comment</p>
+          </div>
+          <div class="list-item-action">
+            <div class="btn-group">
+              <button type="button" class="btn {{isEnabled 'replies'}}" data-action="toggle-setting" 
+              data-action-value="replies" value="1">On</button>
+              <button type="button" class="btn {{unlessEnabled 'replies'}}" data-action="toggle-setting" 
+              data-action-value="replies" value="0">Off</button>
             </div>
-            <div class="list-item">
-              <div class="list-item-info">
-                <label>Topic Comments</label>
-                <p class="help-block">Get notified whenever someone posts a comment in your topic</p>
-              </div>
-              <div class="list-item-action">
-                <div class="btn-group">
-                  <button type="button" class="btn {{isEnabled 'comments'}}" data-action="toggle-setting" 
-                  data-action-value="comments" value="1">On</button>
-                  <button type="button" class="btn {{unlessEnabled 'comments'}}" data-action="toggle-setting" 
-                  data-action-value="comments" value="0">Off</button>
-                </div>
-              </div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-item-info">
+            <label>Topic Comments</label>
+            <p class="help-block">Get notified whenever someone posts a comment in your topic</p>
+          </div>
+          <div class="list-item-action">
+            <div class="btn-group">
+              <button type="button" class="btn {{isEnabled 'comments'}}" data-action="toggle-setting" 
+              data-action-value="comments" value="1">On</button>
+              <button type="button" class="btn {{unlessEnabled 'comments'}}" data-action="toggle-setting" 
+              data-action-value="comments" value="0">Off</button>
             </div>
-            <div class="list-item">
-              <div class="list-item-info">
-                <label>Following Topics</label>
-                <p class="help-block">Get notified when someone posts a comment in a topic you are following</p>
-              </div>
-              <div class="list-item-action">
-                <div class="btn-group">
-                  <button type="button" class="btn {{isEnabled 'followingTopics.comments'}}" data-action="toggle-setting" 
-                  data-action-value="followingTopics-comments" value="1">On</button>
-                  <button type="button" class="btn {{unlessEnabled 'followingTopics.comments'}}" data-action="toggle-setting" 
-                  data-action-value="followingTopics-comments" value="0">Off</button>
-                </div>
-              </div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="list-item-info">
+            <label>Following Topics</label>
+            <p class="help-block">Get notified when someone posts a comment in a topic you are following</p>
+          </div>
+          <div class="list-item-action">
+            <div class="btn-group">
+              <button type="button" class="btn {{isEnabled 'followingTopics.comments'}}" data-action="toggle-setting" 
+              data-action-value="followingTopics-comments" value="1">On</button>
+              <button type="button" class="btn {{unlessEnabled 'followingTopics.comments'}}" data-action="toggle-setting" 
+              data-action-value="followingTopics-comments" value="0">Off</button>
             </div>
           </div>
         </div>
