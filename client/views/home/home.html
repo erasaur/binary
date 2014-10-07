@@ -1,14 +1,12 @@
 <template name="home">
 	<div class="row full-height">
 		<div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
-			<div class="col-content page-body">
-				{{> searchInput}}
-				
-				{{#if searching}}
-					{{#AnimateWithVelocity}}
-						{{> searchResults}}
-					{{/AnimateWithVelocity}}
-				{{else}}
+			{{#if searching}}
+				{{#AnimateWithVelocity}}
+					{{> searchResults}}
+				{{/AnimateWithVelocity}}
+			{{else}}
+				<div class="col-content page-body">
 					{{#AnimateWithVelocity}}
 						{{#if topics.count}}
 							<div data-animate data-duration="500" id="topics-container">
@@ -28,8 +26,8 @@
 							</div>
 						{{/if}}
 					{{/AnimateWithVelocity}}
-				{{/if}}		
-			</div>	
+				</div>
+			{{/if}}
 		</div>
 	</div>
 </template>
