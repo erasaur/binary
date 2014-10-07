@@ -90,9 +90,6 @@ Router.map(function() {
   });
   this.route("settings", {
     path: "/users/:_id/settings"
-    // , waitOn: function () {
-    //   return Meteor.subscribe("userProfile", this.params._id);
-    // }
   });
   this.route("notFound", {
     path: "*"
