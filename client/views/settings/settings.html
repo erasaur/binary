@@ -11,31 +11,31 @@
             <div class="list-item">
               <div class="list-item-info">
                 <label for="js-edit-name">Name</label>
-                <input type="text" id="js-edit-name" class="form-control" 
+                <input type="text" id="js-name" class="form-control" 
                 placeholder="Name" value="{{currentUser.profile.name}}" maxlength="25">
               </div>
               <div class="list-item-action">
-                <button class="btn btn-default" data-action="edit-name"><span>Save</span></button>
+                <button id="js-edit-name" class="btn btn-default"><span>Save</span></button>
               </div>
             </div>
             <div class="list-item">
               <div class="list-item-info">
                 <label for="js-edit-bio">Bio</label>
-                <input type="text" id="js-edit-bio" class="form-control" 
+                <input type="text" id="js-bio" class="form-control" 
                 placeholder="Bio" value="{{currentUser.profile.bio}}">
               </div>
               <div class="list-item-action">
-                <button class="btn btn-default" data-action="edit-bio"><span>Save</span></button>
+                <button id="js-edit-bio" class="btn btn-default"><span>Save</span></button>
               </div>
             </div>
             <!-- <div class="list-item">
               <div class="list-item-info">
                 <label for="js-edit-avatar">Avatar</label>
-                <input type="file" id="js-edit-avatar">
+                <input type="file" id="js-avatar">
                 <p class="help-block">Example block-level help text here.</p>
               </div>
               <div class="list-item-action">
-                <button class="btn btn-default" data-action="edit-avatar"><span>Save</span></button>
+                <button id="js-edit-avatar" class="btn btn-default"><span>Save</span></button>
               </div>
             </div> -->
           </div>
@@ -49,21 +49,21 @@
             <div class="list-item">
               <div class="list-item-info">
                 <label for="js-edit-email">Email</label>
-                <input type="email" class="form-control" id="js-edit-email" placeholder="Email" value="{{currentUser.profile.email}}">
+                <input type="email" class="form-control" id="js-email" placeholder="Email" value="{{currentUser.profile.email}}">
               </div>
               <div class="list-item-action">
-                <button class="btn btn-default" data-action="edit-email"><span>Save</span></button>
+                <button id="js-edit-email" class="btn btn-default"><span>Save</span></button>
               </div>
             </div>
             <div class="list-item">
               <div class="list-item-info">
                 <label for="js-edit-password">Password</label>
-                <input type="password" class="form-control" id="js-edit-password" disabled placeholder="Current Password" value="○○○○○○○">
-                <input type="password" class="form-control" id="js-edit-newPassword" placeholder="New Password" style="display: none;">
+                <input type="password" class="form-control" id="js-password" disabled placeholder="Current Password" value="○○○○○○○">
+                <input type="password" class="form-control" id="js-newPassword" placeholder="New Password" style="display: none;">
               </div>
               <div class="list-item-action">
-                <button class="btn btn-default" id="js-btn-edit-password" data-action="edit-password"><span>Edit</span></button>
-                <button class="btn btn-default" id="js-btn-save-password" style="display: none;"><span>Save</span></button>
+                <button class="btn btn-default" id="js-edit-password"><span>Edit</span></button>
+                <button class="btn btn-default" id="js-save-password" style="display: none;"><span>Save</span></button>
               </div>
             </div>
           </div>
