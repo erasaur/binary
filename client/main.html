@@ -6,25 +6,3 @@
 
 <body>
 </body>
-
-<template name="mainLayout">
-	{{> yield "nav"}}
-
-	<div class="container-fluid wrapper">
-    <div class="row full-height">
-      <div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
-        {{#if searching}}
-          {{#AnimateWithVelocity}}
-            {{> searchResults}}
-          {{/AnimateWithVelocity}}
-        {{else}}
-          {{#AnimateWithVelocity}}
-            <div data-animate data-duration="500">
-  		        {{> yield}}
-            </div>
-          {{/AnimateWithVelocity}}
-        {{/if}}
-      </div>
-    </div>
-	</div>
-</template>
