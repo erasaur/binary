@@ -1,8 +1,5 @@
-<template name="topic">	
-	<div class="page-body">
-		{{> UI.dynamic template=currentTab data=this}}
-	</div>
-</template>
+
+<!-- BEGIN PAGE TABS -->
 
 <template name="topicComments">
 	<div class="col-content page-body-header">
@@ -60,6 +57,16 @@
 	</div>
 </template>
 
+<!-- END PAGE TABS -->
+
+<!-- BEGIN PAGE LAYOUT -->
+
+<template name="topic">	
+	<div class="page-body">
+		{{> UI.dynamic template=currentTab data=this}}
+	</div>
+</template>
+
 <template name="topicButtons">
 	{{#if following}}
 		<button id="js-unfollow" class="btn btn-primary">Following</button>
@@ -91,5 +98,6 @@
 	</ul>
 </template>
 
+<!-- END PAGE LAYOUT -->
 
 

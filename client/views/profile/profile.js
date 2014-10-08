@@ -1,3 +1,9 @@
+Template.profile.helpers({
+	currentTab: function () {
+		return Session.get("currentTab");
+	}
+});
+
 Template.profileButtons.helpers({
 	canFollow: function () {
 		return Meteor.userId() && this._id != Meteor.userId();
@@ -5,12 +11,6 @@ Template.profileButtons.helpers({
 	following: function () {
 		return this.activity && this.activity.followers && 
 			this.activity.followers.indexOf(Meteor.userId()) > -1;
-	}
-});
-
-Template.profile.helpers({
-	currentTab: function () {
-		return Session.get("currentTab");
 	}
 });
 
