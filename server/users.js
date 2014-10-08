@@ -29,9 +29,6 @@ Accounts.onCreateUser(function (options, user) {
     }
   };
   user = _.extend(user, userProperties);
-
-  if (options.email)
-    user.profile.email = options.email;
   
   // set notifications default preferences
   user.profile.notifications = {
@@ -61,7 +58,7 @@ Meteor.methods({
         "email": email, 
         "password": password,
         "profile": {
-          "name": name
+          "name": "No name"
         }
       });
       return "Success! Your account '" + username + "' has been created.";
@@ -75,8 +72,7 @@ Meteor.methods({
   },
   changeEmail: function (newEmail) {
     Meteor.users.update(Meteor.userId(), { $set: { 
-      'emails': [{ 'address': newEmail, 'verified': false }], 
-      'profile.email': newEmail 
+      'emails': [{ 'address': newEmail, 'verified': false }]
     } });
   },
   changePreferences: function (newPreferences) {

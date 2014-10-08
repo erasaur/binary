@@ -29,11 +29,6 @@ Schema.UserProfile = new SimpleSchema({
     type: String,
     regEx: /^([a-zA-Z]+(\s{0,1})[a-zA-Z0-9.'-]+(\s{0,1})[a-zA-Z0-9.'-]*){3,25}$/
   },
-  email: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Email,
-    optional: true
-  },
   bio: {
     type: String,
     optional: true
