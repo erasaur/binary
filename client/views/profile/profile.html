@@ -112,9 +112,7 @@
 		<div class="list">
 		{{#if users.count}}
 			{{#each users}}
-				<div class="list-item">
-					<a href="{{pathFor 'profile'}}">{{username}}</a>
-				</div>
+				{{> profileItem}}
 			{{/each}}
 		{{else}}
 			<div class="list-item">
