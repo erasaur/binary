@@ -45,11 +45,7 @@
             <li>Working on it...</li>
           {{else}}
             {{#esEach index="topics" id="js-search-input"}}
-              <li>
-                <span class="btn btn-pro">{{this.pro}}</span>
-                <span class="btn btn-con">{{this.con}}</span>
-                <a href="{{pathFor 'topic'}}" class="js-search-link">{{this.title}}</a>
-              </li>
+              {{> topicItem}}
             {{/esEach}}
           {{/ifEsIsSearching}}
 

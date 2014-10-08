@@ -162,7 +162,8 @@
   padding: 20px 0;
   overflow: hidden; 
   position: relative;
-  color: black;
+  color: @fontColor-muted;
+  &:hover { color: black; }
 }
 .list-item-info {
   width: 80%; 
@@ -264,6 +265,10 @@
 .vote {
   padding: 40px;
 }
+.show-more {
+  margin: 80px 0;
+  text-align: center;
+}
 .muted {
   color: @fontColor-muted;
 }
@@ -299,16 +304,6 @@
 #topic-categories ul {
   display: table-cell;
   overflow: hidden;
-}
-#search-results ul {
-  &:first-of-type a { //topics
-    margin-left: 10px;
-  }
-
-  &:last-of-type { //users
-    width: 33%;
-    border: 0;
-  }
 }
 #search-results ul li:first-of-type {
   .content-header(@fontColor-muted);
