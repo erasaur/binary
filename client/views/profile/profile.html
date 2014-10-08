@@ -17,8 +17,14 @@
 </template>
 
 <template name="profileHeader">
-	<h3>{{username}}</h3>
-	<p>Reputation: {{stats.reputation}}</p>
+	<div class="profile-header">
+		<div class="profile-avatar">
+			{{> avatar user=this class='large circle'}}
+		</div>
+		<h3 class="profile-title">{{profile.name}}</h3>
+		<p class="muted">{{profile.bio}}</p>
+		<p class="muted"><small>{{stats.reputation}} Rep</small></p>
+	</div>
 </template>
 
 <template name="profileNav">

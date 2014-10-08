@@ -24,7 +24,7 @@ Template.mainLayout.searching = isSearching;
 Template.pageLayout.searching = isSearching;
 
 Template.nav.events({
-  "click .navbar-brand": function () {
+  "click .navbar-brand": function (event, template) {
     stopSearching();
   }
 });
