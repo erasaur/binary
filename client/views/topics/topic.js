@@ -34,6 +34,11 @@ Template.topicComments.helpers({
 		return comments;
 	}
 });
+Template.topicFollowers.helpers({
+	followers: function () {
+		return Meteor.users.find({ '_id': { $in: this.followers } });
+	}
+});
 
 Template.topicNav.helpers({
 	numComments: function () {

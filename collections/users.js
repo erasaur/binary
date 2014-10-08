@@ -68,8 +68,7 @@ Schema.User = new SimpleSchema({
     blackbox: true
   },
   profile: { // public and modifiable
-    type: Schema.UserProfile,
-    optional: true
+    type: Schema.UserProfile
   },
   activity: { // public but not modifiable
     type: Object,

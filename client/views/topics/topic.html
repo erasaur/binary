@@ -38,14 +38,16 @@
 	<div class="col-content page-body-header">
 		<h3>Followers</h3>
 	</div>
-	<div class="col-content page-body">
-		{{#if followers}}
-			{{#each followers}}
-				{{> profileItem}}
-			{{/each}}
-		{{else}}
-			<div>No followers yet.</div>	
-		{{/if}}
+	<div class="col-content page-body-content">
+		<div class="list">
+			{{#if followers.count}}
+				{{#each followers}}
+					{{> profileItem}}
+				{{/each}}
+			{{else}}
+				<div class="list-item">No followers yet.</div>	
+			{{/if}}
+		</div>
 	</div>
 </template>
 
@@ -53,8 +55,8 @@
 	<div class="col-content page-body-header">
 		<h3>Creator</h3>
 	</div>
-	<div class="col-content page-body">
-		info about creator
+	<div class="col-content page-body-content">
+		<div class="list-item">info about creator</div>
 	</div>
 </template>
 
