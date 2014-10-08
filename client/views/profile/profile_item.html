@@ -1,0 +1,18 @@
+<template name="profileItem">
+  <a href="{{pathFor 'profile'}}">
+    <div class="list-item">
+      <div class="list-item-info profile-item">
+        <div class="profile-item-left">
+          {{> avatar user=this class='circle'}}
+        </div>
+        <div class="profile-item-right">
+          <h3>{{profile.name}}</h3>
+          <small>{{profile.bio}}</small>
+        </div>
+      </div>
+      <div class="list-item-action">
+        <span><small>{{stats.reputation}} Rep</small></span>
+      </div>
+    </div>
+  </a>
+</template>

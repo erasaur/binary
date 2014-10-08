@@ -35,14 +35,14 @@
         </ul>
       </div>
       <div id="search-results">
-        <ul>
-          <li>Topics</li>
+        <div class="list">
+          <div class="list-item list-header">Topics</div>
           {{#ifEsInputIsEmpty index="topics" id="js-search-input"}}
-            <li>Search for topics.</li>
+            <div class="list-item">Search for topics.</div>
           {{/ifEsInputIsEmpty}}
 
           {{#ifEsIsSearching index="topics"}}
-            <li>Working on it...</li>
+            <div class="list-item">Working...</div>
           {{else}}
             {{#esEach index="topics" id="js-search-input"}}
               {{> topicItem}}
@@ -50,27 +50,27 @@
           {{/ifEsIsSearching}}
 
           {{#ifEsHasNoResults index="topics" id="js-search-input"}}
-            <li>No search results.</li>
+            <div class="list-item">No search results.</div>
           {{/ifEsHasNoResults}}
-        </ul>
-        <ul>
-          <li>Users</li>
+        </div>
+        <div class="list">
+          <div class="list-item list-header">Users</div>
           {{#ifEsInputIsEmpty index="users" id="js-search-input"}}
-            <li>Search for users.</li>
+            <div class="list-item">Search for users.</div>
           {{/ifEsInputIsEmpty}}
 
           {{#ifEsIsSearching index="users"}}
-            <li>Working on it...</li>
+            <div class="list-item">Working...</div>
           {{else}}
             {{#esEach index="users" id="js-search-input"}}
-              <li><a href="{{pathFor 'profile'}}" class="js-search-link">{{this.username}}</a></li>
+              {{> profileItem}}
             {{/esEach}}
           {{/ifEsIsSearching}}
 
           {{#ifEsHasNoResults index="users" id="js-search-input"}}
-            <li>No search results.</li>
+            <div class="list-item">No search results.</div>
           {{/ifEsHasNoResults}}
-        </ul>
+        </div>
       </div>
     </div>
   </div>
