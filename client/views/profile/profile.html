@@ -1,40 +1,5 @@
-<template name="profile">
-	<div class="col-content page-body">
-		{{> UI.dynamic template=currentTab data=this}}
-	</div>
-</template>
 
-<template name="profileButtons">
-	{{#if canFollow}}
-		{{#if following}}
-			<button id="js-unfollow" class="btn btn-primary">Following</button>
-		{{else}}
-			<button id="js-follow" class="btn btn-default">Follow</button>
-		{{/if}}
-	{{else}}
-		<i id="js-settings" class="fa fa-cog fa-lg"></i>
-	{{/if}}
-</template>
-
-<template name="profileHeader">
-	<div class="profile-header">
-		<div class="profile-avatar">
-			{{> avatar user=this class='large circle'}}
-		</div>
-		<h3 class="profile-title">{{profile.name}}</h3>
-		<p class="muted">{{profile.bio}}</p>
-		<p class="muted"><small>{{stats.reputation}} Rep</small></p>
-	</div>
-</template>
-
-<template name="profileNav">
-	<ul class="page-nav-buttons clearfix">
-	  <li class="js-nav-button {{isCurrentTab 'profileComments'}}" data-tab="profileComments"><a href="#">Comments</a></li>
-	  <li class="js-nav-button {{isCurrentTab 'profileTopics'}}" data-tab="profileTopics"><a href="#">Topics</a></li>
-	  <li class="js-nav-button {{isCurrentTab 'profileUsers'}}" data-tab="profileUsers"><a href="#">Users</a></li>
-	  <li class=""><a href="#">Temporary</a></li>
-	</ul>
-</template>
+<!-- BEGIN PAGE TABS -->
 
 <template name="profileComments">
 	<div class="page-body-header">
@@ -123,8 +88,49 @@
 	</div>
 </template>
 
+<!-- END PAGE TABS -->
 
+<!-- BEGIN PAGE LAYOUT -->
 
+<template name="profile">
+	<div class="col-content page-body">
+		{{> UI.dynamic template=currentTab data=this}}
+	</div>
+</template>
+
+<template name="profileButtons">
+	{{#if canFollow}}
+		{{#if following}}
+			<button id="js-unfollow" class="btn btn-primary">Following</button>
+		{{else}}
+			<button id="js-follow" class="btn btn-default">Follow</button>
+		{{/if}}
+	{{else}}
+		<i id="js-settings" class="fa fa-cog fa-lg"></i>
+	{{/if}}
+</template>
+
+<template name="profileHeader">
+	<div class="profile-header">
+		<div class="profile-avatar">
+			{{> avatar user=this class='large circle'}}
+		</div>
+		<h3 class="profile-title">{{profile.name}}</h3>
+		<p class="muted">{{profile.bio}}</p>
+		<p class="muted"><small>{{stats.reputation}} Rep</small></p>
+	</div>
+</template>
+
+<template name="profileNav">
+	<ul class="page-nav-buttons clearfix">
+	  <li class="js-nav-button {{isCurrentTab 'profileComments'}}" data-tab="profileComments"><a href="#">Comments</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'profileTopics'}}" data-tab="profileTopics"><a href="#">Topics</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'profileUsers'}}" data-tab="profileUsers"><a href="#">Users</a></li>
+	  <li class=""><a href="#">Temporary</a></li>
+	</ul>
+</template>
+
+<!-- END PAGE LAYOUT -->
 
 
 

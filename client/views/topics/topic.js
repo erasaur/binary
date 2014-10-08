@@ -1,8 +1,6 @@
-Template.topic.helpers({
-	currentTab: function () {
-		return Session.get('currentTab');
-	}
-});
+
+// BEGIN PAGE TABS -----------------------------------
+
 Template.topicComments.helpers({
 	hasComments: function () { 
 		// can't do comments.count (not cursor) or comments.length (dummy row)
@@ -34,20 +32,22 @@ Template.topicComments.helpers({
 		return comments;
 	}
 });
+
 Template.topicFollowers.helpers({
 	followers: function () {
 		return Meteor.users.find({ '_id': { $in: this.followers } });
 	}
 });
 
-Template.topicNav.helpers({
-	numComments: function () {
-		return Comments.find({"topicId": this._id}).count();
-	},
-	isCurrentTab: function (tab) {
-		return Session.equals("currentTab", tab) ? "selected" : "";
+Template.topic.helpers({
+	currentTab: function () {
+		return Session.get('currentTab');
 	}
 });
+
+// END PAGE TABS -------------------------------------
+
+// BEGIN PAGE LAYOUT ---------------------------------
 
 Template.topicButtons.helpers({
 	following: function () {
@@ -62,6 +62,15 @@ Template.topicHeader.events({
 	},
 	"click #js-vote-con": function(event, template) {
 		Meteor.call('vote', Session.get("currentTopic"), 'con');
+	}
+});
+
+Template.topicNav.helpers({
+	numComments: function () {
+		return Comments.find({"topicId": this._id}).count();
+	},
+	isCurrentTab: function (tab) {
+		return Session.equals("currentTab", tab) ? "selected" : "";
 	}
 });
 
@@ -80,7 +89,7 @@ Template.topicButtons.events({
 	}
 });
 
-
+// END PAGE LAYOUT -----------------------------------
 
 
 
