@@ -264,9 +264,8 @@
 .vote {
   padding: 40px;
 }
-.show-more {
-  margin: 80px 0;
-  text-align: center;
+.muted {
+  color: @fontColor-muted;
 }
 
 // landing page --------------------------------------
@@ -312,7 +311,7 @@
   }
 }
 #search-results ul li:first-of-type {
-  .content-header(@dark-gray);
+  .content-header(@fontColor-muted);
 }
 #topic-categories ul {
   width: 33%;
@@ -324,7 +323,7 @@
   text-align: center;
 }
 #topic-categories ul a {
-  .content-header(@dark-gray); 
+  .content-header(@fontColor-muted); 
   &:hover { color: black; }
 }
 
