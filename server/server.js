@@ -49,8 +49,10 @@ Meteor.methods({
 
 		return topicId;
 	},
-	newComment: function(userId, topicId, content, side, replyTo, replyToUser) {
+	newComment: function(topicId, content, side, replyTo, replyToUser) {
 		if (content) {
+      var userId = this.userId;
+
 			Meteor.users.update(userId, { $addToSet: { "activity.discussedTopics": topicId } });
 
 			var properties = {
@@ -77,29 +79,35 @@ Meteor.methods({
 		} else
 			throw new Meteor.Error(403, "Sorry, you can't make a comment with no content.");
 	},
-	newFollower: function (userId, following) {
+	newFollower: function (following) {
+    var userId = this.userId;
 		Meteor.users.update(userId, { $addToSet: { "activity.followingUsers": following } });
 		Meteor.users.update(following, { $addToSet: { "activity.followers": userId } });
 	},
-	removeFollower: function (userId, following) {
+	removeFollower: function (following) {
+    var userId = this.userId;
 		Meteor.users.update(userId, { $pull: { "activity.followingUsers": following } });
 		Meteor.users.update(following, { $pull: { "activity.followers": userId } });
 	},
-	upvoteComment: function (userId, commentId, commentOwner) {
+	upvoteComment: function (commentId, ownerId) {
+    var userId = this.userId;
 		Comments.update(commentId, { $inc: { "upvotes": 1 } });
-		Meteor.users.update(commentOwner, { $inc: { "reputation": 1 } });
+		Meteor.users.update(ownerId, { $inc: { "reputation": 1 } });
 		Meteor.users.update(userId, { $addToSet: { "activity.upvotedComments": commentId } });
 	},
-	downvoteComment: function (userId, commentId, commentOwner) {
+	downvoteComment: function (commentId, ownerId) {
+    var userId = this.userId;
 		Comments.update(commentId, { $inc: { "upvotes": -1 } });
-		Meteor.users.update(commentOwner, { $inc: {"reputation": -1 } });	
+		Meteor.users.update(ownerId, { $inc: {"reputation": -1 } });	
 		Meteor.users.update(userId, { $pull: { "activity.upvotedComments": commentId } });
 	},
-	followTopic: function (userId, topicId) {
+	followTopic: function (topicId) {
+    var userId = this.userId;
 		Topics.update(topicId, { $addToSet: { "followers": userId } });
 		Meteor.users.update(userId, { $addToSet: { "activity.followingTopics": topicId } });
 	},
-	unfollowTopic: function (userId, topicId) {
+	unfollowTopic: function (topicId) {
+    var userId = this.userId;
 		Topics.update(topicId, { $pull: { "followers": userId } });
 		Meteor.users.update(userId, { $pull: { "activity.followingTopics": topicId } });
 	}

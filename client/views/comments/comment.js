@@ -25,7 +25,7 @@ Template.newComment.events({
 		var	replyTo = this.id;
 		var	replyToUser = replyTo && Comments.findOne(replyTo).userId;
 
-		Meteor.call("newComment", Meteor.userId(), Session.get("currentTopic"), content, side, replyTo, replyToUser, function(error, result) {
+		Meteor.call("newComment", Session.get("currentTopic"), content, side, replyTo, replyToUser, function(error, result) {
 			if(error)
 				alert(formatError(error));
 			else
@@ -125,10 +125,10 @@ Template.comment.events({
 
 	},
 	"click .js-upvote-comment": function (event, template) {
-		Meteor.call("upvoteComment", Meteor.userId(), this._id, this.userId);
+		Meteor.call("upvoteComment", this._id, this.userId);
 	},
 	"click .js-downvote-comment": function (event, template) {
-		Meteor.call("downvoteComment", Meteor.userId(), this._id, this.userId);
+		Meteor.call("downvoteComment", this._id, this.userId);
 	}
 });
 

@@ -22,10 +22,10 @@ Template.profileNav.helpers({
 
 Template.profileButtons.events({
 	"click #js-follow": function (event, template) {
-		Meteor.call("newFollower", Meteor.userId(), this._id);
+		Meteor.call("newFollower", this._id);
 	},
 	"click #js-unfollow": function (event, template) {
-		Meteor.call("removeFollower", Meteor.userId(), this._id);
+		Meteor.call("removeFollower", this._id);
 	},
 	"click #js-settings": function (event, template) {
 		Router.go(getSettingsRoute(this._id));

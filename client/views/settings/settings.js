@@ -50,10 +50,7 @@ Template.settings.events({
     var newValue = parseInt(button.getAttribute('value'));
 
     // { 'profile.notifications.xxx.xxx': true }
-    var newPreferences = {};
-    newPreferences[actionValue] = !!newValue; // coerce to boolean
-
-    Meteor.call('changePreferences', newPreferences);
+    Meteor.call('changePreferences', setProperty({}, actionValue, !!newValue));
   },
   "click #js-edit-name, click #js-edit-bio, click #js-edit-email": function (event, template) {
     var target = event.currentTarget;

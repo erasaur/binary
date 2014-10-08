@@ -1,42 +1,3 @@
-function formatField(variable, value) {
-	var temp = {};
-	temp[variable] = value;
-	return temp;
-}
-
-Yamcha.Topics = {
-	vote: function(topicId, userId, side) {
-		var first, second, opposite;
-
-		if(side == "pro") {
-			first = "proUsers";
-			second = "conUsers";
-			opposite = "con";
-		} else {
-			first = "conUsers";
-			second = "proUsers";
-			opposite = "pro";
-		}
-
-		//assume we clicked on pro
-		var t = Topics.findOne(topicId);
-		if(t[second].indexOf(userId) === -1) { //didn't vote con already
-			if(t[first].indexOf(userId) !== -1) { //voted pro already, so unvote
-				Topics.update(topicId, {$inc: formatField(side, -1)});
-				Topics.update(topicId, {$pull: formatField(first, userId)});
-			} else { //didn't vote at all yet, so vote
-				Topics.update(topicId, {$inc: formatField(side, 1)});
-				Topics.update(topicId, {$push: formatField(first, userId)});
-			}
-		} else { //voted con already, so switch
-			Topics.update(topicId, {$inc: formatField(opposite, -1)});
-			Topics.update(topicId, {$pull: formatField(second, userId)});
-			Topics.update(topicId, {$inc: formatField(side, 1)});
-			Topics.update(topicId, {$push: formatField(first, userId)});
-		}
-	}
-}
-
 Template.topic.helpers({
 	hasComments: function () {
 		return Comments.find({"topicId": this._id}).count() > 0;
@@ -83,21 +44,19 @@ Template.topicButtons.helpers({
 
 Template.topicHeader.events({
 	"click #js-vote-pro": function(event, template) {
-		if(Session.get("currentTopic") && Meteor.userId())
-			Yamcha.Topics.vote(Session.get("currentTopic"), Meteor.userId(), "pro");
+		Meteor.call('vote', Session.get("currentTopic"), 'pro');
 	},
 	"click #js-vote-con": function(event, template) {
-		if(Session.get("currentTopic") && Meteor.userId())
-			Yamcha.Topics.vote(Session.get("currentTopic"), Meteor.userId(), "con");
+		Meteor.call('vote', Session.get("currentTopic"), 'con');
 	}
 });
 
 Template.topicButtons.events({
 	"click #js-follow": function(event, template) {
-		Meteor.call("followTopic", Meteor.userId(), this._id);
+		Meteor.call("followTopic", this._id);
 	},
 	"click #js-unfollow": function(event, template) {
-		Meteor.call("unfollowTopic", Meteor.userId(), this._id);
+		Meteor.call("unfollowTopic", this._id);
 	}
 });
 
