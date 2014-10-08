@@ -1,5 +1,11 @@
 Template.topic.helpers({
-	hasComments: function () {
+	currentTab: function () {
+		return Session.get('currentTab');
+	}
+});
+Template.topicComments.helpers({
+	hasComments: function () { 
+		// can't do comments.count (not cursor) or comments.length (dummy row)
 		return Comments.find({"topicId": this._id}).count() > 0;
 	},
 	comments: function () {
@@ -32,6 +38,9 @@ Template.topic.helpers({
 Template.topicNav.helpers({
 	numComments: function () {
 		return Comments.find({"topicId": this._id}).count();
+	},
+	isCurrentTab: function (tab) {
+		return Session.equals("currentTab", tab) ? "selected" : "";
 	}
 });
 
@@ -48,6 +57,12 @@ Template.topicHeader.events({
 	},
 	"click #js-vote-con": function(event, template) {
 		Meteor.call('vote', Session.get("currentTopic"), 'con');
+	}
+});
+
+Template.topicNav.events({
+	"click .js-nav-button": function (event, template) {
+		Session.set("currentTab", event.currentTarget.getAttribute("data-tab"));
 	}
 });
 
