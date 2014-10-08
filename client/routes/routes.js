@@ -81,6 +81,7 @@ Router.map(function() {
   		return Meteor.subscribe("singleTopic", this.params._id);
   	},
     onRun: function () {
+      Session.set("currentTab", "topicComments");
       SessionAmplify.set("showingReplies", []);
     },
   	data: function () {

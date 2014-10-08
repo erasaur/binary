@@ -1,32 +1,60 @@
 <template name="topic">	
 	<div class="page-body">
-		<div class="col-content page-body-header">
-			<h3>Comments</h3>
-			<span class="dropdown">
-			  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
-			    Top <span class="caret"></span>
-			  </button>
-			  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Top</a></li>
-			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Newest</a></li>
-			    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Upvoted</a></li>
-			  </ul>
-			</span>
-		</div>
+		{{> UI.dynamic template=currentTab data=this}}
+	</div>
+</template>
 
-		<div class="col-content clearfix">
-			{{> newComment}}
-		</div>
+<template name="topicComments">
+	<div class="col-content page-body-header">
+		<h3>Comments</h3>
+		<span class="dropdown">
+		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+		    Top <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Top</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Newest</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Upvoted</a></li>
+		  </ul>
+		</span>
+	</div>
 
-		{{#if hasComments}}
-			<div class="comment-container main">
-				{{#each comments}}
-					{{> commentRow}}
-				{{/each}}
-			</div>
+	<div class="col-content clearfix">
+		{{> newComment}}
+	</div>
+
+	{{#if hasComments}}
+		<div class="comment-container main">
+			{{#each comments}}
+				{{> commentRow}}
+			{{/each}}
+		</div>
+	{{else}}
+		<div class="col-content">No comments yet.</div>	
+	{{/if}}
+</template>
+
+<template name="topicFollowers">
+	<div class="col-content page-body-header">
+		<h3>Followers</h3>
+	</div>
+	<div class="col-content page-body">
+		{{#if followers}}
+			{{#each followers}}
+				{{> profileItem}}
+			{{/each}}
 		{{else}}
-			<div class="col-content">No comments yet.</div>	
+			<div>No followers yet.</div>	
 		{{/if}}
+	</div>
+</template>
+
+<template name="topicCreator">
+	<div class="col-content page-body-header">
+		<h3>Creator</h3>
+	</div>
+	<div class="col-content page-body">
+		info about creator
 	</div>
 </template>
 
@@ -54,10 +82,10 @@
 
 <template name="topicNav">
 	<ul class="page-nav-buttons clearfix">
-	  <li class="js-nav-button"><a href="#" id="topicComments">Comments {{numComments}}</a></li>
-	  <li class="js-nav-button"><a href="#">Followers {{followers.length}}</a></li>
-	  <li class="js-nav-button"><a href="{{pathFor 'profile' _id=userId}}">Created by {{formatName userId}}</a></li>
-	  <li class="js-nav-button"><a href="#">Created {{formatDate createdAt}}</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'topicComments'}}" data-tab="topicComments"><a href="#">Comments {{numComments}}</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'topicFollowers'}}" data-tab="topicFollowers"><a href="#">Followers {{followers.length}}</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'topicCreator'}}" data-tab="topicCreator"><a href="#">Created by {{formatName userId}}</a></li>
+	  <li><a href="#">Created {{formatDate createdAt}}</a></li>
 	</ul>
 </template>
 
