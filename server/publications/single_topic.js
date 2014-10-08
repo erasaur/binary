@@ -30,7 +30,7 @@ Meteor.publish("singleTopic", function (topicId) {
       options: { sort: { "upvotes": -1 } },
       mappings: [{
         key: "userId", collection: Meteor.users, // publish comment owners
-        options: { fields: { "username": 1, "profile": 1 } }
+        options: { fields: { "username": 1, "profile": 1, "stats": 1 } }
       }]
     }]
   });
