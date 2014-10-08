@@ -22,7 +22,7 @@ Meteor.publish("singleTopic", function (topicId) {
     filter: topicId,
     mappings: [{
       key: "userId", collection: Meteor.users, // publish topic owner
-      options: { fields: { "username": 1 }, limit: 1 }
+      options: { fields: { "username": 1, "profile": 1 }, limit: 1 }
     }, {
       reverse: true, // use the comments topicId to match this _id
       key: "topicId",
@@ -30,7 +30,7 @@ Meteor.publish("singleTopic", function (topicId) {
       options: { sort: { "upvotes": -1 } },
       mappings: [{
         key: "userId", collection: Meteor.users, // publish comment owners
-        options: { fields: { "username": 1 } }
+        options: { fields: { "username": 1, "profile": 1 } }
       }]
     }]
   });

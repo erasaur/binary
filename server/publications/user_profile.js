@@ -51,7 +51,7 @@ Meteor.publish("userProfile", function (userId) {
   userIds = _.union(userIds, commentUsers, topicUsers);
 
   var users = Meteor.users.find({"_id": {$in: userIds}}, 
-                                {fields: {"username": 1, "stats": 1, "activity": 1}});
+                                {fields: {"username": 1, "profile": 1, "stats": 1, "activity": 1}});
 
   return [comments, topics, users];
 });

@@ -58,7 +58,8 @@ Meteor.methods({
         "email": email, 
         "password": password,
         "profile": {
-          "name": "No name"
+          "name": "No name",
+          "bio": "Not much is known about him/her, except that not much is known about him/her."
         }
       });
       return "Success! Your account '" + username + "' has been created.";
