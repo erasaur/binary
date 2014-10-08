@@ -62,11 +62,14 @@
   -webkit-animation: target-fade 2s 1;
   -moz-animation: target-fade 2s 1;
 }
-.content-header(@color) {
+.content-header {
   // line-height: 24px;
-  color: @color;
   font-size: 18px;
   font-weight: 400;
+}
+.content-header(@color) {
+  .content-header;
+  color: @color;
 }
 .border-radius(@radius) {
   -webkit-border-radius: @radius;
