@@ -6,6 +6,7 @@ amplify@1.0.0
 application-configuration@1.0.2
 autoupdate@1.1.1
 base64@1.0.0
+bengott:avatar@0.1.1
 benjaminrh:user-session@0.2.0
 binary-heap@1.0.0
 blaze-tools@1.0.0
@@ -33,6 +34,8 @@ iron:core@0.3.4
 iron:dynamic-template@0.4.1
 iron:layout@0.4.1
 iron:router@0.9.4
+jparker:crypto-core@0.1.0
+jparker:crypto-md5@0.1.1
 jquery@1.0.0
 json@1.0.0
 less@1.0.9
@@ -72,6 +75,7 @@ spacebars-compiler@1.0.2
 spacebars@1.0.2
 srp@1.0.0
 standard-app-packages@1.0.2
+stylus@1.0.4
 templating@1.0.7
 tracker@1.0.2
 ui@1.0.3
