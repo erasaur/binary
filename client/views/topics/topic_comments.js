@@ -1,6 +1,6 @@
 Template.topicComments.helpers({
   commentCategory: function () {
-    return camelToTitle(Router.current().params.sort_by || 'upvotes');
+    return camelToTitle(Router.current().params.sort_by || 'Top');
   },
   hasComments: function () { 
     // can't do comments.count (not cursor) or comments.length (dummy row)
