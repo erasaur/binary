@@ -36,7 +36,16 @@ CommentSchema = new SimpleSchema({
   }
 });
 
-Comments = new Mongo.Collection("comments");
+Comments = new Mongo.Collection('comments');
+// Comments = new Mongo.Collection("comments", {
+//   transform: function (document) {
+//     document.initVotes = document.upvotes;
+//     document.initDate = document.createdAt;
+
+//     console.log("transformers");
+//     return document;
+//   }
+// });
 Comments.attachSchema(CommentSchema);
 
 // Comments.allow

@@ -4,8 +4,13 @@
 - activity.liked -> activity.upvotedComments
 - activity.following -> activity.followingUsers
 
+method 1:
+establish non-reactive query for comments in topic (so liking a comment wont make it shoot to the top)
+- maybe use a method instead of subscription to pull down data? store in session var 
+manually observe 'added' for comments, and push new documents to publication (so users can see their comments being added)
 
-
+method 2:
+render a static template?
 
 
 table {
