@@ -134,7 +134,6 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
 
   // stop all handles
   pub.onStop(function () {
-    console.log('stopped');
     topicHandle.stop();
     topicOwnerHandle.stop();
     commentsHandle.stop();
