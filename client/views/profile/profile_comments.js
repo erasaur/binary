@@ -18,7 +18,7 @@ Template.profileComments.helpers({
 });
 
 Template.profileComments.events({
-  "click li[role='presentation']": function (event, template) {
+  "click .js-dropdown-button": function (event, template) {
     commentCategory = event.currentTarget.getAttribute("data-category");
     commentDeps.changed();
   }
