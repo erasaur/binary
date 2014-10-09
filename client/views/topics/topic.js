@@ -1,38 +1,6 @@
 
 // BEGIN PAGE TABS -----------------------------------
 
-Template.topicComments.helpers({
-	hasComments: function () { 
-		// can't do comments.count (not cursor) or comments.length (dummy row)
-		return Comments.find({"topicId": this._id}).count() > 0;
-	},
-	comments: function () {
-		var pros = Comments.find({
-								"replyTo": {$nin: SessionAmplify.get("showingReplies")}, 
-								"topicId": this._id, 
-								"side": "pro"
-							}).fetch();
-		var	cons = Comments.find({
-								"replyTo": {$nin: SessionAmplify.get("showingReplies")}, 
-								"topicId": this._id, 
-								"side": "con"
-							}).fetch();
-
-		/** 
-		 * Combines the pro and con comments into an array of objects
-		 * with the format: {"pros": proComment, "cons": conComment}
-		 *
-		 * pair - array that contains the comment object
-		 */
-		var comments = _.map(_.zip(pros, cons), function(pair) { 
-			return {"pros": pair[0], "cons": pair[1]};
-		});
-		//a dummy row that solves comment rendering (see docs error 1)
-		comments.push({"bottom": true});
-		return comments;
-	}
-});
-
 Template.topicFollowers.helpers({
 	followers: function () {
 		return Meteor.users.find({ '_id': { $in: this.followers } });

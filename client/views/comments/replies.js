@@ -4,14 +4,20 @@ Template.replies.helpers({
 					 Comments.find({$and: [{"replyTo": this.id}, {"side": "con"}]}).count();
 	},
 	replies: function () {
+		var sortOptions = {
+      'top': 'initVotes',
+      'newest': 'initDate'
+    };
+    var sortBy = sortOptions[Router.current().params.sort_by] || 'initVotes';
+
 		var pros = Comments.find({
 								"replyTo": this.id, 
 								"side": "pro"
-							}).fetch();
+							}, { sort: setProperty({}, sortBy, -1) }).fetch();
 		var	cons = Comments.find({
 								"replyTo": this.id, 
 								"side": "con"
-							}).fetch();
+							}, { sort: setProperty({}, sortBy, -1) }).fetch();
 
 		/** 
 		 * Combines the pro and con comments into an array of objects
