@@ -7,15 +7,21 @@ Template.topicFollowers.helpers({
 	}
 });
 
-Template.topic.helpers({
-	currentTab: function () {
-		return Session.get('currentTab');
+Template.topicCreator.helpers({
+	creator: function () {
+		return Meteor.users.findOne(this.userId);
 	}
 });
 
 // END PAGE TABS -------------------------------------
 
 // BEGIN PAGE LAYOUT ---------------------------------
+
+Template.topic.helpers({
+	currentTab: function () {
+		return Session.get('currentTab');
+	}
+});
 
 Template.topicButtons.helpers({
 	following: function () {
