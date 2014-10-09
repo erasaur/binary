@@ -53,7 +53,21 @@
 		<h3>Creator</h3>
 	</div>
 	<div class="col-content page-body-content">
-		<div class="list-item">info about creator</div>
+		<div class="list">
+			{{#with creator}}
+				{{> profileItem}}
+			{{/with}}
+			<div class="list-item">
+				<h3>Creator's Notes</h3>
+				<p class="muted">
+					{{#if description}}
+						{{formatContent description}}
+					{{else}}
+						No notes have been written.
+					{{/if}}
+				</p>
+			</div>
+		</div>
 	</div>
 </template>
 
