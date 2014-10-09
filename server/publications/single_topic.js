@@ -75,7 +75,7 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
 
         fields.initDate = fields.createdAt;
         fields.initVotes = fields.upvotes;
-        
+
         pub.added('comments', id, fields);
       },
       changed: function (id, fields) {
@@ -83,7 +83,8 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
       },
       removed: function (id) {
         commentsHandle.stop();
-        commentOwnersHandle.stop();
+        if (commentOwnersHandle)
+          commentOwnersHandle.stop();
         pub.removed('comments', id);
       }
     });
@@ -123,7 +124,8 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
       topicHandle.stop();
       topicOwnerHandle.stop();
       commentsHandle.stop();
-      commentOwnersHandle.stop();
+      if (commentOwnersHandle)
+        commentOwnersHandle.stop();
       pub.removed('topics', id);
     }
   });
@@ -132,10 +134,15 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
 
   // stop all handles
   pub.onStop(function () {
+    console.log('stopped');
     topicHandle.stop();
     topicOwnerHandle.stop();
     commentsHandle.stop();
-    commentOwnersHandle.stop();
+    // it's possible that commentOwnersHandle is never
+    // initialized if commentsHandle doesn't call
+    // 'added' (no comments)
+    if (commentOwnersHandle) 
+      commentOwnersHandle.stop();
   });
 
   // Meteor.publishWithRelations({
