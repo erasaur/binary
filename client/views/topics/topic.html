@@ -6,12 +6,12 @@
 		<h3>Comments</h3>
 		<span class="dropdown">
 		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
-		    Top <span class="caret"></span>
+		    {{commentCategory}} <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Top</a></li>
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Newest</a></li>
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Upvoted</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor 'topic' _id=this._id query='sort_by=top'}}">Top</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor 'topic' _id=this._id query='sort_by=newest'}}">Newest</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1">Upvoted</a></li>
 		  </ul>
 		</span>
 	</div>
