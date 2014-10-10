@@ -87,7 +87,7 @@ Meteor.methods({
     // var timeSinceLastComment = timeSinceLast(user, Comments);
     // var commentInterval = Math.abs(parseInt(getSetting('commentInterval',15)));
 
-    if (!userId || !canComment(userId))
+    if (!userId || !canCommentById(userId))
       throw new Meteor.Error(403, 'Please login to post comments.');
 
     // check that user waits more than 15 seconds between comments
