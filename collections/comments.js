@@ -1,3 +1,5 @@
+// schema --------------------------------------------
+
 CommentSchema = new SimpleSchema({
   _id: {
     type: String,
@@ -37,19 +39,30 @@ CommentSchema = new SimpleSchema({
 });
 
 Comments = new Mongo.Collection('comments');
-// Comments = new Mongo.Collection("comments", {
-//   transform: function (document) {
-//     document.initVotes = document.upvotes;
-//     document.initDate = document.createdAt;
-
-//     console.log("transformers");
-//     return document;
-//   }
-// });
 Comments.attachSchema(CommentSchema);
 
-// Comments.allow
-// Comments.deny
+// end schema ----------------------------------------
+
+
+// permissions ---------------------------------------
+
+Comments.allow({
+  update: canEditById,
+  remove: function () {
+    return false;
+  }
+});
+Comments.deny(function (userId, comment, fields) {
+  // if (isAdminById(userId)) return false;
+
+  // deny update if it contains invalid fields
+  return _.without(fields, 'content').length > 0;
+});
+
+// end permissions -----------------------------------
+
+
+// collection hooks ----------------------------------
 
 Comments.before.insert(function (userId, doc) {
   if (Meteor.isServer)
@@ -63,8 +76,54 @@ Comments.before.update(function (userId, doc, fields, modifier, options) {
   }
 });
 
+// end collection hooks ------------------------------
 
 
+// methods -------------------------------------------
+
+Meteor.methods({
+  newComment: function(topicId, content, side, replyTo, replyToUser) {
+    var userId = this.userId;
+    // var timeSinceLastComment = timeSinceLast(user, Comments);
+    // var commentInterval = Math.abs(parseInt(getSetting('commentInterval',15)));
+
+    if (!userId || !canComment(userId))
+      throw new Meteor.Error(403, 'Please login to post comments.');
+
+    // check that user waits more than 15 seconds between comments
+    // if(!this.isSimulation && (timeSinceLastComment < commentInterval))
+    //   throw new Meteor.Error(704, i18n.t('Please wait ')+(commentInterval-timeSinceLastComment)+i18n.t(' seconds before commenting again'));
+
+    if (!content)
+      throw new Meteor.Error(403, "Sorry, you can't make a comment with no content.");
+      
+    Meteor.users.update(userId, { $addToSet: { "activity.discussedTopics": topicId } });
+
+    var properties = {
+      userId: userId,
+      topicId: topicId,
+      createdAt: new Date(),
+      content: content,
+      side: side,
+      upvotes: 0,
+      replyTo: replyTo,
+      replies: []
+    };
+
+    var commentId = Comments.insert(properties);
+
+    if (!!replyTo)
+      Comments.update(replyTo, { $addToSet: { "replies": commentId } });
+
+    Meteor.users.update(userId, { $inc: { "stats.commentsCount": 1 } });
+    Meteor.call("newNotification", "newComment", userId, 
+                { "replyTo": replyToUser || "", "commentId": commentId, "topicId": topicId });
+
+    return commentId;
+  }
+});
+
+// end methods ---------------------------------------
 
 
 
