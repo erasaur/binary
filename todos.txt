@@ -81,32 +81,25 @@ User A sees this:
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
 
 replace unicode with downloaded font/font awesome (eg the search bar "x")
-what happens if comments shift while a replybox is shown? (eg a comment suddenly becomes more popular and displaces it at the top)
 is this.userId already available in publish?
 
-sanitize all inputs (newComment, newTopic, etc.)
+sanitation for markdown
 use sessions only for variables that should be global, otherwise use deps or reactive var
 
-switch from using meteor error
-meteor stubs -- have meteor methods on client and server (see discover meteor)
-- sync client/server side collections
 use router controllers ?
-optimize pub/subs (see discover meteor)
-fix notifications - comment replies don't get tracked.
+implement notifications
 em vs px
 color left border of topicItem based on pro > con / con > pro
 searching topics pro/con icons should be fixed width
 auth certain pages
 better way to do form alerts (home/signup modals)
-improve topics.js vote function
-test the router for loading template, not found template, etc. need to do subscriptions for notfound template
+
+
 implement use of enter to submit forms (maybe not for sign up form -- less risk of bots signing up? add captcha maybe?)
 make a footer type thing (some space from the bottom)
 idToCollection function in helpers -- is it slow to pass collection as parameter?
 
 edit/remove comments, edit/remove topics
-
-sorting by popular, newest, etc. for newest, might be best not to do auto-updates -- comments keep moving around too much
 
 infinite scrolling for comments
 forgot password feature
@@ -116,34 +109,18 @@ fix up css make it better
 SEO
 benchmark website
 
-meteor permissions (allow, deny, etc)
-
-
-if user has 10 new updates, and we're planning on only storing 5, send only the 5 newest updates.
-
-**** maybe remove the notifications model, and put all of them into the user document? take advantage of mongodb "indexing" (search by current user _id rather than by notification's "user" entry), reduce number of publishes/subs
-
-notification system:
-- circle next to name showing notifications.find(user).count()
-- 4 categories of notifications
--- for each one, if only 1 notification, then display something like: user1 posted in/replied to your topic/comment
--- if 2+ notifications, then something like: 2 people posted in/replied to your topic/comment 
-
-- for meteor user:
--- notifications field:
-	- replies:
-	-- list of notification ids for when users reply to user's comments
-	- topics/posts:
-	-- list of ids for new topics/posts created by people user is following
-	- comments:
-	-- list of ids for new comments on topics created by user
-	- follows:
-	-- list of people who just followed you
-
-- whenever someone comments on comment you posted (for example), update the notifications collection where the user is the comment owner (if they are not viewing the current page) and insert info about {person who posted that reply, type of notification (in this case, comment reply -- will be used later to format the message shown to the user), boolean of read to false}
-- when the notification page is viewed, all the notifications are marked as "read" (and perhaps delete notifications after 3 days)
 
 ---------------------------------------------------------------------- DONE -------------------------------------------------------------------------
+sorting by popular, newest, etc. for newest, might be best not to do auto-updates -- comments keep moving around too much
+test the router for loading template, not found template, etc. need to do subscriptions for notfound template
+improve topics.js vote function
+sanitize all inputs (newComment, newTopic, etc.)
+meteor permissions (allow, deny, etc)
+what happens if comments shift while a replybox is shown? (eg a comment suddenly becomes more popular and displaces it at the top)
+meteor stubs -- have meteor methods on client and server (see discover meteor)
+- sync client/server side collections
+optimize pub/subs (see discover meteor)
+deal with newFollower methods and followTopic methods
 fix drawing glitch in chrome when opening replies for the last comment of a reply box (seems to be resolved by border radius)
 for routes to topic/user, publish the cursor rather than an object with the cursor
 add comment ids to comment replies array

@@ -1,5 +1,5 @@
 clean up returnError stuff in permissions (dont need it i think)
-deal with newFollower methods and followTopic methods
+
 purpose of $not: $in vs $nin? same with key:{$in: [oneItem]} vs just plain key:oneItem
 is session.set('currenttopic') necessary?
 
@@ -66,3 +66,28 @@ border: solid 5px transparent;
     background-color: rgb(113, 201, 230);
     border-right: none;
     border-bottom-right-radius: 8px;
+
+
+if user has 10 new updates, and we're planning on only storing 5, send only the 5 newest updates.
+
+**** maybe remove the notifications model, and put all of them into the user document? take advantage of mongodb "indexing" (search by current user _id rather than by notification's "user" entry), reduce number of publishes/subs
+
+notification system:
+- circle next to name showing notifications.find(user).count()
+- 4 categories of notifications
+-- for each one, if only 1 notification, then display something like: user1 posted in/replied to your topic/comment
+-- if 2+ notifications, then something like: 2 people posted in/replied to your topic/comment 
+
+- for meteor user:
+-- notifications field:
+  - replies:
+  -- list of notification ids for when users reply to user's comments
+  - topics/posts:
+  -- list of ids for new topics/posts created by people user is following
+  - comments:
+  -- list of ids for new comments on topics created by user
+  - follows:
+  -- list of people who just followed you
+
+- whenever someone comments on comment you posted (for example), update the notifications collection where the user is the comment owner (if they are not viewing the current page) and insert info about {person who posted that reply, type of notification (in this case, comment reply -- will be used later to format the message shown to the user), boolean of read to false}
+- when the notification page is viewed, all the notifications are marked as "read" (and perhaps delete notifications after 3 days)
