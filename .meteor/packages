@@ -26,3 +26,5 @@ iron:layout
 iron:router
 mrt:iron-router-progress
 bengott:avatar
+meteorhacks:fast-render
+
