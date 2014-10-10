@@ -32,10 +32,10 @@ Template.topicButtons.helpers({
 
 Template.topicHeader.events({
 	"click #js-vote-pro": function(event, template) {
-		Meteor.call('vote', Session.get("currentTopic"), 'pro');
+		Meteor.call('vote', this, 'pro');
 	},
 	"click #js-vote-con": function(event, template) {
-		Meteor.call('vote', Session.get("currentTopic"), 'con');
+		Meteor.call('vote', this, 'con');
 	}
 });
 
