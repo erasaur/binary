@@ -19,10 +19,10 @@ CommentSchema = new SimpleSchema({
     min: 0,
     optional: true
   },
-  // upvoters: {
-  //   type: [String],
-  //   optional: true
-  // },
+  upvoters: {
+    type: [String],
+    optional: true
+  },
   replies: {
     type: [String]
   },
@@ -106,6 +106,7 @@ Meteor.methods({
       content: content,
       side: side,
       upvotes: 0,
+      upvoters: [],
       replyTo: replyTo,
       replies: []
     };
