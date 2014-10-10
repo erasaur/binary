@@ -164,6 +164,24 @@ Meteor.methods({
     Meteor.call("newNotification", "newTopic", userId, { "topicId": topicId, "topicTitle": title });
 
     return topicId;
+  },
+  followTopic: function (topicId) {
+    var userId = this.userId;
+
+    if (!userId || !canFollowById(userId))
+      throw new Meteor.Error(403, 'Please login to follow topics.');
+
+    Topics.update(topicId, { $addToSet: { "followers": userId } });
+    Meteor.users.update(userId, { $addToSet: { "activity.followingTopics": topicId } });
+  },
+  unfollowTopic: function (topicId) {
+    var userId = this.userId;
+
+    if (!userId || !canFollowById(userId))
+      throw new Meteor.Error(403, 'Please login to follow topics.');
+    
+    Topics.update(topicId, { $pull: { "followers": userId } });
+    Meteor.users.update(userId, { $pull: { "activity.followingTopics": topicId } });
   }
 });
 
