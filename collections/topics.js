@@ -1,3 +1,5 @@
+// schema --------------------------------------------
+
 TopicSchema = new SimpleSchema({
   _id: {
     type: String,
@@ -51,10 +53,20 @@ TopicSchema = new SimpleSchema({
 Topics = new Mongo.Collection("topics");
 Topics.attachSchema(TopicSchema);
 
+// end schema ----------------------------------------
+
+
+// search --------------------------------------------
+
 Topics.initEasySearch("title", {
 	"limit": 20,
 	"use": "mongo-db"
 });
+
+// end search ----------------------------------------
+
+
+// permissions ---------------------------------------
 
 Topics.allow({
   // insert: canPostById,
@@ -76,6 +88,11 @@ Topics.deny({
   }
 });
 
+// end permissions -----------------------------------
+
+
+// collection hooks ----------------------------------
+
 Topics.before.insert(function (userId, doc) {
   if (Meteor.isServer)
     doc.description = sanitize(doc.description);
@@ -88,6 +105,11 @@ Topics.before.update(function (userId, doc, fields, modifier, options) {
     modifier.$set.description = sanitize(modifier.$set.description);
   }
 });
+
+// end collection hooks ------------------------------
+
+
+// methods -------------------------------------------
 
 Meteor.methods({
   newTopic: function (topic) {
@@ -178,7 +200,7 @@ Meteor.methods({
   }
 });
 
-
+// end methods ---------------------------------------
 
 
 
