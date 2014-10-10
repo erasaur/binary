@@ -56,7 +56,7 @@ Comments.before.insert(function (userId, doc) {
     doc.content = sanitize(doc.content);
 });
 
-Comments.before.update(function (userId, doc, fieldNames, modifier, options) {
+Comments.before.update(function (userId, doc, fields, modifier, options) {
   if (Meteor.isServer && modifier.$set && modifier.$set.content) {
     modifier.$set = modifier.$set || {};
     modifier.$set.content = sanitize(modifier.$set.content);
