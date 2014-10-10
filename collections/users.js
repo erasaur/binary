@@ -1,3 +1,5 @@
+// schema --------------------------------------------
+
 var Schema = {};
 
 Schema.UserProfileNotifications = new SimpleSchema({
@@ -88,29 +90,42 @@ Schema.User = new SimpleSchema({
 
 Meteor.users.attachSchema(Schema.User);
 
-// Meteor.users.deny({
-//   update: function(userId, post, fieldNames) {
-//     if(isAdminById(userId))
-//       return false;
-//     // deny the update if it contains something other than the profile field
-//     return (_.without(fieldNames, 'profile').length > 0);
-//   }
-// });
+// end schema ----------------------------------------
 
-// Meteor.users.allow({
-//   update: function(userId, doc){
-//     return isAdminById(userId) || userId == doc._id;
-//   },
-//   remove: function(userId, doc){
-//     return isAdminById(userId) || userId == doc._id;
-//   }
-// });
+
+// search --------------------------------------------
 
 Meteor.users.initEasySearch("username", {
-	"limit": 20,
-	"use": "mongo-db"
+  "limit": 20,
+  "use": "mongo-db"
 });
 
+// end search ----------------------------------------
+
+
+// permissions ---------------------------------------
+
+Meteor.users.deny({
+  update: function (userId, user, fields) {
+    // if(isAdminById(userId)) return false;
+
+    // deny the update if it contains something other than the profile field
+    return (_.without(fields, 'profile').length > 0);
+  }
+});
+
+Meteor.users.allow({
+  update: function (userId, user) {
+    // return isAdminById(userId) || userId == user._id;
+    return userId == user._id;
+  },
+  remove: function (userId, user) {
+    // return isAdminById(userId) || userId == user._id;
+    return userId = user._id;
+  }
+});
+
+// end permissions -----------------------------------
 
 
 
