@@ -90,6 +90,7 @@ Router.map(function() {
   	}
   });
   this.route('settings', {
+    // the _id is for show and not to be used in any queries
     path: '/users/:_id/settings'
   });
   this.route('notFound', {
