@@ -125,10 +125,10 @@ Template.comment.events({
 
 	},
 	"click .js-upvote-comment": function (event, template) {
-		Meteor.call("upvoteComment", this._id, this.userId);
+		Meteor.call("upvoteComment", this);
 	},
 	"click .js-downvote-comment": function (event, template) {
-		Meteor.call("downvoteComment", this._id, this.userId);
+		Meteor.call("cancelUpvoteComment", this);
 	}
 });
 
