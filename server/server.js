@@ -15,18 +15,6 @@ Meteor.methods({
       $inc: { 'stats.followersCount': -1 } 
     });
 	},
-	upvoteComment: function (commentId, ownerId) {
-    var userId = this.userId;
-		Comments.update(commentId, { $inc: { "upvotes": 1 }, $addToSet: { 'upvoters': userId } });
-		Meteor.users.update(ownerId, { $inc: { "stats.reputation": 1 } });
-		Meteor.users.update(userId, { $addToSet: { "activity.upvotedComments": commentId } });
-	},
-	downvoteComment: function (commentId, ownerId) {
-    var userId = this.userId;
-		Comments.update(commentId, { $inc: { "upvotes": -1 }, $pull: { 'upvoters': userId } });
-		Meteor.users.update(ownerId, { $inc: { "stats.reputation": -1 } });	
-		Meteor.users.update(userId, { $pull: { "activity.upvotedComments": commentId } });
-	},
 	followTopic: function (topicId) {
     var userId = this.userId;
 		Topics.update(topicId, { $addToSet: { "followers": userId } });
