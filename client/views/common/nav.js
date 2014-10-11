@@ -1,6 +1,6 @@
 Template.nav.events({
 	//prevent page from scrolling when mouse is in notifications box
-	"DOMMouseScroll .notifications, mousewheel .notifications": function (event, template) {
+	'DOMMouseScroll .notifications, mousewheel .notifications': function (event, template) {
 		var target = event.currentTarget;
 		var	$target = $(target);
 		var	scrollTop = target.scrollTop;
@@ -20,9 +20,9 @@ Template.nav.events({
 			event.returnValue = false;
 		}
 	},
-	"click #js-logout": function(event, template) {
+	'click #js-logout': function(event, template) {
 		Meteor.logout(function (error) {
-			Router.go("home");
+			Router.go('home');
 		});
 	}
 });

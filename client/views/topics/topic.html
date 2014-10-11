@@ -11,7 +11,6 @@
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
 		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor 'topic' _id=this._id query='sort_by=top'}}">Top</a></li>
 		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor 'topic' _id=this._id query='sort_by=newest'}}">Newest</a></li>
-		    <li role="presentation"><a role="menuitem" tabindex="-1">Upvoted</a></li>
 		  </ul>
 		</span>
 	</div>
@@ -61,7 +60,7 @@
 				<h3>Creator's Notes</h3>
 				<p class="muted">
 					{{#if description}}
-						{{formatContent description}}
+						{{{formatContent description}}}
 					{{else}}
 						No notes have been written.
 					{{/if}}
@@ -83,7 +82,7 @@
 
 <template name="topicButtons">
 	{{#if following}}
-		<button id="js-unfollow" class="btn btn-primary">Following</button>
+		<button id="js-unfollow" class="btn btn-primary">Unfollow</button>
 	{{else}}
 		<button id="js-follow" class="btn btn-default">Follow</button>
 	{{/if}}

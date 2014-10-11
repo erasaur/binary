@@ -15,13 +15,13 @@ Schema.UserProfileNotifications = new SimpleSchema({
   followers: { // new followers
     type: Boolean
   },
-  "followingTopics.comments": { // new comments in following topics
+  'followingTopics.comments': { // new comments in following topics
     type: Boolean
   },
-  "followingUsers.comments": { // new comments by following users
+  'followingUsers.comments': { // new comments by following users
     type: Boolean
   },
-  "followingUsers.topics": { // new topics by following users
+  'followingUsers.topics': { // new topics by following users
     type: Boolean
   }
 });
@@ -46,19 +46,15 @@ Schema.User = new SimpleSchema({
     type: String,
     optional: true
   },
-  username: {
-    type: String,
-    regEx: /^[a-z0-9A-Z_]{3,15}$/
-  },
   emails: {
     type: [Object],
     optional: true
   },
-  "emails.$.address": {
+  'emails.$.address': {
     type: String,
     regEx: SimpleSchema.RegEx.Email
   },
-  "emails.$.verified": {
+  'emails.$.verified': {
     type: Boolean
   },
   createdAt: {
@@ -95,9 +91,9 @@ Meteor.users.attachSchema(Schema.User);
 
 // search --------------------------------------------
 
-Meteor.users.initEasySearch("username", {
-  "limit": 20,
-  "use": "mongo-db"
+Meteor.users.initEasySearch('profile.name', {
+  'limit': 20,
+  'use': 'mongo-db'
 });
 
 // end search ----------------------------------------

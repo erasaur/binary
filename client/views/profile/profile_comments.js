@@ -1,4 +1,4 @@
-var commentCategory = "Created";
+var commentCategory = 'Created';
 var commentDeps = new Deps.Dependency();
 
 Template.profileComments.helpers({
@@ -10,16 +10,16 @@ Template.profileComments.helpers({
     commentDeps.depend();
 
     // data context (this) is the user
-    if (commentCategory === "Created")
-      return Comments.find({"userId": this._id});
+    if (commentCategory === 'Created')
+      return Comments.find({'userId': this._id});
       
-    return this.activity && Comments.find({"_id": {$in: this.activity.upvotedComments}}) || [];
+    return this.activity && Comments.find({'_id': {$in: this.activity.upvotedComments}}) || [];
   }
 });
 
 Template.profileComments.events({
-  "click .js-dropdown-button": function (event, template) {
-    commentCategory = event.currentTarget.getAttribute("data-category");
+  'click .js-dropdown-button': function (event, template) {
+    commentCategory = event.currentTarget.getAttribute('data-category');
     commentDeps.changed();
   }
 });

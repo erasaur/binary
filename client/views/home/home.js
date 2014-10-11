@@ -3,6 +3,6 @@ Template.home.helpers({
 		return Topics.find();
 	},
 	moreTopics: function () {
-		return Topics.find().count() > Session.get("topicsLimit");
+		return Topics.find().count() > Session.get('topicsLimit');
 	}
 });
