@@ -34,8 +34,16 @@ Router.onAfterAction(function () {
   }
 });
 
+var subs = new SubsManager({
+  // cache recent 50 subscriptions
+  cacheLimit: 50,
+  // expire any subscription after 30 minutes
+  expireIn: 30
+});
+
+
 Deps.autorun(function () {
-  Meteor.subscribe('topicsList', Session.get('topicsLimit'));  
+  subs.subscribe('topicsList', Session.get('topicsLimit'));  
 });
 
 Meteor.subscribe('currentUser');
@@ -44,7 +52,7 @@ Router.map(function() {
 	this.route('home', { 
     path: '/',
     waitOn: function () {
-      return Meteor.subscribe('topicsList', Session.get('topicsLimit'));
+      return subs.subscribe('topicsList', Session.get('topicsLimit'));
     }		
   });
   this.route('signup', {yieldTemplates: {}}); //don't yield nav
@@ -59,7 +67,7 @@ Router.map(function() {
       'profileNav': { to: 'pageNav' } 
     },
     waitOn: function () {
-      return Meteor.subscribe('userProfile', this.params._id);
+      return subs.subscribe('userProfile', this.params._id);
     },
     onRun: function () {
       Session.set('currentTab', 'profileComments');
@@ -78,7 +86,7 @@ Router.map(function() {
       'topicNav': { to: 'pageNav' } 
     },
   	waitOn: function () {
-  		return Meteor.subscribe('singleTopic', this.params._id, this.params.sort_by);
+  		return subs.subscribe('singleTopic', this.params._id, this.params.sort_by);
   	},
     onRun: function () {
       Session.set('currentTab', 'topicComments');

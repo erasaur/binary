@@ -49,6 +49,7 @@ meteor@1.1.1
 meteorhacks:fast-render@1.1.2
 meteorhacks:kadira-binary-deps@1.2.0
 meteorhacks:kadira@2.11.7
+meteorhacks:subs-manager@1.1.0
 minifiers@1.1.0
 minimongo@1.0.3
 mizzao:bootstrap-3@3.2.0_1
