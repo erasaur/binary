@@ -67,7 +67,7 @@ Router.map(function() {
       'profileNav': { to: 'pageNav' } 
     },
     waitOn: function () {
-      return subs.subscribe('userProfile', this.params._id);
+      return Meteor.subscribe('userProfile', this.params._id);
     },
     onRun: function () {
       Session.set('currentTab', 'profileComments');
@@ -86,7 +86,7 @@ Router.map(function() {
       'topicNav': { to: 'pageNav' } 
     },
   	waitOn: function () {
-  		return subs.subscribe('singleTopic', this.params._id, this.params.sort_by);
+  		return Meteor.subscribe('singleTopic', this.params._id, this.params.sort_by);
   	},
     onRun: function () {
       Session.set('currentTab', 'topicComments');
