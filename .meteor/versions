@@ -14,6 +14,7 @@ blaze@2.0.1
 boilerplate-generator@1.0.0
 callback-hook@1.0.0
 check@1.0.1
+chuangbo:marked@0.3.5
 coffeescript@1.0.3
 ctl-helper@1.0.3
 ctl@1.0.1

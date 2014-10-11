@@ -40,9 +40,6 @@ Template.topicHeader.events({
 });
 
 Template.topicNav.helpers({
-	numComments: function () {
-		return Comments.find({ 'topicId': this._id }).count();
-	},
 	isCurrentTab: function (tab) {
 		return Session.equals('currentTab', tab) ? 'selected' : '';
 	}

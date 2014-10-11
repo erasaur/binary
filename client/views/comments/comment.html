@@ -3,8 +3,8 @@
 		<div class="comment-header">
 			<b><a href="{{pathFor 'profile' _id=userId}}">{{formatName userId}}</a></b>
 		</div>
-  	<div class="comment-content collapsed">
-  		{{{formatContent content}}}
+  	<div class="comment-content collapsed marked">
+  		{{{content}}}
   	</div>
   	<div class="comment-date">
   		{{formatDate createdAt}}

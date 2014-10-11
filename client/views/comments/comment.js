@@ -92,7 +92,7 @@ function closeReplies (commentRow) {
 
 Template.comment.events({
 	'click .comment-content': function (event, template) {
-		$(event.target).toggleClass('collapsed');
+		$(event.currentTarget).toggleClass('collapsed');
 	},
 	// 'click .comment-replyto': function (event, template) {
 	// 	event.preventDefault();
