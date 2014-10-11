@@ -50,6 +50,7 @@ Template.topicNav.helpers({
 
 Template.topicNav.events({
 	"click .js-nav-button": function (event, template) {
+		SessionAmplify.set('showingReplies', []);
 		Session.set("currentTab", event.currentTarget.getAttribute("data-tab"));
 	}
 });
