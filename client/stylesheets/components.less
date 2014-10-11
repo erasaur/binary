@@ -121,7 +121,12 @@
 }
 .page-nav-buttons a {
   display: block;
-  padding: @main-padding 10%;
+  padding: @main-padding 0;
+  border-left: 1em solid transparent;
+  border-right: 1em solid transparent;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   height: 100%;
 }
 .page-nav-buttons li.selected {

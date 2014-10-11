@@ -1,6 +1,6 @@
 // Publish profile page
 
-Meteor.publish("userProfile", function (userId) {
+Meteor.publish('userProfile', function (userId) {
   // we will have to look up user twice: once to get the 
   // followers/following users, and once again in the final
   // return statement. this is because we can't publish
@@ -16,18 +16,19 @@ Meteor.publish("userProfile", function (userId) {
   if (user && user.activity)  
     commentIds = user.activity.upvotedComments;
 
-  var comments = Comments.find({$or: [{"userId": userId}, {"_id": {$in: commentIds}}]});
+  var comments = Comments.find({ $or: [ { 'userId': userId }, { '_id': { $in: commentIds } } ] });
 
   /** 
    * Publish all topics created by user, or 
    * topics related to the comments above
    */
   var topicIds = [];
-  if (typeof comments !== "undefined")
-    topicIds = _.pluck(comments.fetch(), "topicId");
+  if (typeof comments !== 'undefined')
+    topicIds = _.pluck(comments.fetch(), 'topicId');
 
-  var topics = Topics.find({$or: [{"userId": userId}, {"_id": {$in: topicIds}}]}, 
-                           {fields: {"_id": 1, "title": 1}});
+  var topics = Topics.find({ $or: [ { 'userId': userId }, { '_id': { $in: topicIds }}]}, { 
+    fields: { '_id': 1, 'title': 1 } 
+  });
 
   /** 
    * Publish all followers and following users, and 
@@ -42,16 +43,17 @@ Meteor.publish("userProfile", function (userId) {
 
   var commentUsers = [];
   var topicUsers = [];
-  if (typeof comments !== "undefined")
-    commentUsers = _.pluck(comments.fetch(), "userId");
+  if (typeof comments !== 'undefined')
+    commentUsers = _.pluck(comments.fetch(), 'userId');
 
-  if (typeof topics !== "undefined")
-    topicUsers = _.pluck(topics.fetch(), "userId");
+  if (typeof topics !== 'undefined')
+    topicUsers = _.pluck(topics.fetch(), 'userId');
 
   userIds = _.union(userIds, commentUsers, topicUsers);
 
-  var users = Meteor.users.find({"_id": {$in: userIds}}, 
-                                {fields: {"username": 1, "profile": 1, "stats": 1, "activity": 1}});
+  var users = Meteor.users.find({ '_id': { $in: userIds } }, {
+    fields: { 'profile': 1, 'stats': 1, 'activity': 1 }
+  });
 
   return [comments, topics, users];
 });

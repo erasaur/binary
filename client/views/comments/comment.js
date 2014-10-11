@@ -3,7 +3,7 @@ var numColors = 4;
 
 Template.comment.helpers({
 	showingReplies: function () {
-		return SessionAmplify.get("showingReplies").indexOf(this._id) > -1;
+		return SessionAmplify.get('showingReplies').indexOf(this._id) > -1;
 	},
 	upvoted: function () {
 		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.upvotedComments)
@@ -15,29 +15,29 @@ Template.comment.helpers({
 });
 
 Template.newComment.events({
-	"click .js-post-comment": function (event, template) {
-		if(!Session.get("currentTopic")) return;
+	'click .js-post-comment': function (event, template) {
+		if(!Session.get('currentTopic')) return;
 
 		var siblings = $(event.target).siblings();
 		var input = $(siblings[0]);
 		var content = input.val();
-		var	side = $(siblings[1]).hasClass("btn-pro") ? "pro" : "con";
+		var	side = $(siblings[1]).hasClass('btn-pro') ? 'pro' : 'con';
 		var	replyTo = this.id;
 		var	replyToUser = replyTo && Comments.findOne(replyTo).userId;
 
-		Meteor.call("newComment", Session.get("currentTopic"), content, side, replyTo, replyToUser, function(error, result) {
+		Meteor.call('newComment', Session.get('currentTopic'), content, side, replyTo, replyToUser, function(error, result) {
 			if(error)
 				alert(formatError(error));
 			else
 				scrollToId(result);
 		});
 
-		input.val("");
+		input.val('');
 	},
-	"click .js-post-side": function(event, template) {
+	'click .js-post-side': function(event, template) {
 		var t = $(event.target);
-		t.toggleClass("btn-pro");
-		t.toggleClass("btn-con");
+		t.toggleClass('btn-pro');
+		t.toggleClass('btn-con');
 	}
 });
 
@@ -56,7 +56,7 @@ function closeReplies (commentRow) {
 	if (!commentRow) return;
 
 	// get all siblings that are reply boxes
-	var siblings = commentRow.siblings(".comment-container");
+	var siblings = commentRow.siblings('.comment-container');
 	// id of the top level reply being closed
 	var closingReply;
 
@@ -70,20 +70,20 @@ function closeReplies (commentRow) {
 		var siblingId; // temporary var to simplify substringing
 
 		siblings.each(function () {
-			siblingId = $(this).attr("id");
-			siblingId = siblingId.substring(0, siblingId.indexOf("-"));
+			siblingId = $(this).attr('id');
+			siblingId = siblingId.substring(0, siblingId.indexOf('-'));
 			ids.push(siblingId);
 
 			if (siblings.length === 1)
 				closingReply = siblingId;
 
-			if ($(this).children(".comment-container").length)
+			if ($(this).children('.comment-container').length)
 				closeReplies($(this).children().first());
 		});
 
-		var showingReplies = SessionAmplify.get("showingReplies");
+		var showingReplies = SessionAmplify.get('showingReplies');
 		showingReplies = _.difference(showingReplies, ids);
-		SessionAmplify.set("showingReplies", showingReplies);
+		SessionAmplify.set('showingReplies', showingReplies);
 		siblings.remove();
 	}
 
@@ -91,44 +91,44 @@ function closeReplies (commentRow) {
 }
 
 Template.comment.events({
-	"click .comment-content": function (event, template) {
-		$(event.target).toggleClass("collapsed");
+	'click .comment-content': function (event, template) {
+		$(event.target).toggleClass('collapsed');
 	},
-	// "click .comment-replyto": function (event, template) {
+	// 'click .comment-replyto': function (event, template) {
 	// 	event.preventDefault();
 	// 	if(this.replyTo)
 	// 		scrollToId(this.replyTo);
 	// },
-	"click .js-toggle-replies": function (event, template) {
+	'click .js-toggle-replies': function (event, template) {
 		var self = this; //store the reference because context changes when rendering template
 
 		// remove replies on equal or deeper level than commentRow
-		var commentRow = $(event.target).closest(".comment-row");
+		var commentRow = $(event.target).closest('.comment-row');
 		var closingReply = closeReplies(commentRow);
 
 		if (closingReply && closingReply === self._id) return;
 
-		var arr = SessionAmplify.get("showingReplies");
+		var arr = SessionAmplify.get('showingReplies');
 		arr.push(self._id.toString());
-		SessionAmplify.set("showingReplies", arr);
+		SessionAmplify.set('showingReplies', arr);
 
 		//update the color index
 		var color = (arr.length - 1) % numColors; 
 
 		// add the replies
 		scrollToId(self._id);
-		var replyTo = $("#" + self._id).closest(".comment-row");
+		var replyTo = $('#' + self._id).closest('.comment-row');
 		Blaze.renderWithData(Template.replies, //template to render
 												{id: self._id, side: self.side, color: color}, //data context
 												replyTo.parent().get(0), // insert within
 												replyTo.next().get(0)); // insert before
 
 	},
-	"click .js-upvote-comment": function (event, template) {
-		Meteor.call("upvoteComment", this);
+	'click .js-upvote-comment': function (event, template) {
+		Meteor.call('upvoteComment', this);
 	},
-	"click .js-downvote-comment": function (event, template) {
-		Meteor.call("cancelUpvoteComment", this);
+	'click .js-downvote-comment': function (event, template) {
+		Meteor.call('cancelUpvoteComment', this);
 	}
 });
 

@@ -31,36 +31,36 @@ Template.topicButtons.helpers({
 });
 
 Template.topicHeader.events({
-	"click #js-vote-pro": function(event, template) {
+	'click #js-vote-pro': function(event, template) {
 		Meteor.call('vote', this, 'pro');
 	},
-	"click #js-vote-con": function(event, template) {
+	'click #js-vote-con': function(event, template) {
 		Meteor.call('vote', this, 'con');
 	}
 });
 
 Template.topicNav.helpers({
 	numComments: function () {
-		return Comments.find({"topicId": this._id}).count();
+		return Comments.find({ 'topicId': this._id }).count();
 	},
 	isCurrentTab: function (tab) {
-		return Session.equals("currentTab", tab) ? "selected" : "";
+		return Session.equals('currentTab', tab) ? 'selected' : '';
 	}
 });
 
 Template.topicNav.events({
-	"click .js-nav-button": function (event, template) {
+	'click .js-nav-button': function (event, template) {
 		SessionAmplify.set('showingReplies', []);
-		Session.set("currentTab", event.currentTarget.getAttribute("data-tab"));
+		Session.set('currentTab', event.currentTarget.getAttribute('data-tab'));
 	}
 });
 
 Template.topicButtons.events({
-	"click #js-follow": function(event, template) {
-		Meteor.call("followTopic", this._id);
+	'click #js-follow': function(event, template) {
+		Meteor.call('followTopic', this._id);
 	},
-	"click #js-unfollow": function(event, template) {
-		Meteor.call("unfollowTopic", this._id);
+	'click #js-unfollow': function(event, template) {
+		Meteor.call('unfollowTopic', this._id);
 	}
 });
 

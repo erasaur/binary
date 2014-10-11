@@ -10,7 +10,7 @@
 //   userIds.push(topicOwner);
 
 //   // owners of all comments
-//   var users = Meteor.users.find({'_id': {$in: userIds}}, {fields: {'username': 1}});
+//   var users = Meteor.users.find({'_id': {$in: userIds}}, {fields: {'profile': 1}});
 
 //   return [comments, users];
 // });
@@ -47,7 +47,7 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
   function publishCommentOwners (userId) {
     var owners = Meteor.users.find(
       { '_id': userId }, 
-      { fields: { 'username': 1, 'profile': 1, 'stats': 1 } }
+      { fields: { 'profile': 1, 'stats': 1 } }
     );
     commentOwnersHandle = owners.observeChanges({
       added: function (id, fields) {
@@ -91,8 +91,8 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
   }
 
   function publishTopicOwner (userId) {
-    var owner = Meteor.users.find(userId, { fields: 
-      { 'username': 1, 'profile': 1 }
+    var owner = Meteor.users.find(userId, { 
+      fields: { 'profile': 1 }
     });
     topicOwnerHandle = owner.observeChanges({
       added: function (id, fields) {
@@ -151,7 +151,7 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
   //   mappings: [
   //   { // publish topic owner
   //     key: 'userId', collection: Meteor.users, 
-  //     options: { fields: { 'username': 1, 'profile': 1 }, limit: 1 }
+  //     options: { fields: { 'profile': 1 }, limit: 1 }
   //   }, 
   //   { // publish comments
   //     reverse: true, // use the comments topicId to match this _id
@@ -162,7 +162,7 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
   //     mappings: [
   //     { // publish comment owners
   //       key: 'userId', collection: Meteor.users, // publish comment owners
-  //       options: { fields: { 'username': 1, 'profile': 1, 'stats': 1 } }
+  //       options: { fields: { 'profile': 1, 'stats': 1 } }
   //     }]
   //   }]
   // });

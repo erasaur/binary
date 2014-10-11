@@ -10,9 +10,9 @@ Template.profileItem.helpers({
 
 Template.profileItem.events({
   'click #js-follow': function (event, template) {
-    Meteor.call("newFollower", this._id);
+    Meteor.call('newFollower', this._id);
   },
   'click #js-unfollow': function (event, template) {
-    Meteor.call("removeFollower", this._id);
+    Meteor.call('removeFollower', this._id);
   }
 });

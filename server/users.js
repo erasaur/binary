@@ -50,20 +50,19 @@ Accounts.onCreateUser(function (options, user) {
 });
 
 Meteor.methods({
-  newUser: function (username, email, password) {   
+  newUser: function (email, password) {   
     if (password.length < 6)
-      throw new Meteor.Error("Your password must be at least 6 characters long.");
+      throw new Meteor.Error('Your password must be at least 6 characters long.');
     else {
       Accounts.createUser({
-        "username": username, 
-        "email": email, 
-        "password": password,
-        "profile": {
-          "name": "No name",
-          "bio": "Not much is known about him/her, except that not much is known about him/her."
+        'email': email, 
+        'password': password,
+        'profile': {
+          'name': 'Anonymous',
+          'bio': 'Not much is known about him/her, except that not much is known about him/her.'
         }
       });
-      return "Success! Your account '" + username + "' has been created.";
+      return 'Success! Your account has been created. Please check your email for a confirmation link!';
     }
   },
   changeName: function (newName) {
@@ -83,78 +82,78 @@ Meteor.methods({
   newNotification: function(type, userId, options) {
     // var  name = getDisplayNameById(userId);
 
-    // if (type === "newComment") {
+    // if (type === 'newComment') {
     //  var topicTitle = Topics.findOne(options.topicId).title;
-    //  var notobj = {"url": "/topics/" + options.topicId + "#" + options.commentId, 
-    //                "message": name + " replied to your comment in '" + topicTitle + "'", 
-    //                "read": false};
+    //  var notobj = {'url': '/topics/' + options.topicId + '#' + options.commentId, 
+    //                'message': name + ' replied to your comment in '' + topicTitle + ''', 
+    //                'read': false};
     //  var notif;
 
-    //  //"user replied to your comment"
+    //  //'user replied to your comment'
     //  if (options.replyTo && options.replyTo !== userId) { //if reply to self, no notification
     //    notif = Meteor.users.findOne(options.replyTo).notifications;
 
     //    if (notif.commentReply.length >= 5) {
     //      Meteor.users.update(options.replyTo, 
-    //                         {$pop: {"notifications.commentReply": -1}}); //pop the last item of array
+    //                         {$pop: {'notifications.commentReply': -1}}); //pop the last item of array
     //    }
 
     //    Meteor.users.update(options.replyTo, 
-    //                       {$addToSet: {"notifications.commentReply": notobj}});
+    //                       {$addToSet: {'notifications.commentReply': notobj}});
     //  }
 
-    //  //"user has posted a new comment in topic"
+    //  //'user has posted a new comment in topic'
     //  var followers = Meteor.users.findOne(userId).activity.followers; 
-    //  notobj.message = name + " posted a new comment in '" + topicTitle + "'";
+    //  notobj.message = name + ' posted a new comment in '' + topicTitle + ''';
 
     //  //notify poster's followers of his new comment
     //  _.each(followers, function (id) {
     //    if(id !== options.replyTo) { //if it's not the replyTo user (whom we should've already notified)
-    //      Meteor.users.update(id, {$addToSet: {"notifications.followingUser": notobj}});
+    //      Meteor.users.update(id, {$addToSet: {'notifications.followingUser': notobj}});
     //    }
     //  });
 
     //  var topicFollowers = [];
-    //  Meteor.users.find({"activity.followingTopics": options.topicId}).forEach(function (user) {
+    //  Meteor.users.find({'activity.followingTopics': options.topicId}).forEach(function (user) {
     //    if(user._id !== options.replyTo && user._id !== userId) {
     //      topicFollowers.push(user._id);
     //    }
     //  });
 
-    //  notobj.url = "/topics/" + options.topicId;
-    //  notobj.message = "A new comment was posted in '" + topicTitle + "'";
+    //  notobj.url = '/topics/' + options.topicId;
+    //  notobj.message = 'A new comment was posted in ' + topicTitle;
       
     //  // notify people who are following the topic in which there is the new comment, 
     //  // but not if they have already been notified via the user whom they are following
     //  _.each(_.difference(topicFollowers, followers), function (id) {
-    //    // "a new comment has been posted in topic"
-    //    var currUrl = "/topics/" + options.topicId; //url for this notification
+    //    // 'a new comment has been posted in topic'
+    //    var currUrl = '/topics/' + options.topicId; //url for this notification
 
     //    // check if a notification entry already has this url
     //    notif = _.find(Meteor.users.findOne(id).notifications.followingTopic, function (obj) { 
     //      return obj.url === currUrl; 
     //    }); 
 
-    //    //if this topic already has more than one notification entry with the url, combine them all into one with a "count" 
+    //    //if this topic already has more than one notification entry with the url, combine them all into one with a 'count' 
     //    if(notif) { //if this topic already has one entry
     //      if(notif.count) {
-    //        Meteor.users.update({"_id": id, "notifications.followingTopic": {$elemMatch: {"url": currUrl}}}, 
-    //                            {$inc: {"notifications.followingTopic.$.count": 1}});
+    //        Meteor.users.update({'_id': id, 'notifications.followingTopic': {$elemMatch: {'url': currUrl}}}, 
+    //                            {$inc: {'notifications.followingTopic.$.count': 1}});
     //      } else {
     //        notobj.count = 2;
-    //        notobj.message = " new comments were posted in '" + topicTitle + "'";
-    //        Meteor.users.update(id, {$pull: {"notifications.followingTopic": {"url": currUrl}}});
-    //        Meteor.users.update(id, {$push: {"notifications.followingTopic": notobj}}); 
+    //        notobj.message = ' new comments were posted in ' + topicTitle;
+    //        Meteor.users.update(id, {$pull: {'notifications.followingTopic': {'url': currUrl}}});
+    //        Meteor.users.update(id, {$push: {'notifications.followingTopic': notobj}}); 
     //      }
     //    } 
-    //    //"count" is still low, so just add it as usual, as a normal notification entry
+    //    //'count' is still low, so just add it as usual, as a normal notification entry
     //    else
-    //      Meteor.users.update(id, {$addToSet: {"notifications.followingTopic": notobj}});
+    //      Meteor.users.update(id, {$addToSet: {'notifications.followingTopic': notobj}});
     //  });
-    // } else if (type === "newTopic") {
+    // } else if (type === 'newTopic') {
     //  _.each(Meteor.users.findOne(userId).activity.followers, function (id) {
-    //    Meteor.users.update(id, {$addToSet: {"notifications.followingUser": 
-    //      {"url": "/topics/" + options.topicId, "message": name + " created the new topic '" + options.topicTitle + "'"}}});
+    //    Meteor.users.update(id, {$addToSet: {'notifications.followingUser': 
+    //      {'url': '/topics/' + options.topicId, 'message': name + ' created the new topic ' + options.topicTitle}}});
     //  });
     // }
   },

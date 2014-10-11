@@ -1,5 +1,5 @@
 Template.settings.events({
-  "click #js-back": function (event, template) {
+  'click #js-back': function (event, template) {
     window.history.back();
   }
 });
@@ -26,18 +26,18 @@ function displaySaved ($button) {
 }
 
 Template.settings.helpers({
-  "isEnabled": function (option) {
+  'isEnabled': function (option) {
     if (Meteor.user())
       return leaf(Meteor.user().profile.notifications, option) ? 'btn-primary' : 'btn-default';
   },
-  "unlessEnabled": function (option) {
+  'unlessEnabled': function (option) {
     if (Meteor.user())
       return leaf(Meteor.user().profile.notifications, option) ? 'btn-default' : 'btn-primary';
   }
 });
 
 Template.settings.events({
-  "click button[data-action='toggle-setting']": function (event, template) {
+  'click button[data-action="toggle-setting"]': function (event, template) {
     var button = event.currentTarget;
     var action = button.getAttribute('data-action');
     var actionValue = button.getAttribute('data-action-value');
@@ -52,7 +52,7 @@ Template.settings.events({
     // { 'profile.notifications.xxx.xxx': true }
     Meteor.call('changePreferences', setProperty({}, actionValue, !!newValue));
   },
-  "click #js-edit-name, click #js-edit-bio, click #js-edit-email": function (event, template) {
+  'click #js-edit-name, click #js-edit-bio, click #js-edit-email': function (event, template) {
     var target = event.currentTarget;
     var id = target.id;
     var fieldName = id.substring(id.lastIndexOf('-') + 1); // js-edit-xxx -> xxx
@@ -68,7 +68,7 @@ Template.settings.events({
         displaySaved($(target));
     });
   },
-  "click #js-edit-password": function (event, template) {
+  'click #js-edit-password': function (event, template) {
     // display inputs for changing password
     $('#js-newPassword').slideDown('fast', function () {
       $('#js-password').removeAttr('disabled').val('').focus();
@@ -76,7 +76,7 @@ Template.settings.events({
       $('#js-save-password').show();
     });
   },
-  "click #js-save-password": function (event, template) {
+  'click #js-save-password': function (event, template) {
     var oldPassword = template.find('#js-password').value;
     var newPassword = template.find('#js-newPassword').value;
 
