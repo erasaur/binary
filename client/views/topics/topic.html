@@ -58,9 +58,9 @@
 			{{/with}}
 			<div class="list-item">
 				<h3>Creator's Notes</h3>
-				<p class="muted">
+				<p class="muted marked">
 					{{#if description}}
-						{{{formatContent description}}}
+						{{{description}}}
 					{{else}}
 						No notes have been written.
 					{{/if}}
@@ -96,16 +96,16 @@
 	</div>
 	
 	{{#if description}}
-		<p class="muted">
-			{{{formatContent description}}}
+		<p class="muted marked">
+			{{{description}}}
 		</p>
 	{{/if}}
 </template>
 
 <template name="topicNav">
 	<ul class="page-nav-buttons clearfix">
-	  <li class="js-nav-button {{isCurrentTab 'topicComments'}}" data-tab="topicComments"><a href="#">Comments {{numComments}}</a></li>
-	  <li class="js-nav-button {{isCurrentTab 'topicFollowers'}}" data-tab="topicFollowers"><a href="#">Followers {{followers.length}}</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'topicComments'}}" data-tab="topicComments"><a href="#">Comments</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'topicFollowers'}}" data-tab="topicFollowers"><a href="#">Followers</a></li>
 	  <li class="js-nav-button {{isCurrentTab 'topicCreator'}}" data-tab="topicCreator"><a href="#">Created by {{formatName userId}}</a></li>
 	  <li><a href="#">Created {{formatDate createdAt}}</a></li>
 	</ul>

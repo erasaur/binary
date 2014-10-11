@@ -1,9 +1,6 @@
 UI.registerHelper("currentPage", function (path) {
 	return getCurrentRoute() === path;
 });
-UI.registerHelper("formatContent", function (text) {
-  return formatContent(text);
-});
 UI.registerHelper("formatDate", function (date) {
 	return formatDate(date);
 });
