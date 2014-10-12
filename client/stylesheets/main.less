@@ -51,7 +51,19 @@ button, a {
 	&:active, 
 	&:focus { outline: none !important; }
 }
-
+.editable {
+  background: #fff;
+  border-radius: @main-radius;
+  outline: none;
+  padding: 10px;
+  margin-bottom: 10px;
+  min-height: 80px;
+  
+  &:after {
+    top: 10px;
+    left: 10px;
+  }
+}
 .markdown {
   img {
     max-width: 100%;
@@ -116,7 +128,7 @@ button, a {
     border-radius: 3px;
   }
   pre {
-    padding: 20px;
+    padding: 10px;
     border: 1px solid #ddd;
     background-color: #f8f8f8;
     overflow-x: scroll;
