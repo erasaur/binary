@@ -42,6 +42,25 @@ Schema.UserProfile = new SimpleSchema({
   }
 });
 
+Schema.UserStats = new SimpleSchema({
+  commentsCount: {
+    type: Number,
+    min: 0
+  },
+  followersCount: {
+    type: Number,
+    min: 0
+  },
+  reputation: {
+    type: Number,
+    min: 0 // possibly negative if we have downvotes ?
+  },
+  topicsCount: {
+    type: Number,
+    min: 0
+  }
+});
+
 Schema.User = new SimpleSchema({
   _id: {
     type: String,
@@ -62,9 +81,8 @@ Schema.User = new SimpleSchema({
     type: Date
   },
   stats: { // public but not modifiable
-    type: Object,
-    optional: true,
-    blackbox: true
+    type: Schema.UserStats,
+    optional: true
   },
   profile: { // public and modifiable
     type: Schema.UserProfile
@@ -83,6 +101,12 @@ Schema.User = new SimpleSchema({
     type: Object,
     blackbox: true
   }
+  // ,
+  // roles: {
+  //   type: Object,
+  //   optional: true,
+  //   blackbox: true
+  // }
 });
 
 Meteor.users.attachSchema(Schema.User);
