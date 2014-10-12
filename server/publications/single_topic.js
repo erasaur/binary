@@ -92,7 +92,7 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
 
   function publishTopicOwner (userId) {
     var owner = Meteor.users.find(userId, { 
-      fields: { 'profile': 1 }
+      fields: { 'profile': 1, 'stats': 1 }
     });
     topicOwnerHandle = owner.observeChanges({
       added: function (id, fields) {
