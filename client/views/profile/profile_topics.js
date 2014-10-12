@@ -1,30 +1,29 @@
-var topicCategory = 'Discussed';
-var topicDeps = new Deps.Dependency();
+var topicCategory = new ReactiveVar('Discussed');
 
 Template.profileTopics.helpers({
   topicCategory: function () {
-    topicDeps.depend();
-    return topicCategory;
+    return topicCategory.get();
   },
   topics: function () {
-    topicDeps.depend();
-
     // data context (this) is the user
-    if (topicCategory === 'Created')
+    if (topicCategory.get() === 'Created')
       return Topics.find({ 'userId': this._id });
 
-    else if (topicCategory === 'Discussed')
-      return this.activity && Topics.find({ '_id': { $in: this.activity.discussedTopics } }) || [];
+    else if (topicCategory.get() === 'Discussed') 
+      return this.activity && Topics.find({ '_id': { 
+        $in: this.activity.discussedTopics 
+      } });
     
     else
-      return this.activity && Topics.find({ '_id': { $in: this.activity.followingTopics } }) || [];
+      return this.activity && Topics.find({ '_id': { 
+        $in: this.activity.followingTopics 
+      } });
   }
 });
 
 Template.profileTopics.events({
   'click li[role="presentation"]': function (event, template) {
-    topicCategory = event.currentTarget.getAttribute('data-category');
-    topicDeps.changed();
+    topicCategory.set(event.currentTarget.getAttribute('data-category'));
   }
 });
 
