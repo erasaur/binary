@@ -33,6 +33,7 @@ Schema.UserProfile = new SimpleSchema({
   },
   bio: {
     type: String,
+    max: 100,
     optional: true
   },
   notifications: {
