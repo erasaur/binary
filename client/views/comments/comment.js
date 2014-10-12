@@ -1,6 +1,3 @@
-// number of colors for each side. so: pro0, pro1, pro2, pro3
-var numColors = 4; 
-
 Template.comment.helpers({
 	showingReplies: function () {
 		return SessionAmplify.get('showingReplies').indexOf(this._id) > -1;
@@ -41,10 +38,6 @@ Template.newComment.events({
 	}
 });
 
-// Template.commentRow.destroyed = function () {
-// 	console.log('destroyed');
-// }
-
 /**
  * Takes an arbitrary div and recursively removes
  * all reply boxes of equal or deeper nesting, and 
@@ -84,6 +77,7 @@ function closeReplies (commentRow) {
 		var showingReplies = SessionAmplify.get('showingReplies');
 		showingReplies = _.difference(showingReplies, ids);
 		SessionAmplify.set('showingReplies', showingReplies);
+		Blaze.remove(Blaze.getView(siblings.get(0)));
 		siblings.remove();
 	}
 
@@ -113,7 +107,8 @@ Template.comment.events({
 		SessionAmplify.set('showingReplies', arr);
 
 		//update the color index
-		var color = (arr.length - 1) % numColors; 
+		var numColors = 4;
+		var color = (arr.length - 1) % numColors;
 
 		// add the replies
 		scrollToId(self._id);

@@ -1,5 +1,7 @@
+var editors = {};
+
 Template.newComment.rendered = function () {
-  var editor = new MediumEditor('.editable', {
+  editors[this.data.id] = new MediumEditor('.editable', {
     buttonLabels: 'fontawesome',
     buttons: ['bold', 'italic', 'anchor', 'pre', 'header1', 'quote', 'unorderedlist'],
     checkLinkFormat: true,
@@ -7,4 +9,8 @@ Template.newComment.rendered = function () {
     disableDoubleReturn: true,
     firstHeader: 'h3'
   });
+};
+
+Template.newComment.destroyed = function () {
+  editors[this.data.id].deactivate();
 };
