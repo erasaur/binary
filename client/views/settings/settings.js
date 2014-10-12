@@ -73,7 +73,15 @@ Template.settings.events({
     $('#js-newPassword').slideDown('fast', function () {
       $('#js-password').removeAttr('disabled').val('').focus();
       $('#js-edit-password').hide();
-      $('#js-save-password').show();
+      $('#js-editing-password').show();
+    });
+  },
+  'click #js-editing-password': function (event, template) {
+    $('#js-newPassword').slideUp('fast', function () {
+      $('#js-password').prop('disabled', true).val('○○○○○○○');
+      $('#js-newPassword').val('');
+      $('#js-editing-password').hide();
+      $('#js-edit-password').show();
     });
   },
   'click #js-save-password': function (event, template) {
@@ -90,7 +98,7 @@ Template.settings.events({
           $('#js-newPassword').slideUp('fast', function () {
             $('#js-password').prop('disabled', true).val('○○○○○○○');
             $('#js-newPassword').val('');
-            $('#js-save-password').hide();
+            $('#js-editing-password').hide();
 
             displaySaved($('#js-edit-password'));
             $('#js-edit-password').show();
