@@ -2,7 +2,7 @@
 <!-- BEGIN PAGE TABS -->
 
 <template name="profileComments">
-	<div class="page-body-header">
+	{{#profileBody items=comments itemTemplate='commentItem' message='No comments yet.'}}
 		<h3>Comments</h3>
 		<span class="dropdown">
 		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
@@ -13,25 +13,11 @@
 		    <li class="js-dropdown-button" role="presentation" data-category="Upvoted"><a role="menuitem" tabindex="-1" href="#">Upvoted</a></li>
 		  </ul>
 		</span>
-	</div>
-
-	<div class="page-body-content">
-		<div class="list">
-		{{#if comments.count}}
-			{{#each comments}}
-				{{> commentItem}}
-			{{/each}}
-		{{else}}
-			<div class="list-item">
-				No comments yet.
-			</div>
-		{{/if}}
-		</div>
-	</div>
+	{{/profileBody}}
 </template>
 
 <template name="profileTopics">
-	<div class="page-body-header">
+	{{#profileBody items=topics itemTemplate='topicItem' message='No topics yet.'}}
 		<h3>Topics</h3>
 		<span class="dropdown">
 		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
@@ -43,49 +29,19 @@
 		    <li class="js-dropdown-button" role="presentation" data-category="Following"><a role="menuitem" tabindex="-1" href="#">Following</a></li>
 		  </ul>
 		</span>
-	</div>
-
-	<div class="page-body-content">
-		<div class="list">
-		{{#if topics.count}}
-			{{#each topics}}
-				{{> topicItem}}
-			{{/each}}
-		{{else}}
-			<div class="list-item">
-				No topics yet.
-			</div>
-		{{/if}}
-		</div>
-	</div>
+	{{/profileBody}}
 </template>
 
-<template name="profileUsers">
-	<div class="page-body-header">
-		<h3>People</h3>
-		<span class="dropdown">
-		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
-		    {{userCategory}} <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-		    <li class="js-dropdown-button" role="presentation" data-category="Followers"><a role="menuitem" tabindex="-1" href="#">Followers</a></li>
-		    <li class="js-dropdown-button" role="presentation" data-category="Following"><a role="menuitem" tabindex="-1" href="#">Following</a></li>
-		  </ul>
-		</span>
-	</div>
-	<div class="page-body-content">
-		<div class="list">
-		{{#if users.count}}
-			{{#each users}}
-				{{> profileItem}}
-			{{/each}}
-		{{else}}
-			<div class="list-item">
-				No users yet.
-			</div>
-		{{/if}}
-		</div>
-	</div>
+<template name="profileFollowers">
+	{{#profileBody items=followers itemTemplate='profileItem' message='No followers yet.'}}
+		<h3>Followers</h3>
+	{{/profileBody}}
+</template>
+
+<template name="profileFollowing">
+	{{#profileBody items=following itemTemplate='profileItem' message='Not following anybody yet.'}}
+		<h3>Following</h3>
+	{{/profileBody}}
 </template>
 
 <!-- END PAGE TABS -->
@@ -125,9 +81,28 @@
 	<ul class="page-nav-buttons clearfix">
 	  <li class="js-nav-button {{isCurrentTab 'profileComments'}}" data-tab="profileComments"><a href="#">Comments</a></li>
 	  <li class="js-nav-button {{isCurrentTab 'profileTopics'}}" data-tab="profileTopics"><a href="#">Topics</a></li>
-	  <li class="js-nav-button {{isCurrentTab 'profileUsers'}}" data-tab="profileUsers"><a href="#">Users</a></li>
-	  <li class=""><a href="#">Temporary</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'profileFollowers'}}" data-tab="profileFollowers"><a href="#">Followers</a></li>
+	  <li class="js-nav-button {{isCurrentTab 'profileFollowing'}}" data-tab="profileFollowing"><a href="#">Following</a></li>
 	</ul>
+</template>
+
+<template name="profileBody">
+	<div class="page-body-header">
+		{{> UI.contentBlock}}
+	</div>
+	<div class="page-body-content">
+		<div class="list">
+			{{#if items.count}}
+				{{#each items}}
+					{{> UI.dynamic template=../itemTemplate}}
+				{{/each}}
+			{{else}}
+				<div class="list-item">
+					{{message}}
+				</div>
+			{{/if}}
+		</div>
+	</div>
 </template>
 
 <!-- END PAGE LAYOUT -->
