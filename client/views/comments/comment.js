@@ -17,7 +17,7 @@ Template.newComment.events({
 
 		var siblings = $(event.target).siblings();
 		var input = $(siblings[0]);
-		var content = input.val();
+		var content = input.html();
 		var	side = $(siblings[1]).hasClass('btn-pro') ? 'pro' : 'con';
 		var	replyTo = this.id;
 		var	replyToUser = replyTo && Comments.findOne(replyTo).userId;
@@ -29,7 +29,7 @@ Template.newComment.events({
 				scrollToId(result);
 		});
 
-		input.val('');
+		input.html('');
 	},
 	'click .js-post-side': function(event, template) {
 		var t = $(event.target);

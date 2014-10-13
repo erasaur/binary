@@ -4,6 +4,7 @@ aldeed:collection2@2.1.0
 aldeed:simple-schema@1.0.3
 amplify@1.0.0
 application-configuration@1.0.2
+artwells:queue@0.0.3
 autoupdate@1.1.1
 base64@1.0.0
 bengott:avatar@0.1.1
@@ -39,6 +40,7 @@ jparker:crypto-core@0.1.0
 jparker:crypto-md5@0.1.1
 jquery@1.0.0
 json@1.0.0
+kestanous:herald@0.10.0
 less@1.0.9
 livedata@1.0.10
 localstorage@1.0.0

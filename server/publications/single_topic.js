@@ -1,41 +1,12 @@
 // Publish a single topic
 
-// Meteor.publish('singleTopic', function (topicId) {
-//   // all comments
-//   var comments = Comments.find({'topicId': topicId}, {sort: {'likes': -1}});
-//   var userIds = _.pluck(comments.fetch(), 'userId'); // comment owners
-
-//   // add topic owner to list of userIds
-//   var topicOwner = Topics.findOne(topicId).userId;
-//   userIds.push(topicOwner);
-
-//   // owners of all comments
-//   var users = Meteor.users.find({'_id': {$in: userIds}}, {fields: {'profile': 1}});
-
-//   return [comments, users];
-// });
-
+// separate into multiple publications ?
 Meteor.publish('singleTopic', function (topicId, sortBy) {
   var sortOptions = {
     'top': 'upvotes',
     'newest': 'createdAt'
   };
   var sortBy = sortOptions[sortBy] || 'upvotes';
-
-  // var self = this;
-
-  // var commentHandle = Comments.find(
-  //   { 'topicId': topicId }
-  // ).observeChanges({
-  //   added: function (id, fields) {
-  //     fields.initialVotes = fields.upvotes;
-  //     fields.initialDate = fields.createdAt;
-  //     self.added('comments', id, fields);
-  //   },
-  //   changed: function (id, fields) {
-  //     self.changed('comments', id, fields);
-  //   }
-  // });
 
   // the publication 'handle', specifies what is published (through added, changed)
   var pub = this; 
@@ -45,10 +16,9 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
   var commentOwnersHandle;
 
   function publishCommentOwners (userId) {
-    var owners = Meteor.users.find(
-      { '_id': userId }, 
-      { fields: { 'profile': 1, 'stats': 1 } }
-    );
+    var owners = Meteor.users.find({ '_id': userId }, { 
+      fields: { 'profile': 1, 'stats': 1 } 
+    });
     commentOwnersHandle = owners.observeChanges({
       added: function (id, fields) {
         pub.added('users', id, fields);
@@ -64,10 +34,9 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
   }
 
   function publishTopicComments (topicId) {
-    var comments = Comments.find(
-      { 'topicId': topicId },
-      { sort: setProperty({}, sortBy, -1) }
-    );
+    var comments = Comments.find({ 'topicId': topicId }, { 
+      sort: setProperty({}, sortBy, -1) 
+    });
 
     commentsHandle = comments.observeChanges({
       added: function (id, fields) {

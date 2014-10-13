@@ -50,7 +50,7 @@ TopicSchema = new SimpleSchema({
   }
 });
 
-Topics = new Mongo.Collection("topics");
+Topics = new Mongo.Collection('topics');
 Topics.attachSchema(TopicSchema);
 
 // end schema ----------------------------------------
@@ -58,9 +58,9 @@ Topics.attachSchema(TopicSchema);
 
 // search --------------------------------------------
 
-Topics.initEasySearch("title", {
-	"limit": 20,
-	"use": "mongo-db"
+Topics.initEasySearch('title', {
+	'limit': 20,
+	'use': 'mongo-db'
 });
 
 // end search ----------------------------------------
@@ -94,7 +94,7 @@ Topics.deny({
 // collection hooks ----------------------------------
 
 Topics.before.insert(function (userId, doc) {
-  if (Meteor.isServer)
+  if (Meteor.isServer && doc.description)
     doc.description = sanitize(marked(doc.description));
 });
 
@@ -118,7 +118,7 @@ Meteor.methods({
     var userId = this.userId;
 
     if (!userId || !canPostById(userId))
-      throw new Meteor.Error(601, "Please login to create new topics.");
+      throw new Meteor.Error(601, 'Please login to create new topics.');
 
     // if(!isAdmin(Meteor.user())){
   //     // check that user waits more than X seconds between posts
@@ -131,17 +131,17 @@ Meteor.methods({
   //   }
 
     if (!title)
-      throw new Meteor.Error(602, "Please enter a title.");
+      throw new Meteor.Error(602, 'Please enter a title.');
 
     // check if title already exists
     else {
-      var topicWithTitle = Topics.findOne({ "title": title });
+      var topicWithTitle = Topics.findOne({ 'title': title });
 
-      if (typeof topicWithTitle !== "undefined")
-        throw new Meteor.Error(603, "Sorry, there is already a topic with that title.", topicWithTitle._id);
+      if (typeof topicWithTitle !== 'undefined')
+        throw new Meteor.Error(603, 'Sorry, there is already a topic with that title.', topicWithTitle._id);
     }
 
-    var properties = {
+    var topic = {
       title: title,
       description: description,
       userId: userId,
@@ -158,12 +158,12 @@ Meteor.methods({
       followers: []
     };
 
-    var topicId = Topics.insert(properties);
+    topic._id = Topics.insert(topic);
 
-    Meteor.users.update(userId, { $inc: { "stats.topicsCount": 1 } });
-    Meteor.call("newNotification", "newTopic", userId, { "topicId": topicId, "topicTitle": title });
+    Meteor.users.update(userId, { $inc: { 'stats.topicsCount': 1 } });
+    Meteor.call('newTopicNotification', topic);
 
-    return topicId;
+    return topic._id;
   },
   followTopic: function (topicId) {
     var userId = this.userId;
@@ -171,8 +171,8 @@ Meteor.methods({
     if (!userId || !canFollowById(userId))
       throw new Meteor.Error(403, 'Please login to follow topics.');
 
-    Topics.update(topicId, { $addToSet: { "followers": userId } });
-    Meteor.users.update(userId, { $addToSet: { "activity.followingTopics": topicId } });
+    Topics.update(topicId, { $addToSet: { 'followers': userId } });
+    Meteor.users.update(userId, { $addToSet: { 'activity.followingTopics': topicId } });
   },
   unfollowTopic: function (topicId) {
     var userId = this.userId;
@@ -180,8 +180,8 @@ Meteor.methods({
     if (!userId || !canFollowById(userId))
       throw new Meteor.Error(403, 'Please login to follow topics.');
     
-    Topics.update(topicId, { $pull: { "followers": userId } });
-    Meteor.users.update(userId, { $pull: { "activity.followingTopics": topicId } });
+    Topics.update(topicId, { $pull: { 'followers': userId } });
+    Meteor.users.update(userId, { $pull: { 'activity.followingTopics': topicId } });
   }
 });
 
