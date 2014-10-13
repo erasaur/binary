@@ -95,11 +95,11 @@ Meteor.methods({
     //   throw new Meteor.Error(704, i18n.t('Please wait ')+(commentInterval-timeSinceLastComment)+i18n.t(' seconds before commenting again'));
 
     if (!content)
-      throw new Meteor.Error(403, "Sorry, you can't make a comment with no content.");
+      throw new Meteor.Error(403, 'Sorry, you can\'t make a comment with no content.');
       
-    Meteor.users.update(userId, { $addToSet: { "activity.discussedTopics": topicId } });
+    Meteor.users.update(userId, { $addToSet: { 'activity.discussedTopics': topicId } });
 
-    var properties = {
+    var comment = {
       userId: userId,
       topicId: topicId,
       createdAt: new Date(),
@@ -111,16 +111,15 @@ Meteor.methods({
       replies: []
     };
 
-    var commentId = Comments.insert(properties);
+    comment._id = Comments.insert(comment);
 
     if (!!replyTo)
-      Comments.update(replyTo, { $addToSet: { "replies": commentId } });
+      Comments.update(replyTo, { $addToSet: { 'replies': comment._id } });
 
-    Meteor.users.update(userId, { $inc: { "stats.commentsCount": 1 } });
-    Meteor.call("newNotification", "newComment", userId, 
-                { "replyTo": replyToUser || "", "commentId": commentId, "topicId": topicId });
+    Meteor.users.update(userId, { $inc: { 'stats.commentsCount': 1 } });
+    Meteor.call('newCommentNotification', comment);
 
-    return commentId;
+    return comment._id;
   }
 });
 

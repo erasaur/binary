@@ -15,35 +15,29 @@ Accounts.onCreateUser(function (options, user) {
       followingUsers: [], 
       followingTopics: [], 
       discussedTopics: []
-    },
-    notifications: {
-      replies: [], // replies to our comments
-      comments: [], // comments in our topics
-      followers: [],
-      followingUsers: { // users we are following
-        comments: [], // new comments
-        topics: [] // new topics
-      }, 
-      followingTopics: { // topics we are following
-        comments: []
-      }
     }
   };
   user = _.extend(user, userProperties);
   
   // set notifications default preferences
   user.profile.notifications = {
-    enabled: true,
-    followingUsers: { // users we are following
-      comments: true, // new comments
-      topics: true // new topics
+    media: {
+      onsite: true
     },
-    followingTopics: { // topics we are following
-      comments: true // new comments
-    },
-    replies: true, // replies to our comments
-    comments: true, // comments in our topics
-    followers: true // new followers
+    couriers: {
+      newTopic: {
+        onsite: true
+      },
+      newComment: {
+        onsite: true
+      },
+      newReply: {
+        onsite: true
+      },
+      newFollower: {
+        onsite: true
+      }
+    }
   };
 
   return user;
@@ -73,90 +67,92 @@ Meteor.methods({
   },
   changeEmail: function (newEmail) {
     Meteor.users.update(Meteor.userId(), { $set: { 
-      'emails': [{ 'address': newEmail, 'verified': false }]
+      'emails': [{ 'address': newEmail, 'verified': false }] // send verification email ?
     } });
   },
   changePreferences: function (newPreferences) {
     Meteor.users.update(Meteor.userId(), { $set: newPreferences });
   },
-  newNotification: function(type, userId, options) {
-    // var  name = getDisplayNameById(userId);
+  newFollowerNotification: function (followingId) { // initiated by the follower
+    var follower = Meteor.user();
 
-    // if (type === 'newComment') {
-    //  var topicTitle = Topics.findOne(options.topicId).title;
-    //  var notobj = {'url': '/topics/' + options.topicId + '#' + options.commentId, 
-    //                'message': name + ' replied to your comment in '' + topicTitle + ''', 
-    //                'read': false};
-    //  var notif;
+    var notificationData = {
+      follower: { '_id': follower._id, 'name': follower.profile.name }
+    };
 
-    //  //'user replied to your comment'
-    //  if (options.replyTo && options.replyTo !== userId) { //if reply to self, no notification
-    //    notif = Meteor.users.findOne(options.replyTo).notifications;
-
-    //    if (notif.commentReply.length >= 5) {
-    //      Meteor.users.update(options.replyTo, 
-    //                         {$pop: {'notifications.commentReply': -1}}); //pop the last item of array
-    //    }
-
-    //    Meteor.users.update(options.replyTo, 
-    //                       {$addToSet: {'notifications.commentReply': notobj}});
-    //  }
-
-    //  //'user has posted a new comment in topic'
-    //  var followers = Meteor.users.findOne(userId).activity.followers; 
-    //  notobj.message = name + ' posted a new comment in '' + topicTitle + ''';
-
-    //  //notify poster's followers of his new comment
-    //  _.each(followers, function (id) {
-    //    if(id !== options.replyTo) { //if it's not the replyTo user (whom we should've already notified)
-    //      Meteor.users.update(id, {$addToSet: {'notifications.followingUser': notobj}});
-    //    }
-    //  });
-
-    //  var topicFollowers = [];
-    //  Meteor.users.find({'activity.followingTopics': options.topicId}).forEach(function (user) {
-    //    if(user._id !== options.replyTo && user._id !== userId) {
-    //      topicFollowers.push(user._id);
-    //    }
-    //  });
-
-    //  notobj.url = '/topics/' + options.topicId;
-    //  notobj.message = 'A new comment was posted in ' + topicTitle;
-      
-    //  // notify people who are following the topic in which there is the new comment, 
-    //  // but not if they have already been notified via the user whom they are following
-    //  _.each(_.difference(topicFollowers, followers), function (id) {
-    //    // 'a new comment has been posted in topic'
-    //    var currUrl = '/topics/' + options.topicId; //url for this notification
-
-    //    // check if a notification entry already has this url
-    //    notif = _.find(Meteor.users.findOne(id).notifications.followingTopic, function (obj) { 
-    //      return obj.url === currUrl; 
-    //    }); 
-
-    //    //if this topic already has more than one notification entry with the url, combine them all into one with a 'count' 
-    //    if(notif) { //if this topic already has one entry
-    //      if(notif.count) {
-    //        Meteor.users.update({'_id': id, 'notifications.followingTopic': {$elemMatch: {'url': currUrl}}}, 
-    //                            {$inc: {'notifications.followingTopic.$.count': 1}});
-    //      } else {
-    //        notobj.count = 2;
-    //        notobj.message = ' new comments were posted in ' + topicTitle;
-    //        Meteor.users.update(id, {$pull: {'notifications.followingTopic': {'url': currUrl}}});
-    //        Meteor.users.update(id, {$push: {'notifications.followingTopic': notobj}}); 
-    //      }
-    //    } 
-    //    //'count' is still low, so just add it as usual, as a normal notification entry
-    //    else
-    //      Meteor.users.update(id, {$addToSet: {'notifications.followingTopic': notobj}});
-    //  });
-    // } else if (type === 'newTopic') {
-    //  _.each(Meteor.users.findOne(userId).activity.followers, function (id) {
-    //    Meteor.users.update(id, {$addToSet: {'notifications.followingUser': 
-    //      {'url': '/topics/' + options.topicId, 'message': name + ' created the new topic ' + options.topicTitle}}});
-    //  });
-    // }
+    // notify user who follower is following
+    Herald.createNotification(followingId, { courier: 'newFollower', data: notificationData });
   },
+  newTopicNotification: function (topic) { // initiated by the topic creator
+    var user = Meteor.user(); // topic owner
+
+    if (!user.activity || !user.activity.followers) return;
+
+    var notificationData = {
+      author: { '_id': user._id, 'name': user.profile.name },
+      topic: _.pick(topic, '_id', 'title')
+    };
+
+    // notify owner's followers
+    _.each(user.activity.followers, function (followerId) {
+      Herald.createNotification(followerId, { courier: 'newTopic', data: notificationData });
+    });
+  },
+  newCommentNotification: function (comment) { // initiated by the comment creator
+    var topic = Topics.findOne(comment.topicId);
+    var replyToId = comment.replyTo;
+    var user = Meteor.user(); // comment owner
+    var notified = [];
+
+    var notificationData = {
+      author: { '_id': user._id, 'name': user.profile.name },
+      comment: _.pick(comment, '_id'),
+      topic: _.pick(topic, '_id', 'title')
+    };
+
+    if (!!replyToId) { // comment reply      
+      var replyTo = Comments.findOne(replyToId);
+
+      notificationData.replyToId = replyToId;
+
+      // notify replyTo owner
+      // unless user is just replying to self
+      if (replyTo.userId !== user._id) {
+
+        // combine notifications if more than 5 ?
+        Herald.createNotification(replyTo.userId, { courier: 'newReply', data: notificationData });
+        notified.push(replyTo.userId);
+      }
+
+    }
+
+    // notify topic owner
+    // unless the comment owner is also the topic owner,
+    // or the topic owner is the replyTo owner (in which case we already notified them with 'newReply')
+    if (topic.userId !== user._id && !_.contains(notified, topic.userId)) {
+      Herald.createNotification(topic.userId, { courier: 'newComment', data: notificationData });
+      notified.push(topic.userId);
+    }
+
+    // notify topic followers
+    var topicFollowers = _.without(topic.followers, notified);
+    _.each(topicFollowers, function (followerId) {
+
+      // in case user is following the topic
+      if (followerId !== user._id)
+        Herald.createNotification(followerId, { courier: 'newComment', data: notificationData });
+
+      notified.push(followerId);
+
+    });
+
+    // notify commenter's followers
+    var commenterFollowers = _.without(user.activity.followers, notified);
+    _.each(commenterFollowers, function (followerId) {
+      Herald.createNotification(followerId, { courier: 'newComment', data: notificationData });
+      notified.push(followerId);
+    });
+  }
 });
   
 

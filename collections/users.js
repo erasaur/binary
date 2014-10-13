@@ -2,30 +2,6 @@
 
 var Schema = {};
 
-Schema.UserProfileNotifications = new SimpleSchema({
-  enabled: { // enable notifications
-    type: Boolean
-  },
-  comments: { // new comments in own topic
-    type: Boolean
-  },
-  replies: { // new replies to own comments
-    type: Boolean
-  },
-  followers: { // new followers
-    type: Boolean
-  },
-  'followingTopics.comments': { // new comments in following topics
-    type: Boolean
-  },
-  'followingUsers.comments': { // new comments by following users
-    type: Boolean
-  },
-  'followingUsers.topics': { // new topics by following users
-    type: Boolean
-  }
-});
-
 Schema.UserProfile = new SimpleSchema({
   name: {
     type: String,
@@ -37,8 +13,9 @@ Schema.UserProfile = new SimpleSchema({
     optional: true
   },
   notifications: {
-    type: Schema.UserProfileNotifications,
-    optional: true
+    type: Object,
+    optional: true,
+    blackbox: true
   }
 });
 
@@ -88,11 +65,6 @@ Schema.User = new SimpleSchema({
     type: Schema.UserProfile
   },
   activity: { // public but not modifiable
-    type: Object,
-    optional: true,
-    blackbox: true
-  },
-  notifications: { // public but not modifiable
     type: Object,
     optional: true,
     blackbox: true
@@ -152,7 +124,7 @@ Meteor.users.allow({
 // methods -------------------------------------------
 
 Meteor.methods({
-  newFollower: function (following) {
+  newFollower: function (followingId) {
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
@@ -160,16 +132,18 @@ Meteor.methods({
 
     // update user being followed
     Meteor.users.update(userId, { 
-      $addToSet: { 'activity.followingUsers': following } 
+      $addToSet: { 'activity.followingUsers': followingId } 
     });
 
     // update the user who is following
-    Meteor.users.update(following, { 
+    Meteor.users.update(followingId, { 
       $addToSet: { 'activity.followers': userId },
       $inc: { 'stats.followersCount': 1 } 
     });
+
+    Meteor.call('newFollowerNotification', followingId);
   },
-  removeFollower: function (following) {
+  removeFollower: function (followingId) {
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
@@ -177,11 +151,11 @@ Meteor.methods({
 
     // update user being followed
     Meteor.users.update(userId, {
-      $pull: { 'activity.followingUsers': following } 
+      $pull: { 'activity.followingUsers': followingId } 
     });
 
     // update the user who is following
-    Meteor.users.update(following, { 
+    Meteor.users.update(followingId, { 
       $pull: { 'activity.followers': userId },
       $inc: { 'stats.followersCount': -1 } 
     });
