@@ -39,7 +39,7 @@ Template.settings.events({
     // toggling global notifications
     if (!actionValue) {
       // use Herald setUserPreference ?
-      Meteor.call('changePreferences', setProperty({}, 'media' + medium, !!newValue));
+      Meteor.call('changePreferences', setProperty({}, 'profile.notifications.media' + medium, !!newValue));
     } 
     // toggling courier specific preferences
     else {
@@ -47,6 +47,7 @@ Template.settings.events({
       actionValue = actionValue.replace(/-/g, '.');
       actionValue = 'profile.notifications.couriers.' + actionValue + medium;
 
+      console.log(actionValue);
       // eg { 'profile.notifications.couriers.newComment.follower.onsite': true }
       Meteor.call('changePreferences', setProperty({}, actionValue, !!newValue));
     }
