@@ -89,7 +89,7 @@ Meteor.users.attachSchema(Schema.User);
 // search --------------------------------------------
 
 Meteor.users.initEasySearch('profile.name', {
-  'limit': 10,
+  'limit': 15,
   'use': 'mongo-db'
 });
 
