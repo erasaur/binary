@@ -50,7 +50,7 @@
 
 <template name="profile">
 	<div class="col-content page-body">
-		{{> UI.dynamic template=currentTab data=this}}
+		{{> Template.dynamic template=currentTab data=this}}
 	</div>
 </template>
 
@@ -88,13 +88,13 @@
 
 <template name="profileBody">
 	<div class="page-body-header">
-		{{> UI.contentBlock}}
+		{{> Template.contentBlock}}
 	</div>
 	<div class="page-body-content">
 		<div class="list">
 			{{#if items.count}}
 				{{#each items}}
-					{{> UI.dynamic template=../itemTemplate}}
+					{{> Template.dynamic template=../itemTemplate}}
 				{{/each}}
 			{{else}}
 				<div class="list-item">
