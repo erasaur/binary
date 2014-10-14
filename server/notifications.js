@@ -2,15 +2,51 @@ Meteor.methods({
   newFollowerNotification: function (followingId) { // initiated by the follower
     var follower = Meteor.user();
 
-    var notificationData = {
-      follower: { '_id': follower._id, 'name': follower.profile.name }
-    };
-
-    // if Herald.collection.find().count() > x, merge notifications
+    var notificationData;
 
     // notify user who follower is following
-    if (Herald.userPrefrence(followingId, 'onsite', 'newFollower'))
-      Herald.createNotification(followingId, { courier: 'newFollower', data: notificationData });
+    if (Herald.userPrefrence(followingId, 'onsite', 'newFollower')) {
+
+      var aggregate = Herald.collection.findOne({ 
+        'data.count': { $exists: true }, courier: 'newFollower', read: false 
+      });
+
+      // unread aggregate notification exists, update it
+      // ensure that the same user can't keep following/unfollowing to increment aggregate
+      if (!!aggregate && !_.contains(aggregate.data.ids, follower._id)) {
+        Herald.collection.update(aggregate._id, { 
+          $inc: { 'data.count': 1 },
+          $addToSet: { 'data.ids': follower._id } 
+        });
+      }
+      // unread aggregate notification doesn't exist
+      else {
+        var count = Herald.collection.find({ 
+          courier: 'newFollower', read: false 
+        }).count();
+
+        // combine unread notifications if there are too many
+        if (count >= 4) {
+          notificationData = { 'ids': [follower._id], 'count': count + 1 };
+
+          // remove all instances of 'newFollower' notification
+          Herald.collection.remove({ courier: 'newFollower', read: false });
+          Herald.createNotification(followingId, { courier: 'newFollower', data: notificationData });
+        }
+
+        // otherwise add notification as long as it's not from same user
+        else if (!Herald.collection.findOne({ 
+          courier: 'newFollower', read: false, 'data.follower._id': follower._id 
+        })) 
+        {
+          notificationData = {
+            follower: { '_id': follower._id, 'name': follower.profile.name }
+          };
+
+          Herald.createNotification(followingId, { courier: 'newFollower', data: notificationData });
+        }
+      } 
+    }
   },
   newTopicNotification: function (topic) { // initiated by the topic creator
     var user = Meteor.user(); // topic owner
