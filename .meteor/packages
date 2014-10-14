@@ -25,7 +25,6 @@ iron:dynamic-template
 iron:layout
 iron:router
 mrt:iron-router-progress
-bengott:avatar
 meteorhacks:fast-render
 meteorhacks:kadira
 chuangbo:marked
@@ -33,4 +32,5 @@ meteorhacks:subs-manager
 codepoet:medium-editor-npm
 reactive-var
 kestanous:herald
+bengott:avatar
 
