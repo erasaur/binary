@@ -49,7 +49,6 @@ Meteor.methods({
       // notify replyTo owner
       // unless user is just replying to self
       if (replyTo.userId !== user._id && Herald.userPrefrence(replyTo.userId, 'onsite', 'newReply')) {
-
         // combine notifications if more than 5 ?
         Herald.createNotification(replyTo.userId, { courier: 'newReply', data: notificationData });
         notified.push(replyTo.userId);
