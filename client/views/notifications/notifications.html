@@ -5,7 +5,7 @@
       <ul>
         {{#if hasNotifications}}
           {{#each notifications}}
-            {{> UI.dynamic template='notificationItem'}}
+            {{> notificationItem}}
           {{/each}}
         {{else}}
           <li><a href="#">No notifications.</a></li>

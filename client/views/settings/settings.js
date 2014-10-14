@@ -4,15 +4,6 @@ Template.settings.events({
   }
 });
 
-// http://stackoverflow.com/questions/8750362/using-variables-with-nested-javascript-object
-function leaf (obj, path) {
-  path = path.split('.');
-  var res = obj;
-  for (var i = 0; i < path.length; i++) 
-    res = res[path[i]];
-  return res;
-}
-
 // button jquery object
 function displaySaved ($button) {
   var button = $button.find('span');
@@ -27,30 +18,38 @@ function displaySaved ($button) {
 
 Template.settings.helpers({
   'isEnabled': function (option) {
+    var medium = '.onsite'; // use user preferences ?
     if (Meteor.user())
-      return leaf(Meteor.user().profile.notifications, option) ? 'btn-primary' : 'btn-default';
+      return getProperty(Meteor.user().profile.notifications, option + medium) ? 'btn-primary' : 'btn-default';
   },
   'unlessEnabled': function (option) {
+    var medium = '.onsite'; // use user preferences ?
     if (Meteor.user())
-      return leaf(Meteor.user().profile.notifications, option) ? 'btn-default' : 'btn-primary';
+      return getProperty(Meteor.user().profile.notifications, option + medium) ? 'btn-default' : 'btn-primary';
   }
 });
 
 Template.settings.events({
   'click button[data-action="toggle-setting"]': function (event, template) {
     var button = event.currentTarget;
-    var action = button.getAttribute('data-action');
     var actionValue = button.getAttribute('data-action-value');
+    var newValue = parseInt(button.getAttribute('value')); // 0 or 1
+    var medium = '.onsite'; // medium of delivering notifications
 
-    // construct the query key
-    actionValue = actionValue.replace(/-/g, '.');
-    actionValue = 'profile.notifications.' + actionValue;
+    // toggling global notifications
+    if (!actionValue) {
+      // use Herald setUserPreference ?
+      Meteor.call('changePreferences', setProperty({}, 'media' + medium, !!newValue));
+    } 
+    // toggling courier specific preferences
+    else {
+      // construct the query key
+      actionValue = actionValue.replace(/-/g, '.');
+      actionValue = 'profile.notifications.couriers.' + actionValue + medium;
 
-    // get the numeric value of toggle (0 or 1)
-    var newValue = parseInt(button.getAttribute('value'));
-
-    // { 'profile.notifications.xxx.xxx': true }
-    Meteor.call('changePreferences', setProperty({}, actionValue, !!newValue));
+      // eg { 'profile.notifications.couriers.newComment.follower.onsite': true }
+      Meteor.call('changePreferences', setProperty({}, actionValue, !!newValue));
+    }
   },
   'click #js-edit-name, click #js-edit-bio, click #js-edit-email': function (event, template) {
     var target = event.currentTarget;

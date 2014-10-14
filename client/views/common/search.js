@@ -17,11 +17,18 @@ function isSearching () {
   return searching;
 }
 
-Template.searchInput.indexes = ['topics', 'users'];
+Template.searchInput.helpers({
+  indexes: ['topics', 'users'],
+  searching: isSearching
+});
 
-Template.searchInput.searching = isSearching;
-Template.mainLayout.searching = isSearching;
-Template.pageLayout.searching = isSearching;
+Template.mainLayout.helpers({
+  searching: isSearching
+});
+
+Template.pageLayout.helpers({
+  searching: isSearching
+});
 
 Template.nav.events({
   'click .navbar-brand, click .dropdown-menu a[href]': function (event, template) {
