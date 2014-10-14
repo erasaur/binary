@@ -177,7 +177,7 @@
   // &:hover { color: black; }
 }
 .list-header {
-  padding: 0;
+  padding-bottom: 0;
   .content-header(black);
 }
 .list-item-info {
@@ -335,27 +335,6 @@
 
 // search page ---------------------------------------
 
-#search-results, 
-#topic-categories {
-  display: table;
-  margin: 40px 0;
-  width: 100%;
-}
-#topic-categories ul {
-  display: table-cell;
-  overflow: hidden;
-  width: 33%;
-  border-right: 1px solid @gray;
-
-  &:last-of-type { border: 0; }
-}
-#topic-categories ul li {
-  text-align: center;
-}
-#topic-categories ul a {
-  .content-header(@fontColor-muted); 
-  &:hover { color: black; }
-}
 
 // iron router loader --------------------------------
 
