@@ -25,12 +25,12 @@ iron:layout
 iron:router
 mrt:iron-router-progress
 meteorhacks:fast-render
-meteorhacks:kadira
 chuangbo:marked
 meteorhacks:subs-manager
 codepoet:medium-editor-npm
 reactive-var
 bengott:avatar
 kestanous:herald@1.0.0-pre2
+meteorhacks:kadira
 matteodem:easy-search
 
