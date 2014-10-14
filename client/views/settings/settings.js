@@ -47,7 +47,6 @@ Template.settings.events({
       actionValue = actionValue.replace(/-/g, '.');
       actionValue = 'profile.notifications.couriers.' + actionValue + medium;
 
-      console.log(actionValue);
       // eg { 'profile.notifications.couriers.newComment.follower.onsite': true }
       Meteor.call('changePreferences', setProperty({}, actionValue, !!newValue));
     }

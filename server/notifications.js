@@ -9,7 +9,8 @@ Meteor.methods({
     // if Herald.collection.find().count() > x, merge notifications
 
     // notify user who follower is following
-    Herald.createNotification(followingId, { courier: 'newFollower', data: notificationData });
+    if (Herald.userPrefrence(followingId, 'onsite', 'newFollower'))
+      Herald.createNotification(followingId, { courier: 'newFollower', data: notificationData });
   },
   newTopicNotification: function (topic) { // initiated by the topic creator
     var user = Meteor.user(); // topic owner
@@ -23,7 +24,9 @@ Meteor.methods({
 
     // notify owner's followers
     _.each(user.activity.followers, function (followerId) {
-      Herald.createNotification(followerId, { courier: 'newTopic', data: notificationData });
+
+      if (Herald.userPrefrence(followerId, 'onsite', 'newTopic'))
+        Herald.createNotification(followerId, { courier: 'newTopic', data: notificationData });
     });
   },
   newCommentNotification: function (comment) { // initiated by the comment creator
@@ -45,7 +48,7 @@ Meteor.methods({
 
       // notify replyTo owner
       // unless user is just replying to self
-      if (replyTo.userId !== user._id) {
+      if (replyTo.userId !== user._id && Herald.userPrefrence(replyTo.userId, 'onsite', 'newReply')) {
 
         // combine notifications if more than 5 ?
         Herald.createNotification(replyTo.userId, { courier: 'newReply', data: notificationData });
@@ -59,7 +62,7 @@ Meteor.methods({
     // or the topic owner is the replyTo owner (in which case we already notified them with 'newReply')
     if (topic.userId !== user._id && 
         !_.contains(notified, topic.userId) &&
-        Herald.userPreference(topic.userId, 'onsite', { courier: 'newComment.topicOwner' })) 
+        Herald.userPrefrence(topic.userId, 'onsite', { courier: 'newComment.topicOwner' })) 
     {
       Herald.createNotification(topic.userId, { courier: 'newComment', data: notificationData });
     }
@@ -71,7 +74,7 @@ Meteor.methods({
 
       // in case user is following the topic
       if (followerId !== user._id && 
-          Herald.userPreference(followerId, 'onsite', { courier: 'newComment.topicFollower' })) 
+          Herald.userPrefrence(followerId, 'onsite', { courier: 'newComment.topicFollower' })) 
       {
         Herald.createNotification(followerId, { courier: 'newComment', data: notificationData });
       }
@@ -84,7 +87,7 @@ Meteor.methods({
     var commenterFollowers = _.without(user.activity.followers, notified);
     _.each(commenterFollowers, function (followerId) {
 
-      if (Herald.userPreference(followerId, 'onsite', { courier: 'newComment.follower' }))
+      if (Herald.userPrefrence(followerId, 'onsite', { courier: 'newComment.follower' }))
         Herald.createNotification(followerId, { courier: 'newComment', data: notificationData });
 
       notified.push(followerId);
