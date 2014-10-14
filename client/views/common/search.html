@@ -12,65 +12,45 @@
 <template name="searchResults">
   <div class="col-content page-body">
     <div data-animate data-duration="1000" data-from-value="0" data-to-value="1" class="results">
-      <div id="topic-categories">
-        <ul>
-          <li><a href="">Technology</a></li>
-          <li><a href="">Business</a></li>
-          <li><a href="">Economy</a></li>
-          <li><a href="">Society</a></li>
-          <li><a href="">Education</a></li>
-        </ul>
-        <ul>
-          <li><a href="">Environment</a></li>
-          <li><a href="">Literature</a></li>
-          <li><a href="">Politics</a></li>
-          <li><a href="">Philosophy</a></li>
-          <li><a href="">Science</a></li>
-        </ul>
-        <ul>
-          <li><a href="">Arts</a></li>
-          <li><a href="">Sports</a></li>
-          <li><a href="">Entertainment</a></li>
-          <li><a href="">Culture</a></li>
-        </ul>
+      <div class="list">
+        <div class="list-item list-header">Topics</div>
+        {{#ifEsInputIsEmpty index="topics" id="js-search-input"}}
+          <div class="list-item">Search for topics.</div>
+        {{/ifEsInputIsEmpty}}
+
+        {{#ifEsIsSearching index="topics"}}
+          <div class="list-item">Working...</div>
+        {{else}}
+          {{#esEach index="topics" id="js-search-input"}}
+            {{> topicItem}}
+          {{/esEach}}
+
+          {{> esLoadMoreButton index="topics" id="js-search-input" classes="btn btn-default"}}
+        {{/ifEsIsSearching}}
+
+        {{#ifEsHasNoResults index="topics" id="js-search-input"}}
+          <div class="list-item">No search results.</div>
+        {{/ifEsHasNoResults}}
       </div>
-      <div id="search-results">
-        <div class="list">
-          <div class="list-item list-header">Topics</div>
-          {{#ifEsInputIsEmpty index="topics" id="js-search-input"}}
-            <div class="list-item">Search for topics.</div>
-          {{/ifEsInputIsEmpty}}
+      <div class="list">
+        <div class="list-item list-header">Users</div>
+        {{#ifEsInputIsEmpty index="users" id="js-search-input"}}
+          <div class="list-item">Search for users.</div>
+        {{/ifEsInputIsEmpty}}
 
-          {{#ifEsIsSearching index="topics"}}
-            <div class="list-item">Working...</div>
-          {{else}}
-            {{#esEach index="topics" id="js-search-input"}}
-              {{> topicItem}}
-            {{/esEach}}
-          {{/ifEsIsSearching}}
+        {{#ifEsIsSearching index="users"}}
+          <div class="list-item">Working...</div>
+        {{else}}
+          {{#esEach index="users" id="js-search-input"}}
+            {{> profileItem}}
+          {{/esEach}}
 
-          {{#ifEsHasNoResults index="topics" id="js-search-input"}}
-            <div class="list-item">No search results.</div>
-          {{/ifEsHasNoResults}}
-        </div>
-        <div class="list">
-          <div class="list-item list-header">Users</div>
-          {{#ifEsInputIsEmpty index="users" id="js-search-input"}}
-            <div class="list-item">Search for users.</div>
-          {{/ifEsInputIsEmpty}}
+          {{> esLoadMoreButton index="users" id="js-search-input" classes="btn btn-default"}}
+        {{/ifEsIsSearching}}
 
-          {{#ifEsIsSearching index="users"}}
-            <div class="list-item">Working...</div>
-          {{else}}
-            {{#esEach index="users" id="js-search-input"}}
-              {{> profileItem}}
-            {{/esEach}}
-          {{/ifEsIsSearching}}
-
-          {{#ifEsHasNoResults index="users" id="js-search-input"}}
-            <div class="list-item">No search results.</div>
-          {{/ifEsHasNoResults}}
-        </div>
+        {{#ifEsHasNoResults index="users" id="js-search-input"}}
+          <div class="list-item">No search results.</div>
+        {{/ifEsHasNoResults}}
       </div>
     </div>
   </div>

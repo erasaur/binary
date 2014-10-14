@@ -64,11 +64,11 @@ Meteor.methods({
         Herald.userPrefrence(topic.userId, 'onsite', { courier: 'newComment.topicOwner' })) 
     {
       Herald.createNotification(topic.userId, { courier: 'newComment', data: notificationData });
+      notified.push(topic.userId);
     }
-    notified.push(topic.userId);
 
     // notify topic followers
-    var topicFollowers = _.without(topic.followers, notified);
+    var topicFollowers = _.difference(topic.followers, notified);
     _.each(topicFollowers, function (followerId) {
 
       // in case user is following the topic
@@ -76,20 +76,18 @@ Meteor.methods({
           Herald.userPrefrence(followerId, 'onsite', { courier: 'newComment.topicFollower' })) 
       {
         Herald.createNotification(followerId, { courier: 'newComment', data: notificationData });
+        notified.push(followerId);
       }
-
-      notified.push(followerId);
-
     });
 
     // notify commenter's followers
-    var commenterFollowers = _.without(user.activity.followers, notified);
+    var commenterFollowers = _.difference(user.activity.followers, notified);
     _.each(commenterFollowers, function (followerId) {
 
       if (Herald.userPrefrence(followerId, 'onsite', { courier: 'newComment.follower' }))
         Herald.createNotification(followerId, { courier: 'newComment', data: notificationData });
 
-      notified.push(followerId);
+      // notified.push(followerId);
     });
   }
 });
