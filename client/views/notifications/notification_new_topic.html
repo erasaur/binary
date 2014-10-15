@@ -1,7 +1,13 @@
 <template name="notificationNewTopic">
   <div class="list-item">
-    <a href="{{profileUrl}}" class="action-link">{{author}}</a> 
-    created a new topic: 
-    <a href="{{topicUrl}}" class="action-link">{{topicTitle}}</a>
+    {{#if count}}
+      <a href="#" class="action-link">
+        {{count}} new topics were created.
+      </a>
+    {{else}}
+      <a href="{{profileUrl}}" class="action-link">{{author}}</a> 
+      created a new topic: 
+      <a href="{{topicUrl}}" class="action-link">{{topicTitle}}</a>
+    {{/if}}
   </div>
 </template>
