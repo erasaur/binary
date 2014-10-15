@@ -16,8 +16,9 @@ Template.newTopic.events({
         $('#js-create-description').val('');
         $('#new-topic-modal').modal('hide');
 
-        if (getCurrentRoute() === 'home')
-          scrollToId(result);
+        $('#new-topic-modal').on('hidden.bs.modal', function () {
+          Router.go('topic', { '_id': result });
+        });
       }
     });
   }
