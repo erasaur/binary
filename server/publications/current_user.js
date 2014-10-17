@@ -1,7 +1,7 @@
 // Publish current user
 
-Meteor.publish("currentUser", function () {
+Meteor.publish('currentUser', function () {
   return Meteor.users.find(this.userId, { 
-    fields: { "stats": 1, "activity": 1 } 
+    fields: { 'email_hash': 1, 'stats': 1, 'activity': 1 } 
   });
 });

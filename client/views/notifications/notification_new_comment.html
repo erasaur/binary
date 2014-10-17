@@ -1,7 +1,18 @@
 <template name="notificationNewComment">
   <div class="list-item">
-    <a href="{{profileUrl}}" class="action-link">{{author}}</a> 
-    posted a new comment on 
-    <a href="{{topicCommentUrl}}" class="action-link">{{topicTitle}}</a>
+    {{#if count}}
+      {{#if author}}
+        <a href="{{profileUrl}}" class="action-link">{{author}}</a> 
+        posted {{count}} new comments
+      {{/if}}
+      {{#if topicTitle}}
+        {{count}} new comments were posted in 
+        <a href="{{topicUrl}}" class="action-link">{{topicTitle}}</a>
+      {{/if}}
+    {{else}}
+      <a href="{{profileUrl}}" class="action-link">{{author}}</a> 
+      posted a new comment on 
+      <a href="{{topicCommentUrl}}" class="action-link">{{topicTitle}}</a>
+    {{/if}}
   </div>
 </template>
