@@ -14,6 +14,7 @@ setInterval(function() {
     //if we scrolled to 250px above bottom && have loaded enough topics to meet the limit
     if(Topics.find().count === Session.get('topicsLimit') && 
       $(window).scrollTop() + window.innerHeight >= $(document).height() - 250) {
+      console.log("SDF");
       Session.set('topicsLimit', Session.get('topicsLimit') + 10); //fetch more topics from server
     }
   }

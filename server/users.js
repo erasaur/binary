@@ -17,7 +17,13 @@ Accounts.onCreateUser(function (options, user) {
       discussedTopics: []
     }
   };
+  // add default properties
   user = _.extend(user, userProperties);
+
+  // add email hash
+  var email = user.emails[0].address;
+  if (email)
+    user.email_hash = Gravatar.hash(email);
   
   // set notifications default preferences
   user.profile.notifications = {
@@ -75,9 +81,12 @@ Meteor.methods({
     Meteor.users.update(Meteor.userId(), { $set: { 'profile.bio': newBio } });
   },
   changeEmail: function (newEmail) {
-    Meteor.users.update(Meteor.userId(), { $set: { 
-      'emails': [{ 'address': newEmail, 'verified': false }] // send verification email ?
-    } });
+    Meteor.users.update(Meteor.userId(), { 
+      $set: { 
+        'emails': [{ 'address': newEmail, 'verified': false }], 
+        'email_hash': Gravatar.hash(newEmail)
+      } // send verification email ?
+    });
   },
   changePreferences: function (newPreferences) {
     Meteor.users.update(Meteor.userId(), { $set: newPreferences });

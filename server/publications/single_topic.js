@@ -17,7 +17,7 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
 
   function publishCommentOwners (userId) {
     var owners = Meteor.users.find({ '_id': userId }, { 
-      fields: { 'profile': 1, 'stats': 1 } 
+      fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } 
     });
     commentOwnersHandle = owners.observeChanges({
       added: function (id, fields) {
@@ -61,7 +61,7 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
 
   function publishTopicOwner (userId) {
     var owner = Meteor.users.find(userId, { 
-      fields: { 'profile': 1, 'stats': 1 }
+      fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 }
     });
     topicOwnerHandle = owner.observeChanges({
       added: function (id, fields) {

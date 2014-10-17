@@ -33,8 +33,7 @@ Meteor.methods({
       if (Herald.userPreference(followerId, 'onsite', 'newTopic')) {
         Herald.createNotification(followerId, { 
           courier: 'newTopic', 
-          data: notificationData,
-          'aggregate': true 
+          data: notificationData // don't aggregate new topics
         });
       }
     });
@@ -59,8 +58,14 @@ Meteor.methods({
       // notify replyTo owner
       // unless user is just replying to self
       if (replyTo.userId !== user._id && Herald.userPreference(replyTo.userId, 'onsite', 'newReply')) {
-        // combine notifications if more than 5 ?
-        Herald.createNotification(replyTo.userId, { courier: 'newReply', data: notificationData });
+        
+        Herald.createNotification(replyTo.userId, { 
+          courier: 'newReply', 
+          data: notificationData, 
+          'aggregate': true,
+          'aggregateAt': 5,
+          'aggregateUnder': 'author._id' // combine notifications with documents that share the value of this field
+        });
         notified.push(replyTo.userId);
       }
 
@@ -73,7 +78,13 @@ Meteor.methods({
         !_.contains(notified, topic.userId) &&
         Herald.userPreference(topic.userId, 'onsite', { courier: 'newComment.topicOwner' })) 
     {
-      Herald.createNotification(topic.userId, { courier: 'newComment', data: notificationData });
+      Herald.createNotification(topic.userId, { 
+        courier: 'newComment', 
+        data: notificationData, 
+        'aggregate': true,
+        'aggregateAt': 5,
+        'aggregateUnder': 'topic'
+      });
       notified.push(topic.userId);
     }
 
@@ -85,7 +96,13 @@ Meteor.methods({
       if (followerId !== user._id && 
           Herald.userPreference(followerId, 'onsite', { courier: 'newComment.topicFollower' })) 
       {
-        Herald.createNotification(followerId, { courier: 'newComment', data: notificationData });
+        Herald.createNotification(followerId, { 
+          courier: 'newComment', 
+          data: notificationData, 
+          'aggregate': true,
+          'aggregateAt': 5,
+          'aggregateUnder': 'topic'
+        });
         notified.push(followerId);
       }
     });
@@ -94,8 +111,15 @@ Meteor.methods({
     var commenterFollowers = _.difference(user.activity.followers, notified);
     _.each(commenterFollowers, function (followerId) {
 
-      if (Herald.userPreference(followerId, 'onsite', { courier: 'newComment.follower' }))
-        Herald.createNotification(followerId, { courier: 'newComment', data: notificationData });
+      if (Herald.userPreference(followerId, 'onsite', { courier: 'newComment.follower' })) {
+        Herald.createNotification(followerId, { 
+          courier: 'newComment', 
+          data: notificationData, 
+          'aggregate': true,
+          'aggregateAt': 5,
+          'aggregateUnder': 'author'
+        });
+      }        
 
       // notified.push(followerId);
     });

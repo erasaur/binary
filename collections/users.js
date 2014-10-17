@@ -54,6 +54,10 @@ Schema.User = new SimpleSchema({
   'emails.$.verified': {
     type: Boolean
   },
+  email_hash: {
+    type: String,
+    optional: true
+  },
   createdAt: {
     type: Date
   },

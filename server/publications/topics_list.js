@@ -12,7 +12,7 @@ Meteor.publish('topicsList', function (limit) {
   // get the owners of each topic
   var userIds = _.pluck(topics.fetch(), 'userId');
   var users = Meteor.users.find({ '_id': { $in: userIds } }, { 
-    fields: { 'profile': 1 } 
+    fields: { 'email_hash': 1, 'profile': 1 } 
   });
 
   // get the top comment id of each topic
