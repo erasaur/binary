@@ -15,21 +15,28 @@ Template.newComment.events({
 	'click .js-post-comment': function (event, template) {
 		if(!Session.get('currentTopic')) return;
 
-		var siblings = $(event.target).siblings();
-		var input = $(siblings[0]);
-		var content = input.html();
-		var	side = $(siblings[1]).hasClass('btn-pro') ? 'pro' : 'con';
-		var	replyTo = this.id;
-		var	replyToUser = replyTo && Comments.findOne(replyTo).userId;
+		var comment = {
+			content: $(template.find('div.editable')).html(),
+			side: $(template.find('.js-post-side')).hasClass('btn-pro') ? 'pro': 'con',
+			replyTo: this.id
+		};
 
-		Meteor.call('newComment', Session.get('currentTopic'), content, side, replyTo, replyToUser, function(error, result) {
-			if(error)
-				alert(formatError(error));
+		Meteor.call('newComment', Session.get('currentTopic'), comment, function (error, result) {
+
+			if (error) {
+				if (error.error === 'logged-out')
+					alert('Please log in to comment. Thank you!');
+				else if (error.error === 'invalid-content')
+					alert('Sorry, your comment has to have at least 10 characters.');	
+				else
+					alert('Sorry, something went wrong. Please try again!');
+			}
 			else
 				scrollToId(result);
+
 		});
 
-		input.html('');
+		template.find('div.editable').innerHTML = '';
 	},
 	'click .js-post-side': function(event, template) {
 		var t = $(event.target);

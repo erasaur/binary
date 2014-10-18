@@ -82,20 +82,21 @@ Comments.before.update(function (userId, doc, fields, modifier, options) {
 // methods -------------------------------------------
 
 Meteor.methods({
-  newComment: function(topicId, content, side, replyTo, replyToUser) {
+  newComment: function(topicId, comment) {
     var userId = this.userId;
     // var timeSinceLastComment = timeSinceLast(user, Comments);
     // var commentInterval = Math.abs(parseInt(getSetting('commentInterval',15)));
 
     if (!userId || !canCommentById(userId))
-      throw new Meteor.Error(403, 'Please login to post comments.');
+      throw new Meteor.Error('logged-out', 'This user must be logged in to post a comment.');
 
     // check that user waits more than 15 seconds between comments
     // if(!this.isSimulation && (timeSinceLastComment < commentInterval))
     //   throw new Meteor.Error(704, i18n.t('Please wait ')+(commentInterval-timeSinceLastComment)+i18n.t(' seconds before commenting again'));
 
-    if (!content)
-      throw new Meteor.Error(403, 'Sorry, you can\'t make a comment with no content.');
+    var noSpaces = stripSpaces(stripHTML(comment.content));
+    if (!noSpaces || noSpaces.length < 10)
+      throw new Meteor.Error('invalid-content', 'This content must contain 10 characters at minimum.');
       
     Meteor.users.update(userId, { $addToSet: { 'activity.discussedTopics': topicId } });
 
@@ -103,18 +104,18 @@ Meteor.methods({
       userId: userId,
       topicId: topicId,
       createdAt: new Date(),
-      content: content,
-      side: side,
+      content: comment.content,
+      side: comment.side,
       upvotes: 0,
       upvoters: [],
-      replyTo: replyTo,
+      replyTo: comment.replyTo,
       replies: []
     };
 
     comment._id = Comments.insert(comment);
 
-    if (!!replyTo)
-      Comments.update(replyTo, { $addToSet: { 'replies': comment._id } });
+    if (!!comment.replyTo)
+      Comments.update(comment.replyTo, { $addToSet: { 'replies': comment._id } });
 
     Meteor.users.update(userId, { $inc: { 'stats.commentsCount': 1 } });
     Meteor.call('newCommentNotification', comment);
