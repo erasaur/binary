@@ -8,9 +8,16 @@ Template.newTopic.events({
     };
 
     Meteor.call('newTopic', topic, function (error, result) {
-      if (error)
-        alert(formatError(error));
-      
+      if (error) {
+        if (error.error === 'logged-out')
+          alert('Please login to post a topic. Thank you!');
+        else if (error.error === 'invalid-content')
+          alert('Sorry, the topic title has to have at least 8 characters.'); 
+        else if (error.error === 'duplicate-content')
+          alert('Sorry, there is already a topic with that title.');
+        else
+          alert('Sorry, something went wrong. Please try again in a moment.');
+      }
       else {
         $('#js-create-title').val('');
         $('#js-create-description').val('');

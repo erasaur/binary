@@ -29,7 +29,7 @@ Template.newComment.events({
 				else if (error.error === 'invalid-content')
 					alert('Sorry, your comment has to have at least 10 characters.');	
 				else
-					alert('Sorry, something went wrong. Please try again!');
+					alert('Sorry, something went wrong. Please try again in a moment.');
 			}
 			else
 				scrollToId(result);

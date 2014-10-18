@@ -84,6 +84,9 @@ Comments.before.update(function (userId, doc, fields, modifier, options) {
 Meteor.methods({
   newComment: function(topicId, comment) {
     var userId = this.userId;
+    var content = comment.content;
+    var side = comment.side;
+    var replyTo = comment.replyTo;
     // var timeSinceLastComment = timeSinceLast(user, Comments);
     // var commentInterval = Math.abs(parseInt(getSetting('commentInterval',15)));
 
@@ -94,9 +97,8 @@ Meteor.methods({
     // if(!this.isSimulation && (timeSinceLastComment < commentInterval))
     //   throw new Meteor.Error(704, i18n.t('Please wait ')+(commentInterval-timeSinceLastComment)+i18n.t(' seconds before commenting again'));
 
-    var noSpaces = stripSpaces(stripHTML(comment.content));
-    if (!noSpaces || noSpaces.length < 10)
-      throw new Meteor.Error('invalid-content', 'This content must contain 10 characters at minimum.');
+    if (!validInput(content))
+      throw new Meteor.Error('invalid-content', 'This content must meet the specified requirements.');
       
     Meteor.users.update(userId, { $addToSet: { 'activity.discussedTopics': topicId } });
 
@@ -104,18 +106,18 @@ Meteor.methods({
       userId: userId,
       topicId: topicId,
       createdAt: new Date(),
-      content: comment.content,
-      side: comment.side,
+      content: content,
+      side: side,
       upvotes: 0,
       upvoters: [],
-      replyTo: comment.replyTo,
+      replyTo: replyTo,
       replies: []
     };
 
     comment._id = Comments.insert(comment);
 
-    if (!!comment.replyTo)
-      Comments.update(comment.replyTo, { $addToSet: { 'replies': comment._id } });
+    if (!!replyTo)
+      Comments.update(replyTo, { $addToSet: { 'replies': comment._id } });
 
     Meteor.users.update(userId, { $inc: { 'stats.commentsCount': 1 } });
     Meteor.call('newCommentNotification', comment);

@@ -118,7 +118,7 @@ Meteor.methods({
     var userId = this.userId;
 
     if (!userId || !canPostById(userId))
-      throw new Meteor.Error(601, 'Please login to create new topics.');
+      throw new Meteor.Error('logged-out', 'This user must be logged in to post a comment.');
 
     // if(!isAdmin(Meteor.user())){
   //     // check that user waits more than X seconds between posts
@@ -130,15 +130,15 @@ Meteor.methods({
   //       throw new Meteor.Error(605, i18n.t('Sorry, you cannot submit more than ')+maxPostsPer24Hours+i18n.t(' posts per day'));
   //   }
 
-    if (!title)
-      throw new Meteor.Error(602, 'Please enter a title.');
+    if (!validInput(title))
+      throw new Meteor.Error('invalid-content', 'This content must meet the specified requirements.');
 
     // check if title already exists
     else {
       var topicWithTitle = Topics.findOne({ 'title': title });
 
       if (typeof topicWithTitle !== 'undefined')
-        throw new Meteor.Error(603, 'Sorry, there is already a topic with that title.', topicWithTitle._id);
+        throw new Meteor.Error('duplicate-content', 'This content must not already exist.', topicWithTitle._id);
     }
 
     var topic = {
