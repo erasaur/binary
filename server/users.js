@@ -5,9 +5,8 @@ Accounts.onCreateUser(function (options, user) {
       reputation: 0,
       topicsCount: 0,
       commentsCount: 0,
-      followersCount: 0
-      // isInvited: false,
-      // invitedCount: 0,
+      followersCount: 0,
+      inviteCount: 3
     },
     activity: { // activity involving other users/collections
       upvotedComments: [],
