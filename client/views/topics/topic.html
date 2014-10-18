@@ -9,8 +9,8 @@
 		    {{commentCategory}} <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor 'topic' _id=this._id query='sort_by=top'}}">Top</a></li>
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor 'topic' _id=this._id query='sort_by=newest'}}">Newest</a></li>
+		    <li><a role="menuitem" tabindex="-1" href="{{pathFor 'topic' _id=this._id query='sort_by=top'}}" class="list-item">Top</a></li>
+		    <li><a role="menuitem" tabindex="-1" href="{{pathFor 'topic' _id=this._id query='sort_by=newest'}}" class="list-item">Newest</a></li>
 		  </ul>
 		</span>
 	</div>
