@@ -22,7 +22,7 @@ Template.profileTopics.helpers({
 });
 
 Template.profileTopics.events({
-  'click li[role="presentation"]': function (event, template) {
+  'click .js-dropdown-button': function (event, template) {
     topicCategory.set(event.currentTarget.getAttribute('data-category'));
   }
 });
