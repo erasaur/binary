@@ -1,7 +1,7 @@
 <template name="notificationNewTopic">
   <div class="list-item">
-    <a href="{{profileUrl}}" class="action-link">{{author}}</a> 
+    <a href="{{author.url}}" class="action-link">{{author.name}}</a> 
     created a new topic: 
-    <a href="{{topicUrl}}" class="action-link">{{topicTitle}}</a>
+    <a href="{{topic.url}}" class="action-link">{{topic.title}}</a>
   </div>
 </template>
