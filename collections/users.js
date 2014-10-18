@@ -35,6 +35,10 @@ Schema.UserStats = new SimpleSchema({
   topicsCount: {
     type: Number,
     min: 0
+  },
+  inviteCount: {
+    type: Number,
+    min: 0
   }
 });
 
