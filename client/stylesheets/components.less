@@ -73,7 +73,6 @@
 .page-body {
   background: @light-gray;
   .border-radius(@main-radius);
-  background-clip: padding-box;
   // border: 1px solid darken(@light-gray, 5%);
   // border-bottom: 2px solid darken(@light-gray, 10%);
   // border-top: none;
@@ -112,7 +111,11 @@
   border-right: none;
   border-bottom: none;
   &:first-of-type { 
+    border-radius: 0 0 0 @main-radius;
     border-left: none; 
+  }
+  &:last-of-type {
+    border-radius: 0 0 @main-radius 0;
   }
   &:hover { background: @gray; }
 }
