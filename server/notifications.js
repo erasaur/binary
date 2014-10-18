@@ -53,7 +53,7 @@ Meteor.methods({
     if (!!replyToId) { // comment reply      
       var replyTo = Comments.findOne(replyToId);
 
-      notificationData.replyToId = replyToId;
+      notificationData.replyTo = _.pick(replyTo, '_id', 'topicId');
 
       // notify replyTo owner
       // unless user is just replying to self
@@ -64,7 +64,7 @@ Meteor.methods({
           data: notificationData, 
           'aggregate': true,
           'aggregateAt': 5,
-          'aggregateUnder': 'author._id' // combine notifications with documents that share the value of this field
+          'aggregateUnder': 'replyTo' // combine notifications that share the same author
         });
         notified.push(replyTo.userId);
       }

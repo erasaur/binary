@@ -1,12 +1,10 @@
 <template name="notificationNewFollower">
-  <div class="list-item">
-    {{#if count}}
-      <a href="{{pathFor 'profile' _id=currentUser._id}}" class="action-link">
-        {{count}} people are now following you.
-      </a>
-    {{else}}
-      <a href="{{profileUrl}}" class="action-link">{{follower}}</a> 
-      is now following you.
-    {{/if}}
-  </div>
+  {{#if count}}
+    <a href="{{pathFor 'profile' _id=currentUser._id}}" class="action-link">
+      {{count}} people are now following you.
+    </a>
+  {{else}}
+    <a href="{{follower.url}}" class="action-link">{{follower.name}}</a> 
+    is now following you.
+  {{/if}}
 </template>

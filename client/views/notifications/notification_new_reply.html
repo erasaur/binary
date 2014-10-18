@@ -1,9 +1,12 @@
 <template name="notificationNewReply">
-  <div class="list-item">
-    <a href="{{profileUrl}}" class="action-link">{{author}}</a> 
+  {{#if count}}
+    {{count}} people replied to 
+    <a href="{{replyToUrl}}" class="action-link">your comment</a> 
+  {{else}}
+    <a href="{{author.url}}" class="action-link">{{author.name}}</a> 
     replied to 
-    <a href="{{replyToCommentUrl}}" class="action-link">your comment</a> 
+    <a href="{{replyToUrl}}" class="action-link">your comment</a> 
     on 
-    <a href="{{topicCommentUrl}}" class="action-link">{{topicTitle}}</a>
-  </div>
+    <a href="{{commentUrl}}" class="action-link">{{topicTitle}}</a>
+  {{/if}}
 </template>
