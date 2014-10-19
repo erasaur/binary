@@ -16,6 +16,7 @@ boilerplate-generator@1.0.1
 callback-hook@1.0.1
 check@1.0.2
 chuangbo:marked@0.3.5
+cmather:handlebars-server@2.0.0
 codepoet:medium-editor-npm@0.0.1
 coffeescript@1.0.4
 ctl-helper@1.0.4
@@ -28,6 +29,7 @@ email@1.0.4
 fastclick@1.0.1
 follower-livedata@1.0.2
 geojson-utils@1.0.1
+handlebars@1.0.1
 html-tools@1.0.2
 htmljs@1.0.2
 http@1.0.7
