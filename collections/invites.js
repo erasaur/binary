@@ -3,17 +3,18 @@ InviteSchema = new SimpleSchema({
     type: String,
     optional: true
   },
-  invitingUserId: {
-    type: String,
-    optional: true
+  inviterId: {
+    type: String
   },
-  invitedUserEmail: {
+  invitedEmail: {
     type: String,
     regEx: SimpleSchema.RegEx.Email
   },
+  inviteCode: {
+    type: String
+  },
   accepted: {
-    type: Boolean,
-    optional: true
+    type: Boolean
   }
 });
 
