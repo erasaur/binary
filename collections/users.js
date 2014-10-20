@@ -2,10 +2,26 @@
 
 var Schema = {};
 
+Schema.UserInvites = new SimpleSchema({
+  inviteCount: {
+    type: Number,
+    min: 0,
+    optional: true
+  },
+  invitedEmails: {
+    type: [String],
+    optional: true
+  },
+  invitedBy: {
+    type: String,
+    optional: true
+  }
+});
+
 Schema.UserProfile = new SimpleSchema({
   name: {
     type: String,
-    regEx: /^([a-zA-Z]+(\s{0,1})[a-zA-Z0-9.'-]+(\s{0,1})[a-zA-Z0-9.'-]*){3,25}$/
+    regEx: /^([a-zA-Z]+[a-zA-Z0-9.'-\s]*){3,25}$/
   },
   bio: {
     type: String,
@@ -35,10 +51,6 @@ Schema.UserStats = new SimpleSchema({
   topicsCount: {
     type: Number,
     min: 0
-  },
-  inviteCount: {
-    type: Number,
-    min: 0
   }
 });
 
@@ -64,6 +76,10 @@ Schema.User = new SimpleSchema({
   },
   createdAt: {
     type: Date
+  },
+  invites: {
+    type: Schema.UserInvites,
+    optional: true
   },
   stats: { // public but not modifiable
     type: Schema.UserStats,
