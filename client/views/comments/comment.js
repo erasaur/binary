@@ -118,13 +118,16 @@ Template.comment.events({
 		var color = (arr.length - 1) % numColors;
 
 		// add the replies
-		scrollToId(self._id);
-		var replyTo = $('#' + self._id).closest('.comment-row');
-		Blaze.renderWithData(Template.replies, //template to render
-												{id: self._id, side: self.side, color: color}, //data context
-												replyTo.parent().get(0), // insert within
-												replyTo.next().get(0)); // insert before
-
+		Tracker.afterFlush(function () {
+			scrollToId(self._id);
+			var replyTo = $('#' + self._id).closest('.comment-row');
+			Blaze.renderWithData(Template.replies, //template to render
+													{id: self._id, side: self.side, color: color}, //data context
+													replyTo.parent().get(0), // insert within
+													replyTo.next().get(0)); // insert before
+	
+		});
+		
 	},
 	'click .js-upvote-comment': function (event, template) {
 		Meteor.call('upvoteComment', this);
