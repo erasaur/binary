@@ -1,12 +1,15 @@
 Accounts.onCreateUser(function (options, user) {
   var userProperties = {
     profile: options.profile || {},
+    invites: {
+      inviteCount: 3,
+      invitedEmails: []  
+    },
     stats: {
       reputation: 0,
       topicsCount: 0,
       commentsCount: 0,
-      followersCount: 0,
-      inviteCount: 3
+      followersCount: 0
     },
     activity: { // activity involving other users/collections
       upvotedComments: [],
@@ -21,8 +24,12 @@ Accounts.onCreateUser(function (options, user) {
 
   // add email hash
   var email = user.emails[0].address;
-  if (email)
+  if (email) {
     user.email_hash = Gravatar.hash(email);
+
+    var invite = Invites.findOne({ 'invitedEmail': email });
+    user.invites.invitedBy = invite && invite.inviterId;
+  }
   
   // set notifications default preferences
   user.profile.notifications = {
@@ -58,20 +65,32 @@ Accounts.onCreateUser(function (options, user) {
 });
 
 Meteor.methods({
-  newUser: function (email, password) {   
+  newUser: function (name, password, inviteCode) {
+    var name = stripHTML(name);
+
+    var invite = {
+      inviteCode: inviteCode,
+      accepted: false
+    };
+    invite = Invites.findOne(invite);
+
+    if (!invite)
+      throw new Meteor.Error('invalid-invite', 'This invitation does not match any existing invitations.');
+
+    if (!validName(name))
+      throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
+
     if (password.length < 6)
-      throw new Meteor.Error('Your password must be at least 6 characters long.');
-    else {
-      Accounts.createUser({
-        'email': email, 
-        'password': password,
-        'profile': {
-          'name': 'Anonymous',
-          'bio': 'Not much is known about him/her, except that not much is known about him/her.'
-        }
-      });
-      return 'Success! Your account has been created. Please check your email for a confirmation link!';
-    }
+      throw new Meteor.Error('weak-password', 'This password must have at least 6 characters.');
+
+    Accounts.createUser({
+      'email': invite.invitedEmail, 
+      'password': password,
+      'profile': {
+        'name': name,
+        'bio': 'Not much is known about him/her, except that not much is known about him/her.'
+      }
+    });
   },
   changeName: function (newName) {
     Meteor.users.update(Meteor.userId(), { $set: { 'profile.name': newName } });
