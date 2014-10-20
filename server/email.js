@@ -33,7 +33,7 @@ buildEmailTemplate = function (htmlContent) {
 
 buildAndSendEmail = function (to, subject, template, properties) {
   var html = buildEmailTemplate(Handlebars.templates[template](properties));
-  return sendEmail (to, subject, html);
+  return sendEmail(to, subject, html);
 };
 
 sendEmail = function (to, subject, html, text) {

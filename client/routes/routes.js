@@ -55,7 +55,18 @@ Router.map(function() {
       return subs.subscribe('topicsList', Session.get('topicsLimit'));
     }		
   });
-  this.route('invite', { yieldTemplates: {} }); //don't yield nav
+  this.route('invite', { //don't yield nav
+    yieldTemplates: {}, 
+    onBeforeAction: function () {
+      var self = this;
+      var inviterId = self.params.inviter_id;
+      var inviteCode = self.params.invite_code;
+      Meteor.call('validLink', inviterId, inviteCode, function (error, result) {
+        if (!result || error)
+          self.render('notFound');
+      });
+    }
+  }); 
   this.route('login', { yieldTemplates: {} }); //don't yield nav
   this.route('signup', { yieldTemplates: {} }); //don't yield nav
   this.route('profile', {
@@ -101,10 +112,6 @@ Router.map(function() {
   this.route('settings', {
     // the _id is for show and not to be used in any queries
     path: '/users/:_id/settings'
-  });
-  this.route('notFound', {
-    path: '*',
-    yieldTemplates: {}
   });
 });
 
