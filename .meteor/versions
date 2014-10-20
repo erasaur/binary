@@ -52,9 +52,11 @@ matb33:collection-hooks@0.7.6
 matteodem:easy-search@1.1.4
 meteor-platform@1.1.2
 meteor@1.1.2
+meteorhacks:async@1.0.0
 meteorhacks:fast-render@1.1.2
 meteorhacks:kadira-binary-deps@1.2.0
 meteorhacks:kadira@2.11.9
+meteorhacks:npm@1.2.0
 meteorhacks:subs-manager@1.1.0
 minifiers@1.1.1
 minimongo@1.0.4
@@ -69,6 +71,7 @@ mrt:publish-with-relations@0.1.5
 mrt:session-amplify@0.1.1
 mrt:underscore-string-latest@2.3.3
 npm-bcrypt@0.7.7
+npm-container@1.0.0
 observe-sequence@1.0.3
 ordered-dict@1.0.1
 random@1.0.1
