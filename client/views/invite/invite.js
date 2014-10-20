@@ -1,4 +1,9 @@
-Template.signup.events({
+Template.invite.helpers({
+	validLink: function () {
+		return Meteor.call('validLink', Router.current().params.invite_code);
+	}
+});
+Template.invite.events({
 	'input input': function (event, template) {
 		fadeElement($('.landing-form-errors'));	
 	},
@@ -6,10 +11,11 @@ Template.signup.events({
 		event.preventDefault();
 		var	name = template.find('#js-create-name').value;
 		var	password = template.find('#js-create-password').value;
+		var inviteCode = Router.current().params.invite_code;
 
-		Meteor.call('newUser', name, password, function (error, result) {
+		Meteor.call('newUser', name, password, inviteCode, function (error, result) {
 			if (error) {
-				var niceError = 'Sorry, something went wrong. Please try again in a moment.';
+				var niceError = error.reason || 'Sorry, something went wrong. Please try again in a moment.';
 
 				if (error.error === 'invalid-invite') {
 					niceError = 'Sorry, the invitation link provided is broken!';

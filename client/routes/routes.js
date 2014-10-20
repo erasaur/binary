@@ -11,13 +11,13 @@ Router.onBeforeAction(function () {
   if (!Meteor.loggingIn() && !Meteor.user())
     this.redirect('signup');
 
-}, {except: ['signup', 'login']}); //forgot password page
+}, {except: ['signup', 'login', 'invite']}); //forgot password page
 
 Router.onBeforeAction(function () {
   if (Meteor.user())
     this.redirect('home');
 
-}, {only: ['signup', 'login']});
+}, {only: ['signup', 'login', 'invite']});
 
 Router.onBeforeAction('loading');
 Router.onBeforeAction('dataNotFound');
@@ -55,8 +55,9 @@ Router.map(function() {
       return subs.subscribe('topicsList', Session.get('topicsLimit'));
     }		
   });
-  this.route('signup', {yieldTemplates: {}}); //don't yield nav
-  this.route('login', {yieldTemplates: {}}); //don't yield nav
+  this.route('invite', { yieldTemplates: {} }); //don't yield nav
+  this.route('login', { yieldTemplates: {} }); //don't yield nav
+  this.route('signup', { yieldTemplates: {} }); //don't yield nav
   this.route('profile', {
     path: '/users/:_id',
     layoutTemplate: 'pageLayout',
@@ -102,7 +103,8 @@ Router.map(function() {
     path: '/users/:_id/settings'
   });
   this.route('notFound', {
-    path: '*'
+    path: '*',
+    yieldTemplates: {}
   });
 });
 

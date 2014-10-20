@@ -1,20 +1,20 @@
 <template name="signup">
-	<div class="landing-container">
-		<div class="landing-form-header">
-			<h1>yamcha</h1>
-		</div>
-		<ul class="landing-form-errors"></ul>
-		<div class="landing-form-body">
-			<form id="js-signup-form" role="form">
-				<div class="control-group">
-					<input type="email" class="form-control" id="js-create-email" placeholder="Email">
-				</div>
-				<div class="control-group">
-					<input type="password" class="form-control" id="js-create-password" placeholder="Password">
-				</div>
-				<button type="submit" class="btn btn-primary">Sign Up</button>
-			</form>
-			Already have an account? <a href="{{pathFor 'login'}}">Log In</a>
-		</div>
-	</div>
+  <div class="landing-container">
+    <div class="landing-form-header">
+      <h1>yamcha</h1>
+    </div>
+    <ul class="landing-form-errors"></ul>
+    <div class="landing-form-body">
+      <form id="js-signup-form" role="form">
+        <div class="control-group">
+          <input type="text" class="form-control" id="js-create-name" placeholder="Your Name" maxlength="25">
+        </div>
+        <div class="control-group">
+          <input type="password" class="form-control" id="js-create-password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </form>
+      Already have an account? <a href="{{pathFor 'login'}}">Log In</a>
+    </div>
+  </div>
 </template>

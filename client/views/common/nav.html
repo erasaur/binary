@@ -12,7 +12,19 @@
 
       <!-- navbar brand container -->
 			<div class="col-sm-2"> 
-				<button class="btn btn-default invite">Invite!</button><a href="{{pathFor 'home'}}" class="navbar-brand">yamcha</a>
+        <button class="btn btn-default invite" data-toggle="dropdown">Invite!</button>
+        <div class="dropdown-menu invite-menu">
+          <!-- {{#if currentUser.invites.inviteCount}} -->
+            <p>You have {{currentUser.invites.inviteCount}} invites left.</p>
+            <div class="input-group">
+              <input type="email" id="js-invite-email" class="form-control" placeholder="Your friend's email">
+              <span class="input-group-btn"><button id="js-invite" class="btn btn-default" type="button">Send</button></span>
+            </div>
+          <!-- {{else}}
+            <span>You have no invites left :(</span>
+          {{/if}} -->
+        </div>
+				<a href="{{pathFor 'home'}}" class="navbar-brand">yamcha</a>
 			</div>
 
       <div class="col-sm-8">
