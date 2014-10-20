@@ -171,7 +171,18 @@
   &:hover { background: @gray; }
 }
 
-// list (borrowed from medium) -----------------------
+// invite menu ---------------------------------------
+
+.invite-menu {
+  padding: 15px 10px;
+  left: 45px;
+  width: 220px;
+}
+.invite-menu input {
+  height: 30px;
+}
+
+// list (inspired by medium) -------------------------
 
 .list-item {
   padding: 20px 0;
@@ -188,7 +199,8 @@
   width: 80%; 
   float: left;
 }
-.list-item-info .form-control {
+.list-item-info .form-control,
+.list-item-info .form-control:focus {
   border: none; 
   background: transparent; 
   box-shadow: none; 
