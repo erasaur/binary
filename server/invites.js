@@ -1,7 +1,6 @@
 Meteor.methods({
-  validLink: function (inviteCode) {
-    console.log(inviteCode);
-    return !!Invites.findOne({ 'inviteCode': inviteCode, 'accepted': false });
+  validLink: function (inviterId, inviteCode) {
+    return !!Invites.findOne({ 'inviterId': inviterId, 'inviteCode': inviteCode, 'accepted': false });
   },
   inviteUser: function (email) {
     var currentUser = Meteor.user();
@@ -30,8 +29,9 @@ Meteor.methods({
     };
 
     Invites.insert(invite);
+
     Meteor.users.update(invite.inviterId, { 
-      // $inc: { 'invites.inviteCount': -1 }, 
+      $inc: { 'invites.inviteCount': -1 }, 
       $addToSet: { 'invites.invitedEmails': email } 
     });
 
@@ -41,6 +41,8 @@ Meteor.methods({
       inviter: getDisplayName(currentUser),
       inviterEmail: getEmail(currentUser)
     };
+
+    console.log(inviteCode, emailProperties.actionLink);
 
     // send email
     Meteor.setTimeout(function () {

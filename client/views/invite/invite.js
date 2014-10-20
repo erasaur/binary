@@ -1,8 +1,3 @@
-Template.invite.helpers({
-	validLink: function () {
-		return Meteor.call('validLink', Router.current().params.invite_code);
-	}
-});
 Template.invite.events({
 	'input input': function (event, template) {
 		fadeElement($('.landing-form-errors'));	
@@ -31,12 +26,12 @@ Template.invite.events({
 				$('.landing-form-errors').fadeTo('slow', 1);
 			} 
 			else {
+				var email = result;
 				Meteor.loginWithPassword(email, password, function (error) {
-					if (error) {
+					if (error)
 						alert('Oops, something went wrong when you were logging in. Please try again in a moment. Thank you!');
-					} else {
+					else
 						Router.go('home');
-					}
 				});
 			}
 		});

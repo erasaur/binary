@@ -28,7 +28,10 @@ Accounts.onCreateUser(function (options, user) {
     user.email_hash = Gravatar.hash(email);
 
     var invite = Invites.findOne({ 'invitedEmail': email });
+    // update the user who invited 
     user.invites.invitedBy = invite && invite.inviterId;
+    // update the invite status to accepted
+    Invites.update(invite._id, { $set: { 'accepted': true } });
   }
   
   // set notifications default preferences
@@ -91,6 +94,8 @@ Meteor.methods({
         'bio': 'Not much is known about him/her, except that not much is known about him/her.'
       }
     });
+
+    return invite.invitedEmail;
   },
   changeName: function (newName) {
     Meteor.users.update(Meteor.userId(), { $set: { 'profile.name': newName } });
