@@ -46,10 +46,16 @@ ul {
 	margin: 0;
 	padding: 0;
 }
-
-button, a {
+a,
+input,
+button {
 	&:active, 
 	&:focus { outline: none !important; }
+}
+.form-control,
+.form-control:focus { 
+  border: 1px solid #ccc;
+  box-shadow: none;
 }
 .editable {
   background: #fff;
