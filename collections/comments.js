@@ -91,14 +91,14 @@ Meteor.methods({
     // var commentInterval = Math.abs(parseInt(getSetting('commentInterval',15)));
 
     if (!userId || !canCommentById(userId))
-      throw new Meteor.Error('logged-out', 'This user must be logged in to post a comment.');
+      throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 
     // check that user waits more than 15 seconds between comments
     // if(!this.isSimulation && (timeSinceLastComment < commentInterval))
     //   throw new Meteor.Error(704, i18n.t('Please wait ')+(commentInterval-timeSinceLastComment)+i18n.t(' seconds before commenting again'));
 
     if (!validInput(content))
-      throw new Meteor.Error('invalid-content', 'This content must meet the specified requirements.');
+      throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
       
     Meteor.users.update(userId, { $addToSet: { 'activity.discussedTopics': topicId } });
 
