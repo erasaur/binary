@@ -31,6 +31,13 @@ buildEmailTemplate = function (htmlContent) {
   return doctype + inlinedHTML;
 };
 
+buildEmailText = function (html) {
+  // Auto-generate text version if it doesn't exist. Has bugs, but should be good enough. 
+  return htmlToText.fromString(html, {
+    wordwrap: 130
+  });
+};
+
 buildAndSendEmail = function (to, subject, template, properties) {
   var html = buildEmailTemplate(Handlebars.templates[template](properties));
   return sendEmail(to, subject, html);
@@ -45,10 +52,7 @@ sendEmail = function (to, subject, html, text) {
   var siteName = siteName;
 
   if (typeof text === 'undefined'){
-    // Auto-generate text version if it doesn't exist. Has bugs, but should be good enough. 
-    var text = htmlToText.fromString(html, {
-      wordwrap: 130
-    });
+    var text = buildEmailText(html);
   }
 
   // console.log('//////// sending email…');

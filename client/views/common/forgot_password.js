@@ -12,27 +12,28 @@ Template.forgotPassword.events({
     event.preventDefault();
     var value = template.find('#js-forgot').value;
 
-    if (value) {
-      if (Session.get('resetPassword')) {
-        Accounts.resetPassword(Session.get('resetPassword'), value, function (error) {
-          Session.set('resetPassword', '');
-          if (error) {
-            template.find('.landing-form-errors').innerHTML = '<li>' + formatError(error) + '</li>';
-            $('.landing-form-errors').fadeTo('slow', 1);
-          } else {
-            Router.go('home');
-          }
-        });
-      } else {
-        Accounts.forgotPassword({ email: value }, function () { 
-          alert('Success! Please check your email for a recovery link.'); 
-          Router.go('landing');
-        });  
-      }
-    }
-    else {
+    if (!value) {
       template.find('.landing-form-errors').innerHTML = '<li>Please fill in the fields!</li>';
       $('.landing-form-errors').fadeTo('slow', 1);
+      return;
+    }
+
+    var token = Session.get('resetPassword');
+    if (token) {
+      Accounts.resetPassword(token, value, function (error) {
+        if (error) {
+          template.find('.landing-form-errors').innerHTML = '<li>' + formatError(error) + '</li>';
+          $('.landing-form-errors').fadeTo('slow', 1);
+        } else {
+          Session.set('resetPassword', '');
+          Router.go('home');
+        }
+      });
+    } else {
+      Accounts.forgotPassword({ email: value }, function () { 
+        alert('Success! Please check your email for a recovery link.'); 
+        Router.go('landing');
+      });  
     }
   }
 });

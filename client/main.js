@@ -6,4 +6,9 @@ SessionAmplify.set('showingReplies', []);
 
 Accounts.onResetPasswordLink(function (token, done) {
   Session.set('resetPassword', token);
+  done();
 });
+
+// Accounts.onEmailVerificationLink(function () {
+
+// });

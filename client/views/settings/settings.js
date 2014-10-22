@@ -65,8 +65,13 @@ Template.settings.events({
         console.log(error.invalidKeys);
         alert('Sorry, please try to stick to alphanumeric characters, hyphens, periods, and apostrophes!');
       }
-      else
+      else {
         displaySaved($(target));
+        if (fieldName === 'email') {
+          Accounts.sendVerificationEmail(Meteor.userId());
+          alert('Please check your email for a verification. Thanks!');
+        }
+      }
     });
   },
   'click #js-edit-password': function (event, template) {
