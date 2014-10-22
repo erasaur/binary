@@ -1,9 +1,11 @@
 @import "includes.import.less";
+@import "comments.import.less";
+@import "components.import.less";
 
 // media queries -------------------------------------
-@media (min-width: 768px) {
-	body { padding-top: @top-padding; }	//no top padding when xs
-}
+// @media (min-width: 768px) {
+// 	body { padding-top: @top-padding; }	//no top padding when xs
+// }
 
 // general styles ------------------------------------
 
@@ -14,6 +16,12 @@ body {
 	min-height: 100%;
 	height: 100%;
 	// background-color: @gray;
+}
+.row {
+  margin: 0;
+}
+.col-sm-8 {
+  max-width: 1066px;
 }
 input, 
 textarea, 

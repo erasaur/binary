@@ -128,10 +128,8 @@
   padding: @main-padding 0;
   border-left: 1em solid transparent;
   border-right: 1em solid transparent;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   height: 100%;
+  .overflow-ellipsis;
 }
 .page-nav-buttons li.selected {
   background: @gray;
@@ -238,13 +236,11 @@
 }
 .navbar-transparent {
   width: 100%; 
+  padding: @main-padding 0;
 }
 .navbar-transparent .col-sm-2, 
 .navbar-transparent .col-sm-8 {
   padding: 0;
-}
-.navbar-transparent .col-sm-8 {
-  margin-bottom: 20px;
 }
 .navbar-brand, 
 .navbar-nav > li > a { // increased specificity to override bootstrap
