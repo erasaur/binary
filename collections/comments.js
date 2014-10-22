@@ -95,7 +95,7 @@ Meteor.methods({
       throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 
     // check that user waits more than 15 seconds between comments
-    if(timeSinceLastComment < commentInterval)
+    if(!this.isSimulation && timeSinceLastComment < commentInterval)
       throw new Meteor.Error('wait', (commentInterval - timeSinceLastComment));
 
     if (!validInput(content))

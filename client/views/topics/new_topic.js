@@ -11,6 +11,8 @@ Template.newTopic.events({
       if (error) {
         if (error.error === 'logged-out')
           alert('Please login to post a topic. Thank you!');
+        else if (error.error === 'wait')
+          alert('Please wait ' + error.reason + ' seconds before posting again. Thank you!');
         else if (error.error === 'invalid-content')
           alert('Sorry, the topic title has to have at least 8 characters.'); 
         else if (error.error === 'duplicate-content')
