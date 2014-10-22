@@ -79,7 +79,9 @@ User A sees this:
 -----------------------------
 
 ---------------------------------------------------------------------- TODO -------------------------------------------------------------------------
-is session.set('currenttopic') necessary? - needed for accessing topic for posting replies (data context is comment)
+is session.set('currenttopic') necessary? - needed for accessing topic for posting replies (data context is comment), but can possibly just get the current route's params (Router.current().params._id = topic id)
+salt emails before hashing to prevent gravatar security leak
+
 replace unicode with downloaded font/font awesome (eg the search bar "x")
 is this.userId already available in publish?
 

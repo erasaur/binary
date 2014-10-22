@@ -42,8 +42,6 @@ Meteor.methods({
       inviterEmail: getEmail(currentUser)
     };
 
-    console.log(inviteCode, emailProperties.actionLink);
-
     // send email
     Meteor.setTimeout(function () {
       buildAndSendEmail(email, emailSubject, 'emailInvite', emailProperties);

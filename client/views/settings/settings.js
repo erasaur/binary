@@ -61,8 +61,10 @@ Template.settings.events({
     var method = 'change' + fieldName.charAt(0).toUpperCase() + fieldName.substring(1);
 
     Meteor.call(method, newValue, function (error) {
-      if (error)
+      if (error) {
+        console.log(error.invalidKeys);
         alert('Sorry, please try to stick to alphanumeric characters, hyphens, periods, and apostrophes!');
+      }
       else
         displaySaved($(target));
     });
