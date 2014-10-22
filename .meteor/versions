@@ -1,6 +1,6 @@
 accounts-base@1.1.2
 accounts-password@1.0.3
-aldeed:collection2@2.1.0
+aldeed:collection2@2.2.0
 aldeed:simple-schema@1.0.3
 amplify@1.0.0
 application-configuration@1.0.3
@@ -49,15 +49,16 @@ livedata@1.0.11
 localstorage@1.0.1
 logging@1.0.4
 matb33:collection-hooks@0.7.6
-matteodem:easy-search@1.1.4
+matteodem:easy-search@1.1.5
 meteor-platform@1.1.2
 meteor@1.1.2
 meteorhacks:async@1.0.0
 meteorhacks:fast-render@1.1.2
 meteorhacks:kadira-binary-deps@1.2.0
-meteorhacks:kadira@2.11.9
+meteorhacks:kadira@2.11.13
+meteorhacks:meteorx@1.2.0
 meteorhacks:npm@1.2.0
-meteorhacks:subs-manager@1.1.0
+meteorhacks:subs-manager@1.2.0
 minifiers@1.1.1
 minimongo@1.0.4
 mizzao:bootstrap-3@3.2.0_1

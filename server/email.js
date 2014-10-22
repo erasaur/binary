@@ -51,10 +51,10 @@ sendEmail = function (to, subject, html, text) {
     });
   }
 
-  console.log('//////// sending email…');
-  console.log('from: ' + from);
-  console.log('to: ' + to);
-  console.log('subject: ' + subject);
+  // console.log('//////// sending email…');
+  // console.log('from: ' + from);
+  // console.log('to: ' + to);
+  // console.log('subject: ' + subject);
   // console.log('html: ' + html);
   // console.log('text: ' + text);
 
