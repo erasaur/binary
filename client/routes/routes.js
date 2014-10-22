@@ -14,14 +14,17 @@ Router.onBeforeAction(function () {
     else
       this.redirect('landing');
   }
-
-}, {except: ['landing', 'login', 'invite', 'forgotPassword']});
+}, { except: ['landing', 'login', 'invite', 'forgotPassword'] });
 
 Router.onBeforeAction(function () {
   if (Meteor.user())
     this.redirect('home');
 
-}, {only: ['landing', 'login', 'invite']});
+}, { only: ['landing', 'login', 'invite'] });
+
+// Router.onBeforeAction(function () {
+
+// }, { only: ['admin'] });
 
 Router.onBeforeAction('loading');
 Router.onBeforeAction('dataNotFound');

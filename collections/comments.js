@@ -121,6 +121,7 @@ Meteor.methods({
       Comments.update(replyTo, { $addToSet: { 'replies': comment._id } });
 
     Meteor.users.update(userId, { $inc: { 'stats.commentsCount': 1 } });
+    Topics.update(topicId, { $inc: { 'commentsCount': 1 } });
     Meteor.call('newCommentNotification', comment);
 
     return comment._id;
