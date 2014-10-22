@@ -29,7 +29,6 @@ chuangbo:marked
 meteorhacks:subs-manager
 codepoet:medium-editor-npm
 reactive-var
-kestanous:herald@1.0.0-pre2
 meteorhacks:kadira
 matteodem:easy-search
 jparker:gravatar
@@ -41,3 +40,5 @@ meteorhacks:npm
 
 
 npm-container
+kestanous:herald
+
