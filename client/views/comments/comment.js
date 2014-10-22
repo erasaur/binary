@@ -26,6 +26,8 @@ Template.newComment.events({
 			if (error) {
 				if (error.error === 'logged-out')
 					alert('Please log in to comment. Thank you!');
+				else if (error.error === 'wait')
+					alert('Please wait ' + error.reason + ' seconds before commenting again. Thank you!');
 				else if (error.error === 'invalid-content')
 					alert('Sorry, your comment has to have at least 10 characters.');	
 				else
