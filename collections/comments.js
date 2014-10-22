@@ -83,19 +83,20 @@ Comments.before.update(function (userId, doc, fields, modifier, options) {
 
 Meteor.methods({
   newComment: function(topicId, comment) {
+    var user = Meteor.user();
     var userId = this.userId;
     var content = comment.content;
     var side = comment.side;
     var replyTo = comment.replyTo;
-    // var timeSinceLastComment = timeSinceLast(user, Comments);
-    // var commentInterval = Math.abs(parseInt(getSetting('commentInterval',15)));
+    var timeSinceLastComment = timeSinceLast(user, Comments);
+    var commentInterval = 15; // 15 seconds
 
-    if (!userId || !canCommentById(userId))
+    if (!user || !canComment(user))
       throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 
     // check that user waits more than 15 seconds between comments
-    // if(!this.isSimulation && (timeSinceLastComment < commentInterval))
-    //   throw new Meteor.Error(704, i18n.t('Please wait ')+(commentInterval-timeSinceLastComment)+i18n.t(' seconds before commenting again'));
+    if(timeSinceLastComment < commentInterval)
+      throw new Meteor.Error('wait', (commentInterval - timeSinceLastComment));
 
     if (!validInput(content))
       throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
