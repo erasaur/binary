@@ -19,16 +19,40 @@ Meteor.publish('userProfile', function (userId) {
   var comments = Comments.find({ $or: [ { 'userId': userId }, { '_id': { $in: commentIds } } ] });
 
   /** 
-   * Publish all topics created by user, or 
+   * Publish all topics created or followed by user, or 
    * topics related to the comments above
    */
   var topicIds = [];
   if (typeof comments !== 'undefined')
     topicIds = _.pluck(comments.fetch(), 'topicId');
 
-  var topics = Topics.find({ $or: [ { 'userId': userId }, { '_id': { $in: topicIds }}]}, { 
-    fields: { '_id': 1, 'title': 1 } 
+  if (user.activity && user.activity.followingTopics)
+    topicIds = _.union(topicIds, user.activity.followingTopics);
+
+  var topics = Topics.find({ 
+    $or: [ { 'userId': userId }, { '_id': { $in: topicIds } } ]
+  }, { 
+    fields: { '_id': 1, 'title': 1, 'createdAt': 1, 'userId': 1, 'pro': 1, 'con': 1 } 
   });
+
+  /** 
+   * Publish all comments (including top comments for topics)
+   */
+  var topCommentIds = [];
+
+  for (var i = topicIds.length - 1; i >= 0; i--) {
+    var comment = Comments.findOne({ 'topicId': topicIds[i] }, {
+      sort: { 'upvotes': -1 }
+    });
+
+    if (comment)
+      topCommentIds.push(comment._id);
+  }
+
+  if (topCommentIds.length)
+    commentIds = _.union(commentIds, topCommentIds);
+
+  comments = Comments.find({ $or: [ { 'userId': userId }, { '_id': { $in: commentIds } } ] });
 
   /** 
    * Publish all followers and following users, and 
