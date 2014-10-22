@@ -8,16 +8,20 @@ Router.configure({
 });
 
 Router.onBeforeAction(function () {
-  if (!Meteor.loggingIn() && !Meteor.user())
-    this.redirect('signup');
+  if (!Meteor.loggingIn() && !Meteor.user()) {
+    if (Session.get('resetPassword'))
+      this.redirect('forgotPassword');
+    else
+      this.redirect('landing');
+  }
 
-}, {except: ['signup', 'login', 'invite']}); //forgot password page
+}, {except: ['landing', 'login', 'invite', 'forgotPassword']});
 
 Router.onBeforeAction(function () {
   if (Meteor.user())
     this.redirect('home');
 
-}, {only: ['signup', 'login', 'invite']});
+}, {only: ['landing', 'login', 'invite']});
 
 Router.onBeforeAction('loading');
 Router.onBeforeAction('dataNotFound');
@@ -55,6 +59,10 @@ Router.map(function() {
       return subs.subscribe('topicsList', Session.get('topicsLimit'));
     }		
   });
+  this.route('forgotPassword', { 
+    path: '/forgot',
+    yieldTemplates: {} //don't yield nav
+  });
   this.route('invite', { //don't yield nav
     yieldTemplates: {}, 
     onBeforeAction: function () {
@@ -68,7 +76,7 @@ Router.map(function() {
     }
   }); 
   this.route('login', { yieldTemplates: {} }); //don't yield nav
-  this.route('signup', { yieldTemplates: {} }); //don't yield nav
+  this.route('landing', { yieldTemplates: {} }); //don't yield nav
   this.route('profile', {
     path: '/users/:_id',
     layoutTemplate: 'pageLayout',
