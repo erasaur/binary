@@ -9,6 +9,11 @@ Accounts.onResetPasswordLink(function (token, done) {
   done();
 });
 
-// Accounts.onEmailVerificationLink(function () {
-
-// });
+Accounts.onEmailVerificationLink(function (token, done) {
+  Accounts.verifyEmail(token, function (error) {
+    if (error) 
+      alert(formatError(error));
+    else
+      alert('Success! Your email has been verified.');
+  });
+});

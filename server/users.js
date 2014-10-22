@@ -108,11 +108,16 @@ Meteor.methods({
       $set: { 
         'emails': [{ 'address': newEmail, 'verified': false }], 
         'email_hash': Gravatar.hash(newEmail)
-      } // send verification email ?
+      }
     });
+    Accounts.sendVerificationEmail(Meteor.userId());
   },
   changePreferences: function (newPreferences) {
     Meteor.users.update(Meteor.userId(), { $set: newPreferences });
+  },
+  sendVerificationEmail: function () {
+    console.log('sent');
+    Accounts.sendVerificationEmail(Meteor.userId());
   }
 });
   
