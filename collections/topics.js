@@ -113,17 +113,19 @@ Topics.before.update(function (userId, doc, fields, modifier, options) {
 
 Meteor.methods({
   newTopic: function (topic) {
+    var user = Meteor.user();
+    var userId = this.userId;
     var title = topic.title;
     var description = topic.description;
-    var userId = this.userId;
+    var timeSinceLastTopic = timeSinceLast(user, Topics);
+    var topicInterval = 15; // 15 seconds
 
-    if (!userId || !canPostById(userId))
+    if (!user || !canPost(user))
       throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 
     // if(!isAdmin(Meteor.user())){
-  //     // check that user waits more than X seconds between posts
-  //     if(!this.isSimulation && timeSinceLastPost < postInterval)
-  //       throw new Meteor.Error(604, i18n.t('Please wait ')+(postInterval-timeSinceLastPost)+i18n.t(' seconds before posting again'));
+      if(!this.isSimulation && timeSinceLastTopic < topicInterval)
+        throw new Meteor.Error('wait', (topicInterval - timeSinceLastTopic));
 
   //     // check that the user doesn't post more than Y posts per day
   //     if(!this.isSimulation && numberOfPostsInPast24Hours > maxPostsPer24Hours)
