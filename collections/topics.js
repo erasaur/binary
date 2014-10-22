@@ -18,10 +18,10 @@ TopicSchema = new SimpleSchema({
   createdAt: {
     type: Date
   },
-  // commentsCount: {
-  //   type: Number,
-  //   optional: true
-  // },
+  commentsCount: {
+    type: Number,
+    optional: true
+  },
   // commenters: {
   //   type: [String],
   //   optional: true
@@ -152,7 +152,7 @@ Meteor.methods({
       // category: category,
       // baseScore: 0,
       // score: 0,
-      // commentsCount: 0,
+      commentsCount: 0,
       pro: 0,
       con: 0,
       proUsers: [],
