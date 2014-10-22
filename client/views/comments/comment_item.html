@@ -3,7 +3,19 @@
   <div class="list-item">
     <div class="comment comment-item">
       <div class="comment-header">
-        <b><a href="{{pathFor 'profile' _id=userId}}">{{formatName userId}}</a></b>
+        {{#with author}}
+          <a href="{{pathFor 'profile'}}">
+            <div class="profile-item">
+              <div class="profile-item-left">
+                {{> avatar user=this class='circle'}}
+              </div>
+              <div class="profile-item-right overflow-ellipsis">
+                <b>{{formatName _id}}</b><br/>
+                <small style="margin-right: 10px;">{{profile.bio}}</small>
+              </div>
+            </div>
+          </a>
+        {{/with}}
       </div>
       <div class="comment-content markdown">
         {{{content}}}

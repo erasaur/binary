@@ -10,10 +10,10 @@
         <span class="btn btn-con">{{con}}</span>
       </div>
     </div>
-    <div class="list-item" style="padding-top: 0; border-bottom: 1px solid rgba(0,0,0,0.05);">
-      {{#if topComment}}
+    {{#if topComment}}
+      <div class="list-item top-comment-item">      
         {{> commentItem topComment}}
-      {{/if}}
-    </div>
+      </div>
+    {{/if}}
   </a>
 </template>

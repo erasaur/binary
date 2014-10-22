@@ -1,4 +1,7 @@
 Template.comment.helpers({
+	author: function () {
+		return Meteor.users.findOne(this.userId);
+	},
 	showingReplies: function () {
 		return SessionAmplify.get('showingReplies').indexOf(this._id) > -1;
 	},

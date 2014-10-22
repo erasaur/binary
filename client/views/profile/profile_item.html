@@ -5,9 +5,9 @@
         <div class="profile-item-left">
           {{> avatar user=this class='circle'}}
         </div>
-        <div class="profile-item-right">
+        <div class="profile-item-right overflow-ellipsis">
           <h3>{{profile.name}} <small>{{stats.reputation}} Rep</small></h3>
-          <small>{{profile.bio}}</small>
+          <small style="margin-right: 20px;">{{profile.bio}}</small>
         </div>
       </div>
     </a>
