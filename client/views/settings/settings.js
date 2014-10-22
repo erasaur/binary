@@ -51,6 +51,14 @@ Template.settings.events({
       Meteor.call('changePreferences', setProperty({}, actionValue, !!newValue));
     }
   },
+  'click #js-email-verification': function (event, template) {
+    Meteor.call('sendVerificationEmail', function (error) {
+      if (error)
+        alert(formatError(error))
+      else
+        alert('Please check your email for a verification link. Thanks!');
+    });
+  },
   'click #js-edit-name, click #js-edit-bio, click #js-edit-email': function (event, template) {
     var target = event.currentTarget;
     var id = target.id;
@@ -67,10 +75,8 @@ Template.settings.events({
       }
       else {
         displaySaved($(target));
-        if (fieldName === 'email') {
-          Accounts.sendVerificationEmail(Meteor.userId());
-          alert('Please check your email for a verification. Thanks!');
-        }
+        if (fieldName === 'email')
+          alert('Please check your email for a verification link. Thanks!');
       }
     });
   },
