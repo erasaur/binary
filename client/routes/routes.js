@@ -1,8 +1,5 @@
 Router.configure({
 	layoutTemplate: 'mainLayout',
-	yieldTemplates: {
-		'nav': {to: 'nav'}
-	},
   loadingTemplate: 'loading',
   notFoundTemplate: 'notFound'
 });
@@ -58,16 +55,17 @@ Meteor.subscribe('currentUser');
 Router.map(function() {
 	this.route('home', { 
     path: '/',
+    yieldTemplates: { 
+      'nav': { to: 'nav' } 
+    },
     waitOn: function () {
       return subs.subscribe('topicsList', Session.get('topicsLimit'));
     }		
   });
-  this.route('forgotPassword', { 
-    path: '/forgot',
-    yieldTemplates: {} //don't yield nav
+  this.route('forgotPassword', { // don't yield nav
+    path: '/forgot'
   });
-  this.route('invite', { //don't yield nav
-    yieldTemplates: {}, 
+  this.route('invite', { // don't yield nav
     onBeforeAction: function () {
       var self = this;
       var inviterId = self.params.inviter_id;
@@ -78,8 +76,8 @@ Router.map(function() {
       });
     }
   }); 
-  this.route('login', { yieldTemplates: {} }); //don't yield nav
-  this.route('landing', { yieldTemplates: {} }); //don't yield nav
+  this.route('login'); // don't yield nav
+  this.route('landing'); // don't yield nav
   this.route('profile', {
     path: '/users/:_id',
     layoutTemplate: 'pageLayout',
@@ -117,10 +115,13 @@ Router.map(function() {
     },
   	data: function () {
       Session.set('currentTopic', this.params._id);
-			return Topics.findOne(this.params._id);
+			return Topics.findOne({ '_id': this.params._id, 'isDeleted': false });
   	}
   });
   this.route('settings', {
+    yieldTemplates: {
+      'nav': { to: 'nav' }
+    },
     // the _id is for show and not to be used in any queries
     path: '/users/:_id/settings'
   });

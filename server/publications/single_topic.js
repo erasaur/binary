@@ -15,6 +15,28 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
   var commentsHandle; // handler for changes in comments collection
   var commentOwnersHandle;
 
+  topicHandle = Topics.find({ '_id': topicId, 'isDeleted': false }).observeChanges({
+    added: function (id, fields) {
+      // publish associated comments
+      publishTopicComments(id);
+      // publish owner
+      publishTopicOwner(fields.userId);
+      // add to publication
+      pub.added('topics', id, fields);
+    },
+    changed: function (id, fields) {
+      pub.changed('topics', id, fields);
+    },
+    removed: function (id, fields) {
+      topicHandle.stop();
+      topicOwnerHandle.stop();
+      commentsHandle.stop();
+      if (commentOwnersHandle)
+        commentOwnersHandle.stop();
+      pub.removed('topics', id);
+    }
+  });
+
   function publishCommentOwners (userId) {
     var owners = Meteor.users.find({ '_id': userId }, { 
       fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } 
@@ -76,28 +98,6 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
       }
     });
   }
-
-  topicHandle = Topics.find(topicId).observeChanges({
-    added: function (id, fields) {
-      // publish associated comments
-      publishTopicComments(id);
-      // publish owner
-      publishTopicOwner(fields.userId);
-      // add to publication
-      pub.added('topics', id, fields);
-    },
-    changed: function (id, fields) {
-      pub.changed('topics', id, fields);
-    },
-    removed: function (id, fields) {
-      topicHandle.stop();
-      topicOwnerHandle.stop();
-      commentsHandle.stop();
-      if (commentOwnersHandle)
-        commentOwnersHandle.stop();
-      pub.removed('topics', id);
-    }
-  });
 
   pub.ready();
 
