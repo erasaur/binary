@@ -68,6 +68,13 @@
 .comment-header {
   padding: 20px 10px 10px;
 }
+.comment-header.deleted {
+  height: 70px;
+  padding-top: 30px;
+}
+.comment-header.deleted a {
+  cursor: default;
+}
 .comment-content {
   padding: 0 10px;
   min-height: 130px;
@@ -77,6 +84,10 @@
 .comment-content.collapsed {
   height: 100px;
   overflow-y: hidden;
+}
+.comment-content.deleted {
+  height: 160px;
+  cursor: default; 
 }
 .comment-date {
   padding: 0 10px;

@@ -53,7 +53,7 @@ Template.topicNav.events({
 });
 
 Template.topicButtons.events({
-	'click #js-follow': function(event, template) {
+	'click #js-follow': function (event, template) {
 		Meteor.call('followTopic', this._id, function (error) {
 			if (error) {
 				if (error.error === 'logged-out')
@@ -63,11 +63,21 @@ Template.topicButtons.events({
 			}
 		});
 	},
-	'click #js-unfollow': function(event, template) {
+	'click #js-unfollow': function (event, template) {
 		Meteor.call('unfollowTopic', this._id, function (error) {
 			if (error) {
 				if (error.error === 'logged-out')
 					alert('Please log in to follow topics. Thank you!');
+				else
+					alert('Sorry, something went wrong. Please try again in a moment.');
+			}
+		});
+	},
+	'click #js-delete-topic': function (event, template) {
+		Meteor.call('removeTopic', this, function (error) {
+			if (error) {
+				if (error.error === 'no-permission')
+					alert('Oops! We\'re sorry but we can\'t let you continue.');
 				else
 					alert('Sorry, something went wrong. Please try again in a moment.');
 			}
