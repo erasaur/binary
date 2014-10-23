@@ -1,13 +1,13 @@
 <template name="comment">
 	<div id="{{_id}}" class="comment">
     {{#if isDeleted}}
-      <div class="comment-header">
+      <div class="comment-header deleted">
         <a href="#">Deleted</a>
       </div>
-      <div class="comment-content collapsed markdown">
+      <div class="comment-content collapsed markdown deleted">
         {{{content}}}
       </div>
-      <div class="comment-footer">
+      <div class="comment-footer deleted">
         <button class="btn btn-default js-toggle-replies float-right">
           {{#if showingReplies}}
             Hide Replies
@@ -26,7 +26,7 @@
               </div>
               <div class="profile-item-right overflow-ellipsis">
                 <b>{{formatName _id}}</b><br/>
-                <small style="margin-right: 10px;">{{profile.bio}}</small>
+                <small>{{profile.bio}}</small>
               </div>
             </div>
           </a>
@@ -39,33 +39,34 @@
     		{{formatDate createdAt}}
     	</div>
     	<div class="comment-footer">
-    		{{#if currentUser}}
-  	  		{{#if upvoted}}
-  	  			<button class="float-left btn btn-primary js-downvote-comment">Unlike {{upvotes}}</button>
-  	  		{{else}}
-  	  			<button class="float-left btn btn-default js-upvote-comment"><i class="fa fa-thumbs-o-up"></i> {{upvotes}}</button>
-  	  		{{/if}}
-  	  	{{else}}
-  	  		<i class="fa fa-thumbs-o-up"></i> {{upvotes}}
-    		{{/if}}
+        <div class="comment-footer-left">
+      		{{#if currentUser}}
+    	  		{{#if upvoted}}
+    	  			<button class="float-left btn btn-primary js-downvote-comment">Unlike {{upvotes}}</button>
+    	  		{{else}}
+    	  			<button class="float-left btn btn-default js-upvote-comment"><i class="fa fa-thumbs-o-up"></i> {{upvotes}}</button>
+    	  		{{/if}}
+    	  	{{else}}
+    	  		<i class="fa fa-thumbs-o-up"></i> {{upvotes}}
+      		{{/if}}
+        </div>
 
-        {{#if isAdmin}}
-          <button class="float-right btn btn-default js-delete-comment">Delete</button>
-        {{/if}}
-
-    		<button class="btn btn-default js-toggle-replies float-right">
-          {{#if showingReplies}}
-            Hide Replies
-          {{else}}
-            Show Replies {{numReplies}}
+        <div class="comment-footer-right float-right">
+          <button class="btn btn-default js-toggle-replies">
+            {{#if showingReplies}}
+              Hide Replies
+            {{else}}
+              Show Replies {{numReplies}}
+            {{/if}}
+          </button>
+          {{#if isAdmin}}
+            <button class="btn btn-default js-delete-comment">Delete</button>
           {{/if}}
-        </button>
+        </div>
     	</div>
     {{/if}}
 	</div>
 </template>
-
-
 
 
 
