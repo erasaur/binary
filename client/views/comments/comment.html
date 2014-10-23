@@ -1,45 +1,67 @@
 <template name="comment">
 	<div id="{{_id}}" class="comment">
-		<div class="comment-header">
-      {{#with author}}
-        <a href="{{pathFor 'profile'}}">
-          <div class="profile-item">
-            <div class="profile-item-left">
-              {{> avatar user=this class='circle'}}
+    {{#if isDeleted}}
+      <div class="comment-header">
+        <a href="#">Deleted</a>
+      </div>
+      <div class="comment-content collapsed markdown">
+        {{{content}}}
+      </div>
+      <div class="comment-footer">
+        <button class="btn btn-default js-toggle-replies float-right">
+          {{#if showingReplies}}
+            Hide Replies
+          {{else}}
+            Show Replies {{numReplies}}
+          {{/if}}
+        </button>
+      </div>
+    {{else}}
+  		<div class="comment-header">
+        {{#with author}}
+          <a href="{{pathFor 'profile'}}">
+            <div class="profile-item">
+              <div class="profile-item-left">
+                {{> avatar user=this class='circle'}}
+              </div>
+              <div class="profile-item-right overflow-ellipsis">
+                <b>{{formatName _id}}</b><br/>
+                <small style="margin-right: 10px;">{{profile.bio}}</small>
+              </div>
             </div>
-            <div class="profile-item-right overflow-ellipsis">
-              <b>{{formatName _id}}</b><br/>
-              <small style="margin-right: 10px;">{{profile.bio}}</small>
-            </div>
-          </div>
-        </a>
-      {{/with}}
-		</div>
-  	<div class="comment-content collapsed markdown">
-  		{{{content}}}
-  	</div>
-  	<div class="comment-date">
-  		{{formatDate createdAt}}
-  	</div>
-  	<div class="comment-footer">
-  		{{#if currentUser}}
-	  		{{#if upvoted}}
-	  			<button class="float-left btn btn-primary js-downvote-comment">Unlike {{upvotes}}</button>
-	  		{{else}}
-	  			<button class="float-left btn btn-default js-upvote-comment"><i class="fa fa-thumbs-o-up"></i> {{upvotes}}</button>
-	  		{{/if}}
-	  	{{else}}
-	  		<i class="fa fa-thumbs-o-up"></i> {{upvotes}}
-  		{{/if}}
+          </a>
+        {{/with}}
+  		</div>
+    	<div class="comment-content collapsed markdown">
+  		  {{{content}}}
+    	</div>
+    	<div class="comment-date">
+    		{{formatDate createdAt}}
+    	</div>
+    	<div class="comment-footer">
+    		{{#if currentUser}}
+  	  		{{#if upvoted}}
+  	  			<button class="float-left btn btn-primary js-downvote-comment">Unlike {{upvotes}}</button>
+  	  		{{else}}
+  	  			<button class="float-left btn btn-default js-upvote-comment"><i class="fa fa-thumbs-o-up"></i> {{upvotes}}</button>
+  	  		{{/if}}
+  	  	{{else}}
+  	  		<i class="fa fa-thumbs-o-up"></i> {{upvotes}}
+    		{{/if}}
 
-  		<button class="btn btn-default js-toggle-replies float-right">
-        {{#if showingReplies}}
-          Hide Replies
-        {{else}}
-          Show Replies {{numReplies}}
+        {{#if isAdmin}}
+          <button class="float-right btn btn-default js-delete-comment">Delete</button>
         {{/if}}
-      </button>
-  	</div>
+
+    		<button class="btn btn-default js-toggle-replies float-right">
+          {{#if showingReplies}}
+            Hide Replies
+          {{else}}
+            Show Replies {{numReplies}}
+          {{/if}}
+        </button>
+    	</div>
+    {{/if}}
 	</div>
 </template>
 

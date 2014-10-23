@@ -16,7 +16,10 @@ Meteor.publish('userProfile', function (userId) {
   if (user && user.activity)  
     commentIds = user.activity.upvotedComments;
 
-  var comments = Comments.find({ $or: [ { 'userId': userId }, { '_id': { $in: commentIds } } ] });
+  var comments = Comments.find({ 
+    $or: [ { 'userId': userId }, { '_id': { $in: commentIds } } ], 
+    isDeleted: false
+  });
 
   /** 
    * Publish all topics created or followed by user, or 
@@ -52,7 +55,10 @@ Meteor.publish('userProfile', function (userId) {
   if (topCommentIds.length)
     commentIds = _.union(commentIds, topCommentIds);
 
-  comments = Comments.find({ $or: [ { 'userId': userId }, { '_id': { $in: commentIds } } ] });
+  comments = Comments.find({ 
+    $or: [ { 'userId': userId }, { '_id': { $in: commentIds } } ], 
+    isDeleted: false
+  });
 
   /** 
    * Publish all followers and following users, and 

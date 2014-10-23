@@ -1,6 +1,7 @@
 Accounts.onCreateUser(function (options, user) {
   var userProperties = {
     profile: options.profile || {},
+    isAdmin: false,
     invites: {
       inviteCount: 3,
       invitedEmails: []  
@@ -116,7 +117,6 @@ Meteor.methods({
     Meteor.users.update(Meteor.userId(), { $set: newPreferences });
   },
   sendVerificationEmail: function () {
-    console.log('sent');
     Accounts.sendVerificationEmail(Meteor.userId());
   }
 });
