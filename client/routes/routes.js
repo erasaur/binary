@@ -107,7 +107,10 @@ Router.map(function() {
       'topicNav': { to: 'pageNav' } 
     },
   	waitOn: function () {
-  		return Meteor.subscribe('singleTopic', this.params._id, this.params.sort_by);
+  		return [
+        Meteor.subscribe('singleTopic', this.params._id),
+        Meteor.subscribe('topicComments', this.params._id, this.params.sort_by),
+      ];
   	},
     onRun: function () {
       Session.set('currentTab', 'topicComments');

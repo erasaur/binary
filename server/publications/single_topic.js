@@ -1,47 +1,60 @@
 // Publish a single topic
 
-// separate into multiple publications ?
-Meteor.publish('singleTopic', function (topicId, sortBy) {
+/**
+ * Publish all the comments associated with topicId, as well as
+ * all of the users who are owners of these comments.
+ * 
+ * We don't use publishWithRelations here since we need to transform
+ * the documents as they are added, by inserting temporary *non-reactive*
+ * values (to be used for sorting client-side) so sorting won't keep
+ * changing as the comments change.
+ */
+Meteor.publish('topicComments', function (topicId, sortBy) {
+  var topic = Topics.findOne(topicId);
+
+  // if topic is deleted then don't publish comments
+  if (!topic || topic.isDeleted) return null;
+
   var sortOptions = {
     'top': 'upvotes',
     'newest': 'createdAt'
   };
   var sortBy = sortOptions[sortBy] || 'upvotes';
-
-  // the publication 'handle', specifies what is published (through added, changed)
-  var pub = this; 
-  var topicHandle;
-  var topicOwnerHandle;
   var commentsHandle; // handler for changes in comments collection
-  var commentOwnersHandle;
+  var commentOwnersHandle = []; // handlers for owners associated with the comments
 
-  topicHandle = Topics.find({ '_id': topicId, 'isDeleted': false }).observeChanges({
-    added: function (id, fields) {
-      // publish associated comments
-      publishTopicComments(id);
-      // publish owner
-      publishTopicOwner(fields.userId);
-      // add to publication
-      pub.added('topics', id, fields);
+  var pub = this;
+  var comments = Comments.find({ 'topicId': topicId }, { 
+    sort: setProperty({}, sortBy, -1) 
+  });
+
+  commentsHandle = comments.observeChanges({
+    // in added case, fields essentially is the entirety of the added comment
+    added: function (id, fields) { 
+      publishCommentOwner(id, fields); // publish the owner associated with this comment
+
+      fields.initDate = fields.createdAt;
+      fields.initVotes = fields.upvotes;
+
+      pub.added('comments', id, fields);
     },
     changed: function (id, fields) {
-      pub.changed('topics', id, fields);
+      pub.changed('comments', id, fields);
     },
-    removed: function (id, fields) {
-      topicHandle.stop();
-      topicOwnerHandle.stop();
-      commentsHandle.stop();
-      if (commentOwnersHandle)
-        commentOwnersHandle.stop();
-      pub.removed('topics', id);
+    removed: function (id) {
+      // remove the owner handle attached to this comment
+      commentOwnersHandle[id] && commentOwnersHandle[id].stop();
+      pub.removed('comments', id);
     }
   });
 
-  function publishCommentOwners (userId) {
-    var owners = Meteor.users.find({ '_id': userId }, { 
+  function publishCommentOwner (commentId, comment) {
+    var owners = Meteor.users.find({ '_id': comment.userId }, { 
       fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } 
     });
-    commentOwnersHandle = owners.observeChanges({
+    // attach an owner handle to this comment, and store it with comment's id
+    // as a key so we can remove the handle when the comment is removed
+    commentOwnersHandle[commentId] = owners.observeChanges({
       added: function (id, fields) {
         pub.added('users', id, fields);
       },
@@ -49,51 +62,7 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
         pub.changed('users', id, fields);
       },
       removed: function (id, fields) {
-        commentOwnersHandle.stop();
-        pub.removed('users', id);
-      }
-    });
-  }
-
-  function publishTopicComments (topicId) {
-    var comments = Comments.find({ 'topicId': topicId }, { 
-      sort: setProperty({}, sortBy, -1) 
-    });
-
-    commentsHandle = comments.observeChanges({
-      added: function (id, fields) {
-        publishCommentOwners(fields.userId);
-
-        fields.initDate = fields.createdAt;
-        fields.initVotes = fields.upvotes;
-
-        pub.added('comments', id, fields);
-      },
-      changed: function (id, fields) {
-        pub.changed('comments', id, fields);
-      },
-      removed: function (id) {
-        commentsHandle.stop();
-        if (commentOwnersHandle)
-          commentOwnersHandle.stop();
-        pub.removed('comments', id);
-      }
-    });
-  }
-
-  function publishTopicOwner (userId) {
-    var owner = Meteor.users.find(userId, { 
-      fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 }
-    });
-    topicOwnerHandle = owner.observeChanges({
-      added: function (id, fields) {
-        pub.added('users', id, fields);
-      },
-      changed: function (id, fields) {
-        pub.changed('users', id, fields);
-      },
-      removed: function (id, fields) {
-        topicOwnerHandle.stop();
+        commentOwnersHandle[id] && commentOwnersHandle[id].stop();
         pub.removed('users', id);
       }
     });
@@ -101,18 +70,28 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
 
   pub.ready();
 
-  // stop all handles
   pub.onStop(function () {
-    topicHandle.stop();
-    topicOwnerHandle.stop();
     commentsHandle.stop();
-    // it's possible that commentOwnersHandle is never
-    // initialized if commentsHandle doesn't call
-    // 'added' (no comments)
-    if (commentOwnersHandle) 
-      commentOwnersHandle.stop();
+    _.each(commentOwnersHandle, function (handle) {
+      handle.stop();
+    });
   });
+});
 
+Meteor.publish('singleTopic', function (topicId) {
+  Meteor.publishWithRelations({
+    handle: this,
+    collection: Topics,
+    filter: topicId,
+    mappings: [
+    { // publish topic owner
+      key: 'userId', collection: Meteor.users, 
+      options: { fields: { 'profile': 1 }, limit: 1 }
+    }]
+  });
+});
+
+// Meteor.publish('singleTopic', function (topicId, sortBy) {
   // Meteor.publishWithRelations({
   //   handle: this,
   //   collection: Topics,
@@ -135,4 +114,4 @@ Meteor.publish('singleTopic', function (topicId, sortBy) {
   //     }]
   //   }]
   // });
-});
+// });
