@@ -14,6 +14,9 @@ CommentSchema = new SimpleSchema({
   createdAt: {
     type: Date
   },
+  isDeleted: {
+    type: Boolean
+  },
   upvotes: { // scoring system ?
     type: Number,
     min: 0,
@@ -52,11 +55,13 @@ Comments.allow({
     return false;
   }
 });
-Comments.deny(function (userId, comment, fields) {
-  // if (isAdminById(userId)) return false;
+Comments.deny({
+  update: function (userId, comment, fields) {
+    if (isAdminById(userId)) return false;
 
-  // deny update if it contains invalid fields
-  return _.without(fields, 'content').length > 0;
+    // deny update if it contains invalid fields
+    return _.without(fields, 'content').length > 0;
+  }
 });
 
 // end permissions -----------------------------------
@@ -95,13 +100,11 @@ Meteor.methods({
       throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 
     // check that user waits more than 15 seconds between comments
-    if(!this.isSimulation && timeSinceLastComment < commentInterval)
+    if(!isAdmin(user) && !this.isSimulation && timeSinceLastComment < commentInterval)
       throw new Meteor.Error('wait', (commentInterval - timeSinceLastComment));
 
     if (!validInput(content))
       throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
-      
-    Meteor.users.update(userId, { $addToSet: { 'activity.discussedTopics': topicId } });
 
     var comment = {
       userId: userId,
@@ -112,7 +115,8 @@ Meteor.methods({
       upvotes: 0,
       upvoters: [],
       replyTo: replyTo,
-      replies: []
+      replies: [],
+      isDeleted: false
     };
 
     comment._id = Comments.insert(comment);
@@ -120,8 +124,14 @@ Meteor.methods({
     if (!!replyTo)
       Comments.update(replyTo, { $addToSet: { 'replies': comment._id } });
 
-    Meteor.users.update(userId, { $inc: { 'stats.commentsCount': 1 } });
-    Topics.update(topicId, { $inc: { 'commentsCount': 1 } });
+    Meteor.users.update(userId, { 
+      $inc: { 'stats.commentsCount': 1 }, 
+      $addToSet: { 'activity.discussedTopics': topicId }
+    });
+    Topics.update(topicId, { 
+      $inc: { 'commentsCount': 1 }, 
+      $addToSet: { 'commenters': userId } 
+    });
     Meteor.call('newCommentNotification', comment);
 
     return comment._id;

@@ -54,10 +54,24 @@ Template.topicNav.events({
 
 Template.topicButtons.events({
 	'click #js-follow': function(event, template) {
-		Meteor.call('followTopic', this._id);
+		Meteor.call('followTopic', this._id, function (error) {
+			if (error) {
+				if (error.error === 'logged-out')
+					alert('Please log in to follow topics. Thank you!');
+				else
+					alert('Sorry, something went wrong. Please try again in a moment.');
+			}
+		});
 	},
 	'click #js-unfollow': function(event, template) {
-		Meteor.call('unfollowTopic', this._id);
+		Meteor.call('unfollowTopic', this._id, function (error) {
+			if (error) {
+				if (error.error === 'logged-out')
+					alert('Please log in to follow topics. Thank you!');
+				else
+					alert('Sorry, something went wrong. Please try again in a moment.');
+			}
+		});
 	}
 });
 

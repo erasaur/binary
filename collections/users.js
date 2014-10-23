@@ -70,6 +70,10 @@ Schema.User = new SimpleSchema({
   'emails.$.verified': {
     type: Boolean
   },
+  isAdmin: {
+    type: Boolean,
+    optional: true
+  },
   email_hash: {
     type: String,
     optional: true
@@ -97,12 +101,6 @@ Schema.User = new SimpleSchema({
     type: Object,
     blackbox: true
   }
-  // ,
-  // roles: {
-  //   type: Object,
-  //   optional: true,
-  //   blackbox: true
-  // }
 });
 
 Meteor.users.attachSchema(Schema.User);
@@ -124,7 +122,7 @@ Meteor.users.initEasySearch('profile.name', {
 
 Meteor.users.deny({
   update: function (userId, user, fields) {
-    // if(isAdminById(userId)) return false;
+    if(isAdminById(userId)) return false;
 
     // deny the update if it contains something other than the profile field
     return (_.without(fields, 'profile').length > 0);
@@ -133,12 +131,10 @@ Meteor.users.deny({
 
 Meteor.users.allow({
   update: function (userId, user) {
-    // return isAdminById(userId) || userId == user._id;
-    return userId == user._id;
+    return isAdminById(userId) || userId == user._id;
   },
   remove: function (userId, user) {
-    // return isAdminById(userId) || userId == user._id;
-    return userId = user._id;
+    return isAdminById(userId) || userId == user._id;
   }
 });
 
@@ -152,7 +148,7 @@ Meteor.methods({
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
-      throw new Meteor.Error(403, 'Please login to follow other users.');
+      throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 
     // update user being followed
     Meteor.users.update(userId, { 
@@ -171,7 +167,7 @@ Meteor.methods({
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
-      throw new Meteor.Error(403, 'Please login to follow other users.');
+      throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 
     // update user being followed
     Meteor.users.update(userId, {

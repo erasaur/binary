@@ -43,7 +43,7 @@ Template.newComment.events({
 
 		template.find('div.editable').innerHTML = '';
 	},
-	'click .js-post-side': function(event, template) {
+	'click .js-post-side': function (event, template) {
 		var t = $(event.target);
 		t.toggleClass('btn-pro');
 		t.toggleClass('btn-con');
@@ -139,6 +139,16 @@ Template.comment.events({
 	},
 	'click .js-downvote-comment': function (event, template) {
 		Meteor.call('cancelUpvoteComment', this);
+	},
+	'click .js-delete-comment': function (event, template) {
+		Meteor.call('removeComment', this, function (error) {
+			if (error) {
+				if (error.error === 'no-permission')
+					alert('Oops! We\'re sorry but we can\'t let you continue.');
+				else
+					alert('Sorry, something went wrong. Please try again in a moment.');
+			}
+		});
 	}
 });
 

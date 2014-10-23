@@ -19,7 +19,7 @@ Meteor.publish('topicsList', function (limit) {
   var commentIds = [];
 
   for (var i = topicIds.length - 1; i >= 0; i--) {
-    var comment = Comments.findOne({ 'topicId': topicIds[i] }, {
+    var comment = Comments.findOne({ 'topicId': topicIds[i], 'isDeleted': false }, {
       sort: { 'upvotes': -1 }
     });
 
@@ -28,7 +28,7 @@ Meteor.publish('topicsList', function (limit) {
   }
 
   // find the top comments
-  var topComments = Comments.find({'_id': {$in: commentIds}});
+  var topComments = Comments.find({ '_id': { $in: commentIds } });
 
   return [topics, topComments, users];
 });

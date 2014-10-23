@@ -22,10 +22,10 @@ TopicSchema = new SimpleSchema({
     type: Number,
     optional: true
   },
-  // commenters: {
-  //   type: [String],
-  //   optional: true
-  // },
+  commenters: {
+    type: [String],
+    optional: true
+  },
   pro: {
     type: Number,
     min: 0,
@@ -47,6 +47,9 @@ TopicSchema = new SimpleSchema({
   followers: {
     type: [String],
     optional: true
+  },
+  isDeleted: {
+    type: Boolean
   }
 });
 
@@ -123,14 +126,8 @@ Meteor.methods({
     if (!user || !canPost(user))
       throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 
-    // if(!isAdmin(Meteor.user())){
-      if(!this.isSimulation && timeSinceLastTopic < topicInterval)
-        throw new Meteor.Error('wait', (topicInterval - timeSinceLastTopic));
-
-  //     // check that the user doesn't post more than Y posts per day
-  //     if(!this.isSimulation && numberOfPostsInPast24Hours > maxPostsPer24Hours)
-  //       throw new Meteor.Error(605, i18n.t('Sorry, you cannot submit more than ')+maxPostsPer24Hours+i18n.t(' posts per day'));
-  //   }
+    if(!isAdmin(user) && !this.isSimulation && timeSinceLastTopic < topicInterval)
+      throw new Meteor.Error('wait', (topicInterval - timeSinceLastTopic));
 
     if (!validInput(title))
       throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
@@ -155,9 +152,11 @@ Meteor.methods({
       commentsCount: 0,
       pro: 0,
       con: 0,
+      commenters: [],
       proUsers: [],
       conUsers: [],
-      followers: []
+      followers: [],
+      isDeleted: false
     };
 
     topic._id = Topics.insert(topic);
@@ -171,7 +170,7 @@ Meteor.methods({
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
-      throw new Meteor.Error(403, 'Please login to follow topics.');
+      throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 
     Topics.update(topicId, { $addToSet: { 'followers': userId } });
     Meteor.users.update(userId, { $addToSet: { 'activity.followingTopics': topicId } });
@@ -180,7 +179,7 @@ Meteor.methods({
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
-      throw new Meteor.Error(403, 'Please login to follow topics.');
+      throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
     
     Topics.update(topicId, { $pull: { 'followers': userId } });
     Meteor.users.update(userId, { $pull: { 'activity.followingTopics': topicId } });

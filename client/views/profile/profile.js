@@ -22,10 +22,16 @@ Template.profileNav.helpers({
 
 Template.profileButtons.events({
 	'click #js-follow': function (event, template) {
-		Meteor.call('newFollower', this._id);
+		Meteor.call('newFollower', this._id, function (error) {
+			if (error.error === 'logged-out')
+				alert('Please log in to follow other users. Thank you!');
+		});
 	},
 	'click #js-unfollow': function (event, template) {
-		Meteor.call('removeFollower', this._id);
+		Meteor.call('removeFollower', this._id, function (error) {
+			if (error.error === 'logged-out')
+				alert('Please log in to follow other users. Thank you!');
+		});
 	},
 	'click #js-settings': function (event, template) {
 		Router.go(getSettingsRoute(this._id));
