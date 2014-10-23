@@ -6,11 +6,12 @@ Meteor.publish('topicsList', function (limit) {
     limit = 0;
 
   // get the topics cursor and store the ids
-  var topics = Topics.find({}, { limit: limit, sort: { 'createdAt': -1 } });
-  var topicIds = _.pluck(topics.fetch(), '_id');
+  var topics = Topics.find({ 'isDeleted': false }, { limit: limit, sort: { 'createdAt': -1 } });
+  var topicsArray = topics.fetch();
+  var topicIds = _.pluck(topicsArray, '_id');
 
   // get the owners of each topic
-  var userIds = _.pluck(topics.fetch(), 'userId');
+  var userIds = _.pluck(topicsArray, 'userId');
   var users = Meteor.users.find({ '_id': { $in: userIds } }, { 
     fields: { 'email_hash': 1, 'profile': 1 } 
   });

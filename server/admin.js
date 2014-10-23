@@ -31,7 +31,7 @@ Meteor.methods({
     var userId = topic.userId;
 
     Topics.update(topicId, {
-      $set: { title: 'This topic has been deleted.', description: 'This topic has been deleted.', isDeleted: true }
+      $set: { 'title': 'This topic has been deleted.', 'description': 'This topic has been deleted.', 'isDeleted': true }
     });
 
     // remove topic from users following
