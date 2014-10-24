@@ -1,7 +1,7 @@
 Template.nav.rendered = function () {
 	$('.invite').popover({ html: true });
-	$('.dropdown-menu input').click(function (e) {
-    e.stopPropagation();
+	$('#js-invite-email, #js-invite').click(function (e) {
+  	e.stopPropagation();
   });
 };
 Template.nav.events({
