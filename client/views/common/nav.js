@@ -1,6 +1,6 @@
 Template.nav.rendered = function () {
 	$('.invite').popover({ html: true });
-	$('#js-invite-email, #js-invite').click(function (e) {
+	$('#js-invite-email').click(function (e) {
   	e.stopPropagation();
   });
 };
