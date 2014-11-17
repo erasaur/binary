@@ -45,12 +45,12 @@ var subs = new SubsManager({
   expireIn: 30
 });
 
-
-Deps.autorun(function () {
+// is this needed ?
+Tracker.autorun(function () {
   subs.subscribe('topicsList', Session.get('topicsLimit'));  
 });
 
-Meteor.subscribe('currentUser');
+subs.subscribe('currentUser');
 
 Router.map(function() {
 	this.route('home', { 
