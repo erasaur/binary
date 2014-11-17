@@ -32,7 +32,6 @@ reactive-var
 meteorhacks:kadira
 matteodem:easy-search
 jparker:gravatar
-bengott:avatar
 email
 cmather:handlebars-server
 random
@@ -41,4 +40,5 @@ meteorhacks:npm
 
 npm-container
 kestanous:herald
+bengott:avatar
 
