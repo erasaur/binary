@@ -1,3 +1,23 @@
+add to discuss project:
+segment.io
+autoform?
+check
+velocity
+audit-argument-checks
+fastclick
+publish composite
+some form of alert thing
+i18n (tap-i18n?)
+move error messages to common place
+collectionfs for avatars?
+user roles?
+send nice email to users after they sign up
+take out body
+fix route notFound (and update router)
+add fetch to allow/deny
+_uihooks ? https://github.com/meteor/meteor/blob/30fb11f1fa0227f1c0ec3eb30b7864ea3b2d210e/History.md#blaze-1
+move stuff into packages
+
 /** 
  * comment template
  * 
