@@ -8,14 +8,20 @@ Router.onBeforeAction(function () {
   if (!Meteor.loggingIn() && !Meteor.user()) {
     if (Session.get('resetPassword'))
       this.redirect('forgotPassword');
-    else
+    else {
       this.redirect('landing');
+    }
+  } else {
+    this.next();
   }
 }, { except: ['landing', 'login', 'invite', 'forgotPassword'] });
 
 Router.onBeforeAction(function () {
-  if (Meteor.user())
+  if (Meteor.user()) {
     this.redirect('home');
+  } else {
+    this.next();
+  }
 
 }, { only: ['landing', 'login', 'invite'] });
 
@@ -45,7 +51,6 @@ var subs = new SubsManager({
   expireIn: 30
 });
 
-// is this needed ?
 Tracker.autorun(function () {
   subs.subscribe('topicsList', Session.get('topicsLimit'));  
 });
@@ -55,9 +60,6 @@ subs.subscribe('currentUser');
 Router.map(function() {
 	this.route('home', { 
     path: '/',
-    yieldTemplates: { 
-      'nav': { to: 'nav' } 
-    },
     waitOn: function () {
       return subs.subscribe('topicsList', Session.get('topicsLimit'));
     }		
@@ -81,12 +83,6 @@ Router.map(function() {
   this.route('profile', {
     path: '/users/:_id',
     layoutTemplate: 'pageLayout',
-    yieldTemplates: { 
-      'nav': { to: 'nav' },
-      'profileButtons': { to: 'pageButtons' },
-      'profileHeader': { to: 'pageHeader' },
-      'profileNav': { to: 'pageNav' } 
-    },
     waitOn: function () {
       return Meteor.subscribe('userProfile', this.params._id);
     },
@@ -100,12 +96,6 @@ Router.map(function() {
   this.route('topic', { 
   	path: '/topics/:_id',
     layoutTemplate: 'pageLayout',
-    yieldTemplates: { 
-      'nav': { to: 'nav' },
-      'topicButtons': { to: 'pageButtons' },
-      'topicHeader': { to: 'pageHeader' },
-      'topicNav': { to: 'pageNav' } 
-    },
   	waitOn: function () {
   		return [
         Meteor.subscribe('singleTopic', this.params._id),
@@ -122,9 +112,6 @@ Router.map(function() {
   	}
   });
   this.route('settings', {
-    yieldTemplates: {
-      'nav': { to: 'nav' }
-    },
     // the _id is for show and not to be used in any queries
     path: '/users/:_id/settings'
   });
