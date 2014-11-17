@@ -130,12 +130,14 @@ Meteor.users.deny({
 });
 
 Meteor.users.allow({
-  update: function (userId, user) {
-    return isAdminById(userId) || userId == user._id;
-  },
-  remove: function (userId, user) {
-    return isAdminById(userId) || userId == user._id;
-  }
+  // update: function (userId, user) {
+  //   return isAdminById(userId) || userId == user._id;
+  // },
+  // remove: function (userId, user) {
+  //   return isAdminById(userId) || userId == user._id;
+  // }
+  update: canEditById,
+  remove: canEditById
 });
 
 // end permissions -----------------------------------

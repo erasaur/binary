@@ -81,7 +81,8 @@ Topics.allow({
 
 Topics.deny({
   update: function (userId, topic, fields) {
-    // if (isAdminById(userId)) return false;
+    if (isAdminById(userId)) return false;
+    
     var validFields = [
       'title',
       'description'
@@ -133,12 +134,10 @@ Meteor.methods({
       throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
 
     // check if title already exists
-    else {
-      var topicWithTitle = Topics.findOne({ 'title': title });
+    var topicWithTitle = Topics.findOne({ 'title': title });
 
-      if (typeof topicWithTitle !== 'undefined')
-        throw new Meteor.Error('duplicate-content', 'This content already exists.', topicWithTitle._id);
-    }
+    if (typeof topicWithTitle !== 'undefined')
+      throw new Meteor.Error('duplicate-content', 'This content already exists.', topicWithTitle._id);
 
     var topic = {
       title: title,
