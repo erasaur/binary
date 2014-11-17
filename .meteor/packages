@@ -23,7 +23,6 @@ iron:core
 iron:dynamic-template
 iron:layout
 iron:router
-mrt:iron-router-progress
 meteorhacks:fast-render
 chuangbo:marked
 meteorhacks:subs-manager
@@ -41,4 +40,5 @@ meteorhacks:npm
 npm-container
 kestanous:herald
 bengott:avatar
+multiply:iron-router-progress
 

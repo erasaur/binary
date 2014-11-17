@@ -72,11 +72,11 @@ mobile-status-bar@1.0.1
 mongo-livedata@1.0.6
 mongo@1.0.8
 mrt:animation-helper-velocity@0.1.5
-mrt:iron-router-progress@0.9.3
 mrt:moment@2.8.1
 mrt:publish-with-relations@0.1.5
 mrt:session-amplify@0.1.1
 mrt:underscore-string-latest@2.3.3
+multiply:iron-router-progress@1.0.0
 npm-bcrypt@0.7.7
 npm-container@1.0.0
 observe-sequence@1.0.3
