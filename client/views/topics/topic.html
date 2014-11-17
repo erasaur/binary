@@ -75,6 +75,11 @@
 <!-- BEGIN PAGE LAYOUT -->
 
 <template name="topic">	
+	{{> contentFor region="nav" template="nav"}}
+	{{> contentFor region="pageButtons" template="topicButtons"}}
+	{{> contentFor region="pageHeader" template="topicHeader"}}
+	{{> contentFor region="pageNav" template="topicNav"}}
+
 	<div class="page-body">
 		{{> Template.dynamic template=currentTab data=this}}
 	</div>
