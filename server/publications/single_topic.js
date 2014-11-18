@@ -10,12 +10,11 @@
  * changing as the comments change.
  */
 Meteor.publish('topicComments', function (topicId, sortBy) {
-  if (!canViewById(this.userId)) return [];
-
   var topic = Topics.findOne(topicId);
 
-  // if topic is deleted then don't publish comments
-  if (!topic || topic.isDeleted) return null;
+  // if topic is deleted or no permission to view
+  if (!topic || topic.isDeleted || !canViewById(this.userId)) 
+    return [];
 
   var sortOptions = {
     'top': 'upvotes',
@@ -80,40 +79,25 @@ Meteor.publish('topicComments', function (topicId, sortBy) {
   });
 });
 
-Meteor.publish('singleTopic', function (topicId) {
-  Meteor.publishWithRelations({
-    handle: this,
-    collection: Topics,
-    filter: topicId,
-    mappings: [
-    { // publish topic owner
-      key: 'userId', collection: Meteor.users, 
-      options: { fields: { 'profile': 1 }, limit: 1 }
-    }]
-  });
-});
+Meteor.publishComposite('singleTopic', function (topicId) {
+  if (!canViewById(this.userId)) {
+    return {
+      find: function () {
+        return;
+      }
+    };
+  }
 
-// Meteor.publish('singleTopic', function (topicId, sortBy) {
-  // Meteor.publishWithRelations({
-  //   handle: this,
-  //   collection: Topics,
-  //   filter: topicId,
-  //   mappings: [
-  //   { // publish topic owner
-  //     key: 'userId', collection: Meteor.users, 
-  //     options: { fields: { 'profile': 1 }, limit: 1 }
-  //   }, 
-  //   { // publish comments
-  //     reverse: true, // use the comments topicId to match this _id
-  //     // handle: commentHandle,
-  //     key: 'topicId',
-  //     collection: Comments,
-  //     options: { sort: setProperty({}, sortBy, -1) },
-  //     mappings: [
-  //     { // publish comment owners
-  //       key: 'userId', collection: Meteor.users, // publish comment owners
-  //       options: { fields: { 'profile': 1, 'stats': 1 } }
-  //     }]
-  //   }]
-  // });
-// });
+  return {
+    find: function () {
+      return Topics.find(topicId);
+    },
+    children: [{
+      find: function (topic) { // topic author
+        return Meteor.users.find(topic.userId, { 
+          limit: 1, fields: { 'profile': 1 } 
+        });
+      }
+    }]
+  };
+});
