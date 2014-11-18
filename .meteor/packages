@@ -17,7 +17,6 @@ aldeed:collection2
 djedi:sanitize-html
 mrt:moment
 benjaminrh:user-session
-mrt:publish-with-relations
 mrt:session-amplify
 iron:core
 iron:dynamic-template
@@ -42,4 +41,3 @@ kestanous:herald
 bengott:avatar
 multiply:iron-router-progress
 reywood:publish-composite
-
