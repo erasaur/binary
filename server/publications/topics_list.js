@@ -1,6 +1,8 @@
 // Publish list of topics (sorted by date) and top comment for each
 
 Meteor.publish('topicsList', function (limit) {  
+  if (!canViewById(this.userId)) return [];
+
   // set the topic display limit
   if (limit > Topics.find().count() || !limit)
     limit = 0;
