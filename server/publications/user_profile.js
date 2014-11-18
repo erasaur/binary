@@ -1,6 +1,8 @@
 // Publish profile page
 
 Meteor.publish('userProfile', function (userId) {
+  if (!canViewById(this.userId)) return [];
+
   // we will have to look up user twice: once to get the 
   // followers/following users, and once again in the final
   // return statement. this is because we can't publish

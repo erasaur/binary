@@ -10,6 +10,8 @@
  * changing as the comments change.
  */
 Meteor.publish('topicComments', function (topicId, sortBy) {
+  if (!canViewById(this.userId)) return [];
+
   var topic = Topics.findOne(topicId);
 
   // if topic is deleted then don't publish comments
