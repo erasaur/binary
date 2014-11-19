@@ -3,7 +3,7 @@
 Meteor.publishComposite('topicsList', function (limit) {
   return {
     find: function () {
-      if (!canViewById(this.userId)) return;
+      if (!canViewById(this.userId)) return this.ready();
 
       return Topics.find({ 'isDeleted': false }, { sort: { 'createdAt': -1 }, limit: limit });
     },
