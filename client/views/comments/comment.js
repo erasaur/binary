@@ -16,11 +16,11 @@ Template.comment.helpers({
 
 Template.newComment.events({
 	'click .js-post-comment': function (event, template) {
-		if(!Session.get('currentTopic')) return;
+		if (!Session.get('currentTopic')) return;
 
 		var comment = {
-			content: $(template.find('div.editable')).html(),
-			side: $(template.find('.js-post-side')).hasClass('btn-pro') ? 'pro': 'con',
+			content: template.$('.editable').val(),
+			side: template.$('.js-post-side').hasClass('btn-pro') ? 'pro': 'con',
 			replyTo: this.id
 		};
 
@@ -36,12 +36,11 @@ Template.newComment.events({
 				else
 					alert('Sorry, something went wrong. Please try again in a moment.');
 			}
-			else
+			else {
+				template.$('.editable').val('');
 				scrollToId(result);
-
+			}
 		});
-
-		template.find('div.editable').innerHTML = '';
 	},
 	'click .js-post-side': function (event, template) {
 		var t = $(event.target);
