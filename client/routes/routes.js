@@ -17,10 +17,9 @@ Router.configure({
 Router.onBeforeAction(function () {
   if (!Meteor.loggingIn() && !Meteor.user()) {
     if (Session.get('resetPassword')) {
-      this.render('forgotPassword');
+      this.redirect('/forgot');
     } else {
-      this.render('notFound');
-      this.stop();
+      this.redirect('/landing');
     }
   } else {
     this.next();
@@ -29,7 +28,7 @@ Router.onBeforeAction(function () {
 
 Router.onBeforeAction(function () {
   if (Meteor.user()) {
-    this.redirect('home');
+    this.redirect('/');
   } else {
     this.next();
   }
@@ -93,13 +92,15 @@ Router.route('/topics/:_id', {
   waitOn: function () {
     return [
       Meteor.subscribe('singleTopic', this.params._id),
-      Meteor.subscribe('topicComments', this.params._id, this.params.sort_by),
+      Meteor.subscribe('topicComments', this.params._id, this.params.sort_by)
     ];
+  },
+  onAfterAction: function () {
+    Session.set('currentTab', 'topicComments');
+    SessionAmplify.set('showingReplies', []);  
   },
   action: function () {
     if (Meteor.user()) {
-      Session.set('currentTab', 'topicComments');
-      SessionAmplify.set('showingReplies', []);
       this.layout('pageLayout');
       this.render();
       this.render('nav', { to: 'nav' });
@@ -118,17 +119,17 @@ Router.route('/users/:_id', {
   waitOn: function () {
     return Meteor.subscribe('userProfile', this.params._id);
   },
+  onAfterAction: function () {
+    Session.set('currentTab', 'profileComments');  
+  },
   action: function () {
     if (Meteor.user()) {
-      Session.set('currentTab', 'profileComments');
       this.layout('pageLayout');
       this.render();
       this.render('nav', { to: 'nav' });
       this.render('profileButtons', { to: 'pageButtons' });
       this.render('profileHeader', { to: 'pageHeader' });
       this.render('profileNav', { to: 'pageNav' });
-    } else {
-      console.warn('gtfo');
     }
   },
   data: function () {
