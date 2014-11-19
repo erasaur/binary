@@ -4,7 +4,7 @@
 			<div class="navbar-items">
         {{> navItems}}
       </div>
-      <a href="{{pathFor 'home'}}" class="navbar-brand">yamcha</a>
+      <a href="{{pathFor route='home'}}" class="navbar-brand">yamcha</a>
 		</div>
   </div>
 	<div class="hidden-xs">
@@ -24,7 +24,7 @@
             <span>You have no invites left :(</span>
           {{/if}}
         </div>
-				<a href="{{pathFor 'home'}}" class="navbar-brand">yamcha</a>
+				<a href="{{pathFor route='home'}}" class="navbar-brand">yamcha</a>
 			</div>
 
       <div class="col-sm-8">
@@ -51,7 +51,7 @@
         <a href="#" class="dropdown-toggle" id="nav-profile" data-toggle="dropdown"><i class="fa fa-user"></i></a>
         <div class="dropdown-menu">
         	<ul>
-        		<li><a href="{{pathFor 'profile' _id=currentUser._id}}" class="list-item"><span>Profile</span></a></li>
+        		<li><a href="{{pathFor route='profile' data=currentUser}}" class="list-item"><span>Profile</span></a></li>
 						<li><a href="#" id="js-logout" class="list-item"><span>Log Out</span></a></li>
 					</ul>
         </div>
