@@ -26,7 +26,7 @@ Template.topic.helpers({
 Template.topicButtons.helpers({
 	following: function () {
 		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.followingTopics)
-			return Meteor.user().activity.followingTopics.indexOf(this._id) > -1;
+			return _.contains(Meteor.user().activity.followingTopics, this._id);
 	}
 });
 

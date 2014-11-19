@@ -3,11 +3,11 @@ Template.comment.helpers({
 		return Meteor.users.findOne(this.userId);
 	},
 	showingReplies: function () {
-		return SessionAmplify.get('showingReplies').indexOf(this._id) > -1;
+		return _.contains(SessionAmplify.get('showingReplies'), this._id);
 	},
 	upvoted: function () {
 		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.upvotedComments)
-			return Meteor.user().activity.upvotedComments.indexOf(this._id) > -1;
+			return _.contains(Meteor.user().activity.upvotedComments, this._id);
 	},
 	numReplies: function () {
 		return this.replies && this.replies.length;
@@ -25,7 +25,6 @@ Template.newComment.events({
 		};
 
 		Meteor.call('newComment', Session.get('currentTopic'), comment, function (error, result) {
-
 			if (error) {
 				if (error.error === 'logged-out')
 					alert('Please log in to comment. Thank you!');
@@ -126,7 +125,7 @@ Template.comment.events({
 			scrollToId(self._id);
 			var replyTo = $('#' + self._id).closest('.comment-row');
 			Blaze.renderWithData(Template.replies, //template to render
-													{id: self._id, side: self.side, color: color}, //data context
+													{ id: self._id, side: self.side, color: color }, //data context
 													replyTo.parent().get(0), // insert within
 													replyTo.next().get(0)); // insert before
 	

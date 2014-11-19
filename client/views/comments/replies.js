@@ -8,7 +8,8 @@ Template.replies.helpers({
       'top': 'initVotes',
       'newest': 'initDate'
     };
-    var sortBy = sortOptions[Router.current().params.sort_by] || 'initVotes';
+    var query = getCurrentQuery();
+    var sortBy = query && sortOptions[query.sort_by] || 'initVotes';
 
 		var pros = Comments.find({
 								'replyTo': this.id, 
