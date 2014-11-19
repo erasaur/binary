@@ -6,11 +6,11 @@ Template.profile.helpers({
 
 Template.profileButtons.helpers({
 	canFollow: function () {
-		return Meteor.userId() && this._id != Meteor.userId();
+		return canFollow(Meteor.user(), this._id);
 	},
 	following: function () {
 		return this.activity && this.activity.followers && 
-			this.activity.followers.indexOf(Meteor.userId()) > -1;
+			_.contains(this.activity.followers, Meteor.userId());
 	}
 });
 
@@ -34,7 +34,8 @@ Template.profileButtons.events({
 		});
 	},
 	'click #js-settings': function (event, template) {
-		Router.go(getSettingsRoute(this._id));
+		// Router.go(getSettingsRoute(this._id));
+		Router.go('settings', { '_id': this._id })
 	}
 });
 

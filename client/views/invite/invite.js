@@ -32,7 +32,7 @@ Template.invite.events({
 					if (error)
 						alert('Oops, something went wrong when you were logging in. Please try again in a moment. Thank you!');
 					else
-						Router.go('/');
+						Router.go('home');
 				});
 			}
 		});
