@@ -80,16 +80,10 @@ Meteor.publish('topicComments', function (topicId, sortBy) {
 });
 
 Meteor.publishComposite('singleTopic', function (topicId) {
-  if (!canViewById(this.userId)) {
-    return {
-      find: function () {
-        return;
-      }
-    };
-  }
-
   return {
     find: function () {
+      if (!canViewById(this.userId)) return;
+
       return Topics.find(topicId);
     },
     children: [{
