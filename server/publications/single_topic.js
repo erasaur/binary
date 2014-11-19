@@ -15,8 +15,7 @@ Meteor.publish('topicComments', function (topicId, sortBy) {
   var topic = Topics.findOne(topicId);
 
   // if topic is deleted or no permission to view
-  if (!topic || topic.isDeleted || !canViewById(this.userId)) 
-    return [];
+  if (!topic || topic.isDeleted || !canViewById(this.userId)) return [];
 
   var sortOptions = {
     'top': 'upvotes',
