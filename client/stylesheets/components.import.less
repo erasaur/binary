@@ -58,7 +58,6 @@
 .container-fluid {
   height: 100%;
   width: 100%;
-  display: table;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 0;
@@ -244,6 +243,9 @@
 .navbar-transparent {
   width: 100%; 
   padding: @main-padding 0;
+  background: rgba(255, 255, 255, 0.9);
+  position: fixed;
+  z-index: 1000;
 }
 .navbar-transparent .col-sm-2, 
 .navbar-transparent .col-sm-8 {
