@@ -64,8 +64,9 @@ Router.route('/invite', {
     var inviteCode = self.params.invite_code;
 
     Meteor.call('validLink', inviterId, inviteCode, function (error, result) {
-      if (!result || error)
+      if (!result || error) {
         self.render('notFound');
+      }
     });
   }
 });
@@ -95,7 +96,7 @@ Router.route('/topics/:_id', {
       Meteor.subscribe('topicComments', this.params._id, this.params.sort_by)
     ];
   },
-  onAfterAction: function () {
+  onRun: function () {
     Session.set('currentTab', 'topicComments');
     SessionAmplify.set('showingReplies', []);  
   },
@@ -119,7 +120,7 @@ Router.route('/users/:_id', {
   waitOn: function () {
     return Meteor.subscribe('userProfile', this.params._id);
   },
-  onAfterAction: function () {
+  onRun: function () {
     Session.set('currentTab', 'profileComments');  
   },
   action: function () {
