@@ -18,6 +18,9 @@ add fetch to allow/deny
 _uihooks ? https://github.com/meteor/meteor/blob/30fb11f1fa0227f1c0ec3eb30b7864ea3b2d210e/History.md#blaze-1
 move stuff into packages
 
+use iron router to store states? eg storing current topic id instead of using session, storing current tab instead of using session, etc.
+FIX PAGINATION!
+
 /** 
  * comment template
  * 
