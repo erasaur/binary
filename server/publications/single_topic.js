@@ -10,6 +10,8 @@
  * changing as the comments change.
  */
 Meteor.publish('topicComments', function (topicId, sortBy) {
+  if (!canViewById(this.userId)) return this.ready();
+
   var topic = Topics.findOne(topicId);
 
   // if topic is deleted or no permission to view
@@ -82,7 +84,7 @@ Meteor.publish('topicComments', function (topicId, sortBy) {
 Meteor.publishComposite('singleTopic', function (topicId) {
   return {
     find: function () {
-      if (!canViewById(this.userId)) return;
+      if (!canViewById(this.userId)) return this.ready();
 
       return Topics.find(topicId);
     },

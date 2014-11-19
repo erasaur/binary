@@ -3,7 +3,7 @@
 Meteor.publishComposite('userProfile', function (userId) {
   return {
     find: function () { // the user
-      if (!canViewById(this.userId)) return;
+      if (!canViewById(this.userId)) return this.ready();
 
       return Meteor.users.find(userId, { 'limit': 1, 'fields': { 
         'email_hash': 1, 'profile': 1, 'stats': 1, 'activity': 1 
@@ -12,7 +12,7 @@ Meteor.publishComposite('userProfile', function (userId) {
     children: [
       {
         find: function (user) { // comments liked/created by user
-          var commentIds = user && user.activity && user.activity.upvotedComments;
+          var commentIds = user && user.activity && user.activity.upvotedComments || [];
 
           return Comments.find({ 
             $or: [ { 'userId': userId }, { '_id': { $in: commentIds } } ], 
@@ -38,7 +38,7 @@ Meteor.publishComposite('userProfile', function (userId) {
       },
       {
         find: function (user) { // topics created/followed by user
-          var topicIds = user && user.activity && user.activity.followingTopics;
+          var topicIds = user && user.activity && user.activity.followingTopics || [];
 
           return Topics.find({ 
             $or: [ { 'userId': userId }, { '_id': { $in: topicIds } } ],
@@ -75,7 +75,7 @@ Meteor.publishComposite('userProfile', function (userId) {
         find: function (user) { // users following/followed by user
           if (!user || !user.activity) return {};
 
-          var userIds = _.union(user.activity.followers, user.activity.followingUsers);
+          var userIds = _.union(user.activity.followers, user.activity.followingUsers) || [];
           return Meteor.users.find({ '_id': { $in: userIds } }, {
             'email_hash': 1, 'profile': 1
           });
