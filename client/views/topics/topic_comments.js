@@ -1,6 +1,7 @@
 Template.topicComments.helpers({
   commentCategory: function () {
-    return camelToTitle(Router.current().params.sort_by || 'Top');
+    var query = getCurrentQuery();
+    return query && camelToTitle(query.sort_by) || 'Top';
   },
   hasComments: function () { 
     // can't do comments.count (not cursor) or comments.length (dummy row)
@@ -11,7 +12,8 @@ Template.topicComments.helpers({
       'top': 'initVotes',
       'newest': 'initDate'
     };
-    var sortBy = sortOptions[Router.current().params.sort_by] || 'initVotes';
+    var query = getCurrentQuery();
+    var sortBy = query && sortOptions[query.sort_by] || 'initVotes';
 
     var pros = Comments.find({
                 'replyTo': {$nin: SessionAmplify.get('showingReplies')}, 

@@ -6,7 +6,8 @@ Template.invite.events({
 		event.preventDefault();
 		var	name = template.find('#js-create-name').value;
 		var	password = template.find('#js-create-password').value;
-		var inviteCode = Router.current().params.invite_code;
+		var query = getCurrentQuery();
+		var inviteCode = query && query.invite_code;
 
 		Meteor.call('newUser', name, password, inviteCode, function (error, result) {
 			if (error) {
@@ -31,7 +32,7 @@ Template.invite.events({
 					if (error)
 						alert('Oops, something went wrong when you were logging in. Please try again in a moment. Thank you!');
 					else
-						Router.go('home');
+						Router.go('/');
 				});
 			}
 		});
