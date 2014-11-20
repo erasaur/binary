@@ -1,5 +1,5 @@
 <template name="nav">
-  <header class="navbar navbar-fixed-top" id="top" role="banner">
+  <div class="navbar navbar-fixed-top">
     <div class="container">
       <div class="navbar-header col-sm-2" style="padding-right: 0;">
         <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar">
@@ -12,17 +12,16 @@
       </div>
       <nav class="navbar-collapse collapse in" id="main-navbar" role="navigation" aria-expanded="true">
         <ul class="nav navbar-nav col-sm-8" style="margin: 0; padding: 0;">
-          <form class="navbar-form" id="js-search-form" role="search" style="margin: 8px 0;">
+          <!-- <form class="navbar-form" id="js-search-form" role="search" style="margin: 8px 0;">
             <div class="form-group has-feedback" style="width: 100%;">
               <input type="text" class="form-control" placeholder="Search" style="width: 100%;">
             </div>
-          </form>
+          </form> -->
+          {{> searchInput}}
         </ul>
         
         {{#if currentUser}}
           <ul class="nav navbar-nav col-sm-2" style="margin: 0; padding-left: 0; padding-right: 0;">
-            <!-- <li><a href="http://expo.getbootstrap.com" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Expo');">Expo</a></li>
-            <li><a href="http://blog.getbootstrap.com" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Blog');">Blog</a></li> -->
             <li class="dropdown">
               <a href="#" data-toggle="modal" data-target="#new-topic-modal"><i class="hidden-xs fa fa-plus"></i><span class="visible-xs">Add New Topic</span></a>
             </li>
@@ -40,7 +39,7 @@
         {{/if}}
       </nav>
     </div>
-  </header>
+  </div>
 
 
   <!-- <div class="visible-xs">
