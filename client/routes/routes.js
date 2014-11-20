@@ -4,6 +4,7 @@ var subs = new SubsManager({
   // expire any subscription after 30 minutes
   expireIn: 30
 });
+var scrolled = false;
 
 Router.configure({
   layoutTemplate: 'mainLayout',
@@ -11,6 +12,10 @@ Router.configure({
   notFoundTemplate: 'notFound',
   waitOn: function () {
     return subs.subscribe('currentUser');
+  },
+  onRun: function () {
+    console.log('global onRun');
+    this.next();
   }
 });
 
@@ -46,10 +51,11 @@ Router.onAfterAction(function () {
   if (this.ready()) {
     var hash = window.location.hash.substring(1);
 
-    if (hash) {
-      setTimeout(function () {
+    if (hash && !scrolled) {
+      Meteor.defer(function () {
         scrollToId(hash);
-      }, 0);
+        scrolled = true;
+      });
     }  
   }
 });
@@ -99,6 +105,7 @@ Router.route('/topics/:_id', {
   onRun: function () {
     Session.set('currentTab', 'topicComments');
     SessionAmplify.set('showingReplies', []);  
+    console.log('onRun for topic route');
   },
   action: function () {
     if (Meteor.user()) {
@@ -122,6 +129,7 @@ Router.route('/users/:_id', {
   },
   onRun: function () {
     Session.set('currentTab', 'profileComments');  
+    console.log('onRun for profile route');
   },
   action: function () {
     if (Meteor.user()) {
