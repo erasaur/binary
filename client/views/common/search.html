@@ -1,7 +1,7 @@
 <template name="searchInput">
-  <form class="form-horizontal" id="js-search-form" role="form">
-    <div class="form-group has-feedback">
-      {{> esInput index=indexes classes="form-control" id="js-search-input" placeholder="Filter by category or keyword..."}}
+  <form class="navbar-form search-form" id="js-search-form" role="search">
+    <div class="search-form-group form-group has-feedback">
+      {{> esInput index=indexes classes="form-control search-input" id="js-search-input" placeholder="Find topics..."}}
       {{#if searching}}
         <span id="js-search-cancel" class="glyphicon glyphicon-remove form-control-feedback"></span>
       {{/if}}
