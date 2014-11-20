@@ -8,9 +8,9 @@ var scrolled = false;
 
 Router.configure({
   layoutTemplate: 'mainLayout',
-  loadingTemplate: 'loading',
+  // loadingTemplate: 'loading',
   notFoundTemplate: 'notFound',
-  waitOn: function () {
+  subscriptions: function () {
     return subs.subscribe('currentUser');
   },
   onRun: function () {
@@ -44,7 +44,6 @@ Router.onBeforeAction(function () {
 
 // }, { only: ['admin'] });
 
-Router.plugin('loading', { notFoundTemplate: 'loading' });
 Router.plugin('dataNotFound', { notFoundTemplate: 'notFound' });
 
 Router.onAfterAction(function () {
@@ -72,8 +71,12 @@ Router.route('/invite', {
     Meteor.call('validLink', inviterId, inviteCode, function (error, result) {
       if (!result || error) {
         self.render('notFound');
+      } else {
+        self.render();
       }
     });
+
+    this.render('loading');
   }
 });
 Router.route('/login');
@@ -81,11 +84,11 @@ Router.route('/landing');
 
 Router.route('/', { 
   name: 'home',
-  waitOn: function () {
+  subscriptions: function () {
     return subs.subscribe('topicsList', Session.get('topicsLimit'));
   },
   action: function () {
-    if (Meteor.user()) {
+    if (this.ready() && Meteor.user()) {
       this.render('nav', { to: 'nav' });
       this.render('home');
     }
@@ -96,7 +99,7 @@ Router.route('/', {
 });
 Router.route('/topics/:_id', {
   name: 'topic',
-  waitOn: function () {
+  subscriptions: function () {
     return [
       Meteor.subscribe('singleTopic', this.params._id),
       Meteor.subscribe('topicComments', this.params._id, this.params.sort_by)
@@ -106,9 +109,10 @@ Router.route('/topics/:_id', {
     Session.set('currentTab', 'topicComments');
     SessionAmplify.set('showingReplies', []);  
     console.log('onRun for topic route');
+    this.next();
   },
   action: function () {
-    if (Meteor.user()) {
+    if (this.ready() && Meteor.user()) {
       this.layout('pageLayout');
       this.render();
       this.render('nav', { to: 'nav' });
@@ -124,15 +128,16 @@ Router.route('/topics/:_id', {
 });
 Router.route('/users/:_id', {
   name: 'profile',
-  waitOn: function () {
+  subscriptions: function () {
     return Meteor.subscribe('userProfile', this.params._id);
   },
   onRun: function () {
     Session.set('currentTab', 'profileComments');  
     console.log('onRun for profile route');
+    this.next();
   },
   action: function () {
-    if (Meteor.user()) {
+    if (this.ready() && Meteor.user()) {
       this.layout('pageLayout');
       this.render();
       this.render('nav', { to: 'nav' });
