@@ -10,12 +10,10 @@
  * changing as the comments change.
  */
 Meteor.publish('topicComments', function (topicId, sortBy) {
-  if (!canViewById(this.userId)) return this.ready();
-
   var topic = Topics.findOne(topicId);
 
   // if topic is deleted or no permission to view
-  if (!topic || topic.isDeleted || !canViewById(this.userId)) return [];
+  if (!topic || topic.isDeleted || !this.userId) return this.ready();
 
   var sortOptions = {
     'top': 'upvotes',
@@ -83,7 +81,7 @@ Meteor.publish('topicComments', function (topicId, sortBy) {
 Meteor.publishComposite('singleTopic', function (topicId) {
   return {
     find: function () {
-      if (!canViewById(this.userId)) return this.ready();
+      if (!this.userId) return this.ready();
 
       return Topics.find(topicId);
     },
