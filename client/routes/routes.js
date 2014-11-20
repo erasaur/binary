@@ -13,7 +13,8 @@ Router.configure({
   onRun: function () {
     console.log('global onRun');
     this.next();
-  }
+  },
+  progressDelay: 100 // delay before showing IR progress
 });
 
 Router.onBeforeAction(function () {
