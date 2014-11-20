@@ -55,13 +55,46 @@
 
 // general layout components -------------------------
 
-.container-fluid {
-  height: 100%;
+.container {
   width: 100%;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
   padding: 0;
 }
+.navbar {
+  border-bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0;
+}
+
+.navbar-brand {
+  margin-left: 0;
+  float: left;
+}
+@media (min-width: 768px) {
+  .navbar-brand {
+    float: right;
+  }
+}
+.navbar-nav {
+  margin: 0;
+}
+.navbar-collapse .navbar-nav {
+  margin: 7.5px 10px;
+  padding-left: 15px;
+}
+.navbar-right {
+  float: left;
+}
+
+
+
+
+// .container-fluid {
+//   height: 100%;
+//   width: 100%;
+//   -moz-box-sizing: border-box;
+//   box-sizing: border-box;
+//   padding: 0;
+// }
 .col {
   // background: @light-gray; 
   padding: 0;
@@ -240,67 +273,67 @@
   color: @dark-gray;
   &:hover { cursor: pointer; }
 }
-.navbar-transparent {
-  width: 100%; 
-  padding: @main-padding 0;
-  background: rgba(255, 255, 255, 0.9);
-  position: fixed;
-  z-index: 1000;
-}
-.navbar-transparent .col-sm-2, 
-.navbar-transparent .col-sm-8 {
-  padding: 0;
-}
-.navbar-brand, 
-.navbar-nav > li > a { // increased specificity to override bootstrap
-  color: @dark-gray;
-  font-size: 1.5em; 
-  background: transparent !important;
-  position: relative;
-  padding: 0;
+// .navbar-transparent {
+//   width: 100%; 
+//   padding: @main-padding 0;
+//   background: rgba(255, 255, 255, 0.9);
+//   position: fixed;
+//   z-index: 1000;
+// }
+// .navbar-transparent .col-sm-2, 
+// .navbar-transparent .col-sm-8 {
+//   padding: 0;
+// }
+// .navbar-brand, 
+// .navbar-nav > li > a { // increased specificity to override bootstrap
+//   color: @dark-gray;
+//   font-size: 1.5em; 
+//   background: transparent !important;
+//   position: relative;
+//   padding: 0;
 
-  &:hover { color: black; }
-}
-.navbar-brand { 
-  float: right; 
-  padding-right: @main-padding;
-  margin-top: 5px;
-  height: auto;
-}
-.navbar-nav { 
-  margin-top: 5px;
-  float: left; 
-  padding-left: @main-padding;
-  position: relative;
-}
-.navbar-nav > li {
-  width: 40px;
-  display: inline-block; //so the list items don't stack when screen is shrunk
-}
-.navbar-nav > li > .dropdown-menu { // increased specificity to override bootstrap
-  right: 0;
-  left: auto;
-  margin-top: 10px;
-  .border-radius(@main-radius);
-}
-.navbar-nav .dropdown-menu.notifications {
-  width: 250px;
-  height: 400px;
-  overflow-y: auto; 
-}
-.navbar-collapsed {
-  width: 100%;
-  padding: @main-padding;
-}
-.navbar-collapsed .navbar-brand {
-  float: left; 
-  margin: 0; padding: 0;
-  height: 1.5em;
-}
-.navbar-collapsed .navbar-items {
-  float: right;
-  margin-top: -7.5px;
-}
+//   &:hover { color: black; }
+// }
+// .navbar-brand { 
+//   float: right; 
+//   padding-right: @main-padding;
+//   margin-top: 5px;
+//   height: auto;
+// }
+// .navbar-nav { 
+//   margin-top: 5px;
+//   float: left; 
+//   padding-left: @main-padding;
+//   position: relative;
+// }
+// .navbar-nav > li {
+//   width: 40px;
+//   display: inline-block; //so the list items don't stack when screen is shrunk
+// }
+// .navbar-nav > li > .dropdown-menu { // increased specificity to override bootstrap
+//   right: 0;
+//   left: auto;
+//   margin-top: 10px;
+//   .border-radius(@main-radius);
+// }
+// .navbar-nav .dropdown-menu.notifications {
+//   width: 250px;
+//   height: 400px;
+//   overflow-y: auto; 
+// }
+// .navbar-collapsed {
+//   width: 100%;
+//   padding: @main-padding;
+// }
+// .navbar-collapsed .navbar-brand {
+//   float: left; 
+//   margin: 0; padding: 0;
+//   height: 1.5em;
+// }
+// .navbar-collapsed .navbar-items {
+//   float: right;
+//   margin-top: -7.5px;
+// }
 
 // settings page -------------------------------------
 
@@ -355,6 +388,12 @@
 }
 
 // search page ---------------------------------------
+
+// notification badge --------------------------------
+
+.notification-container span {
+  display: inline-block;
+}
 
 // iron router loader --------------------------------
 

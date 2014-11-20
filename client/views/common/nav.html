@@ -1,5 +1,49 @@
 <template name="nav">
-  <div class="visible-xs">
+  <header class="navbar navbar-fixed-top" id="top" role="banner">
+    <div class="container">
+      <div class="navbar-header col-sm-2" style="padding-right: 0;">
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="../" class="navbar-brand" style="right: 0;">yamcha</a>
+      </div>
+      <nav class="navbar-collapse collapse in" id="main-navbar" role="navigation" aria-expanded="true">
+        <ul class="nav navbar-nav col-sm-8" style="margin: 0; padding: 0;">
+          <form class="navbar-form" id="js-search-form" role="search" style="margin: 8px 0;">
+            <div class="form-group has-feedback" style="width: 100%;">
+              <input type="text" class="form-control" placeholder="Search" style="width: 100%;">
+            </div>
+          </form>
+        </ul>
+        
+        {{#if currentUser}}
+          <ul class="nav navbar-nav col-sm-2" style="margin: 0; padding-left: 0; padding-right: 0;">
+            <!-- <li><a href="http://expo.getbootstrap.com" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Expo');">Expo</a></li>
+            <li><a href="http://blog.getbootstrap.com" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Blog');">Blog</a></li> -->
+            <li class="dropdown">
+              <a href="#" data-toggle="modal" data-target="#new-topic-modal"><i class="hidden-xs fa fa-plus"></i><span class="visible-xs">Add New Topic</span></a>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" id="nav-profile" data-toggle="dropdown"><i class="hidden-xs fa fa-user"></i><span class="visible-xs">Your Profile</span></a>
+              <div class="dropdown-menu">
+                <ul>
+                  <li><a href="{{pathFor route='profile' data=currentUser}}" class="list-item"><span>Profile</span></a></li>
+                  <li><a href="#" id="js-logout" class="list-item"><span>Log Out</span></a></li>
+                </ul>
+              </div>
+            </li>
+            {{> notifications}}
+          </ul>
+        {{/if}}
+      </nav>
+    </div>
+  </header>
+
+
+  <!-- <div class="visible-xs">
   	<div class="navbar-collapsed">
 			<div class="navbar-items">
         {{> navItems}}
@@ -10,7 +54,6 @@
 	<div class="hidden-xs">
 		<div class="navbar-transparent row">
 
-      <!-- navbar brand container -->
 			<div class="col-sm-2"> 
         <button class="btn btn-default invite" data-toggle="dropdown">Invite!</button>
         <div class="dropdown-menu invite-menu">
@@ -31,19 +74,18 @@
         {{> searchInput}}
       </div>
 
-      <!-- navbar items container -->
 			<div class="col-sm-2 navbar-items">
 				{{> navItems}}
 			</div>
 
 		</div>
-	</div>
+	</div> -->
   {{> newTopic}}
 </template>
 
 <template name="navItems">
-	<ul class="nav navbar-nav">
-		{{#if currentUser}}
+  {{#if currentUser}}
+  	<ul class="nav navbar-nav">
       <li class="dropdown">
         <a href="#" data-toggle="modal" data-target="#new-topic-modal"><i class="fa fa-plus"></i></a>
       </li>
@@ -57,6 +99,6 @@
         </div>
       </li>
     	{{> notifications}}
-    {{/if}}   
-	</ul>
+  	</ul>
+  {{/if}}   
 </template>
