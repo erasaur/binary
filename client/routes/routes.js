@@ -10,9 +10,6 @@ Router.configure({
   layoutTemplate: 'mainLayout',
   // loadingTemplate: 'loading',
   notFoundTemplate: 'notFound',
-  subscriptions: function () {
-    return subs.subscribe('currentUser');
-  },
   onRun: function () {
     console.log('global onRun');
     this.next();
@@ -58,6 +55,8 @@ Router.onAfterAction(function () {
     }  
   }
 });
+
+subs.subscribe('currentUser');
 
 Router.route('/forgot', { 
   name: 'forgotPassword'
