@@ -3,7 +3,7 @@
 Meteor.publishComposite('userProfile', function (userId) {
   return {
     find: function () { // the user
-      if (!canViewById(this.userId)) return this.ready();
+      if (!this.userId) return this.ready();
 
       return Meteor.users.find(userId, { 'limit': 1, 'fields': { 
         'email_hash': 1, 'profile': 1, 'stats': 1, 'activity': 1 
