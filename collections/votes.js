@@ -38,7 +38,7 @@ Meteor.methods({
       throw new Meteor.Error('invalid-content', 'This content does not exist.');
 
     // votes/score
-    var result = Comments.update({ '_id': commentId, 'upvoters': userId } }, {
+    var result = Comments.update({ '_id': commentId, 'upvoters': userId }, {
       $pull: { 'upvoters': userId },
       $inc: { 'upvotes': -1 }
     });
@@ -68,13 +68,13 @@ Meteor.methods({
 
     if (field) {
       Topics.update({ _id: topicId }, {
-        $pull: { field + 'Users': userId },
+        $pull: setProperty({}, field + 'Users', userId),
         $inc: { field: -1 }
       });  
     }
 
     Topics.update({ _id: topicId }, {
-      $addToSet: { side + 'Users': userId },
+      $addToSet: setProperty({}, side + 'Users', userId),
       $inc: { side: 1 }
     });
 
