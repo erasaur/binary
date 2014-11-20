@@ -1,11 +1,11 @@
 Meteor.methods({
   upvoteComment: function (comment) {
-    var user = Meteor.user();
-    var userId = user._id;
-    var commentId = comment._id;
-
     if (!comment)
       throw new Meteor.Error('invalid-content', 'This content does not exist.');
+
+    var user = Meteor.user();
+    var userId = this.userId;
+    var commentId = comment._id;
 
     if (!user || !canUpvote(user, comment))
       throw new Meteor.Error('duplicate-content', 'This content already exists.');
@@ -29,12 +29,15 @@ Meteor.methods({
     }
   },
   cancelUpvoteComment: function (comment) {
+    if (!comment)
+      throw new Meteor.Error('invalid-content', 'This content does not exist.');
+
     var user = Meteor.user();
-    var userId = user._id;
+    var userId = this.userId;
     var commentId = comment._id;
 
     // if user isn't among the upvoters, abort
-    if (!comment || !user || canUpvote(user, comment))
+    if (!user || canUpvote(user, comment))
       throw new Meteor.Error('invalid-content', 'This content does not exist.');
 
     // votes/score
@@ -53,12 +56,15 @@ Meteor.methods({
     }
   },
   vote: function (topic, side) {
+    if (!topic || !side)
+      throw new Meteor.Error('invalid-content', 'This content does not exist.');
+
     var user = Meteor.user();
-    var userId = user._id;
+    var userId = this.userId;
     var topicId = topic._id;
 
-    if (!topic || !user || !canUpvote(user))
-      throw new Meteor.Error('invalid-content', 'This content does not exist.');
+    if (!user || !canUpvote(user))
+      throw new Meteor.Error('invalid-content', 'This content already exists.');
 
     // in case user voted already, cancel previous vote
     if (topic.proUsers && _.contains(topic.proUsers, userId))
@@ -67,15 +73,15 @@ Meteor.methods({
       var field = 'con';
 
     if (field) {
-      Topics.update({ _id: topicId }, {
+      Topics.update(topicId, {
         $pull: setProperty({}, field + 'Users', userId),
-        $inc: { field: -1 }
+        $inc: setProperty({}, field, -1) // need the function to convert variable key
       });  
     }
 
-    Topics.update({ _id: topicId }, {
+    Topics.update(topicId, {
       $addToSet: setProperty({}, side + 'Users', userId),
-      $inc: { side: 1 }
+      $inc: setProperty({}, side, 1)
     });
 
     // store voting history in user activity ?
