@@ -36,29 +36,21 @@
   		  {{{content}}}
     	</div>
     	<div class="comment-date">
-    		{{formatDate createdAt}}
+    		<span>{{formatDate createdAt}}</span>
     	</div>
     	<div class="comment-footer">
-        <div class="comment-footer-left">
-      		{{#if currentUser}}
-    	  		{{#if upvoted}}
-    	  			<button class="float-left btn btn-primary js-downvote-comment">Unlike {{upvotes}}</button>
-    	  		{{else}}
-    	  			<button class="float-left btn btn-default js-upvote-comment"><i class="fa fa-thumbs-o-up"></i> {{upvotes}}</button>
-    	  		{{/if}}
-    	  	{{else}}
-    	  		<i class="fa fa-thumbs-o-up"></i> {{upvotes}}
-      		{{/if}}
+        <div class="comment-footer-left float-left">
+          <div class="icon-group {{voteClass}}">
+            <i class="icon-action fa fa-heart"></i>
+            <span class="icon-text">{{upvotes}}</span>
+          </div>
+          <div class="icon-group js-toggle-replies {{toggleClass}}">
+            <i class="icon-action fa fa-comment fa-flip-horizontal"></i>
+            <span class="icon-text">{{numReplies}}</span>
+          </div>
         </div>
 
         <div class="comment-footer-right float-right">
-          <button class="btn btn-default js-toggle-replies">
-            {{#if showingReplies}}
-              Hide Replies
-            {{else}}
-              Show Replies {{numReplies}}
-            {{/if}}
-          </button>
           {{#if isAdmin}}
             <button class="btn btn-default js-delete-comment">Delete</button>
           {{/if}}

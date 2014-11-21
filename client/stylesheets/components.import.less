@@ -53,6 +53,26 @@
   margin-right: 20px;
 }
 
+.icon-group {
+  display: inline-block;
+  cursor: pointer;
+  padding-right: 8px;
+  color: rgb(176, 176, 176);
+
+  &:hover { color: rgb(132, 132, 132); }
+}
+.icon-group.liked .icon-action { // liked comment
+  color: #cb2027;
+}
+.icon-group.showing .icon-action { // showing comment replies
+  color: rgb(132, 132, 132);
+}
+.icon-text {
+  font-size: 11px;
+  position: relative;
+  top: -1px;
+}
+
 // general layout components -------------------------
 
 .container,
