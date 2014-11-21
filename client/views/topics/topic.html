@@ -106,11 +106,32 @@
 </template>
 
 <template name="topicNav">
+	<div class="divider"><hr></div>
 	<ul class="page-nav-buttons clearfix">
-	  <li class="js-nav-button {{isCurrentTab 'topicComments'}}" data-tab="topicComments"><a href="#">Comments</a></li>
-	  <li class="js-nav-button {{isCurrentTab 'topicFollowers'}}" data-tab="topicFollowers"><a href="#">Followers</a></li>
-	  <li class="js-nav-button {{isCurrentTab 'topicCreator'}}" data-tab="topicCreator"><a href="#">Created by {{formatName userId}}</a></li>
-	  <li><a href="#">Created {{formatDate createdAt}}</a></li>
+	  <li class="js-nav-button" data-tab="topicComments">
+	  	<a href="#" class="{{isCurrentTab 'topicComments'}}">
+	  		<span class="value">{{commentsCount}}</span>
+	  		<span class="label">Comments</span>
+	  	</a>
+	  </li>
+	  <li class="js-nav-button" data-tab="topicFollowers">
+	  	<a href="#" class="{{isCurrentTab 'topicFollowers'}}">
+	  		<span class="value">{{followers.length}}</span>
+	  		<span class="label">Followers</span>
+	  	</a>
+  	</li>
+	  <!-- <li class="js-nav-button" data-tab="topicCreator">
+	  	<a href="#" class="{{isCurrentTab 'topicCreator'}}">
+	  		<span class="value">1337</span>
+	  		<span class="label">Created by {{formatName userId}}</span>
+	  	</a>
+	  </li>
+	  <li class="js-nav-button" data-tab="topicCreator">
+	  	<a href="#">
+	  		<span class="value">1337</span>
+	  		<span class="label">Created {{formatDate createdAt}}</span>
+	  	</a>
+  	</li> -->
 	</ul>
 </template>
 

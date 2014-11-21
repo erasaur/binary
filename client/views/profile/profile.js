@@ -16,7 +16,7 @@ Template.profileButtons.helpers({
 
 Template.profileNav.helpers({
 	isCurrentTab: function (tab) {
-		return Session.equals('currentTab', tab) ? 'selected' : '';
+		return Session.equals('currentTab', tab) ? 'active' : '';
 	}
 });
 
@@ -35,7 +35,7 @@ Template.profileButtons.events({
 	},
 	'click #js-settings': function (event, template) {
 		// Router.go(getSettingsRoute(this._id));
-		Router.go('settings', { '_id': this._id })
+		Router.go('settings', { '_id': this._id });
 	}
 });
 
