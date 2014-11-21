@@ -2,21 +2,26 @@
 <!-- BEGIN PAGE TABS -->
 
 <template name="topicComments">
-	<div class="col-content page-body-header">
-		<h3>Comments</h3>
-		<span class="dropdown">
-		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
-		    {{commentCategory}} <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-		    <li><a role="menuitem" tabindex="-1" href="{{pathFor route='topic' query='sort_by=top'}}" class="list-item">Top</a></li>
-		    <li><a role="menuitem" tabindex="-1" href="{{pathFor route='topic' query='sort_by=newest'}}" class="list-item">Newest</a></li>
-		  </ul>
-		</span>
-	</div>
+	<div class="col-content page-body-header topic-header clearfix">
+		<div class="float-left">
+			<h3>Comments</h3>
+			<span class="dropdown">
+			  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+			    {{commentCategory}} <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
+			    <li><a role="menuitem" tabindex="-1" href="{{pathFor route='topic' query='sort_by=top'}}" class="list-item">Top</a></li>
+			    <li><a role="menuitem" tabindex="-1" href="{{pathFor route='topic' query='sort_by=newest'}}" class="list-item">Newest</a></li>
+			  </ul>
+			</span>
+		</div>
+		<div class="float-right">
+			<button class="btn btn-default" type="button">
+				Comment
+			</button>
+		</div>
 
-	<div class="col-content clearfix">
-		{{> newComment}}
+		<!-- {{> newComment}} -->
 	</div>
 
 	{{#if hasComments}}
