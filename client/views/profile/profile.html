@@ -78,11 +78,32 @@
 </template>
 
 <template name="profileNav">
+	<div class="divider"><hr></div>
 	<ul class="page-nav-buttons clearfix">
-	  <li class="js-nav-button {{isCurrentTab 'profileComments'}}" data-tab="profileComments"><a href="#">Comments</a></li>
-	  <li class="js-nav-button {{isCurrentTab 'profileTopics'}}" data-tab="profileTopics"><a href="#">Topics</a></li>
-	  <li class="js-nav-button {{isCurrentTab 'profileFollowers'}}" data-tab="profileFollowers"><a href="#">Followers</a></li>
-	  <li class="js-nav-button {{isCurrentTab 'profileFollowing'}}" data-tab="profileFollowing"><a href="#">Following</a></li>
+	  <li>
+	  	<a href="#" class="js-nav-button {{isCurrentTab 'profileComments'}}" data-tab="profileComments">
+	  		<span class="value">{{stats.commentsCount}}</span>
+	  		<span class="label">Comments</span>
+	  	</a>
+	  </li>
+	  <li>
+	  	<a href="#" class="{{isCurrentTab 'profileTopics'}} js-nav-button" data-tab="profileTopics">
+	  		<span class="value">{{stats.topicsCount}}</span>
+	  		<span class="label">Topics</span>
+	  	</a>
+	  </li>
+	  <li>
+	  	<a href="#" class="{{isCurrentTab 'profileFollowers'}} js-nav-button" data-tab="profileFollowers">
+	  		<span class="value">{{activity.followers.length}}</span>
+	  		<span class="label">Followers</span>
+	  	</a>
+  	</li>
+  	<li>
+	  	<a href="#" class="{{isCurrentTab 'profileFollowing'}} js-nav-button" data-tab="profileFollowing">
+	  		<span class="value">{{activity.followingUsers.length}}</span>
+	  		<span class="label">Following</span>
+	  	</a>
+	  </li>
 	</ul>
 </template>
 

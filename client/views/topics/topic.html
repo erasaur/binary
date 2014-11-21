@@ -108,30 +108,18 @@
 <template name="topicNav">
 	<div class="divider"><hr></div>
 	<ul class="page-nav-buttons clearfix">
-	  <li class="js-nav-button" data-tab="topicComments">
-	  	<a href="#" class="{{isCurrentTab 'topicComments'}}">
+	  <li>
+	  	<a href="#" class="{{isCurrentTab 'topicComments'}} js-nav-button" data-tab="topicComments">
 	  		<span class="value">{{commentsCount}}</span>
 	  		<span class="label">Comments</span>
 	  	</a>
 	  </li>
-	  <li class="js-nav-button" data-tab="topicFollowers">
-	  	<a href="#" class="{{isCurrentTab 'topicFollowers'}}">
+	  <li>
+	  	<a href="#" class="{{isCurrentTab 'topicFollowers'}} js-nav-button" data-tab="topicFollowers">
 	  		<span class="value">{{followers.length}}</span>
 	  		<span class="label">Followers</span>
 	  	</a>
   	</li>
-	  <!-- <li class="js-nav-button" data-tab="topicCreator">
-	  	<a href="#" class="{{isCurrentTab 'topicCreator'}}">
-	  		<span class="value">1337</span>
-	  		<span class="label">Created by {{formatName userId}}</span>
-	  	</a>
-	  </li>
-	  <li class="js-nav-button" data-tab="topicCreator">
-	  	<a href="#">
-	  		<span class="value">1337</span>
-	  		<span class="label">Created {{formatDate createdAt}}</span>
-	  	</a>
-  	</li> -->
 	</ul>
 </template>
 
