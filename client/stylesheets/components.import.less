@@ -68,7 +68,11 @@
   background: rgba(255, 255, 255, 0.9);
   margin-bottom: 0;
 }
+.navbar-header {
+  padding-right: 0;
+}
 .navbar-brand {
+  right: 0;
   margin-left: 0;
   float: left;
 }
@@ -79,11 +83,12 @@
 }
 .navbar-nav {
   margin: 0;
+  padding: 0;
 }
-.navbar-collapse .navbar-nav {
-  margin: 7.5px 10px;
-  padding-left: 15px;
-}
+// .navbar-collapse .navbar-nav {
+//   margin: 7.5px 10px;
+//   padding-left: 15px;
+// }
 .navbar-right {
   float: left;
 }
@@ -94,6 +99,15 @@
 }
 .col-content {
   padding: @main-padding;
+}
+.divider {
+  margin: 0 15px;
+}
+.divider hr {
+  border: 0;
+  height: 1px;
+  margin: 0;
+  background-color: #eee;
 }
 .full-height {
   height: 100%;
@@ -107,7 +121,8 @@
   // border-top: none;
 }
 .page-head {
-  margin-bottom: 20px;
+  margin: 30px 15px;
+  background-color: #fff;
 }
 .page-header {
   margin: 0;
@@ -129,35 +144,45 @@
 .page-nav-buttons {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: auto;
+  display: table;
+  table-layout: fixed;
 }
 .page-nav-buttons li {
-  float: left;
-  width: 25%;
-  height: 60px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // background-color: #fff;
+  display: table-cell;
+  float: none;
+  line-height: 14px;
   text-align: center;
-  border: 1px solid @gray;
-  border-right: none;
-  border-bottom: none;
-  &:first-of-type { 
-    border-radius: 0 0 0 @main-radius;
-    border-left: none; 
-  }
-  &:last-of-type {
-    border-radius: 0 0 @main-radius 0;
-  }
-  &:hover { background: @gray; }
-}
-.page-nav-buttons a {
-  display: block;
   padding: @main-padding 0;
-  border-left: 1em solid transparent;
-  border-right: 1em solid transparent;
-  height: 100%;
+}
+.page-nav-buttons li a {
+  display: block;
+  font-weight: normal;
+  padding: 0;
+  width: 120px;
   .overflow-ellipsis;
 }
-.page-nav-buttons li.selected {
-  background: @gray;
+.page-nav-buttons li a:hover .value,
+.page-nav-buttons li a:hover .label,
+.page-nav-buttons li a.active .value,
+.page-nav-buttons li a.active .label {
+  color: #cb2027;
+}
+.page-nav-buttons li a .value {
+  display: block;
+  font-weight: bold;
+  padding-bottom: 3px;
+  font-size: 16px;
+  color: #aaa;
+}
+.page-nav-buttons li a .label {
+  display: block;
+  font-weight: normal;
+  font-size: 11px;
+  color: #9a9a9a;
 }
 .page-body-content.col-content {
   padding-top: 0;
