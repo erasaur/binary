@@ -2,7 +2,7 @@
 <!-- BEGIN PAGE TABS -->
 
 <template name="topicComments">
-	<div class="col-content page-body-header topic-header clearfix">
+	<div class="page-body-header clearfix">
 		<div class="float-left">
 			<h3>Comments</h3>
 			<span class="dropdown">
@@ -25,7 +25,7 @@
 	</div>
 
 	{{#if hasComments}}
-		<div class="comment-container main">
+		<div class="page-body-content">
 			{{#each comments}}
 				{{> commentRow}}
 			{{/each}}
@@ -36,10 +36,10 @@
 </template>
 
 <template name="topicFollowers">
-	<div class="col-content page-body-header">
+	<div class="page-body-header">
 		<h3>Followers</h3>
 	</div>
-	<div class="col-content page-body-content">
+	<div class="page-body-content">
 		<div class="list">
 			{{#if followers.count}}
 				{{#each followers}}
@@ -53,10 +53,10 @@
 </template>
 
 <template name="topicCreator">
-	<div class="col-content page-body-header">
+	<div class="page-body-header">
 		<h3>Creator</h3>
 	</div>
-	<div class="col-content page-body-content">
+	<div class="page-body-content">
 		<div class="list">
 			{{#with creator}}
 				{{> profileItem}}
@@ -80,7 +80,7 @@
 <!-- BEGIN PAGE LAYOUT -->
 
 <template name="topic">	
-	<div class="page-body">
+	<div class="page-body topic-comments">
 		{{> Template.dynamic template=currentTab data=this}}
 	</div>
 </template>
@@ -112,7 +112,7 @@
 
 <template name="topicNav">
 	<div class="divider"><hr></div>
-	<ul class="page-nav-buttons clearfix">
+	<ul class="page-nav-action clearfix">
 	  <li>
 	  	<a href="#" class="{{isCurrentTab 'topicComments'}} js-nav-button" data-tab="topicComments">
 	  		<span class="value">{{commentsCount}}</span>
