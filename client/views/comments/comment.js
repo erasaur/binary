@@ -2,12 +2,16 @@ Template.comment.helpers({
 	author: function () {
 		return Meteor.users.findOne(this.userId);
 	},
-	showingReplies: function () {
-		return _.contains(SessionAmplify.get('showingReplies'), this._id);
+	toggleClass: function () {
+		return _.contains(SessionAmplify.get('showingReplies'), this._id) && 'showing';
 	},
-	upvoted: function () {
-		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.upvotedComments)
-			return _.contains(Meteor.user().activity.upvotedComments, this._id);
+	voteClass: function () {
+		var user = Meteor.user();
+		if (!user) return;
+
+		var upvoted = user.activity && user.activity.upvotedComments;
+		return upvoted && _.contains(upvoted, this._id) ? 
+			'liked js-downvote-comment' : 'js-upvote-comment';
 	},
 	numReplies: function () {
 		return this.replies && this.replies.length;
