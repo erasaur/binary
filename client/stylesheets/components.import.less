@@ -87,6 +87,7 @@
   border-bottom: 0;
   background: rgba(255, 255, 255, 0.9);
   margin-bottom: 0;
+  .border-shadow;
 }
 .navbar-header {
   padding-right: 0;
@@ -114,8 +115,7 @@
 }
 
 .col {
-  // background: @light-gray; 
-  padding: 0;
+  padding: 30px 15px;
 }
 .col-content {
   padding: @main-padding;
@@ -132,45 +132,37 @@
 .full-height {
   height: 100%;
 }
-.page-head, 
+.page-head,
 .page-body {
-  background: @light-gray;
+  background-color: #fff;
   .border-radius(@main-radius);
-  // border: 1px solid darken(@light-gray, 5%);
-  // border-bottom: 2px solid darken(@light-gray, 10%);
-  // border-top: none;
+  .border-shadow;
 }
 .page-head {
-  margin: 30px 15px 20px;
-  background-color: #fff;
+  margin-bottom: 30px;
 }
-.page-header {
-  margin: 0;
-  border: none;
+.page-head .page-head-action {
+  padding: 15px 15px 0;
+  height: 45px;
 }
-.page-header-buttons {
-  height: 40px;
-}
-.page-header-buttons i {
+.page-head .page-head-action i {
   color: @dark-gray;
   &:hover { 
     cursor: pointer; 
     color: black; 
   }
 }
-.page-nav {
-  padding: 0;
+.page-head .page-head-content {
+  padding: 0 15px;
 }
-.page-nav-buttons {
+.page-nav .page-nav-action {
   list-style: none;
   padding: 0;
   margin: auto;
   display: table;
   table-layout: fixed;
 }
-.page-nav-buttons li {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.page-nav .page-nav-action li {
   // background-color: #fff;
   display: table-cell;
   float: none;
@@ -178,27 +170,27 @@
   text-align: center;
   padding: @main-padding 0;
 }
-.page-nav-buttons li a {
+.page-nav .page-nav-action li a {
   display: block;
   font-weight: normal;
   padding: 0;
   width: 120px;
   .overflow-ellipsis;
 }
-.page-nav-buttons li a:hover .value,
-.page-nav-buttons li a:hover .label,
-.page-nav-buttons li a.active .value,
-.page-nav-buttons li a.active .label {
+.page-nav .page-nav-action li a:hover .value,
+.page-nav .page-nav-action li a:hover .label,
+.page-nav .page-nav-action li a.active .value,
+.page-nav .page-nav-action li a.active .label {
   color: #cb2027;
 }
-.page-nav-buttons li a .value {
+.page-nav .page-nav-action li a .value {
   display: block;
   font-weight: bold;
   padding-bottom: 3px;
   font-size: 16px;
   color: #aaa;
 }
-.page-nav-buttons li a .label {
+.page-nav .page-nav-action li a .label {
   display: block;
   font-weight: normal;
   font-size: 11px;
@@ -207,6 +199,13 @@
 // .page-body-content.col-content {
 //   padding-top: 0;
 // }
+.page-body.topic-comments {
+  box-shadow: none;
+  background-color: transparent;
+}
+.page-body-header {
+  padding: 10px 15px 0;
+}
 .page-body-header h3 { 
   display: inline-block;
 }
@@ -309,67 +308,6 @@
   pointer-events: auto;
   &:hover { cursor: pointer; }
 }
-// .navbar-transparent {
-//   width: 100%; 
-//   padding: @main-padding 0;
-//   background: rgba(255, 255, 255, 0.9);
-//   position: fixed;
-//   z-index: 1000;
-// }
-// .navbar-transparent .col-sm-2, 
-// .navbar-transparent .col-sm-8 {
-//   padding: 0;
-// }
-// .navbar-brand, 
-// .navbar-nav > li > a { // increased specificity to override bootstrap
-//   color: @dark-gray;
-//   font-size: 1.5em; 
-//   background: transparent !important;
-//   position: relative;
-//   padding: 0;
-
-//   &:hover { color: black; }
-// }
-// .navbar-brand { 
-//   float: right; 
-//   padding-right: @main-padding;
-//   margin-top: 5px;
-//   height: auto;
-// }
-// .navbar-nav { 
-//   margin-top: 5px;
-//   float: left; 
-//   padding-left: @main-padding;
-//   position: relative;
-// }
-// .navbar-nav > li {
-//   width: 40px;
-//   display: inline-block; //so the list items don't stack when screen is shrunk
-// }
-// .navbar-nav > li > .dropdown-menu { // increased specificity to override bootstrap
-//   right: 0;
-//   left: auto;
-//   margin-top: 10px;
-//   .border-radius(@main-radius);
-// }
-// .navbar-nav .dropdown-menu.notifications {
-//   width: 250px;
-//   height: 400px;
-//   overflow-y: auto; 
-// }
-// .navbar-collapsed {
-//   width: 100%;
-//   padding: @main-padding;
-// }
-// .navbar-collapsed .navbar-brand {
-//   float: left; 
-//   margin: 0; padding: 0;
-//   height: 1.5em;
-// }
-// .navbar-collapsed .navbar-items {
-//   float: right;
-//   margin-top: -7.5px;
-// }
 
 // settings page -------------------------------------
 
@@ -402,9 +340,9 @@
 .muted {
   color: @fontColor-muted;
 }
-.topic-header {
-  padding: 15px 30px 7.5px;
-}
+// .topic-header {
+//   padding: 15px 30px 7.5px;
+// }
 // .topic-category-title {
 //   float: left;
 // }
