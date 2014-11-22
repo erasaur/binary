@@ -1,50 +1,38 @@
 <template name="comment">
-	<div id="{{_id}}" class="comment">
-    {{#if isDeleted}}
-      <div class="comment-header deleted">
-        <a href="#">Deleted</a>
-      </div>
-      <div class="comment-content collapsed markdown deleted">
-        {{{content}}}
-      </div>
-      <div class="comment-footer deleted">
-        <button class="btn btn-default js-toggle-replies float-right">
-          {{#if showingReplies}}
-            Hide Replies
-          {{else}}
-            Show Replies {{numReplies}}
-          {{/if}}
-        </button>
-      </div>
-    {{else}}
-  		<div class="comment-header">
+	<div id="{{_id}}" class="comment {{#if isDeleted}}deleted{{/if}}">
+		<div class="comment-header">
+      {{#if isDeleted}}
+        <span>Deleted</span>
+      {{else}}
         {{> profileInfo author}}
-  		</div>
-    	<div class="comment-content collapsed markdown" title="Show/hide more">
-  		  {{{content}}}
-    	</div>
-    	<div class="comment-date">
-    		<span>{{formatDate createdAt}}</span>
-    	</div>
-    	<div class="comment-footer">
-        <div class="comment-footer-left float-left">
+      {{/if}}
+		</div>
+  	<div class="comment-content collapsed markdown" title="Show/hide more">
+		  {{{content}}}
+  	</div>
+  	<div class="comment-date">
+  		<span>{{formatDate createdAt}}</span>
+  	</div>
+  	<div class="comment-footer">
+      <div class="comment-footer-left float-left">
+        {{#unless isDeleted}}
           <div class="icon-group {{voteClass}}">
             <i class="icon-action fa fa-heart"></i>
             <span class="icon-text">{{upvotes}}</span>
           </div>
-          <div class="icon-group js-toggle-replies {{toggleClass}}">
-            <i class="icon-action fa fa-comment fa-flip-horizontal"></i>
-            <span class="icon-text">{{numReplies}}</span>
-          </div>
+        {{/unless}}
+        <div class="icon-group js-toggle-replies {{toggleClass}}">
+          <i class="icon-action fa fa-comment fa-flip-horizontal"></i>
+          <span class="icon-text">{{numReplies}}</span>
         </div>
+      </div>
 
+      {{#if isAdmin}}
         <div class="comment-footer-right float-right">
-          {{#if isAdmin}}
-            <button class="btn btn-default js-delete-comment">Delete</button>
-          {{/if}}
+          <button class="btn btn-default js-delete-comment">Delete</button>
         </div>
-    	</div>
-    {{/if}}
+      {{/if}}
+  	</div>
 	</div>
 </template>
 
