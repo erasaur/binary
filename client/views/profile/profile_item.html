@@ -1,24 +1,26 @@
 <template name="profileItem">
-  <div class="list-item">
-    <a href="{{pathFor route='profile'}}">
-      <div class="list-item-info profile-item">
-        <div class="profile-item-left">
-          {{> avatar user=this shape='circle'}}
-        </div>
-        <div class="profile-item-right overflow-ellipsis">
-          <h3>{{profile.name}} <small>{{stats.reputation}} Rep</small></h3>
-          <small style="margin-right: 20px;">{{profile.bio}}</small>
-        </div>
-      </div>
-    </a>
+  <div class="list-item profile-item">
     <div class="list-item-action">
       {{#if canFollow}}
-        {{#if following}}
-          <button id="js-unfollow" class="btn btn-primary">Unfollow {{stats.followersCount}}</button>
-        {{else}}
-          <button id="js-follow" class="btn btn-default">Follow {{stats.followersCount}}</button>
-        {{/if}}
+        <div class="icon-group {{followClass}}">
+          <i class="fa fa-user icon-action"><i class="fa fa-plus fa-xs" style="font-size: 8px; vertical-align: top;"></i></i>
+        </div>
       {{/if}}
-    </div>
+    </div>    
+    {{> profileInfo}}  
   </div>
+</template>
+
+<template name="profileInfo">
+  <a href="{{pathFor route='profile'}}">
+    <div class="list-item-info profile-item">
+      <div class="profile-item-left">
+        {{> avatar user=this shape='circle'}}
+      </div>
+      <div class="profile-item-right overflow-ellipsis">
+        <span>{{profile.name}} <small>{{stats.reputation}} Rep</small></span>
+        {{profile.bio}}
+      </div>
+    </div>
+  </a>
 </template>

@@ -1,18 +1,22 @@
 Template.profileItem.helpers({
   canFollow: function () {
-    return Meteor.userId() && this._id != Meteor.userId();
+    return canFollow(Meteor.user(), this._id);
   },
-  following: function () {
-    if (Meteor.user() && Meteor.user().activity)
-      return Meteor.user().activity.followingUsers.indexOf(this._id) > -1;
+  followClass: function () {
+    var user = Meteor.user();
+    if (!user || !user.activity)
+      return 'js-follow';
+
+    return _.contains(user.activity.followingUsers, this._id) ? 
+      'js-unfollow following' : 'js-follow';
   }
 });
 
 Template.profileItem.events({
-  'click #js-follow': function (event, template) {
+  'click .js-follow': function (event, template) {
     Meteor.call('newFollower', this._id);
   },
-  'click #js-unfollow': function (event, template) {
+  'click .js-unfollow': function (event, template) {
     Meteor.call('removeFollower', this._id);
   }
 });
