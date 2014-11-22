@@ -107,6 +107,10 @@
   margin: 0;
   padding: 0;
 }
+.navbar-nav > li > .dropdown-menu {
+  margin-top: 15px;
+  .border-radius(@main-radius);
+}
 // .navbar-collapse .navbar-nav {
 //   margin: 7.5px 10px;
 //   padding-left: 15px;
@@ -222,20 +226,23 @@
 // dropdown ------------------------------------------
 
 .dropdown { 
-  margin: 0; 
+  margin-top: 0; 
   border: none;
 }
 .dropdown-menu {
   width: 100%;
-  margin-top: 10px;
-  border-color: @dark-gray;
-  background: @light-gray;
-  box-shadow: none;
+  margin-top: 15px; 
+  padding: 0;
+  border: none;
+  background-color: #fff;
+  right: 0;
+  overflow: hidden;
+  .border-shadow;
   .border-radius(@main-radius);
 }
 .dropdown-menu .list-item {
   display: block;
-  padding: 5px 10px;
+  padding: 7.5px 10px;
   &:hover { background: @gray; }
 }
 
