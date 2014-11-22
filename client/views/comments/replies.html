@@ -7,11 +7,11 @@
 		{{/if}}
 
 		{{#unless hasReplies}}
-			<div class="col-content">No replies.</div>
+			<div>No replies.</div>
+		{{else}}
+			{{#each replies}}
+				{{> commentRow}}
+			{{/each}}
 		{{/unless}}
-
-		{{#each replies}}
-			{{> commentRow}}
-		{{/each}}
 	</div>
 </template>
