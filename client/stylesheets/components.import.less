@@ -64,7 +64,8 @@
 .icon-group.liked .icon-action { // liked comment
   color: #cb2027;
 }
-.icon-group.showing .icon-action { // showing comment replies
+.icon-group.showing .icon-action, // showing comment replies
+.icon-group.following .icon-action { // following user/topic
   color: rgb(132, 132, 132);
 }
 .icon-text {
@@ -258,10 +259,10 @@
   padding-bottom: 0;
   .content-header(black);
 }
-.list-item-info {
-  width: 80%; 
-  float: left;
-}
+// .list-item-info {
+//   width: 80%; 
+//   float: left;
+// }
 .list-item-info .form-control,
 .list-item-info .form-control:focus {
   border: none; 
@@ -269,28 +270,40 @@
   box-shadow: none; 
   padding: 0;
 }
-.list-item-action {
-  position: absolute; 
-  right: 0; 
-}
+
 .list-item.top-comment-item {
   padding: 0; 
 }
+
+.list-item.profile-item {
+  height: auto; 
+  overflow: hidden;
+}
+.list-item.profile-item .list-item-action {
+  float: right;
+}
+// .list-item.profile-item .profile-item-right h3 {
+//   font-size: 18px;
+//   margin: 0 0 5px;
+// }
+// .list-item.profile-item .list-item-info {
+//   width: auto;
+//   overflow: hidden;
+// }
 .profile-item .profile-item-left {
-  width: 40px; 
   margin-right: 15px; 
-  position: relative; 
   float: left;
 }
-.profile-item-right {
+.profile-item .profile-item-right {
   display: block; 
   margin-left: 55px;
+  height: 40px;
 }
-.profile-item-right h3 {
-  margin-bottom: 5px;
-}
-.profile-item-right small {
-  margin-right: 10px;
+.profile-item .profile-item-right span {
+  display: block;
+  margin: 0 0 5px;
+  font-weight: bold;
+  small { font-weight: normal; }
 }
 
 // navbar --------------------------------------------
@@ -329,7 +342,7 @@
 
 // topic page ----------------------------------------
 
-.vote {
+.topic-vote {
   padding: 40px;
 }
 .show-more {
@@ -339,15 +352,6 @@
 .muted {
   color: @fontColor-muted;
 }
-// .topic-header {
-//   padding: 15px 30px 7.5px;
-// }
-// .topic-category-title {
-//   float: left;
-// }
-// .topic-new-comment {
-//   float: right;
-// }
 
 // landing page --------------------------------------
 
