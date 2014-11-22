@@ -25,7 +25,7 @@
 	</div>
 
 	{{#if hasComments}}
-		<div class="page-body-content">
+		<div class="page-body-content topic-comments">
 			{{#each comments}}
 				{{> commentRow}}
 			{{/each}}
@@ -80,7 +80,10 @@
 <!-- BEGIN PAGE LAYOUT -->
 
 <template name="topic">	
-	<div class="page-body topic-comments">
+	<div class="page-body">
+		<!-- {{#with Session 'currentTab'}}
+			{{> Template.dynamic template=this data=..}}
+		{{/with}} -->
 		{{> Template.dynamic template=currentTab data=this}}
 	</div>
 </template>
@@ -114,13 +117,13 @@
 	<div class="divider"><hr></div>
 	<ul class="page-nav-action clearfix">
 	  <li>
-	  	<a href="#" class="{{isCurrentTab 'topicComments'}} js-nav-button" data-tab="topicComments">
+	  	<a href="#" class="{{Session 'currentTab' eq='topicComments' s='active'}} js-nav-button" data-tab="topicComments">
 	  		<span class="value">{{commentsCount}}</span>
 	  		<span class="label">Comments</span>
 	  	</a>
 	  </li>
 	  <li>
-	  	<a href="#" class="{{isCurrentTab 'topicFollowers'}} js-nav-button" data-tab="topicFollowers">
+	  	<a href="#" class="{{Session 'currentTab' eq='topicFollowers' s='active'}} js-nav-button" data-tab="topicFollowers">
 	  		<span class="value">{{followers.length}}</span>
 	  		<span class="label">Followers</span>
 	  	</a>

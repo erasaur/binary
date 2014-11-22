@@ -39,12 +39,6 @@ Template.topicHeader.events({
 	}
 });
 
-Template.topicNav.helpers({
-	isCurrentTab: function (tab) {
-		return Session.equals('currentTab', tab) ? 'active' : '';
-	}
-});
-
 Template.topicNav.events({
 	'click .js-nav-button': function (event, template) {
 		SessionAmplify.set('showingReplies', []);

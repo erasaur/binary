@@ -133,7 +133,7 @@
   height: 100%;
 }
 .page-head,
-.page-body {
+.page-body .page-body-content {
   background-color: #fff;
   .border-radius(@main-radius);
   .border-shadow;
@@ -152,6 +152,7 @@
     color: black; 
   }
 }
+.page-body .page-body-content,
 .page-head .page-head-content {
   padding: 0 15px;
 }
@@ -196,12 +197,10 @@
   font-size: 11px;
   color: #9a9a9a;
 }
-// .page-body-content.col-content {
-//   padding-top: 0;
-// }
-.page-body.topic-comments {
+.page-body-content.topic-comments {
   box-shadow: none;
   background-color: transparent;
+  padding: 0;
 }
 .page-body-header {
   padding: 10px 15px 0;
