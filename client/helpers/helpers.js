@@ -11,15 +11,6 @@ Template.registerHelper('isAdmin', function () {
   return isAdmin(Meteor.user());
 });
 
-//pass in an ID from handlebars, and get a collection back
-// Template.registerHelper('toCollection', function(context, options) {
-// 	if(context && options)
-// 		return idToCollection(context, options);
-// });
-
-
-
-
 
 
 
