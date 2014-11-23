@@ -12,6 +12,7 @@ Router.configure({
   notFoundTemplate: 'notFound',
   onRun: function () {
     console.log('global onRun');
+    scrolled = false;
     this.next();
   },
   progressDelay: 100 // delay before showing IR progress
