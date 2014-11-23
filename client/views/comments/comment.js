@@ -143,14 +143,16 @@ Template.comment.events({
 		Meteor.call('cancelUpvoteComment', this);
 	},
 	'click .js-delete-comment': function (event, template) {
-		Meteor.call('removeComment', this, function (error) {
-			if (error) {
-				if (error.error === 'no-permission')
-					alert('Oops! We\'re sorry but we can\'t let you continue.');
-				else
-					alert('Sorry, something went wrong. Please try again in a moment.');
-			}
-		});
+		if (confirm('Are you sure you want to delete this comment?')) {
+			Meteor.call('removeComment', this, function (error) {
+				if (error) {
+					if (error.error === 'no-permission')
+						alert('Oops! We\'re sorry but we can\'t let you continue.');
+					else
+						alert('Sorry, something went wrong. Please try again in a moment.');
+				}
+			});	
+		}
 	}
 });
 
