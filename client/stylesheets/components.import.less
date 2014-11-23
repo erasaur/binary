@@ -58,8 +58,8 @@
   cursor: pointer;
   padding-right: 8px;
   color: rgb(176, 176, 176);
-
-  &:hover { color: rgb(132, 132, 132); }
+  // &:hover { color: black; }
+  &:last-of-type { padding-right: 0; }
 }
 .icon-group.liked .icon-action { // liked comment
   color: #cb2027;
@@ -308,7 +308,7 @@
 .profile-item .profile-item-right {
   display: block; 
   margin-left: 55px;
-  height: 40px;
+  // height: 40px;
 }
 .profile-item .profile-item-right span {
   display: block;
@@ -319,12 +319,12 @@
 
 // navbar --------------------------------------------
 
-.form-group.has-feedback { 
-  margin: 0;
-}
-.form-group.has-feedback input { 
-  padding-right: 0px; 
-}
+// .form-group.has-feedback { 
+//   margin: 0;
+// }
+// .form-group.has-feedback input { 
+//   padding-right: 0px; 
+// }
 .form-control-feedback { 
   right: 0; 
   color: @dark-gray;
