@@ -1,4 +1,4 @@
-Template.notificationNewComment.helpers({
+Template.notificationNewReply.helpers({
   count: function () {
     return this.data.count;
   },
@@ -9,12 +9,11 @@ Template.notificationNewComment.helpers({
       'url': getProfileRoute(author._id) 
     };
   },
-  topic: function () {
-    var topic = this.data.topic;
-    return topic && { 
-      'title': topic.title, 
-      'url': getTopicRoute(topic._id) 
-    };
+  replyToUrl: function () {
+    return getTopicRoute(this.data.replyTo.topicId) + '#' + this.data.replyTo._id;
+  },
+  topicTitle: function () {
+    return this.data.topic && this.data.topic.title;
   },
   commentUrl: function () {
     var topic = this.data.topic;

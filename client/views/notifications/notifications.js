@@ -1,11 +1,11 @@
 Template.notifications.helpers({
   hasNotifications: function () {
-    return !!Herald.collection.find({ 'userId': Meteor.userId(), 'read': false }, {
+    return !!Herald.collection.find({ 'userId': Meteor.userId() }, {
       sort: { timestamp: -1 }
     }).count();
   },
   notifications: function () {
-    return Herald.collection.find({ 'userId': Meteor.userId(), 'read': false }, {
+    return Herald.collection.find({ 'userId': Meteor.userId() }, {
       sort: { timestamp: -1 }
     });
   },

@@ -235,8 +235,9 @@
   padding: 0;
   border: none;
   background-color: #fff;
+  left: auto;
   right: 0;
-  overflow: hidden;
+  overflow: auto;
   .border-shadow;
   .border-radius(@main-radius);
 }
@@ -244,6 +245,10 @@
   display: block;
   padding: 7.5px 10px;
   &:hover { background: @gray; }
+}
+.dropdown-menu.notifications {
+  height: 450px;
+  width: 230px;
 }
 
 // invite menu ---------------------------------------
