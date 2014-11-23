@@ -9,9 +9,9 @@ Template.notificationItem.helpers({
 
 Template.notificationItem.events({
   'click .action-link': function (event, template) {
-    var notificationId = template.data._id;
+    var notificationId = this._id;
 
-    Herald.collection.update({ _id: notificationId }, {
+    Herald.collection.update(notificationId, {
       $set: { read: true }
     },
     function (error, result) {
