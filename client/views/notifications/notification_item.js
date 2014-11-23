@@ -3,7 +3,6 @@ Template.notificationItem.helpers({
     return moment(this.timestamp).fromNow();
   },
   notificationHTML: function () {
-    console.log(this.message())
     return this.message();
   }
 });
