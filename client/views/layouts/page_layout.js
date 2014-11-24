@@ -4,3 +4,9 @@ Template.pageLayout.events({
     window.history.back();
   }
 });
+
+Template.pageBody.helpers({
+  hasItems: function () {
+    return _.has(this, 'hasItems') && this.hasItems || this.items.count();
+  }
+});

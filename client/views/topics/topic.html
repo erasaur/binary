@@ -2,7 +2,7 @@
 <!-- BEGIN PAGE TABS -->
 
 <template name="topicComments">
-	<div class="page-body-header clearfix">
+	{{#pageBody items=comments item=commentRow hasItems=hasComments message='No comments yet.' class='no-container'}}
 		<div class="float-left">
 			<h3>Comments</h3>
 			<span class="dropdown">
@@ -22,61 +22,13 @@
 		</div>
 
 		<!-- {{> newComment}} -->
-	</div>
-
-	{{#if hasComments}}
-		<div class="page-body-content no-container">
-			{{#each comments}}
-				{{> commentRow}}
-			{{/each}}
-		</div>
-	{{else}}
-		<div class="page-body-content">
-			<div class="list">
-				<div class="list-item">No comments yet.</div>
-			</div>
-		</div>	
-	{{/if}}
+	{{/pageBody}}
 </template>
 
 <template name="topicFollowers">
-	<div class="page-body-header">
+	{{#pageBody items=followers item=profileItem message='No followers yet.'}}
 		<h3>Followers</h3>
-	</div>
-	<div class="page-body-content">
-		<div class="list">
-			{{#if followers.count}}
-				{{#each followers}}
-					{{> profileItem}}
-				{{/each}}
-			{{else}}
-				<div class="list-item">No followers yet.</div>	
-			{{/if}}
-		</div>
-	</div>
-</template>
-
-<template name="topicCreator">
-	<div class="page-body-header">
-		<h3>Creator</h3>
-	</div>
-	<div class="page-body-content">
-		<div class="list">
-			{{#with creator}}
-				{{> profileItem}}
-			{{/with}}
-			<div class="list-item">
-				<h3>Creator's Notes</h3>
-				<p class="muted marked">
-					{{#if description}}
-						{{{description}}}
-					{{else}}
-						No notes have been written.
-					{{/if}}
-				</p>
-			</div>
-		</div>
-	</div>
+	{{/pageBody}}
 </template>
 
 <!-- END PAGE TABS -->

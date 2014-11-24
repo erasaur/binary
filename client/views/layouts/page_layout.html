@@ -34,3 +34,22 @@
     </div>
   </div>
 </template>
+
+<template name="pageBody">
+  <div class="page-body-header clearfix">
+    {{> Template.contentBlock}}
+  </div>
+  <div class="page-body-content {{class}}">
+    <div class="list">
+      {{#if hasItems}}
+        {{#each items}}
+          {{> Template.dynamic template=../item}}
+        {{/each}}
+      {{else}}
+        <div class="list-item">
+          {{message}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</template>

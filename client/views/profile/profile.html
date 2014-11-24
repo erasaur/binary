@@ -2,7 +2,7 @@
 <!-- BEGIN PAGE TABS -->
 
 <template name="profileComments">
-	{{#profileBody items=comments itemTemplate='commentItem' message='No comments yet.' class='no-container'}}
+	{{#pageBody items=comments item='commentItem' message='No comments yet.' class='no-container'}}
 		<h3>Comments</h3>
 		<span class="dropdown">
 		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
@@ -13,11 +13,11 @@
 		    <li class="js-dropdown-button" role="presentation" data-category="Upvoted"><a role="menuitem" tabindex="-1" href="#">Upvoted</a></li>
 		  </ul>
 		</span>
-	{{/profileBody}}
+	{{/pageBody}}
 </template>
 
 <template name="profileTopics">
-	{{#profileBody items=topics itemTemplate='topicItem' message='No topics yet.' class='no-container'}}
+	{{#pageBody items=topics item='topicItem' message='No topics yet.' class='no-container'}}
 		<h3>Topics</h3>
 		<span class="dropdown">
 		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
@@ -29,19 +29,19 @@
 		    <li class="js-dropdown-button" role="presentation" data-category="Following"><a role="menuitem" tabindex="-1" href="#" class="list-item">Following</a></li>
 		  </ul>
 		</span>
-	{{/profileBody}}
+	{{/pageBody}}
 </template>
 
 <template name="profileFollowers">
-	{{#profileBody items=followers itemTemplate='profileItem' message='No followers yet.'}}
+	{{#pageBody items=followers item='profileItem' message='No followers yet.'}}
 		<h3>Followers</h3>
-	{{/profileBody}}
+	{{/pageBody}}
 </template>
 
 <template name="profileFollowing">
-	{{#profileBody items=following itemTemplate='profileItem' message='Not following anybody yet.'}}
+	{{#pageBody items=following item='profileItem' message='Not following anybody yet.'}}
 		<h3>Following</h3>
-	{{/profileBody}}
+	{{/pageBody}}
 </template>
 
 <!-- END PAGE TABS -->
@@ -105,25 +105,6 @@
 	  	</a>
 	  </li>
 	</ul>
-</template>
-
-<template name="profileBody">
-	<div class="page-body-header">
-		{{> Template.contentBlock}}
-	</div>
-	<div class="page-body-content {{class}}">
-		<div class="list">
-			{{#if items.count}}
-				{{#each items}}
-					{{> Template.dynamic template=../itemTemplate}}
-				{{/each}}
-			{{else}}
-				<div class="list-item">
-					{{message}}
-				</div>
-			{{/if}}
-		</div>
-	</div>
 </template>
 
 <!-- END PAGE LAYOUT -->
