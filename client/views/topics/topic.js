@@ -7,12 +7,6 @@ Template.topicFollowers.helpers({
 	}
 });
 
-Template.topicCreator.helpers({
-	creator: function () {
-		return Meteor.users.findOne(this.userId);
-	}
-});
-
 // END PAGE TABS -------------------------------------
 
 // BEGIN PAGE LAYOUT ---------------------------------
