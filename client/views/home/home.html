@@ -1,5 +1,5 @@
 <template name="home">
-	<div class="col-content page-body">
+	<div class="page-body">
 		{{#if topics.count}}
 			{{#each topics}}
 				{{> topicItem}}
@@ -8,11 +8,11 @@
 
 		{{#if moreTopics}}
 			<div class="show-more">
-				<span class="alert alert-info">Loading more...</span>
+				<span>Loading more...</span>
 			</div>
 		{{else}}
 			<div class="show-more">
-				<p class="muted">No more topics.</p>
+				<span>No more topics.</span>
 			</div>
 		{{/if}}
 	</div>

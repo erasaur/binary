@@ -1,20 +1,28 @@
-var scrolling = false;
-var currentRoute; 
+initInfiniteScroll = function (collection) {
+  var items = window[capitalize(collection)].find();
+  var count = 0;
 
-$(window).scroll(function() {
-  scrolling = true; //run function when scroll
-});
-
-//handles infinite scrolling on events page
-setInterval(function() {
-  currentRoute = getCurrentRoute();
-  if(scrolling && currentRoute === 'home') {
-    scrolling = false;
-
-    //if we scrolled to 250px above bottom && have loaded enough topics to meet the limit
-    if(Topics.find().count === Session.get('topicsLimit') && 
-      $(window).scrollTop() + window.innerHeight >= $(document).height() - 250) {
-      Session.set('topicsLimit', Session.get('topicsLimit') + 10); //fetch more topics from server
+  // observeChanges will fire for initial set, so count can start at 0
+  var handle = items.observeChanges({
+    added: function () {
+      count++;
+    },
+    removed: function () {
+      count--;
     }
-  }
-}, 300);
+  });
+
+  $(window).on('scroll', _.throttle(function () {
+    // trigger at 300px above bottom
+    console.log(count);
+    var target = document.body.offsetHeight - 300;
+
+    if (window.innerHeight + window.scrollY >= target) {
+      if (count === Session.get('topicsLimit')) {
+        Session.set('topicsLimit', Session.get('topicsLimit') + 15); //fetch more topics from server
+      }
+    }
+  }, 300));  
+
+  return handle;
+};
