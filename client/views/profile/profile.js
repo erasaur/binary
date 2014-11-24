@@ -14,12 +14,6 @@ Template.profileButtons.helpers({
 	}
 });
 
-Template.profileNav.helpers({
-	isCurrentTab: function (tab) {
-		return Session.equals('currentTab', tab) ? 'active' : '';
-	}
-});
-
 Template.profileButtons.events({
 	'click #js-follow': function (event, template) {
 		Meteor.call('newFollower', this._id, function (error) {
