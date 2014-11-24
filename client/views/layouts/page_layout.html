@@ -39,7 +39,7 @@
   <div class="page-body-header clearfix">
     {{> Template.contentBlock}}
   </div>
-  <div class="page-body-content {{class}}">
+  <div class="page-body-content {{#if hasItems}}{{class}}{{/if}}">
     <div class="list">
       {{#if hasItems}}
         {{#each items}}
