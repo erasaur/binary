@@ -2,7 +2,7 @@
 <!-- BEGIN PAGE TABS -->
 
 <template name="profileComments">
-	{{#profileBody items=comments itemTemplate='commentItem' message='No comments yet.'}}
+	{{#profileBody items=comments itemTemplate='commentItem' message='No comments yet.' class='no-container'}}
 		<h3>Comments</h3>
 		<span class="dropdown">
 		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
@@ -17,7 +17,7 @@
 </template>
 
 <template name="profileTopics">
-	{{#profileBody items=topics itemTemplate='topicItem' message='No topics yet.'}}
+	{{#profileBody items=topics itemTemplate='topicItem' message='No topics yet.' class='no-container'}}
 		<h3>Topics</h3>
 		<span class="dropdown">
 		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
@@ -49,7 +49,7 @@
 <!-- BEGIN PAGE LAYOUT -->
 
 <template name="profile">
-	<div class="col-content page-body">
+	<div class="page-body">
 		{{> Template.dynamic template=currentTab data=this}}
 	</div>
 </template>
@@ -69,7 +69,7 @@
 <template name="profileHeader">
 	<div class="profile-header">
 		<div class="profile-avatar">
-			{{> avatar user=this size='large' type='circle'}}
+			{{> avatar user=this size='large' shape='circle'}}
 		</div>
 		<h3 class="profile-title">{{profile.name}}</h3>
 		<p class="muted">{{profile.bio}}</p>
@@ -79,27 +79,27 @@
 
 <template name="profileNav">
 	<div class="divider"><hr></div>
-	<ul class="page-nav-buttons clearfix">
+	<ul class="page-nav-action clearfix">
 	  <li>
-	  	<a href="#" class="js-nav-button {{isCurrentTab 'profileComments'}}" data-tab="profileComments">
+	  	<a href="#" class="js-nav-button {{Session 'currentTab' eq='profileComments' s='active'}}" data-tab="profileComments">
 	  		<span class="value">{{stats.commentsCount}}</span>
 	  		<span class="label">Comments</span>
 	  	</a>
 	  </li>
 	  <li>
-	  	<a href="#" class="{{isCurrentTab 'profileTopics'}} js-nav-button" data-tab="profileTopics">
+	  	<a href="#" class="js-nav-button {{Session 'currentTab' eq='profileTopics' s='active'}}" data-tab="profileTopics">
 	  		<span class="value">{{stats.topicsCount}}</span>
 	  		<span class="label">Topics</span>
 	  	</a>
 	  </li>
 	  <li>
-	  	<a href="#" class="{{isCurrentTab 'profileFollowers'}} js-nav-button" data-tab="profileFollowers">
+	  	<a href="#" class="js-nav-button {{Session 'currentTab' eq='profileFollowers' s='active'}}" data-tab="profileFollowers">
 	  		<span class="value">{{activity.followers.length}}</span>
 	  		<span class="label">Followers</span>
 	  	</a>
   	</li>
   	<li>
-	  	<a href="#" class="{{isCurrentTab 'profileFollowing'}} js-nav-button" data-tab="profileFollowing">
+	  	<a href="#" class="js-nav-button {{Session 'currentTab' eq='profileFollowing' s='active'}}" data-tab="profileFollowing">
 	  		<span class="value">{{activity.followingUsers.length}}</span>
 	  		<span class="label">Following</span>
 	  	</a>
@@ -111,7 +111,7 @@
 	<div class="page-body-header">
 		{{> Template.contentBlock}}
 	</div>
-	<div class="page-body-content">
+	<div class="page-body-content {{class}}">
 		<div class="list">
 			{{#if items.count}}
 				{{#each items}}
