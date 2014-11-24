@@ -77,6 +77,9 @@ Meteor.methods({
         $pull: setProperty({}, field + 'Users', userId),
         $inc: setProperty({}, field, -1) // need the function to convert variable key
       });  
+
+      // just cancelling vote, not switching. so don't revote after cancel
+      if (field === side) return; 
     }
 
     Topics.update(topicId, {
