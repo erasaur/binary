@@ -223,52 +223,19 @@
   &:active { box-shadow: none; }
 }
 
-// dropdown ------------------------------------------
-
-.dropdown { 
-  margin-top: 0; 
-  border: none;
-}
-.dropdown-menu {
-  width: 100%;
-  margin-top: 15px; 
-  padding: 0;
-  border: none;
-  background-color: #fff;
-  left: auto;
-  right: 0;
-  overflow: auto;
-  .border-shadow;
-  .border-radius(@main-radius);
-}
-.dropdown-menu .list-item {
-  display: block;
-  padding: 7.5px 10px;
-  &:hover { background: @gray; }
-}
-.dropdown-menu.notifications {
-  height: 450px;
-  width: 230px;
-}
-
-// invite menu ---------------------------------------
-
-.invite-menu {
-  padding: 15px 10px;
-  left: 45px;
-  width: 220px;
-}
-.invite-menu input {
-  height: 30px;
-}
-
 // list (inspired by medium) -------------------------
 
+.list {
+  padding: 1px;
+}
 .list-item {
   // padding: 20px 0;
-  padding-bottom: 20px;
+  margin-bottom: 20px;
   overflow: hidden; 
   position: relative;
+
+  &:first-of-type { margin-top: 10px; }
+  &:last-of-type { margin-bottom: 10px; }
   // color: @fontColor-muted;
   // &:hover { color: black; }
 }
@@ -321,6 +288,46 @@
   margin: 0 0 5px;
   font-weight: bold;
   small { font-weight: normal; }
+}
+
+// dropdown ------------------------------------------
+
+.dropdown { 
+  margin-top: 0; 
+  border: none;
+}
+.dropdown-menu {
+  width: 100%;
+  margin-top: 15px; 
+  padding: 0;
+  border: none;
+  background-color: #fff;
+  left: auto;
+  right: 0;
+  overflow: auto;
+  .border-shadow;
+  .border-radius(@main-radius);
+}
+.dropdown-menu .list-item {
+  display: block;
+  padding: 7.5px 10px;
+  margin: 0;
+  &:hover { background: @gray; }
+}
+.dropdown-menu.notifications {
+  height: 450px;
+  width: 230px;
+}
+
+// invite menu ---------------------------------------
+
+.invite-menu {
+  padding: 15px 10px;
+  left: 45px;
+  width: 220px;
+}
+.invite-menu input {
+  height: 30px;
 }
 
 // navbar --------------------------------------------
