@@ -2,7 +2,7 @@
   <ul class="nav navbar-nav col-sm-8">
     <form class="navbar-form search-form" id="js-search-form" role="search">
       <div class="search-form-group form-group has-feedback">
-        {{> esInput index=indexes class="form-control search-input" id="js-search-input" placeholder="Find topics..."}}
+        {{> esInput index="topics" id="js-search-input" class="form-control search-input" placeholder="Find topics..."}}
         {{#if searching}}
           <span id="js-search-cancel" class="icon-group form-control-feedback"><i class="icon-action fa fa-remove"></i></span>
         {{/if}}
@@ -20,38 +20,18 @@
           <div class="list-item">Search for topics.</div>
         {{/ifEsInputIsEmpty}}
 
-        {{#ifEsIsSearching index="topics"}}
+        {{#ifEsIsSearching index="topics" id="js-search-input"}}
           <div class="list-item">Working...</div>
         {{else}}
           {{#esEach index="topics" id="js-search-input"}}
             {{> topicItem}}
           {{/esEach}}
-
-          {{> esLoadMoreButton index="topics" id="js-search-input" classes="btn btn-default"}}
         {{/ifEsIsSearching}}
 
         {{#ifEsHasNoResults index="topics" id="js-search-input"}}
           <div class="list-item">No search results.</div>
-        {{/ifEsHasNoResults}}
-      </div>
-      <div class="list">
-        <div class="list-item list-header">Users</div>
-        {{#ifEsInputIsEmpty index="users" id="js-search-input"}}
-          <div class="list-item">Search for users.</div>
-        {{/ifEsInputIsEmpty}}
-
-        {{#ifEsIsSearching index="users"}}
-          <div class="list-item">Working...</div>
         {{else}}
-          {{#esEach index="users" id="js-search-input"}}
-            {{> profileItem}}
-          {{/esEach}}
-
-          {{> esLoadMoreButton index="users" id="js-search-input" classes="btn btn-default"}}
-        {{/ifEsIsSearching}}
-
-        {{#ifEsHasNoResults index="users" id="js-search-input"}}
-          <div class="list-item">No search results.</div>
+          {{> esLoadMoreButton index="topics" class="btn btn-default" id="js-search-input"}}
         {{/ifEsHasNoResults}}
       </div>
     </div>

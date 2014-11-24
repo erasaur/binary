@@ -1,20 +1,13 @@
-var searching = false;
+var searching = new ReactiveVar(false);
 var searchDeps = new Deps.Dependency();
 
 function stopSearching () {
-  $('#js-search-input').val('').blur();
-  searching = false;
-  searchDeps.changed();
-}
-
-function startSearching () {
-  searching = true;
-  searchDeps.changed();
+  // $('#js-search-input').val('').blur();
+  searching.set(false);
 }
 
 function isSearching () {
-  searchDeps.depend();
-  return searching;
+  return searching.get();
 }
 
 Template.searchInput.helpers({
@@ -37,10 +30,10 @@ Template.nav.events({
 });
 
 Template.searchInput.events({
-  'focus #js-search-input': function (event, template) {
-    startSearching();
+  'focus .search-input': function (event, template) {
+    searching.set(true);
   },
-  'click #js-search-cancel': function (event, template) {
+  'click .search-cancel': function (event, template) {
     stopSearching(); 
   }
 });
