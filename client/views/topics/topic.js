@@ -12,18 +12,11 @@ Template.topicFollowers.helpers({
 // BEGIN PAGE LAYOUT ---------------------------------
 
 Template.topicComments.rendered = function () {
-	this.autorun(function () {
-		console.log('items limit reset');
-    Session.get('currentTab');
-    Session.set('itemsLimit', 15);
-  });
-  this._infiniteScroll = initInfiniteScroll('comments');
+  initInfiniteScroll.call(this, 'comments');
 };
 
 Template.topicComments.destroyed = function () {
-  console.log('search and destroy!');
-  $(window).off('scroll');
-  this._infiniteScroll && this._infiniteScroll.stop();
+  stopInfiniteScroll.call(this);
 };
 
 Template.topic.helpers({

@@ -1,10 +1,9 @@
-Template.profile.rendered = function () {
-	// reset infinite scroll limit on tab change
-	this.autorun(function () {
-		console.log('items limit reset');
-    Session.get('currentTab');
-    Session.set('itemsLimit', 20);
-  });
+Template.profileComments.rendered = function () {
+  initInfiniteScroll.call(this, 'comments');
+};
+
+Template.profileComments.destroyed = function () {
+	stopInfiniteScroll.call(this);
 };
 
 Template.profile.helpers({
