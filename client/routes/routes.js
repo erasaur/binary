@@ -102,7 +102,7 @@ Router.route('/', {
 });
 Router.route('/topics/:_id', {
   name: 'topic',
-  layoutTemplate: 'pageLayout',
+  // layoutTemplate: 'pageLayout',
   subscriptions: function () {
     return [
       Meteor.subscribe('singleTopic', this.params._id),
@@ -119,9 +119,9 @@ Router.route('/topics/:_id', {
   action: function () {
     if (this.ready() && this.data() && Meteor.user()) {
       // this.lookupOption('layoutTemplate')
-      // if (this._layout._template !== 'pageLayout') {
-      //   this.layout('pageLayout');
-      // }
+      if (this._layout._template !== 'pageLayout') {
+        this.layout('pageLayout');
+      }
       this.render();
       this.render('nav', { to: 'nav' });
       this.render('topicButtons', { to: 'pageButtons' });
@@ -136,7 +136,7 @@ Router.route('/topics/:_id', {
 });
 Router.route('/users/:_id', {
   name: 'profile',
-  layoutTemplate: 'pageLayout',
+  // layoutTemplate: 'pageLayout',
   subscriptions: function () {
     return Meteor.subscribe('userProfile', this.params._id);
   },
@@ -147,9 +147,9 @@ Router.route('/users/:_id', {
   },
   action: function () {
     if (this.ready() && this.data() && Meteor.user()) {
-      // if (this._layout._template !== 'pageLayout') {
-      //   this.layout('pageLayout');
-      // }
+      if (this._layout._template !== 'pageLayout') {
+        this.layout('pageLayout');
+      }
       this.render();
       this.render('nav', { to: 'nav' });
       this.render('profileButtons', { to: 'pageButtons' });
