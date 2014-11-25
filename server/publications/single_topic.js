@@ -4,12 +4,12 @@
  * Publish all the comments associated with topicId, as well as
  * all of the users who are owners of these comments.
  * 
- * We don't use publishWithRelations here since we need to transform
+ * We don't use publish-composite here since we need to transform
  * the documents as they are added, by inserting temporary *non-reactive*
  * values (to be used for sorting client-side) so sorting won't keep
  * changing as the comments change.
  */
-Meteor.publish('topicComments', function (topicId, sortBy) {
+Meteor.publish('topicComments', function (topicId, sortBy, limit) {
   var topic = Topics.findOne(topicId);
 
   // if topic is deleted or no permission to view
@@ -25,7 +25,8 @@ Meteor.publish('topicComments', function (topicId, sortBy) {
 
   var pub = this;
   var comments = Comments.find({ 'topicId': topicId }, { 
-    sort: setProperty({}, sortBy, -1) 
+    sort: setProperty({}, sortBy, -1), 
+    limit: limit
   });
 
   commentsHandle = comments.observeChanges({
