@@ -1,11 +1,9 @@
 Template.home.rendered = function () {
-  this._infiniteScroll = initInfiniteScroll('topics');
+  initInfiniteScroll.call(this, 'topics');
 };
 
 Template.home.destroyed = function () {
-  console.log('search and destroy!');
-  $(window).off('scroll');
-  this._infiniteScroll && this._infiniteScroll.stop();
+  stopInfiniteScroll.call(this);
 };
 
 Template.home.helpers({
