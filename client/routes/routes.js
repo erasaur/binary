@@ -42,8 +42,10 @@ Router.onBeforeAction(function () {
 // Router.onBeforeAction(function () {
 
 // }, { only: ['admin'] });
-
-Router.plugin('dataNotFound', { notFoundTemplate: 'notFound' });
+// Iron.Router.plugins.dataNotFound = function (router, options) {
+//   router.onBeforeAction('dataNotFound', options)
+// };
+Router.plugin('dataNotFound', { notFoundTemplate: 'notFound', layoutTemplate: 'mainLayout' });
 
 Router.onAfterAction(function () {
   if (this.ready()) {
@@ -86,7 +88,7 @@ Router.route('/landing');
 Router.route('/', { 
   name: 'home',
   subscriptions: function () {
-    return subs.subscribe('topicsList', Session.get('topicsLimit'));
+    return subs.subscribe('topicsList', Session.get('itemsLimit'));
   },
   action: function () {
     if (this.ready() && Meteor.user()) {
@@ -100,21 +102,26 @@ Router.route('/', {
 });
 Router.route('/topics/:_id', {
   name: 'topic',
+  layoutTemplate: 'pageLayout',
   subscriptions: function () {
     return [
       Meteor.subscribe('singleTopic', this.params._id),
-      Meteor.subscribe('topicComments', this.params._id, this.params.sort_by)
+      Meteor.subscribe('topicComments', this.params._id, this.params.sort_by, Session.get('itemsLimit'))
     ];
   },
   onRun: function () {
+    // Session.set('itemsLimit', 20);
     Session.set('currentTab', 'topicComments');
     SessionAmplify.set('showingReplies', []);  
     console.log('onRun for topic route');
     this.next();
   },
   action: function () {
-    if (this.ready() && Meteor.user()) {
-      this.layout('pageLayout');
+    if (this.ready() && this.data() && Meteor.user()) {
+      // this.lookupOption('layoutTemplate')
+      // if (this._layout._template !== 'pageLayout') {
+      //   this.layout('pageLayout');
+      // }
       this.render();
       this.render('nav', { to: 'nav' });
       this.render('topicButtons', { to: 'pageButtons' });
@@ -129,6 +136,7 @@ Router.route('/topics/:_id', {
 });
 Router.route('/users/:_id', {
   name: 'profile',
+  layoutTemplate: 'pageLayout',
   subscriptions: function () {
     return Meteor.subscribe('userProfile', this.params._id);
   },
@@ -138,8 +146,10 @@ Router.route('/users/:_id', {
     this.next();
   },
   action: function () {
-    if (this.ready() && Meteor.user()) {
-      this.layout('pageLayout');
+    if (this.ready() && this.data() && Meteor.user()) {
+      // if (this._layout._template !== 'pageLayout') {
+      //   this.layout('pageLayout');
+      // }
       this.render();
       this.render('nav', { to: 'nav' });
       this.render('profileButtons', { to: 'pageButtons' });
