@@ -21,7 +21,7 @@
 		<h3>Topics</h3>
 		<span class="dropdown">
 		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
-		    {{topicCategory}} <span class="caret"></span>
+		    {{profileCategory}} <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
 		    <li class="js-dropdown-button" role="presentation" data-category="Discussed"><a role="menuitem" tabindex="-1" href="#" class="list-item">Discussed</a></li>
@@ -49,6 +49,10 @@
 <!-- BEGIN PAGE LAYOUT -->
 
 <template name="profile">
+	{{> contentFor region='nav' template='nav'}}
+	{{> contentFor region='pageButtons' template='profileButtons'}}
+	{{> contentFor region='pageHeader' template='profileHeader'}}
+	{{> contentFor region='pageNav' template='profileNav'}}
 	<div class="page-body">
 		{{> Template.dynamic template=currentTab}}
 	</div>
