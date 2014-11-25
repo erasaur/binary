@@ -1,6 +1,7 @@
 Avatar.options = {
   emailHashProperty: 'email_hash',
-  gravatarDefault: 'identicon'
+  // gravatarDefault: 'identicon',
+  defaultType: 'initials'
 };
 
 Herald.settings.useIronRouter = false;
