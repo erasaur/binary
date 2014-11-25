@@ -4,14 +4,13 @@ var subs = new SubsManager({
   // expire any subscription after 30 minutes
   expireIn: 30
 });
-var scrolled = false;
 
 Router.configure({
   layoutTemplate: 'mainLayout',
   notFoundTemplate: 'notFound',
   onRun: function () {
     console.log('global onRun');
-    scrolled = false;
+    this._scrolledOnce = false;
     this.next();
   },
   progressDelay: 100 // delay before showing IR progress
@@ -50,10 +49,10 @@ Router.onAfterAction(function () {
   if (this.ready()) {
     var hash = window.location.hash.substring(1);
 
-    if (hash && !scrolled) {
+    if (hash && !this._scrolledOnce) {
       Meteor.defer(function () {
         scrollToId(hash);
-        scrolled = true;
+        this._scrolledOnce = true;
       });
     }  
   }
@@ -109,7 +108,6 @@ Router.route('/topics/:_id', {
     ];
   },
   onRun: function () {
-    // Session.set('itemsLimit', 20);
     Session.set('currentTab', 'topicComments');
     SessionAmplify.set('showingReplies', []);  
     console.log('onRun for topic route');
