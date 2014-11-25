@@ -8,7 +8,6 @@ var scrolled = false;
 
 Router.configure({
   layoutTemplate: 'mainLayout',
-  // loadingTemplate: 'loading',
   notFoundTemplate: 'notFound',
   onRun: function () {
     console.log('global onRun');

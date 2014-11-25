@@ -11,7 +11,7 @@ Template.topicFollowers.helpers({
 
 // BEGIN PAGE LAYOUT ---------------------------------
 
-Template.topic.rendered = function () {
+Template.topicComments.rendered = function () {
 	this.autorun(function () {
 		console.log('items limit reset');
     Session.get('currentTab');
@@ -20,7 +20,7 @@ Template.topic.rendered = function () {
   this._infiniteScroll = initInfiniteScroll('comments');
 };
 
-Template.topic.destroyed = function () {
+Template.topicComments.destroyed = function () {
   console.log('search and destroy!');
   $(window).off('scroll');
   this._infiniteScroll && this._infiniteScroll.stop();
@@ -50,9 +50,8 @@ Template.topicHeader.events({
 
 Template.topicNav.events({
 	'click .js-nav-button': function (event, template) {
-		// SessionAmplify.set('showingReplies', []);
-		// Session.set('currentTab', event.currentTarget.getAttribute('data-tab'));
-		// Session.set('itemsLimit', Session.get('itemsLimit') + 15);
+		SessionAmplify.set('showingReplies', []);
+		Session.set('currentTab', event.currentTarget.getAttribute('data-tab'));
 	}
 });
 
