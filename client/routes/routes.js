@@ -19,7 +19,9 @@ Router.configure({
 });
 
 Router.onBeforeAction(function () {
-  if (!Meteor.loggingIn() && !Meteor.user()) {
+  if (!Meteor.loggingIn() && !Meteor.userId()) {
+    this.layout('mainLayout');
+
     if (Session.get('resetPassword')) {
       this.redirect('/forgot');
     } else {
@@ -31,7 +33,7 @@ Router.onBeforeAction(function () {
 }, { except: ['landing', 'login', 'invite', 'forgotPassword'] });
 
 Router.onBeforeAction(function () {
-  if (Meteor.user()) {
+  if (Meteor.userId()) {
     this.redirect('/');
   } else {
     this.next();
@@ -42,9 +44,7 @@ Router.onBeforeAction(function () {
 // Router.onBeforeAction(function () {
 
 // }, { only: ['admin'] });
-// Iron.Router.plugins.dataNotFound = function (router, options) {
-//   router.onBeforeAction('dataNotFound', options)
-// };
+
 Router.plugin('dataNotFound', { notFoundTemplate: 'notFound', layoutTemplate: 'mainLayout' });
 
 Router.onAfterAction(function () {
@@ -102,7 +102,7 @@ Router.route('/', {
 });
 Router.route('/topics/:_id', {
   name: 'topic',
-  // layoutTemplate: 'pageLayout',
+  layoutTemplate: 'pageLayout',
   subscriptions: function () {
     return [
       Meteor.subscribe('singleTopic', this.params._id),
@@ -116,19 +116,6 @@ Router.route('/topics/:_id', {
     console.log('onRun for topic route');
     this.next();
   },
-  action: function () {
-    if (this.ready() && this.data() && Meteor.user()) {
-      // this.lookupOption('layoutTemplate')
-      if (this._layout._template !== 'pageLayout') {
-        this.layout('pageLayout');
-      }
-      this.render();
-      this.render('nav', { to: 'nav' });
-      this.render('topicButtons', { to: 'pageButtons' });
-      this.render('topicHeader', { to: 'pageHeader' });
-      this.render('topicNav', { to: 'pageNav' });
-    }
-  },
   data: function () {
     Session.set('currentTopic', this.params._id);
     return Topics.findOne({ '_id': this.params._id, 'isDeleted': false });
@@ -136,7 +123,7 @@ Router.route('/topics/:_id', {
 });
 Router.route('/users/:_id', {
   name: 'profile',
-  // layoutTemplate: 'pageLayout',
+  layoutTemplate: 'pageLayout',
   subscriptions: function () {
     return Meteor.subscribe('userProfile', this.params._id);
   },
@@ -144,18 +131,6 @@ Router.route('/users/:_id', {
     Session.set('currentTab', 'profileComments');  
     console.log('onRun for profile route');
     this.next();
-  },
-  action: function () {
-    if (this.ready() && this.data() && Meteor.user()) {
-      if (this._layout._template !== 'pageLayout') {
-        this.layout('pageLayout');
-      }
-      this.render();
-      this.render('nav', { to: 'nav' });
-      this.render('profileButtons', { to: 'pageButtons' });
-      this.render('profileHeader', { to: 'pageHeader' });
-      this.render('profileNav', { to: 'pageNav' });
-    }
   },
   data: function () {
     return Meteor.users.findOne(this.params._id);
