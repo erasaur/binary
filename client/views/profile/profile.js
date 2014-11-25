@@ -1,8 +1,13 @@
 Template.profileComments.rendered = function () {
   initInfiniteScroll.call(this, 'comments');
 };
-
 Template.profileComments.destroyed = function () {
+	stopInfiniteScroll.call(this);
+};
+Template.profileTopics.rendered = function () {
+	initInfiniteScroll.call(this, 'topics');
+};
+Template.profileTopics.destroyed = function () {
 	stopInfiniteScroll.call(this);
 };
 
