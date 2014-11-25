@@ -14,12 +14,12 @@ initInfiniteScroll = function (collection) {
 
   $(window).on('scroll', _.throttle(function () {
     // trigger at 300px above bottom
-    console.log(count);
     var target = document.body.offsetHeight - 300;
 
     if (window.innerHeight + window.scrollY >= target) {
-      if (count === Session.get('topicsLimit')) {
-        Session.set('topicsLimit', Session.get('topicsLimit') + 15); //fetch more topics from server
+      console.log(count, Session.get('itemsLimit'))
+      if (count >= Session.get('itemsLimit')) {
+        Session.set('itemsLimit', Session.get('itemsLimit') + 15); //fetch more topics from server
       }
     }
   }, 300));  

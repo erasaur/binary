@@ -33,7 +33,7 @@ Template.searchInput.events({
   'focus .search-input': function (event, template) {
     searching.set(true);
   },
-  'click .search-cancel': function (event, template) {
+  'click #js-search-cancel': function (event, template) {
     stopSearching(); 
   }
 });
