@@ -1,3 +1,12 @@
+Template.profile.rendered = function () {
+	// reset infinite scroll limit on tab change
+	this.autorun(function () {
+		console.log('items limit reset');
+    Session.get('currentTab');
+    Session.set('itemsLimit', 20);
+  });
+};
+
 Template.profile.helpers({
 	currentTab: function () {
 		return Session.get('currentTab');
