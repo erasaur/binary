@@ -122,7 +122,11 @@ Router.route('/users/:_id', {
   name: 'profile',
   layoutTemplate: 'pageLayout',
   subscriptions: function () {
-    return Meteor.subscribe('userProfile', this.params._id);
+    return [
+      Meteor.subscribe('userProfile', this.params._id),
+      Meteor.subscribe('userComments', this.params._id, Session.get('itemsLimit')),
+      Meteor.subscribe('userTopics', this.params._id, Session.get('itemsLimit'))
+    ];
   },
   onRun: function () {
     Session.set('currentTab', 'profileComments');  
