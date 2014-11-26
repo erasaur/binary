@@ -1,3 +1,5 @@
+// Accounts.validateNewUser(function (user) { 
+// });
 Accounts.onCreateUser(function (options, user) {
   var userProperties = {
     profile: options.profile || {},
@@ -29,6 +31,7 @@ Accounts.onCreateUser(function (options, user) {
     user.email_hash = Gravatar.hash(email);
 
     var invite = Invites.findOne({ 'invitedEmail': email });
+
     // update the user who invited 
     user.invites.invitedBy = invite && invite.inviterId;
     // update the invite status to accepted
