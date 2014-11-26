@@ -1,7 +1,10 @@
 Template.topicItem.helpers({
   topComment: function () {
-    return Comments.findOne({ 'topicId': this._id }, {
+    var comment = Comments.findOne({ 'topicId': this._id, 'isDeleted': false }, {
       sort: { 'upvotes': -1 }
     });
+    if (!comment) { return; }
+    comment.isTopComment = true;
+    return comment;
   }
 });
