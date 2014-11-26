@@ -11,6 +11,10 @@ Template.topicFollowers.helpers({
 
 // BEGIN PAGE LAYOUT ---------------------------------
 
+Template.topic.destroyed = function () {
+	console.log('topic got destroyed');
+};
+
 Template.topicComments.rendered = function () {
   initInfiniteScroll.call(this, 'comments');
 };

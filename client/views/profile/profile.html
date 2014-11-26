@@ -9,8 +9,10 @@
 		    {{commentCategory}} <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-		    <li class="js-dropdown-button" role="presentation" data-category="Created"><a role="menuitem" tabindex="-1" href="#">Created</a></li>
-		    <li class="js-dropdown-button" role="presentation" data-category="Upvoted"><a role="menuitem" tabindex="-1" href="#">Upvoted</a></li>
+		    <!-- <li class="js-dropdown-button" role="presentation" data-category="Created"><a role="menuitem" tabindex="-1" href="#">Created</a></li>
+		    <li class="js-dropdown-button" role="presentation" data-category="Upvoted"><a role="menuitem" tabindex="-1" href="#">Upvoted</a></li> -->
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=created'}}">Created</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=upvoted'}}">Upvoted</a></li>
 		  </ul>
 		</span>
 	{{/pageBody}}
@@ -24,9 +26,9 @@
 		    {{topicCategory}} <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-		    <li class="js-dropdown-button" role="presentation" data-category="Discussed"><a role="menuitem" tabindex="-1" href="#" class="list-item">Discussed</a></li>
-		    <li class="js-dropdown-button" role="presentation" data-category="Created"><a role="menuitem" tabindex="-1" href="#" class="list-item">Created</a></li>
-		    <li class="js-dropdown-button" role="presentation" data-category="Following"><a role="menuitem" tabindex="-1" href="#" class="list-item">Following</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=discussed'}}" class="list-item">Discussed</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=created'}}" class="list-item">Created</a></li>
+		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=following'}}" class="list-item">Following</a></li>
 		  </ul>
 		</span>
 	{{/pageBody}}
