@@ -1,4 +1,7 @@
 Template.comment.helpers({
+	containerClass: function () {
+		return this.isDeleted ? 'deleted' : this.isTopComment ? 'comment-item' : '';
+	},
 	author: function () {
 		return Meteor.users.findOne(this.userId);
 	},

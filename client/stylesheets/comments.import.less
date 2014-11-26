@@ -61,10 +61,10 @@
 // comment card display ------------------------------
 .comment {
   padding: 0;
-  background: #fff;
-  .border-radius(@main-radius);
+  // background: #fff;
+  // .border-radius(@main-radius);
+  // .border-shadow;
   overflow: hidden;
-  .border-shadow;
 }
 .comment .comment-header {
   padding: 20px 15px 10px;
@@ -97,13 +97,13 @@
 
 // comment item --------------------------------------
 
-.comment-item .comment-content {
+.comment.comment-item {
+  margin-bottom: 30px;
+}
+.comment.comment-item .comment-content.collapsed {
   min-height: 40px;
+  height: 40px;
 }
-.comment-item .comment-footer {
-  height: auto;
-}
-
 
 
 
