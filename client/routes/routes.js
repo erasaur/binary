@@ -39,11 +39,20 @@ Router.onBeforeAction(function () {
 
 }, { only: ['landing', 'login', 'invite'] });
 
+Router.onBeforeAction(function () {
+  if (!this.data()) {
+    this.layout('mainLayout');
+  } else {
+    this.layout('pageLayout');
+  }
+  this.next();
+}, { only: ['topic', 'profile'] });
+
 // Router.onBeforeAction(function () {
 
 // }, { only: ['admin'] });
 
-Router.plugin('dataNotFound', { notFoundTemplate: 'notFound', layoutTemplate: 'mainLayout' });
+Router.plugin('dataNotFound', { notFoundTemplate: 'notFound' });
 
 Router.onAfterAction(function () {
   if (this.ready()) {
@@ -100,11 +109,10 @@ Router.route('/', {
 });
 Router.route('/topics/:_id', {
   name: 'topic',
-  layoutTemplate: 'pageLayout',
   subscriptions: function () {
     return [
       Meteor.subscribe('singleTopic', this.params._id),
-      Meteor.subscribe('topicComments', this.params._id, this.params.sort_by, Session.get('itemsLimit'))
+      Meteor.subscribe('topicComments', this.params._id, this.params.query.sort_by, Session.get('itemsLimit'))
     ];
   },
   onRun: function () {
@@ -120,12 +128,13 @@ Router.route('/topics/:_id', {
 });
 Router.route('/users/:_id', {
   name: 'profile',
-  layoutTemplate: 'pageLayout',
   subscriptions: function () {
+    var query = this.params.query;
+
     return [
       Meteor.subscribe('userProfile', this.params._id),
-      Meteor.subscribe('userComments', this.params._id, Session.get('itemsLimit')),
-      Meteor.subscribe('userTopics', this.params._id, Session.get('itemsLimit'))
+      Meteor.subscribe('userComments', this.params._id, query.filter_by, Session.get('itemsLimit')),
+      Meteor.subscribe('userTopics', this.params._id, query.filter_by, Session.get('itemsLimit'))
     ];
   },
   onRun: function () {
