@@ -1,5 +1,18 @@
 // Publish profile page
 
+
+// filter pubs by category (created, liked, etc)
+// in profile page, have to init a new infinite scroll thing for every category change
+// so that scrolling to bottom of one doesn't affect the other
+// maybe consider using separate paths for each category (like the sortBy in topic page)
+
+// separate the topic publications somehow so that pro comments and con comments can be 
+// loaded at once. currently publishing the most recent comments might end up with a long list of
+// pro comments and no con comments added
+
+// look into kadira academy and bulletproof meteor
+
+
 Meteor.publishComposite('userProfile', function (userId) {
   return {
     find: function () { // the user
@@ -22,18 +35,26 @@ Meteor.publishComposite('userProfile', function (userId) {
   };
 });
 
-Meteor.publishComposite('userComments', function (userId, limit) {
+Meteor.publishComposite('userComments', function (userId, filter, limit) {
   return {
     find: function () {
       if (!this.userId) return this.ready();
 
       var user = Meteor.users.findOne(userId);
-      var commentIds = user && user.activity && user.activity.upvotedComments || [];
+      var upvoted = user && user.activity && user.activity.upvotedComments || [];
+      var query = {
+        'created': { 'userId': userId, 'isDeleted': false },
+        'upvoted': { '_id': { $in: upvoted }, 'isDeleted': false }
+      };
+      var opts = {
+        sort: { 'createdAt': -1 }, 
+        limit: limit
+      };
 
-      return Comments.find({ 
-        $or: [ { 'userId': userId }, { '_id': { $in: commentIds } } ], 
-        'isDeleted': false 
-      }, { sort: { 'createdAt': -1 }, limit: limit });
+      if (!_.has(query, filter))
+        return this.ready();
+
+      return Comments.find(query[filter], opts);
     },
     children: [{
       find: function (comment) { // owners of said comments
@@ -51,22 +72,31 @@ Meteor.publishComposite('userComments', function (userId, limit) {
   };
 });
 
-Meteor.publishComposite('userTopics', function (userId, limit) {
+Meteor.publishComposite('userTopics', function (userId, filter, limit) {
   return {
     find: function () { // topics created/followed by user
       if (!this.userId) return this.ready();
 
       var user = Meteor.users.findOne(userId);
-      var topicIds = user && user.activity && user.activity.followingTopics || [];
+      var activity = user && user.activity;
+      var discussed = activity && activity.discussedTopics || [];
+      var following = activity && activity.followingTopics || [];
 
-      return Topics.find({ 
-        $or: [ { 'userId': userId }, { '_id': { $in: topicIds } } ],
-        'isDeleted': false
-      }, { 
+      var opts = { 
         sort: { 'createdAt': -1 },
         limit: limit,
         fields: { '_id': 1, 'title': 1, 'createdAt': 1, 'userId': 1, 'pro': 1, 'con': 1 } 
-      });
+      };
+      var query = {
+        'created': { 'userId': userId, 'isDeleted': false },
+        'discussed': { '_id': { $in: discussed }, 'isDeleted': false },
+        'following': { '_id': { $in: following }, 'isDeleted': false }
+      };
+
+      if (!_.has(query, filter))
+        return this.ready();
+
+      return Topics.find(query[filter], opts);
     },
     children: [{
       find: function (topic) { // owner of each topic

@@ -1,5 +1,16 @@
+Template.profile.destroyed = function () {
+	console.log('destroyed');
+};
+
 Template.profileComments.rendered = function () {
-  initInfiniteScroll.call(this, 'comments');
+	var user = Meteor.users.findOne(this._id);
+  var upvoted = user && user.activity && user.activity.upvotedComments || [];
+	var query = {
+    'created': { 'userId': this._id, 'isDeleted': false },
+    'upvoted': { '_id': { $in: upvoted }, 'isDeleted': false }
+  };
+	var filter = getCurrentQuery();
+  initInfiniteScroll.call(this, 'comments', query[filter]);
 };
 Template.profileComments.destroyed = function () {
 	stopInfiniteScroll.call(this);
