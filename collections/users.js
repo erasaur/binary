@@ -108,15 +108,6 @@ Meteor.users.attachSchema(Schema.User);
 // end schema ----------------------------------------
 
 
-// search --------------------------------------------
-
-Meteor.users.initEasySearch('profile.name', {
-  'limit': 15
-});
-
-// end search ----------------------------------------
-
-
 // permissions ---------------------------------------
 
 Meteor.users.deny({
