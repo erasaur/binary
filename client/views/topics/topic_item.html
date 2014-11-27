@@ -1,20 +1,19 @@
 <template name="topicItem">
   <a href="{{pathFor route='topic'}}">
-    <div class="list-item topic-item" id="{{_id}}">
+    <div class="list-item topic-item {{#if topComment}}has-comment{{/if}}" id="{{_id}}">
       <div class="list-item-action">
-        <span class="btn btn-pro">{{pro}}</span> 
-        <span class="btn btn-con">{{con}}</span>
-        <span>{{title}}</span>
+        <button type="button" class="btn btn-pro">{{pro}}</button> 
+        <button type="button" class="btn btn-con">{{con}}</button>
+        <h3>{{title}}</h3>
       </div>
       <div class="list-item-info">
-        <span>{{commentsCount}} Comments</span>
-        <span>{{formatDate createdAt}}</span>
-        <span>{{formatName userId}}</span>
+        <div>{{commentsCount}} Comments</div>
+        <div>{{formatDate createdAt}}</div>
+        <div>{{formatName userId}}</div>
       </div>
     </div>
   </a>
   {{#if topComment}} 
-    <!-- {{> commentItem topComment}} -->
     {{> comment topComment}}
   {{/if}}
 </template>
