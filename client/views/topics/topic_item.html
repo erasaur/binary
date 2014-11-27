@@ -9,7 +9,7 @@
       <div class="list-item-info">
         <div>{{commentsCount}} Comments</div>
         <div>{{formatDate createdAt}}</div>
-        <div>{{formatName userId}}</div>
+        <div><a href="{{pathFor 'profile' _id=userId}}" class="action-link">{{formatName userId}}</a></div>
       </div>
     </div>
   </a>
