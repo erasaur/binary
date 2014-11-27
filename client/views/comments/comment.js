@@ -1,3 +1,13 @@
+Template.comment.rendered = function () {
+	var content = this.$('.comment-content');
+	if (content.get(0).scrollHeight > content.innerHeight()) {
+		var container = this.$('.comment');
+		var containerClass = container.attr('class');
+
+		container.attr('class', containerClass + ' comment-collapsible');
+	}
+};
+
 Template.comment.helpers({
 	containerClass: function () {
 		return this.isDeleted ? 'deleted' : this.isTopComment ? 'comment-item' : '';
@@ -103,7 +113,10 @@ function closeReplies (commentRow) {
 
 Template.comment.events({
 	'click .comment-content': function (event, template) {
-		$(event.currentTarget).toggleClass('collapsed');
+		var parent = $(event.currentTarget).parent();
+		if (parent.hasClass('comment-collapsible')) {
+			parent.toggleClass('collapsed');
+		}
 	},
 	// 'click .comment-replyto': function (event, template) {
 	// 	event.preventDefault();

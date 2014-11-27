@@ -1,5 +1,5 @@
 <template name="comment">
-	<div id="{{_id}}" class="comment {{containerClass}}">
+	<div id="{{_id}}" class="comment collapsed {{containerClass}}">
 		<div class="comment-header">
       {{#if isDeleted}}
         <span>Deleted</span>
@@ -7,7 +7,7 @@
         {{> profileInfo author}}
       {{/if}}
 		</div>
-  	<div class="comment-content collapsed markdown" title="Show/hide more">
+  	<div class="comment-content markdown" title="Show/hide more">
 		  {{{content}}}
   	</div>
   	<div class="comment-date">
