@@ -3,46 +3,54 @@
 
 <template name="profileComments">
 	{{#pageBody items=comments item='commentItem' message='No comments yet.' class='no-container'}}
-		<h3>Comments</h3>
-		<span class="dropdown">
-		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
-		    {{commentCategory}} <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-		    <!-- <li class="js-dropdown-button" role="presentation" data-category="Created"><a role="menuitem" tabindex="-1" href="#">Created</a></li>
-		    <li class="js-dropdown-button" role="presentation" data-category="Upvoted"><a role="menuitem" tabindex="-1" href="#">Upvoted</a></li> -->
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=created'}}">Created</a></li>
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=upvoted'}}">Upvoted</a></li>
-		  </ul>
-		</span>
+		<div class="page-title">
+			<h3>Comments</h3>
+			<span class="dropdown">
+			  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+			    {{commentCategory}} <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
+			    <!-- <li class="js-dropdown-button" role="presentation" data-category="Created"><a role="menuitem" tabindex="-1" href="#">Created</a></li>
+			    <li class="js-dropdown-button" role="presentation" data-category="Upvoted"><a role="menuitem" tabindex="-1" href="#">Upvoted</a></li> -->
+			    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=created'}}">Created</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=upvoted'}}">Upvoted</a></li>
+			  </ul>
+			</span>
+		</div>
 	{{/pageBody}}
 </template>
 
 <template name="profileTopics">
 	{{#pageBody items=topics item='topicItem' message='No topics yet.' class='no-container'}}
-		<h3>Topics</h3>
-		<span class="dropdown">
-		  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
-		    {{topicCategory}} <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=discussed'}}" class="list-item">Discussed</a></li>
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=created'}}" class="list-item">Created</a></li>
-		    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=following'}}" class="list-item">Following</a></li>
-		  </ul>
-		</span>
+		<div class="page-title">
+			<h3>Topics</h3>
+			<span class="dropdown">
+			  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+			    {{topicCategory}} <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
+			    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=discussed'}}" class="list-item">Discussed</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=created'}}" class="list-item">Created</a></li>
+			    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{pathFor route='profile' query='filter_by=following'}}" class="list-item">Following</a></li>
+			  </ul>
+			</span>
+		</div>
 	{{/pageBody}}
 </template>
 
 <template name="profileFollowers">
 	{{#pageBody items=followers item='profileItem' message='No followers yet.'}}
-		<h3>Followers</h3>
+		<div class="page-title">
+			<h3>Followers</h3>
+		</div>
 	{{/pageBody}}
 </template>
 
 <template name="profileFollowing">
 	{{#pageBody items=following item='profileItem' message='Not following anybody yet.'}}
-		<h3>Following</h3>
+		<div class="page-title">
+			<h3>Following</h3>
+		</div>
 	{{/pageBody}}
 </template>
 
@@ -51,10 +59,6 @@
 <!-- BEGIN PAGE LAYOUT -->
 
 <template name="profile">
-	<!-- {{> contentFor region='nav' template='nav'}}
-	{{> contentFor region='pageButtons' template='profileButtons'}}
-	{{> contentFor region='pageHeader' template='profileHeader'}}
-	{{> contentFor region='pageNav' template='profileNav'}} -->
 	<div class="page-body">
 		{{> Template.dynamic template=currentTab}}
 	</div>
