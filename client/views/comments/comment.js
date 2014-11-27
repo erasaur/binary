@@ -16,6 +16,7 @@ Template.comment.helpers({
 		return Meteor.users.findOne(this.userId);
 	},
 	toggleClass: function () {
+		if (this.isCommentItem) return;
 		return _.contains(SessionAmplify.get('showingReplies'), this._id) && 'showing';
 	},
 	voteClass: function () {
@@ -124,6 +125,7 @@ Template.comment.events({
 	// 		scrollToId(this.replyTo);
 	// },
 	'click .js-toggle-replies': function (event, template) {
+		if (this.isCommentItem) return;
 		var self = this; //store the reference because context changes when rendering template
 
 		// remove replies on equal or deeper level than commentRow
