@@ -10,9 +10,9 @@ Template.pageBody.helpers({
     if (!this.items)
       return;
 
-    if (this.hasItems || this.items.length)
-      return this.hasItems || this.items.length;
+    if (_.has(this, 'hasItems'))
+      return this.hasItems;
 
-    return this.items && typeof this.items.count === 'function' && this.items.count();
+    return typeof this.items.count === 'function' ? this.items.count() : this.items.length;
   }
 });
