@@ -3,7 +3,7 @@
 
 <template name="topicComments">
 	{{#pageBody items=comments item='commentRow' hasItems=hasComments message='No comments yet.' class='no-container'}}
-		<div class="float-left">
+		<div class="page-title">
 			<h3>Comments</h3>
 			<span class="dropdown">
 			  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
@@ -15,19 +15,16 @@
 			  </ul>
 			</span>
 		</div>
-		<div class="float-right">
-			<button class="btn btn-default" type="button">
-				Comment
-			</button>
-		</div>
 
-		<!-- {{> newComment}} -->
+		{{> newComment}}
 	{{/pageBody}}
 </template>
 
 <template name="topicFollowers">
 	{{#pageBody items=followers item='profileItem' message='No followers yet.'}}
-		<h3>Followers</h3>
+		<div class="page-title">
+			<h3>Followers</h3>
+		</div>
 	{{/pageBody}}
 </template>
 
@@ -36,14 +33,7 @@
 <!-- BEGIN PAGE LAYOUT -->
 
 <template name="topic">	
-	<!-- {{> contentFor region='nav' template='nav'}}
-	{{> contentFor region='pageButtons' template='topicButtons'}}
-	{{> contentFor region='pageHeader' template='topicHeader'}}
-	{{> contentFor region='pageNav' template='topicNav'}} -->
 	<div class="page-body">
-		<!-- {{#with Session 'currentTab'}}
-			{{> Template.dynamic template=this data=..}}
-		{{/with}} -->
 		{{> Template.dynamic template=currentTab}}
 	</div>
 </template>
