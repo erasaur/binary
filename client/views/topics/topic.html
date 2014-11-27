@@ -1,40 +1,21 @@
-
-<!-- BEGIN PAGE TABS -->
-
-<template name="topicComments">
-	{{#pageBody items=comments item='commentRow' hasItems=hasComments message='No comments yet.' class='no-container'}}
-		<div class="page-title">
-			<h3>Comments</h3>
-			<span class="dropdown">
-			  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
-			    {{commentCategory}} <span class="caret"></span>
-			  </button>
-			  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-			    <li><a role="menuitem" tabindex="-1" href="{{pathFor route='topic' query='sort_by=top'}}" class="list-item">Top</a></li>
-			    <li><a role="menuitem" tabindex="-1" href="{{pathFor route='topic' query='sort_by=newest'}}" class="list-item">Newest</a></li>
-			  </ul>
-			</span>
-		</div>
-
-		{{> newComment}}
-	{{/pageBody}}
-</template>
-
-<template name="topicFollowers">
-	{{#pageBody items=followers item='profileItem' message='No followers yet.'}}
-		<div class="page-title">
-			<h3>Followers</h3>
-		</div>
-	{{/pageBody}}
-</template>
-
-<!-- END PAGE TABS -->
-
-<!-- BEGIN PAGE LAYOUT -->
-
 <template name="topic">	
 	<div class="page-body">
-		{{> Template.dynamic template=currentTab}}
+		{{#pageBody items=comments item='commentRow' hasItems=hasComments message='No comments yet.' class='no-container'}}
+			<div class="page-title">
+				<h3>Comments</h3>
+				<span class="dropdown">
+				  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+				    {{commentCategory}} <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
+				    <li><a role="menuitem" tabindex="-1" href="{{pathFor route='topic' query='sort_by=top'}}" class="list-item">Top</a></li>
+				    <li><a role="menuitem" tabindex="-1" href="{{pathFor route='topic' query='sort_by=newest'}}" class="list-item">Newest</a></li>
+				  </ul>
+				</span>
+			</div>
+
+			{{> newComment}}
+		{{/pageBody}}
 	</div>
 </template>
 
@@ -62,25 +43,4 @@
 		</p>
 	{{/if}}
 </template>
-
-<template name="topicNav">
-	<div class="divider"><hr></div>
-	<ul class="page-nav-action clearfix">
-	  <li>
-	  	<a href="#" class="{{Session 'currentTab' eq='topicComments' s='active'}} js-nav-button" data-tab="topicComments">
-	  		<span class="value">{{commentsCount}}</span>
-	  		<span class="label">Comments</span>
-	  	</a>
-	  </li>
-	  <li>
-	  	<a href="#" class="{{Session 'currentTab' eq='topicFollowers' s='active'}} js-nav-button" data-tab="topicFollowers">
-	  		<span class="value">{{followers.length}}</span>
-	  		<span class="label">Followers</span>
-	  	</a>
-  	</li>
-	</ul>
-</template>
-
-<!-- END PAGE LAYOUT -->
-
 

@@ -1,32 +1,51 @@
-
-// BEGIN PAGE TABS -----------------------------------
-
-Template.topicFollowers.helpers({
-	followers: function () {
-		return Meteor.users.find({ '_id': { $in: this.followers } });
-	}
-});
-
-// END PAGE TABS -------------------------------------
-
-// BEGIN PAGE LAYOUT ---------------------------------
-
-Template.topic.destroyed = function () {
-	console.log('topic got destroyed');
-};
-
-Template.topicComments.rendered = function () {
+Template.topic.rendered = function () {
   initInfiniteScroll.call(this, 'comments');
 };
-
-Template.topicComments.destroyed = function () {
+Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
 };
 
 Template.topic.helpers({
-	currentTab: function () {
-		return Session.get('currentTab');
-	}
+  commentCategory: function () {
+    var query = getCurrentQuery();
+    return query && camelToTitle(query.sort_by) || 'Top';
+  },
+  hasComments: function () { 
+    // can't do comments.count (not cursor) or comments.length (dummy row)
+    return Comments.find({ 'topicId': this._id }).count() > 0;
+  },
+  comments: function () {
+    var sortOptions = {
+      'top': 'initVotes',
+      'newest': 'initDate'
+    };
+    var query = getCurrentQuery();
+    var sortBy = query && sortOptions[query.sort_by] || 'initVotes';
+
+    var pros = Comments.find({
+                'replyTo': {$nin: SessionAmplify.get('showingReplies')}, 
+                'topicId': this._id, 
+                'side': 'pro'
+              }, { sort: setProperty({}, sortBy, -1) }).fetch();
+    var cons = Comments.find({
+                'replyTo': {$nin: SessionAmplify.get('showingReplies')}, 
+                'topicId': this._id, 
+                'side': 'con'
+              }, { sort: setProperty({}, sortBy, -1) }).fetch();
+
+    /** 
+     * Combines the pro and con comments into an array of objects
+     * with the format: {'pros': proComment, 'cons': conComment}
+     *
+     * pair - array that contains the comment object
+     */
+    var comments = _.map(_.zip(pros, cons), function (pair) { 
+      return { 'pros': pair[0], 'cons': pair[1] };
+    });
+    //a dummy row that solves comment rendering (see docs error 1)
+    comments.push({ 'bottom': true });
+    return comments;
+  }
 });
 
 Template.topicButtons.helpers({
@@ -42,13 +61,6 @@ Template.topicHeader.events({
 	},
 	'click #js-vote-con': function(event, template) {
 		Meteor.call('vote', this, 'con');
-	}
-});
-
-Template.topicNav.events({
-	'click .js-nav-button': function (event, template) {
-		SessionAmplify.set('showingReplies', []);
-		Session.set('currentTab', event.currentTarget.getAttribute('data-tab'));
 	}
 });
 
@@ -84,11 +96,5 @@ Template.topicButtons.events({
 		});
 	}
 });
-
-// END PAGE LAYOUT -----------------------------------
-
-
-
-
 
 
