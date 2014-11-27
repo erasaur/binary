@@ -10,7 +10,7 @@ Template.comment.rendered = function () {
 
 Template.comment.helpers({
 	containerClass: function () {
-		return this.isDeleted ? 'deleted' : this.isCommentItem ? 'comment-item' : '';
+		return this.isDeleted ? 'deleted' : this.isCommentItem ? 'list-item comment-item' : '';
 	},
 	author: function () {
 		return Meteor.users.findOne(this.userId);

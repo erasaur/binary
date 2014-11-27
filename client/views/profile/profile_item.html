@@ -12,15 +12,13 @@
 </template>
 
 <template name="profileInfo">
-  <a href="{{pathFor route='profile'}}" class="action-group">
-    <div class="list-item-info profile-item">
-      <div class="profile-item-left">
-        {{> avatar user=this shape='circle'}}
-      </div>
-      <div class="profile-item-right">
-        <div><span class="action-link">{{profile.name}} </span><small>{{stats.reputation}} Rep</small></div>
-        <div class="overflow-ellipsis">{{profile.bio}}</div>
-      </div>
+  <a href="{{pathFor route='profile'}}" class="action-group list-item-info profile-item">
+    <div class="profile-item-left">
+      {{> avatar user=this shape='circle'}}
+    </div>
+    <div class="profile-item-right">
+      <div><span class="action-link">{{profile.name}}</span> <small>{{stats.reputation}} Rep</small></div>
+      <div class="overflow-ellipsis">{{profile.bio}}</div>
     </div>
   </a>
 </template>
