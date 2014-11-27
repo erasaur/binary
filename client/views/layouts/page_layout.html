@@ -13,7 +13,6 @@
             <div data-animate data-duration="500">
               <div class="page-head">
                 <div class="page-head-action">
-                  <i id="js-back" class="fa fa-chevron-left"></i>
                   <div class="float-right">
                     {{> yield "pageButtons"}}
                   </div>
@@ -41,7 +40,6 @@
   </div>
   <div class="page-body-content {{#if hasItems}}{{class}}{{/if}}">
     <div class="list">
-      {{hasItems}}
       {{#if hasItems}}
         {{#each items}}
           {{> Template.dynamic template=../item}}

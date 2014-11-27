@@ -1,9 +1,3 @@
-Template.settings.events({
-  'click #js-back': function (event, template) {
-    window.history.back();
-  }
-});
-
 // button jquery object
 function displaySaved ($button) {
   var button = $button.find('span');
