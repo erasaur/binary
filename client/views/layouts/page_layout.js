@@ -7,8 +7,11 @@ Template.pageLayout.events({
 
 Template.pageBody.helpers({
   hasItems: function () {
-    if (_.has(this, 'hasItems'))
-      return this.hasItems;
+    if (!this.items)
+      return;
+
+    if (this.hasItems || this.items.length)
+      return this.hasItems || this.items.length;
 
     return this.items && typeof this.items.count === 'function' && this.items.count();
   }

@@ -4,7 +4,7 @@ Template.topicItem.helpers({
       sort: { 'upvotes': -1 }
     });
     if (!comment) { return; }
-    comment.isTopComment = true;
+    comment.isCommentItem = true;
     return comment;
   }
 });

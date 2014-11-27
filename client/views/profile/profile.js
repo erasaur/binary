@@ -1,16 +1,5 @@
-Template.profile.destroyed = function () {
-	console.log('destroyed');
-};
-
 Template.profileComments.rendered = function () {
-	var user = Meteor.users.findOne(this._id);
-  var upvoted = user && user.activity && user.activity.upvotedComments || [];
-	var query = {
-    'created': { 'userId': this._id, 'isDeleted': false },
-    'upvoted': { '_id': { $in: upvoted }, 'isDeleted': false }
-  };
-	var filter = getCurrentQuery();
-  initInfiniteScroll.call(this, 'comments', query[filter]);
+  initInfiniteScroll.call(this, 'comments');
 };
 Template.profileComments.destroyed = function () {
 	stopInfiniteScroll.call(this);
@@ -63,9 +52,33 @@ Template.profileNav.events({
 	}
 });
 
+// page tabs -----------------------------------------
 
+Template.profileTopics.helpers({
+  topics: function () {
+    // data context (this) is the user
+    return Topics.find({ 'userId': this._id });
+  }
+});
 
+Template.profileComments.helpers({
+  comments: function () {
+    var comments = Comments.find({ 'userId': this._id }).map(function (comment) {
+    	comment.isCommentItem = true;
+    	return comment;
+    });
+    console.log(comments);
+    return comments;
+  }
+});
 
+Template.profileFollowers.helpers({
+  followers: function () {
+    return this.activity && Meteor.users.find({
+      '_id': { $in: this.activity.followers }
+    });
+  }
+});
 
 
 
