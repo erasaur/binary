@@ -31,11 +31,15 @@ h3 {
 	.content-header;
 	margin-top: 0;
 }
-a {
-	text-decoration: none !important;
-	color: @fontColor-muted !important;
+a, a:hover, a:active {
+	text-decoration: none;
+	color: @fontColor-muted;
 }
-a:hover, .icon-group:hover { 
+a:hover .action-link {
+  text-decoration: underline;
+}
+// a:hover, 
+.icon-group:hover { 
   color: black !important;
 }
 textarea {

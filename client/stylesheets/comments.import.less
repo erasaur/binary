@@ -61,26 +61,25 @@
 // comment card display ------------------------------
 .comment {
   padding: 0;
-  // background: #fff;
-  // .border-radius(@main-radius);
-  // .border-shadow;
   overflow: hidden;
+}
+.comment.comment-collapsible:hover {
+  background-color: #fafafa;
+  cursor: pointer;
 }
 .comment .comment-header {
   padding: 20px 15px 10px;
 }
 .comment .comment-content {
   padding: 0 15px;
-  min-height: 130px;
   word-wrap: break-word;
-  cursor: pointer;
 }
-.comment .comment-content.collapsed {
-  height: 100px;
+.comment.collapsed .comment-content {
+  height: 120px;
   overflow-y: hidden;
 }
 .comment.deleted .comment-content {
-  height: 150px;
+  height: 140px;
   cursor: default; 
 }
 .comment .comment-date {
@@ -100,7 +99,7 @@
 .comment.comment-item {
   margin-bottom: 30px;
 }
-.comment.comment-item .comment-content.collapsed {
+.comment.comment-item.collapsed .comment-content {
   min-height: 40px;
   height: 40px;
 }
