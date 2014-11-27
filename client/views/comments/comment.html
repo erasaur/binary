@@ -1,12 +1,10 @@
 <template name="comment">
 	<div id="{{_id}}" class="comment collapsed {{containerClass}}">
-		<div class="comment-header">
-      {{#if isDeleted}}
-        <span>Deleted</span>
-      {{else}}
+    {{#unless isDeleted}}
+  		<div class="comment-header">      
         {{> profileInfo author}}
-      {{/if}}
-		</div>
+	   	</div>
+    {{/unless}}
   	<div class="comment-content markdown" title="Show/hide more">
 		  {{{content}}}
   	</div>
