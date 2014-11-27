@@ -67,7 +67,6 @@ Template.profileComments.helpers({
     	comment.isCommentItem = true;
     	return comment;
     });
-    console.log(comments);
     return comments;
   }
 });

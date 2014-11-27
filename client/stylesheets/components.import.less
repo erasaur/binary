@@ -163,10 +163,13 @@
     color: black; 
   }
 }
-.page-body .page-body-content,
 .page-head .page-head-content {
   padding: 0 15px;
 }
+.page-body .page-body-content {
+  padding: 10px 15px;
+}
+
 .page-nav .page-nav-action {
   list-style: none;
   padding: 0;
@@ -232,12 +235,13 @@
 }
 .list-item {
   // padding: 20px 0;
+  display: block;
   margin-bottom: 20px;
   overflow: hidden; 
-  position: relative;
+  // position: relative;
 
-  &:first-of-type { margin-top: 10px; }
-  &:last-of-type { margin-bottom: 10px; }
+  &:first-of-type { margin-top: 0; }
+  &:last-of-type { margin-bottom: 0; }
   // color: @fontColor-muted;
   // &:hover { color: black; }
 }
@@ -299,6 +303,9 @@
 //   width: auto;
 //   overflow: hidden;
 // }
+.profile-item {
+  display: block;
+}
 .profile-item .profile-item-left {
   margin-right: 15px; 
   float: left;
