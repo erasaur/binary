@@ -41,6 +41,7 @@
   </div>
   <div class="page-body-content {{#if hasItems}}{{class}}{{/if}}">
     <div class="list">
+      {{hasItems}}
       {{#if hasItems}}
         {{#each items}}
           {{> Template.dynamic template=../item}}
