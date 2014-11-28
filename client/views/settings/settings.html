@@ -1,118 +1,80 @@
+<template name="settingsBody">
+  <div class="page-body settings">
+    <div class="page-body-content">
+      <form role="form" class="list">
+        <div class="list-item settings-item">
+          <div class="list-item-info">
+            <h3>{{title}}</h3>
+          </div>
+          <div class="list-item-action">
+            {{#if editing}}
+              <a href="#" id="js-cancel-edit" class="action-link">Cancel</a>
+              <button type="submit" class="btn btn-default">Save</button>
+            {{else}}
+              <button type="submit" class="btn btn-default" disabled>Saved</button>
+            {{/if}}
+          </div>
+        </div>
+        {{> Template.contentBlock}}
+      </form>
+    </div>
+  </div>
+</template>
+
 <template name="settings">  
   {{> contentFor region="nav" template="nav"}}
   
-  <div class="page-body settings">
-    <div class="page-body-content">
-      <form role="form" class="list">
-        <div class="list-item settings-item">
-          <div class="list-item-info">
-            <h3>Edit Profile</h3>
-          </div>
-          <div class="list-item-action">
-            <button type="submit" class="btn btn-default">Submit</button>
-          </div>
-        </div>
-        <div class="list-item settings-item">
-          <div class="list-item-info">
-            <label for="js-name">Name</label>
-          </div>
-          <div class="settings-input">
-            <input type="text" id="js-name" class="form-control" placeholder="Name" value="{{currentUser.profile.name}}" maxlength="25">
-          </div>
-        </div>
-        <div class="list-item settings-item">
-          <div class="list-item-info">
-            <label for="js-bio">Bio</label>
-          </div>
-          <div class="settings-input">
-            <input type="text" id="js-bio" class="form-control" placeholder="Bio" value="{{currentUser.profile.bio}}" maxlength="100">
-          </div>
-        </div>
-      </form>
+  {{> settingsProfile}}
+  {{> settingsAccount}}
 
-      <!-- <div class="list">
-        <div class="list-item">
-          <div class="list-item-info">
-            <label for="js-name">Name</label>
-            <input type="text" id="js-name" class="form-control" 
-            placeholder="Name" value="{{currentUser.profile.name}}" maxlength="25">
-          </div>
-          <div class="list-item-action">
-            <button id="js-edit-name" class="btn btn-default"><span>Save</span></button>
-          </div>
-        </div>
-        <div class="list-item">
-          <div class="list-item-info">
-            <label for="js-bio">Bio</label>
-            <input type="text" id="js-bio" class="form-control" 
-            placeholder="Bio" value="{{currentUser.profile.bio}}" maxlength="100">
-          </div>
-          <div class="list-item-action">
-            <button id="js-edit-bio" class="btn btn-default"><span>Save</span></button>
-          </div>
-        </div>
-      </div> -->
+  <!-- <div class="list">
+    <div class="list-item">
+      <div class="list-item-info">
+        <label for="js-name">Name</label>
+        <input type="text" id="js-name" class="form-control" 
+        placeholder="Name" value="{{currentUser.profile.name}}" maxlength="25">
+      </div>
+      <div class="list-item-action">
+        <button id="js-edit-name" class="btn btn-default"><span>Save</span></button>
+      </div>
     </div>
-  </div>
-
-  <div class="page-body settings">
-    <div class="page-body-content">
-      <form role="form" class="list">
-        <div class="list-item settings-item">
-          <div class="list-item-info">
-            <h3>Account Settings</h3>
-          </div>
-          <div class="list-item-action">
-            <button type="submit" class="btn btn-default">Submit</button>
-          </div>
-        </div>
-        <div class="list-item settings-item">
-          <div class="list-item-info">
-            <label for="js-email">Email {{#unless currentUser.emails.[0].verified}}<a href="#" id="js-email-verification">(Resend Verification)</a>{{/unless}}</label>
-          </div>
-          <div class="settings-input">
-            <input type="email" class="form-control" id="js-email" placeholder="Email" value="{{currentUser.emails.[0].address}}">
-          </div>
-        </div>
-        <div class="list-item settings-item">
-          <div class="list-item-info">
-            <label for="js-password">Password</label>
-          </div>
-          <div class="settings-input">
-            <input type="password" class="form-control" id="js-password" placeholder="Current Password" style="display: none;">
-            <input type="password" class="form-control" id="js-newPassword" placeholder="New Password" style="display: none;">
-            <a href="#" class="action-link">Change Password</a>
-          </div>
-        </div>
-      </form>
-
-      <!-- <div class="list">
-        <div class="list-item">
-          <div class="list-item-info">
-            <label for="js-email">Email {{#unless currentUser.emails.[0].verified}}<a href="#" id="js-email-verification">(Resend Verification)</a>{{/unless}}</label>
-            <input type="email" class="form-control" id="js-email" placeholder="Email" value="{{currentUser.emails.[0].address}}">
-          </div>
-          <div class="list-item-action">
-            <button id="js-edit-email" class="btn btn-default"><span>Save</span></button>
-          </div>
-        </div>
-        <div class="list-item">
-          <div class="list-item-info">
-            <label for="js-password">Password</label>
-            <input type="password" class="form-control" id="js-password" disabled placeholder="Current Password" value="○○○○○○○">
-            <input type="password" class="form-control" id="js-newPassword" placeholder="New Password" style="display: none;">
-          </div>
-          <div class="list-item-action">
-            <button class="btn btn-default" id="js-edit-password"><span>Edit</span></button>
-            <div class="btn-group" id="js-editing-password" style="display: none;">
-              <button type="button" class="btn btn-default" id="js-save-password"><span>Save</span></button>  
-              <button type="button" class="btn btn-default" id="js-cancel-password">Cancel</button>
-            </div>
-          </div>
-        </div>
-      </div> -->
+    <div class="list-item">
+      <div class="list-item-info">
+        <label for="js-bio">Bio</label>
+        <input type="text" id="js-bio" class="form-control" 
+        placeholder="Bio" value="{{currentUser.profile.bio}}" maxlength="100">
+      </div>
+      <div class="list-item-action">
+        <button id="js-edit-bio" class="btn btn-default"><span>Save</span></button>
+      </div>
     </div>
-  </div>
+  </div> -->
+
+  <!-- <div class="list">
+    <div class="list-item">
+      <div class="list-item-info">
+        <label for="js-email">Email {{#unless currentUser.emails.[0].verified}}<a href="#" id="js-email-verification">(Resend Verification)</a>{{/unless}}</label>
+        <input type="email" class="form-control" id="js-email" placeholder="Email" value="{{currentUser.emails.[0].address}}">
+      </div>
+      <div class="list-item-action">
+        <button id="js-edit-email" class="btn btn-default"><span>Save</span></button>
+      </div>
+    </div>
+    <div class="list-item">
+      <div class="list-item-info">
+        <label for="js-password">Password</label>
+        <input type="password" class="form-control" id="js-password" disabled placeholder="Current Password" value="○○○○○○○">
+        <input type="password" class="form-control" id="js-newPassword" placeholder="New Password" style="display: none;">
+      </div>
+      <div class="list-item-action">
+        <button class="btn btn-default" id="js-edit-password"><span>Edit</span></button>
+        <div class="btn-group" id="js-editing-password" style="display: none;">
+          <button type="button" class="btn btn-default" id="js-save-password"><span>Save</span></button>  
+          <button type="button" class="btn btn-default" id="js-cancel-password">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
 
   <div class="page-body settings">
     <div class="page-body-content">
@@ -129,8 +91,8 @@
           </div>
           <div class="list-item-action">
             <div class="btn-group">
-              <button type="button" class="btn {{isEnabled 'media'}}" data-action="toggle-setting" value="1">On</button>
-              <button type="button" class="btn {{unlessEnabled 'media'}}" data-action="toggle-setting" value="0">Off</button>
+              <button type="button" class="btn {{isEnabled 'media' 1}}" data-action="toggle-setting" value="1">On</button>
+              <button type="button" class="btn {{isEnabled 'media' 0}}" data-action="toggle-setting" value="0">Off</button>
             </div>
           </div>
         </div>
@@ -141,9 +103,9 @@
           </div>
           <div class="list-item-action">
             <div class="btn-group">
-              <button type="button" class="btn {{isEnabled 'couriers.newFollower'}}" data-action="toggle-setting" 
+              <button type="button" class="btn {{isEnabled 'couriers.newFollower' 1}}" data-action="toggle-setting" 
               data-action-value="newFollower" value="1">On</button>
-              <button type="button" class="btn {{unlessEnabled 'couriers.newFollower'}}" data-action="toggle-setting" 
+              <button type="button" class="btn {{isEnabled 'couriers.newFollower' 0}}" data-action="toggle-setting" 
               data-action-value="newFollower" value="0">Off</button>
             </div>
           </div>
@@ -155,9 +117,9 @@
           </div>
           <div class="list-item-action">
             <div class="btn-group">
-              <button type="button" class="btn {{isEnabled 'couriers.newComment.follower'}}" data-action="toggle-setting" 
+              <button type="button" class="btn {{isEnabled 'couriers.newComment.follower' 1}}" data-action="toggle-setting" 
               data-action-value="newComment-follower" value="1">On</button>
-              <button type="button" class="btn {{unlessEnabled 'couriers.newComment.follower'}}" data-action="toggle-setting" 
+              <button type="button" class="btn {{isEnabled 'couriers.newComment.follower' 0}}" data-action="toggle-setting" 
               data-action-value="newComment-follower" value="0">Off</button>
             </div>
           </div>
@@ -169,9 +131,9 @@
           </div>
           <div class="list-item-action">
             <div class="btn-group">
-              <button type="button" class="btn {{isEnabled 'couriers.newTopic'}}" data-action="toggle-setting" 
+              <button type="button" class="btn {{isEnabled 'couriers.newTopic' 1}}" data-action="toggle-setting" 
               data-action-value="newTopic" value="1">On</button>
-              <button type="button" class="btn {{unlessEnabled 'couriers.newTopic'}}" data-action="toggle-setting" 
+              <button type="button" class="btn {{isEnabled 'couriers.newTopic' 0}}" data-action="toggle-setting" 
               data-action-value="newTopic" value="0">Off</button>
             </div>
           </div>
@@ -183,9 +145,9 @@
           </div>
           <div class="list-item-action">
             <div class="btn-group">
-              <button type="button" class="btn {{isEnabled 'couriers.newReply'}}" data-action="toggle-setting" 
+              <button type="button" class="btn {{isEnabled 'couriers.newReply' 1}}" data-action="toggle-setting" 
               data-action-value="newReply" value="1">On</button>
-              <button type="button" class="btn {{unlessEnabled 'couriers.newReply'}}" data-action="toggle-setting" 
+              <button type="button" class="btn {{isEnabled 'couriers.newReply' 0}}" data-action="toggle-setting" 
               data-action-value="newReply" value="0">Off</button>
             </div>
           </div>
@@ -197,9 +159,9 @@
           </div>
           <div class="list-item-action">
             <div class="btn-group">
-              <button type="button" class="btn {{isEnabled 'couriers.newComment.topicOwner'}}" data-action="toggle-setting" 
+              <button type="button" class="btn {{isEnabled 'couriers.newComment.topicOwner' 1}}" data-action="toggle-setting" 
               data-action-value="newComment-topicOwner" value="1">On</button>
-              <button type="button" class="btn {{unlessEnabled 'couriers.newComment.topicOwner'}}" data-action="toggle-setting" 
+              <button type="button" class="btn {{isEnabled 'couriers.newComment.topicOwner' 0}}" data-action="toggle-setting" 
               data-action-value="newComment-topicOwner" value="0">Off</button>
             </div>
           </div>
@@ -211,9 +173,9 @@
           </div>
           <div class="list-item-action">
             <div class="btn-group">
-              <button type="button" class="btn {{isEnabled 'couriers.newComment.topicFollower'}}" data-action="toggle-setting" 
+              <button type="button" class="btn {{isEnabled 'couriers.newComment.topicFollower' 1}}" data-action="toggle-setting" 
               data-action-value="newComment-topicFollower" value="1">On</button>
-              <button type="button" class="btn {{unlessEnabled 'couriers.newComment.topicFollower'}}" data-action="toggle-setting" 
+              <button type="button" class="btn {{isEnabled 'couriers.newComment.topicFollower' 0}}" data-action="toggle-setting" 
               data-action-value="newComment-topicFollower" value="0">Off</button>
             </div>
           </div>
