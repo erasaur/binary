@@ -1,0 +1,20 @@
+<template name="settingsProfile">
+  {{#settingsBody title='Edit Profile'}}
+    <div class="list-item settings-item">
+      <div class="list-item-info">
+        <label for="js-name">Name</label>
+      </div>
+      <div class="settings-input">
+        <input type="text" id="js-name" class="form-control" placeholder="Name" value="{{currentUser.profile.name}}" maxlength="25">
+      </div>
+    </div>
+    <div class="list-item settings-item">
+      <div class="list-item-info">
+        <label for="js-bio">Bio</label>
+      </div>
+      <div class="settings-input">
+        <input type="text" id="js-bio" class="form-control" placeholder="Bio" value="{{currentUser.profile.bio}}" maxlength="100">
+      </div>
+    </div>
+  {{/settingsBody}}
+</template>
