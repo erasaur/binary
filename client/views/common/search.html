@@ -12,10 +12,9 @@
 </template>
 
 <template name="searchResults">
-  <div class="col-content page-body">
+  <div class="page-body">
     <div data-animate data-duration="1000" data-from-value="0" data-to-value="1" class="results">
       <div class="list">
-        <div class="list-item list-header">Topics</div>
         {{#ifEsInputIsEmpty index="topics"}}
           <div class="list-item">Search for topics.</div>
         {{/ifEsInputIsEmpty}}
