@@ -1,8 +1,10 @@
 <template name="notificationItem">
-  <li class="notification-item list-item {{#if read}}read{{/if}}">
-    <span class="notification-timestamp">{{niceTime}}</span>
-    <div class="notification-html">
-      {{{notificationHTML}}}
-    </div>
+  <li>
+    <a href="#" class="notification-item list-item {{#if read}}read{{/if}}">
+      <div class="notification-content">
+        {{{notificationHTML}}}
+      </div>
+      <span class="notification-timestamp">{{niceTime}}</span>
+    </a>
   </li>
 </template>

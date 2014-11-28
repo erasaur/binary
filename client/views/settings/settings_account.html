@@ -4,7 +4,7 @@
       <div class="list-item-info">
         <label for="js-email">Email</label>
         {{#unless currentUser.emails.[0].verified}}
-          <a href="#" id="js-email-verification">(Resend Verification)</a>
+          <a href="#" id="js-email-verification" class="action-link">(Resend Verification)</a>
         {{/unless}}
       </div>
       <div class="settings-input">
