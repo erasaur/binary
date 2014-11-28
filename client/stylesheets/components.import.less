@@ -238,8 +238,8 @@
   &:first-of-type { margin-top: 0; }
   &:last-of-type { margin-bottom: 0; }
 }
-.list-item-info .form-control,
-.list-item-info .form-control:focus {
+.list-item-info input,
+.list-item-info input:focus {
   border: none; 
   background: transparent; 
   box-shadow: none; 
@@ -274,7 +274,11 @@
 }
 
 .list-item.settings-item {
-  margin-bottom: 10px;
+  margin-bottom: 0;
+}
+.list-item.settings-item .list-item-info,
+.list-item.settings-item .settings-input {
+  padding: 5px 0;
 }
 .list-item.settings-item .list-item-info {
   float: left;
