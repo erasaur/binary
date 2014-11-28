@@ -12,7 +12,6 @@ Template.settingsProfile.events({
   },
   'click #js-cancel-edit': function (event, template) {
     var user = Meteor.user();
-
     if (!user) return;
     template.$('#js-name').val(user.profile.name);
     template.$('#js-bio').val(user.profile.bio);
