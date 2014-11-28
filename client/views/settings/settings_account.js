@@ -63,12 +63,14 @@ Template.settingsAccount.events({
 
     if (newPassword.length < 6) {
       alert('Your password must be at least 6 characters long.');
+      $('#js-newPassword').trigger('focus');
       return;
     }
     
     Accounts.changePassword(oldPassword, newPassword, function (error) {
       if (error) {
         alert('Please verify that you have entered the correct password.');
+        $('#js-password').trigger('focus');
         return;
       } else {
         try {
