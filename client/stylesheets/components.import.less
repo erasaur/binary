@@ -73,6 +73,9 @@
   -webkit-border-radius: 19px;
   -moz-border-radius: 19px;
 }
+.toggle.comment-side .handle {
+  background-color: @pro-color;
+}
 .toggle .handle:after,
 .toggle .handle:before {
   position: absolute;
@@ -109,7 +112,7 @@
   height: 20px;
   top: 0;
   left: 0;
-  background-color: #a0d468;
+  background-color: @con-color; //#a0d468;
 }
 .toggle input[type=checkbox]:checked + .handle:after,
 .toggle input[type=radio]:checked + .handle:after {
