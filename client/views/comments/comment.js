@@ -43,18 +43,19 @@ Template.newComment.helpers({
 });
 
 Template.newComment.events({
-	'click .js-new-comment': function (event, template) {
+	'click .js-comment-new': function (event, template) {
 		template.editingComment.set(true);
+		template.$('.editable').trigger('focus');
 	},
-	'click .js-cancel-comment': function (event, template) {
+	'click .js-comment-cancel': function (event, template) {
 		template.editingComment.set(false);
 	},
-	'click .js-post-comment': function (event, template) {
+	'click .js-comment-post': function (event, template) {
 		if (!Session.get('currentTopic')) return;
 
 		var comment = {
 			content: template.$('.editable').val(),
-			side: template.$('.js-post-side').is(':checked') ? 'pro': 'con',
+			side: template.$('.js-comment-side').is(':checked') ? 'pro': 'con',
 			replyTo: this.id
 		};
 
@@ -71,6 +72,7 @@ Template.newComment.events({
 			}
 			else {
 				template.$('.editable').val('');
+				template.editingComment.set(false);
 				scrollToId(result);
 			}
 		});
@@ -156,7 +158,7 @@ Template.comment.events({
 		// add the replies
 		Tracker.afterFlush(function () {
 			scrollToId(self._id);
-			var replyTo = $('#' + self._id).closest('.comment-row');
+			var replyTo = template.$('#' + self._id).closest('.comment-row');
 			Blaze.renderWithData(Template.replies, //template to render
 													{ id: self._id, side: self.side, color: color }, //data context
 													replyTo.parent().get(0), // insert within
