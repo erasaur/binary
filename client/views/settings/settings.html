@@ -1,13 +1,36 @@
 <template name="settings">  
   {{> contentFor region="nav" template="nav"}}
   
-  <div class="col-content page-body settings">
-    <!-- <div class="page-header-buttons">
-      <i id="js-back" class="fa fa-chevron-left"></i>
-    </div> -->
+  <div class="page-body settings">
     <div class="page-body-content">
-      <h3>Profile</h3>
-      <div class="list">
+      <form role="form" class="list">
+        <div class="list-item settings-item">
+          <div class="list-item-info">
+            <h3>Edit Profile</h3>
+          </div>
+          <div class="list-item-action">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </div>
+        <div class="list-item settings-item">
+          <div class="list-item-info">
+            <label for="js-name">Name</label>
+          </div>
+          <div class="settings-input">
+            <input type="text" id="js-name" class="form-control" placeholder="Name" value="{{currentUser.profile.name}}" maxlength="25">
+          </div>
+        </div>
+        <div class="list-item settings-item">
+          <div class="list-item-info">
+            <label for="js-bio">Bio</label>
+          </div>
+          <div class="settings-input">
+            <input type="text" id="js-bio" class="form-control" placeholder="Bio" value="{{currentUser.profile.bio}}" maxlength="100">
+          </div>
+        </div>
+      </form>
+
+      <!-- <div class="list">
         <div class="list-item">
           <div class="list-item-info">
             <label for="js-name">Name</label>
@@ -28,14 +51,42 @@
             <button id="js-edit-bio" class="btn btn-default"><span>Save</span></button>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
-  <div class="col-content page-body settings">
+  <div class="page-body settings">
     <div class="page-body-content">
-      <h3>Account</h3>
-      <div class="list">
+      <form role="form" class="list">
+        <div class="list-item settings-item">
+          <div class="list-item-info">
+            <h3>Account Settings</h3>
+          </div>
+          <div class="list-item-action">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </div>
+        <div class="list-item settings-item">
+          <div class="list-item-info">
+            <label for="js-email">Email {{#unless currentUser.emails.[0].verified}}<a href="#" id="js-email-verification">(Resend Verification)</a>{{/unless}}</label>
+          </div>
+          <div class="settings-input">
+            <input type="email" class="form-control" id="js-email" placeholder="Email" value="{{currentUser.emails.[0].address}}">
+          </div>
+        </div>
+        <div class="list-item settings-item">
+          <div class="list-item-info">
+            <label for="js-password">Password</label>
+          </div>
+          <div class="settings-input">
+            <input type="password" class="form-control" id="js-password" placeholder="Current Password" style="display: none;">
+            <input type="password" class="form-control" id="js-newPassword" placeholder="New Password" style="display: none;">
+            <a href="#" class="action-link">Change Password</a>
+          </div>
+        </div>
+      </form>
+
+      <!-- <div class="list">
         <div class="list-item">
           <div class="list-item-info">
             <label for="js-email">Email {{#unless currentUser.emails.[0].verified}}<a href="#" id="js-email-verification">(Resend Verification)</a>{{/unless}}</label>
@@ -59,15 +110,19 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
-  <div class="col-content page-body settings">
+  <div class="page-body settings">
     <div class="page-body-content">
-      <h3>Notifications</h3>
       <div class="list">
-        <div class="list-item">
+        <div class="list-item settings-item">
+          <div class="list-item-info">
+            <h3>Notifications</h3>
+          </div>
+        </div>
+        <div class="list-item settings-item">
           <div class="list-item-info">
             <label>Notifications</label>
             <p class="help-block">Turn all notifications on/off</p>
@@ -79,7 +134,7 @@
             </div>
           </div>
         </div>
-        <div class="list-item">
+        <div class="list-item settings-item">
           <div class="list-item-info">
             <label>Followers</label>
             <p class="help-block">Get notified when you gain a new follower</p>
@@ -93,7 +148,7 @@
             </div>
           </div>
         </div>
-        <div class="list-item">
+        <div class="list-item settings-item">
           <div class="list-item-info">
             <label>Following Users' Comments</label>
             <p class="help-block">Get notified when someone you are following posts a new comment</p>
@@ -107,7 +162,7 @@
             </div>
           </div>
         </div>
-        <div class="list-item">
+        <div class="list-item settings-item">
           <div class="list-item-info">
             <label>Following Users' Topics</label>
             <p class="help-block">Get notified when someone you are following creates a new topic</p>
@@ -121,7 +176,7 @@
             </div>
           </div>
         </div>
-        <div class="list-item">
+        <div class="list-item settings-item">
           <div class="list-item-info">
             <label>Comment Replies</label>
             <p class="help-block">Get notified whenever someone replies to your comment</p>
@@ -135,7 +190,7 @@
             </div>
           </div>
         </div>
-        <div class="list-item">
+        <div class="list-item settings-item">
           <div class="list-item-info">
             <label>Topic Comments</label>
             <p class="help-block">Get notified whenever someone posts a comment in your topic</p>
@@ -149,7 +204,7 @@
             </div>
           </div>
         </div>
-        <div class="list-item">
+        <div class="list-item settings-item">
           <div class="list-item-info">
             <label>Following Topics</label>
             <p class="help-block">Get notified when someone posts a comment in a topic you are following</p>

@@ -230,29 +230,14 @@
 
 // list (inspired by medium) -------------------------
 
-.list {
-  padding: 1px;
-}
 .list-item {
-  // padding: 20px 0;
   display: block;
   margin-bottom: 20px;
   overflow: hidden; 
-  // position: relative;
 
   &:first-of-type { margin-top: 0; }
   &:last-of-type { margin-bottom: 0; }
-  // color: @fontColor-muted;
-  // &:hover { color: black; }
 }
-.list-header {
-  padding-bottom: 0;
-  .content-header(black);
-}
-// .list-item-info {
-//   width: 80%; 
-//   float: left;
-// }
 .list-item-info .form-control,
 .list-item-info .form-control:focus {
   border: none; 
@@ -266,7 +251,7 @@
   background-color: #fafafa;
   cursor: pointer;
 }
-.comment.comment-item,
+.list-item.comment-item,
 .list-item.topic-item {
   margin-bottom: 20px;
 }
@@ -288,12 +273,24 @@
   margin: 10px 10px 0 0;
 }
 
+.list-item.settings-item {
+  margin-bottom: 10px;
+}
+.list-item.settings-item .list-item-info {
+  float: left;
+  width: 35%;
+}
+.list-item.settings-item .settings-input {
+  display: block;
+  margin-left: 35%;
+}
+.list-item.settings-item .list-item-action,
+.list-item.profile-item .list-item-action {
+  float: right;
+}
 .list-item.profile-item {
   height: auto; 
   overflow: hidden;
-}
-.list-item.profile-item .list-item-action {
-  float: right;
 }
 // .list-item.profile-item .profile-item-right h3 {
 //   font-size: 18px;
@@ -385,6 +382,9 @@
 
 .page-body.settings {
   margin-bottom: 20px;
+}
+.page-body.settings .page-body-content {
+  padding: 15px;
 }
 
 // profile page --------------------------------------
