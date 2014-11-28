@@ -1,18 +1,5 @@
 // Publish profile page
 
-
-// filter pubs by category (created, liked, etc)
-// in profile page, have to init a new infinite scroll thing for every category change
-// so that scrolling to bottom of one doesn't affect the other
-// maybe consider using separate paths for each category (like the sortBy in topic page)
-
-// separate the topic publications somehow so that pro comments and con comments can be 
-// loaded at once. currently publishing the most recent comments might end up with a long list of
-// pro comments and no con comments added
-
-// look into kadira academy and bulletproof meteor
-
-
 Meteor.publishComposite('userProfile', function (userId) {
   return {
     find: function () { // the user
