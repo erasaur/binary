@@ -13,6 +13,7 @@ Template.settingsAccount.events({
     changingPassword.set(true);
   },
   'click #js-cancel-edit': function (event, template) {
+    template.$('#js-email').val(Meteor.user().emails[0].address);
     template.$('#js-password').val('');
     template.$('#js-newPassword').val('');
     changingPassword.set(false);
