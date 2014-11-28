@@ -26,6 +26,7 @@ Template.settingsBody.events({
   },
   'click #js-cancel-edit, submit form': function (event, template) {
     event.preventDefault();
+    console.log('too late');
     template.editing.set(false);
   }
 });
