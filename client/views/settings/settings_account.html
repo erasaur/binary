@@ -2,7 +2,10 @@
   {{#settingsBody title='Account Settings'}}
     <div class="list-item settings-item">
       <div class="list-item-info">
-        <label for="js-email">Email {{#unless currentUser.emails.[0].verified}}<a href="#" id="js-email-verification">(Resend Verification)</a>{{/unless}}</label>
+        <label for="js-email">Email</label>
+        {{#unless currentUser.emails.[0].verified}}
+          <a href="#" id="js-email-verification">(Resend Verification)</a>
+        {{/unless}}
       </div>
       <div class="settings-input">
         <input type="email" class="form-control" id="js-email" placeholder="Email" value="{{currentUser.emails.[0].address}}">
@@ -12,14 +15,18 @@
       <div class="list-item-info">
         <label for="js-password">Password</label>
       </div>
-      <div class="settings-input">
-        {{#if changingPassword}}
+      {{#if changingPassword}}
+        <div class="settings-input">
           <input type="password" class="form-control" id="js-password" placeholder="Current Password">
+        </div>
+        <div class="settings-input">
           <input type="password" class="form-control" id="js-newPassword" placeholder="New Password">
-        {{else}}
+        </div>
+      {{else}}
+        <div class="settings-input">
           <a href="#" id="js-edit-password" class="action-link">Change Password</a>
-        {{/if}}
-      </div>
+        </div>
+      {{/if}}
     </div>
   {{/settingsBody}}
 </template>
