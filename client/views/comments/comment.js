@@ -32,13 +32,29 @@ Template.comment.helpers({
 	}
 });
 
+Template.newComment.created = function () {
+	this.editingComment = new ReactiveVar(false);
+};
+
+Template.newComment.helpers({
+	editing: function () {
+		return Template.instance().editingComment.get();
+	}
+});
+
 Template.newComment.events({
+	'click .js-new-comment': function (event, template) {
+		template.editingComment.set(true);
+	},
+	'click .js-cancel-comment': function (event, template) {
+		template.editingComment.set(false);
+	},
 	'click .js-post-comment': function (event, template) {
 		if (!Session.get('currentTopic')) return;
 
 		var comment = {
 			content: template.$('.editable').val(),
-			side: template.$('.js-post-side').hasClass('btn-pro') ? 'pro': 'con',
+			side: template.$('.js-post-side').is(':checked') ? 'pro': 'con',
 			replyTo: this.id
 		};
 
@@ -58,11 +74,6 @@ Template.newComment.events({
 				scrollToId(result);
 			}
 		});
-	},
-	'click .js-post-side': function (event, template) {
-		var t = $(event.target);
-		t.toggleClass('btn-pro');
-		t.toggleClass('btn-con');
 	}
 });
 
