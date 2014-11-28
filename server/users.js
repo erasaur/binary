@@ -101,11 +101,10 @@ Meteor.methods({
 
     return invite.invitedEmail;
   },
-  changeName: function (newName) {
-    Meteor.users.update(Meteor.userId(), { $set: { 'profile.name': newName } });
-  },
-  changeBio: function (newBio) {
-    Meteor.users.update(Meteor.userId(), { $set: { 'profile.bio': newBio } });
+  changeProfile: function (newName, newBio) {
+    Meteor.users.update(Meteor.userId(), { 
+      $set: { 'profile.name': newName, 'profile.bio': newBio } 
+    });
   },
   changeEmail: function (newEmail) {
     Meteor.users.update(Meteor.userId(), { 
