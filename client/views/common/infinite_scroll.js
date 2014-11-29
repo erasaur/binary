@@ -13,7 +13,7 @@ initInfiniteScroll = function (collection) {
   });
 
   console.log('items limit reset');
-  Session.set('itemsLimit', 15);
+  Session.set('itemsLimit', 2);
 
   $(window).on('scroll', _.throttle(function () {
     // trigger at 300px above bottom
@@ -23,7 +23,7 @@ initInfiniteScroll = function (collection) {
       console.log(count, Session.get('itemsLimit'))
 
       if (count >= Session.get('itemsLimit')) {
-        Session.set('itemsLimit', Session.get('itemsLimit') + 15); //fetch more items from server
+        Session.set('itemsLimit', Session.get('itemsLimit') + 2); //fetch more items from server
       }
     }
   }, 300));  
