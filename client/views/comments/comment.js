@@ -1,6 +1,6 @@
 Template.comment.rendered = function () {
 	var content = this.$('.comment-content');
-	if (content.get(0).scrollHeight > content.innerHeight()) {
+	if (content.get(0).scrollHeight >= content.innerHeight()) {
 		var container = this.$('.comment');
 		var containerClass = container.attr('class');
 
@@ -43,9 +43,11 @@ Template.newComment.helpers({
 });
 
 Template.newComment.events({
-	'click .js-comment-new': function (event, template) {
+	'focus .js-comment-new': function (event, template) {
 		template.editingComment.set(true);
-		template.$('.editable').trigger('focus');
+		Tracker.afterFlush(function () {
+			template.$('.editable').focus();
+		});
 	},
 	'click .js-comment-cancel': function (event, template) {
 		template.editingComment.set(false);
@@ -55,7 +57,7 @@ Template.newComment.events({
 
 		var comment = {
 			content: template.$('.editable').val(),
-			side: template.$('.js-comment-side').is(':checked') ? 'pro': 'con',
+			side: template.$('.js-comment-side').is(':checked') ? 'con' : 'pro',
 			replyTo: this.id
 		};
 
