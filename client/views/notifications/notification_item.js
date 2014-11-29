@@ -3,13 +3,15 @@ Template.notificationItem.helpers({
     return moment(this.timestamp).fromNow();
   },
   notificationHTML: function () {
-    console.log(this);
     return this.message();
+  },
+  readClass: function () {
+    return this.read && 'read';
   }
 });
 
 Template.notificationItem.events({
-  'click .action-link': function (event, template) {
+  'click .notification-item': function (event, template) {
     var notificationId = this._id;
 
     Herald.collection.update(notificationId, {
