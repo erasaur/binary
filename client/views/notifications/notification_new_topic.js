@@ -1,16 +1,10 @@
 Template.notificationNewTopic.helpers({
   author: function () {
     var author = this.data.author;
-    return author && { 
-      'name': author.name, 
-      'url': getProfileRoute(this.data.author._id) 
-    };
+    return author && author.name;
   },
   topic: function () {
     var topic = this.data.topic;
-    return topic && { 
-      'title': topic.title, 
-      'url': getTopicRoute(topic._id) 
-    };
+    return topic && topic.title;
   }  
 });
