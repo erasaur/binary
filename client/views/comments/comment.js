@@ -1,12 +1,12 @@
-Template.comment.rendered = function () {
-	var content = this.$('.comment-content');
-	if (content.get(0).scrollHeight >= content.innerHeight()) {
-		var container = this.$('.comment');
-		var containerClass = container.attr('class');
+// Template.comment.rendered = function () {
+// 	var content = this.$('.comment-content');
+// 	if (content.get(0).scrollHeight > content.innerHeight()) {
+// 		var container = this.$('.comment');
+// 		var containerClass = container.attr('class');
 
-		container.attr('class', containerClass + ' comment-collapsible');
-	}
-};
+// 		container.attr('class', containerClass + ' comment-collapsible');
+// 	}
+// };
 
 Template.comment.helpers({
 	containerClass: function () {
