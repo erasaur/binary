@@ -10,7 +10,9 @@ Template.notificationNewComment.helpers({
     return author && author.name;
   },
   topicMessage: function () {
-    return topic && topic.userId === Meteor.userId() ? 
+    var topic = this.data.topic;
+    if (!topic) return;
+    return topic.userId === Meteor.userId() ? 
       'in your topic: ' + topic.title : 'in: ' + topic.title;
   }
 });
