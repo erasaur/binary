@@ -47,7 +47,7 @@ Meteor.methods({
     var notificationData = {
       author: { '_id': user._id, 'name': user.profile.name },
       comment: _.pick(comment, '_id'),
-      topic: _.pick(topic, '_id', 'title')
+      topic: _.pick(topic, '_id', 'title', 'userId')
     };
 
     if (!!replyToId) { // comment reply      
@@ -81,6 +81,7 @@ Meteor.methods({
       Herald.createNotification(topic.userId, { 
         courier: 'newComment', 
         data: notificationData, 
+        'duplicates': false,
         'aggregate': true,
         'aggregateAt': 5,
         'aggregateUnder': 'topic'
@@ -117,7 +118,7 @@ Meteor.methods({
           data: notificationData, 
           'aggregate': true,
           'aggregateAt': 5,
-          'aggregateUnder': 'author'
+          'aggregateUnder': 'topic'
         });
       }        
 
