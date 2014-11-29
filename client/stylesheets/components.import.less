@@ -252,7 +252,7 @@
   padding: 0 15px;
 }
 .page-body .page-body-content {
-  padding: 10px 15px;
+  padding: 20px 15px;
 }
 
 .page-nav .page-nav-action {
@@ -430,7 +430,10 @@
   display: block;
   padding: 7.5px 10px;
   margin: 0;
-  &:hover { background-color: @gray; }
+}
+.dropdown-menu .list-item:hover,
+.list-item.notification-item.read {
+  background-color: @gray;
 }
 .dropdown-menu .no-notifications a {
   cursor: default;
