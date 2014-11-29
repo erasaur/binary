@@ -1,16 +1,7 @@
 <template name="notificationNewComment">
-  {{#if count}}
-    {{#if author}}
-      <a href="{{author.url}}" class="action-link">{{author.name}}</a> 
-      posted {{count}} new comments
-    {{/if}}
-    {{#if topic}}
-      {{count}} new comments were posted in 
-      <a href="{{topic.url}}" class="action-link">{{topic.title}}</a>
-    {{/if}}
+  {{#if hasCount}}
+    {{author}} and {{count}} others posted new comments {{topicMessage}}
   {{else}}
-    <a href="{{author.url}}" class="action-link">{{author.name}}</a> 
-    posted a new comment on 
-    <a href="{{commentUrl}}" class="action-link">{{topic.title}}</a>
+    {{author}} posted a new comment {{topicMessage}}
   {{/if}}
 </template>

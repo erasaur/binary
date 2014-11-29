@@ -1,13 +1,12 @@
 Template.notificationNewFollower.helpers({
-  count: function () {
+  hasCount: function () {
     return this.data.count;
+  },
+  count: function () {
+    return this.data.count - 1;
   },
   follower: function () {
     var follower = this.data.follower;
-    return follower && { 
-      'name': follower.name, 
-      'url': getProfileRoute(follower._id) 
-    };
+    return follower && follower.name;
   }
 });
-  
