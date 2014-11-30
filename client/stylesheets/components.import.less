@@ -171,17 +171,20 @@
   margin-left: 0;
   float: left;
 }
-@media (min-width: 768px) {
-  .navbar-brand {
-    float: right;
-  }
-}
 .navbar-nav {
   margin: 0;
   padding: 0;
 }
 .navbar-nav > li a {
-  padding: 10px 6px;
+  padding: 10px;
+}
+@media (min-width: 768px) {
+  .navbar-brand {
+    float: right;
+  }
+  .navbar-nav > li a {
+    padding: 10px 6px;
+  }
 }
 .navbar-nav > li .dropdown-menu {
   margin-top: 15px;
