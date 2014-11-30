@@ -62,15 +62,6 @@
   {{#if currentUser}}
     <ul class="nav navbar-nav col-sm-2">
       <li class="dropdown">
-        <a href="#" data-toggle="modal" data-target="#new-topic-modal">
-          <div class="navbar-item icon-group hidden-xs">
-            <i class="b-icon-write"></i>
-          </div>
-          <span class="visible-xs">Add New Topic</span>
-        </a>
-      </li>
-      {{> notifications}}
-      <li class="dropdown">
         <a href="#" class="dropdown-toggle" id="nav-profile" data-toggle="dropdown">
           {{> avatar user=currentUser size='small' shape='circle' class='navbar-item hidden-xs'}}
           <span class="visible-xs">Your Profile</span>
@@ -81,6 +72,15 @@
             <li><a href="#" id="js-logout" class="list-item"><span>Log Out</span></a></li>
           </ul>
         </div>
+      </li>
+      {{> notifications}}
+      <li class="dropdown">
+        <a href="#" data-toggle="modal" data-target="#new-topic-modal">
+          <div class="navbar-item icon-group hidden-xs">
+            <i class="b-icon-write"></i>
+          </div>
+          <span class="visible-xs">Add New Topic</span>
+        </a>
       </li>
     </ul>
   {{/if}} 
