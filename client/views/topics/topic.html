@@ -35,14 +35,21 @@
 <template name="topicHeader">
 	<h3>{{title}}</h3>
 	<div class="topic-vote center">
-		<button id="js-vote-pro" class="btn btn-pro">Pro: {{pro}}</button> 
-		<button id="js-vote-con" class="btn btn-con">Con: {{con}}</button>
+		<button id="js-vote-pro" class="btn btn-pro">{{pro}}</button> 
+		<button id="js-vote-con" class="btn btn-con">{{con}}</button>
 	</div>
 	
 	{{#if description}}
-		<p class="muted markdown">
+		<div class="topic-description muted markdown">
 			{{{description}}}
-		</p>
+		</div>
 	{{/if}}
+</template>
+
+<template name="topicNav">
+	<div class="topic-info">
+		<div>{{formatDate createdAt}}</div>
+		<div>by <a href="{{pathFor 'profile' _id=userId}}" class="action-link">{{formatName userId}}</a></div>
+	</div>
 </template>
 
