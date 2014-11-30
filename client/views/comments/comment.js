@@ -57,7 +57,7 @@ Template.newComment.events({
 
 		var comment = {
 			content: template.$('.editable').val(),
-			side: template.$('.js-comment-side').is(':checked') ? 'con' : 'pro',
+			side: template.$('.js-comment-side')[0].checked ? 'con' : 'pro',
 			replyTo: this.id
 		};
 
@@ -128,6 +128,16 @@ function closeReplies (commentRow) {
 }
 
 Template.comment.events({
+	'mouseover .comment': function (event, template) {
+		event.stopPropagation();
+		if (this._calcCollapsible) return;
+
+		var $content = $(event.currentTarget).find('.comment-content');
+		if ($content[0].scrollHeight > $content.innerHeight()) {
+			$content.parent().addClass('comment-collapsible');
+		}
+		this._calcCollapsible = true;
+	},
 	'click .comment-content': function (event, template) {
 		var parent = $(event.currentTarget).parent();
 		if (parent.hasClass('comment-collapsible')) {
