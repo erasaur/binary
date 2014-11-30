@@ -63,8 +63,8 @@
     <ul class="nav navbar-nav col-sm-2">
       <li class="dropdown">
         <a href="#" data-toggle="modal" data-target="#new-topic-modal">
-          <div class="navbar-item icon-group">
-            <i class="hidden-xs b-icon-write"></i>
+          <div class="navbar-item icon-group hidden-xs">
+            <i class="b-icon-write"></i>
           </div>
           <span class="visible-xs">Add New Topic</span>
         </a>
@@ -72,7 +72,7 @@
       {{> notifications}}
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" id="nav-profile" data-toggle="dropdown">
-          {{> avatar user=currentUser size='small' shape='circle' class='navbar-item'}}
+          {{> avatar user=currentUser size='small' shape='circle' class='navbar-item hidden-xs'}}
           <span class="visible-xs">Your Profile</span>
         </a>
         <div class="dropdown-menu">
