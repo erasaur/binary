@@ -1,23 +1,5 @@
 Template.topic.rendered = function () {
-  initInfiniteScroll.call(this, 'comments');
-
-  var container = this.find('.page-body-content .list');
-  
-  container._uihooks = {
-    insertElement: function (node, next) {
-      container.insertBefore(node, next);
-
-      var $node = $(node).find('.comment-content');
-
-      if (!$node) return;
-      $node.each(function () {
-        var $comment = $(this);
-        if (this.scrollHeight > $comment.innerHeight()) {
-          $comment.parent().addClass('comment-collapsible');
-        }
-      });
-    }
-  };
+  initInfiniteScroll.call(this, 'comments'); 
 };
 Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
