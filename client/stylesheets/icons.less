@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+// @bi-font-path: "/fonts";
+// @bi-css-prefix: bi;
+// @{bi-css-prefix} {
+//   display: inline-block;
+//   font: normal normal normal 14px/1 "binary-icon-font"; // shortening font declaration
+//   font-size: inherit; // can't have font-size inherit on line above, so need to override
+//   text-rendering: auto; // optimizelegibility throws things off #1094
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+// }
+
+// // icon sizes
+// .@{bi-css-prefix}-lg {
+//   font-size: (4em / 3);
+//   line-height: (3em / 4);
+//   vertical-align: -15%;
+// }
+// .@{bi-css-prefix}-2x { font-size: 2em; }
+// .@{bi-css-prefix}-3x { font-size: 3em; }
+// .@{bi-css-prefix}-4x { font-size: 4em; }
+// .@{bi-css-prefix}-5x { font-size: 5em; }
+
+@font-face {
+  font-family: "binary-icon-font";
+  src:url("fonts/binary-icon-font.eot");
+  src:url("fonts/binary-icon-font.eot?#iefix") format("embedded-opentype"),
+    url("fonts/binary-icon-font.woff") format("woff"),
+    url("fonts/binary-icon-font.ttf") format("truetype"),
+    url("fonts/binary-icon-font.svg#binary-icon-font") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+[data-icon]:before {
+  font-family: "binary-icon-font" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// [class^="b-"]:before,
+// [class*=" b-"]:before // generic selectors are slower
+.b-icon-plus,
+.b-icon-bubble,
+.b-icon-heart,
+.b-icon-flag,
+.b-icon-logout,
+.b-icon-write,
+.b-icon-gear,
+.b-icon-check,
+.b-icon-share {
+  font-family: "binary-icon-font" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.b-icon-plus:before {
+  content: "p";
+}
+.b-icon-bubble:before {
+  content: "b";
+}
+.b-icon-heart:before {
+  content: "h";
+}
+.b-icon-flag:before {
+  content: "f";
+}
+.b-icon-logout:before {
+  content: "l";
+}
+.b-icon-write:before {
+  content: "w";
+}
+.b-icon-gear:before {
+  content: "g";
+}
+.b-icon-check:before {
+  content: "c";
+}
+.b-icon-share:before {
+  content: "s";
+}
