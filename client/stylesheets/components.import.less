@@ -31,11 +31,18 @@
   padding: .2em .6em;
   .border-radius;
 }
+.btn.btn-pro, 
+.btn.btn-con {
+  width: 60px;
+  height: 30px;
+}
 .btn.btn-pro { 
   background-color: @pro-color; 
+  margin-right: 7.5px;
 }
 .btn.btn-con { 
   background-color: @con-color;
+  margin-left: 7.5px;
 }
 .btn.btn-default {
   background-color: @primary-color;
@@ -366,61 +373,63 @@
   padding: 0;
 }
 
-.list-item.topic-item:hover,
-.comment.comment-collapsible:hover {
+.topic-item:hover,
+.comment-collapsible:hover {
   background-color: #fafafa;
   cursor: pointer;
 }
-.list-item.comment-item,
-.list-item.topic-item {
+.comment-item,
+.topic-item {
   margin-bottom: 20px;
 }
-.list-item.topic-item.has-comment { 
+.topic-item.has-comment { 
   margin-bottom: 10px; 
 }
-.list-item.topic-item .list-item-action {
+.topic-item .list-item-action {
   padding: 15px 15px 0;
 }
-.list-item.topic-item .list-item-action h3 { 
+.topic-item .list-item-action h3 { 
   display: inline-block; 
   margin-left: 10px;
 }
-.list-item.topic-item .list-item-info {
+.topic-info,
+.topic-item .list-item-info {
   padding: 0 15px 15px;
 }
-.list-item.topic-item .list-item-info div {
+.topic-info div,
+.topic-item .list-item-info div {
   display: inline-block;
   margin: 10px 10px 0 0;
 }
 
-.list-item.settings-item {
+.settings-item {
   margin-bottom: 0;
 }
-.list-item.settings-item .list-item-info,
-.list-item.settings-item .settings-input {
+.settings-item .list-item-info,
+.settings-item .settings-input {
   padding: 5px 0;
 }
-.list-item.settings-item .list-item-info {
+.settings-item .list-item-info {
   float: left;
   width: 35%;
 }
-.list-item.settings-item .settings-input {
+.settings-item .settings-input {
   display: block;
   margin-left: 35%;
 }
-.list-item.settings-item .list-item-action,
-.list-item.profile-item .list-item-action {
+.settings-item .list-item-action,
+.profile-item .list-item-action {
   float: right;
 }
-.list-item.profile-item {
+.profile-item {
   height: auto; 
   overflow: hidden;
 }
-// .list-item.profile-item .profile-item-right h3 {
+// .profile-item .profile-item-right h3 {
 //   font-size: 18px;
 //   margin: 0 0 5px;
 // }
-// .list-item.profile-item .list-item-info {
+// .profile-item .list-item-info {
 //   width: auto;
 //   overflow: hidden;
 // }
@@ -466,8 +475,8 @@
   padding: 7.5px 10px;
   margin: 0;
 }
-.dropdown-menu .list-item:hover,
-.list-item.notification-item.read {
+.notification-item.read,
+.dropdown-menu .list-item:hover {
   background-color: @gray;
 }
 .dropdown-menu .no-notifications a {
@@ -492,12 +501,6 @@
 
 // navbar --------------------------------------------
 
-// .form-group.has-feedback { 
-//   margin: 0;
-// }
-// .form-group.has-feedback input { 
-//   padding-right: 0px; 
-// }
 .form-control-feedback { 
   right: 0; 
   color: @dark-gray;
@@ -530,7 +533,10 @@
 // topic page ----------------------------------------
 
 .topic-vote {
-  padding: 40px;
+  padding: 20px;
+}
+.topic-info {
+  color: @fontColor-muted;
 }
 .show-more {
   margin: 80px 0;
