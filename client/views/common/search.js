@@ -2,7 +2,7 @@ var searching = new ReactiveVar(false);
 var searchDeps = new Deps.Dependency();
 
 function stopSearching () {
-  // $('#js-search-input').val('').blur();
+  $('.search-input').val('').blur();
   searching.set(false);
 }
 
