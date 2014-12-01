@@ -4,6 +4,16 @@ Template.topic.rendered = function () {
 Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
 };
+Template.topicHeader.rendered = function () {
+  var description = this.find('.topic-description');
+  var $description = $(description);
+
+  if (!$description || !$description.length) return;
+
+  if (description.scrollHeight > $description.innerHeight()) {
+    $description.addClass('collapsible');
+  }
+};
 
 Template.topic.helpers({
   commentCategory: function () {
@@ -56,10 +66,13 @@ Template.topicButtons.helpers({
 });
 
 Template.topicHeader.events({
-	'click #js-vote-pro': function(event, template) {
+  'click .collapsible': function (event, template) {
+    template.$('.topic-description').toggleClass('collapsed');
+  },
+	'click #js-vote-pro': function (event, template) {
 		Meteor.call('vote', this, 'pro');
 	},
-	'click #js-vote-con': function(event, template) {
+	'click #js-vote-con': function (event, template) {
 		Meteor.call('vote', this, 'con');
 	}
 });
