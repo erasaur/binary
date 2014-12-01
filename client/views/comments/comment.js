@@ -1,13 +1,3 @@
-// Template.comment.rendered = function () {
-// 	var content = this.$('.comment-content');
-// 	if (content.get(0).scrollHeight > content.innerHeight()) {
-// 		var container = this.$('.comment');
-// 		var containerClass = container.attr('class');
-
-// 		container.attr('class', containerClass + ' comment-collapsible');
-// 	}
-// };
-
 Template.comment.helpers({
 	containerClass: function () {
 		return this.isDeleted ? 'deleted' : this.isCommentItem ? 'list-item comment-item' : '';
@@ -134,13 +124,13 @@ Template.comment.events({
 
 		var $content = $(event.currentTarget).find('.comment-content');
 		if ($content[0].scrollHeight > $content.innerHeight()) {
-			$content.parent().addClass('comment-collapsible');
+			$content.parent().addClass('collapsible');
 		}
 		this._calcCollapsible = true;
 	},
 	'click .comment-content': function (event, template) {
 		var parent = $(event.currentTarget).parent();
-		if (parent.hasClass('comment-collapsible')) {
+		if (parent.hasClass('collapsible')) {
 			parent.toggleClass('collapsed');
 		}
 	},

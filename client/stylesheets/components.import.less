@@ -374,7 +374,7 @@
 }
 
 .topic-item:hover,
-.comment-collapsible:hover {
+.collapsible:hover {
   background-color: #fafafa;
   cursor: pointer;
 }
@@ -537,6 +537,13 @@
 }
 .topic-info {
   color: @fontColor-muted;
+}
+.topic-description {
+  word-wrap: break-word;
+}
+.topic-description.collapsed {
+  max-height: 75px;
+  overflow: hidden;
 }
 .show-more {
   margin: 80px 0;
