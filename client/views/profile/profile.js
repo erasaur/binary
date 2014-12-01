@@ -1,11 +1,15 @@
-Template.profileComments.rendered = function () {
-  initInfiniteScroll.call(this, 'comments');
+Template.profileComments.created = function () {
+  initInfiniteScroll.call(this, 'comments', {
+    'userId': this.data._id
+  });
 };
 Template.profileComments.destroyed = function () {
 	stopInfiniteScroll.call(this);
 };
-Template.profileTopics.rendered = function () {
-	initInfiniteScroll.call(this, 'topics');
+Template.profileTopics.created = function () {
+	initInfiniteScroll.call(this, 'topics', {
+    'userId': this.data._id
+  });
 };
 Template.profileTopics.destroyed = function () {
 	stopInfiniteScroll.call(this);
