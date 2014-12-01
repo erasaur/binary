@@ -41,7 +41,9 @@ Template.invite.events({
 
 Template.inviteForm.events({
 	'submit #js-invite-form': function (event, template) {
+		event.preventDefault();
 		event.stopPropagation();
+		
 		var email = template.$('#js-invite-email');
 		
 		Meteor.call('inviteUser', email.val(), function (error) {
