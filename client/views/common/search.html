@@ -2,7 +2,7 @@
   <ul class="nav navbar-nav navbar-search col-sm-8">
     <form class="navbar-form search-form" id="js-search-form" role="search">
       <div class="search-form-group form-group has-feedback">
-        {{> esInput index="topics" class="form-control search-input" placeholder="Find topics..."}}
+        {{> esInput index=searchIndex id="js-search" class="form-control search-input" placeholder="Find topics and users..."}}
         {{#if searching}}
           <span id="js-search-cancel" class="icon-group form-control-feedback"><i class="icon-action fa fa-remove"></i></span>
         {{/if}}
@@ -14,23 +14,32 @@
 <template name="searchResults">
   <div class="page-body">
     <div data-animate data-duration="1000" data-from-value="0" data-to-value="1" class="results">
+      <ul role="tablist">
+        <li role="presentation" class="active">
+          <a href="#" id="js-search-topics" role="tab">Topics</a>
+        </li>
+        <li role="presentation" class="active">
+          <a href="#" id="js-search-users" role="tab">Users</a>
+        </li>
+      </ul>
+    
       <div class="list">
-        {{#ifEsInputIsEmpty index="topics"}}
-          <div class="list-item">Search for topics.</div>
+        {{#ifEsInputIsEmpty index=searchIndex id="js-search"}}
+          <div class="list-item">Search for {{searchIndex}}.</div>
         {{/ifEsInputIsEmpty}}
 
-        {{#ifEsIsSearching index="topics"}}
+        {{#ifEsIsSearching index=searchIndex id="js-search"}}
           <div class="list-item">Working...</div>
         {{else}}
-          {{#esEach index="topics"}}
-            {{> topicItem}}
+          {{#esEach index=searchIndex id="js-search"}}
+            {{> Template.dynamic template=searchTemplate}}
           {{/esEach}}
         {{/ifEsIsSearching}}
 
-        {{#ifEsHasNoResults index="topics"}}
+        {{#ifEsHasNoResults index=searchIndex id="js-search"}}
           <div class="list-item">No search results.</div>
         {{else}}
-          {{> esLoadMoreButton index="topics" class="btn btn-default"}}
+          {{> esLoadMoreButton index=searchIndex class="btn btn-default" id="js-search"}}
         {{/ifEsHasNoResults}}
       </div>
     </div>

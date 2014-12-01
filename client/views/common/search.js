@@ -1,17 +1,23 @@
 var searching = new ReactiveVar(false);
-var searchDeps = new Deps.Dependency();
+var searchIndex = new ReactiveVar('topics');
+var searchTemplate = {
+  'topics': 'topicItem',
+  'users': 'profileItem'
+};
 
-function stopSearching () {
+var stopSearching = function () {
   $('.search-input').val('').blur();
   searching.set(false);
-}
-
-function isSearching () {
+};
+var isSearching = function () {
   return searching.get();
-}
+};
+var indexSearching = function () {
+  return searchIndex.get();
+};
 
 Template.searchInput.helpers({
-  indexes: ['topics', 'users'],
+  searchIndex: indexSearching,
   searching: isSearching
 });
 
@@ -38,11 +44,25 @@ Template.searchInput.events({
   }
 });
 
+Template.searchResults.helpers({
+  searchIndex: indexSearching,
+  searchTemplate: function () {
+    return searchIndex && searchTemplate[searchIndex.get()];
+  }
+});
+
 Template.searchResults.events({
   'submit #js-search-form': function (event, template) {
     event.preventDefault();
   },
-  'click a[href]': function (event, template) {
-    stopSearching();
-  }
+  'click #js-search-topics': function (event, template) {
+    searchIndex.set('topics');
+  },
+  'click #js-search-users': function (event, template) {
+    searchIndex.set('users');
+    console.log(searchIndex.get());
+  },
+  // 'click a[href]': function (event, template) {
+  //   stopSearching();
+  // }
 });
