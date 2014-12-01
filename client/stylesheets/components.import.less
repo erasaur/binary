@@ -569,14 +569,23 @@
 // search form ---------------------------------------
 
 .navbar-form.search-form {
-  margin: 8px 0;
+  margin: 10px 0;
 }
-.navbar-form .search-input {
-  border-radius: 16px;
+.navbar-form.search-form,
+.navbar-form .search-input,
+.navbar-form .search-form-group,
+.search-form-group .form-control-feedback {
+  height: 30px;
+}
+.search-form-group .form-control-feedback {
+  line-height: 30px;
 }
 .navbar-form .search-input,
 .navbar-form .search-form-group {
-  width: 100%;
+  width: 100%;  
+}
+.navbar-form .search-input {
+  border-radius: 16px;
 }
 
 // notification badge --------------------------------
