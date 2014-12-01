@@ -1,5 +1,6 @@
-initInfiniteScroll = function (collection) {
-  var items = window[capitalize(collection)].find();
+initInfiniteScroll = function (collection, options) {
+  var options = options || {};
+  var items = window[capitalize(collection)].find(options);
   var count = 0;
 
   // observeChanges will fire for initial set, so count can start at 0
