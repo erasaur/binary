@@ -128,10 +128,6 @@
   // -moz-box-shadow: inset 0 0 0 1px #f5f7fa,1px 1px 1px #c7ccd3;
   // box-shadow: inset 0 0 0 1px #f5f7fa,1px 1px 1px #c7ccd3;
 }
-.invite {
-  float: right;
-  margin-right: 20px;
-}
 
 .icon-group {
   display: inline-block;
@@ -474,6 +470,7 @@
   display: block;
   padding: 7.5px 10px;
   margin: 0;
+  border-bottom: 1px solid rgb(225, 225, 225);
 }
 .notification-item.read,
 .dropdown-menu .list-item:hover {
@@ -490,13 +487,19 @@
 
 // invite menu ---------------------------------------
 
-.invite-menu {
-  padding: 15px 10px;
-  left: 45px;
-  width: 220px;
-}
-.invite-menu input {
-  height: 30px;
+.invite {
+  margin: 0; 
+  padding: 10px; 
+  position: fixed; 
+  bottom: 20px; 
+  right: 20px; 
+  width: 36px; 
+  height: 36px; 
+  background-color: #fff; 
+  .border-radius(50%); 
+  .border-shadow;
+  display: block; 
+  color: rgba(0,0,0,0.5);
 }
 
 // navbar --------------------------------------------
@@ -616,16 +619,17 @@
   outline: none !important;
 }
 .modal-backdrop {
-  background: white;
-  -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(5px);
+  // background: #fff;
+  // -webkit-filter: blur(5px);
+  // -moz-filter: blur(5px);
+  // -o-filter: blur(5px);
+  // -ms-filter: blur(5px);
+  // filter: blur(5px);
+  background: #969696;
 }
-.modal-dialog {
-  background: transparent;
-}
+// .modal-dialog {
+//   background: transparent;
+// }
 .modal.fade .modal-dialog {
   .transition(ease-out);
 }
@@ -634,9 +638,16 @@
 }
 .modal-content {
   .border-radius(@main-radius);
-  box-shadow: none;
+  border: none;
+  .border-shadow(0 1px 5px 0 rgba(0, 0, 0, 0.3));
 }
-
+.modal-header {
+  border: none;
+  padding-bottom: 10px;
+}
+.modal-content .action-group button {
+  float: right;
+}
 
 
 
