@@ -35,36 +35,71 @@ Template.topic.helpers({
     var query = getCurrentQuery();
     var sortBy = query && sortOptions[query.sort_by] || 'initVotes';
 
-    var newPros = Comments.find({
+    // var newPros = Comments.find({
+    //   'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
+    //   'topicId': this._id, 
+    //   'side': 'pro',
+    //   'initDate': { $exists: false }
+    // }, { sort: { 'createdAt': -1 } }).fetch();
+
+    // var newCons = Comments.find({
+    //   'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
+    //   'topicId': this._id, 
+    //   'side': 'con',
+    //   'initDate': { $exists: false }
+    // }, { sort: { 'createdAt': -1 } }).fetch();
+
+    // var pros = Comments.find({
+    //             'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
+    //             'topicId': this._id, 
+    //             'side': 'pro',
+    //             'initDate': { $exists: true }
+    //           }, { sort: setProperty({}, sortBy, -1) }).fetch();
+    // var cons = Comments.find({
+    //             'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
+    //             'topicId': this._id, 
+    //             'side': 'con',
+    //             'initDate': { $exists: true }
+    //           }, { sort: setProperty({}, sortBy, -1) }).fetch();
+
+    var res = [];
+
+    var newComments = Comments.find({
       'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
       'topicId': this._id, 
-      'side': 'pro',
       'initDate': { $exists: false }
     }, { sort: { 'createdAt': -1 } }).fetch();
 
-    var newCons = Comments.find({
+    var sort = setProperty({}, sortBy, -1);
+    sort.createdAt = -1;
+    var comments = Comments.find({
       'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
       'topicId': this._id, 
-      'side': 'con',
-      'initDate': { $exists: false }
-    }, { sort: { 'createdAt': -1 } }).fetch();
+      'initDate': { $exists: true }
+    }, { sort: sort }).fetch();
 
-    var pros = Comments.find({
-                'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
-                'topicId': this._id, 
-                'side': 'pro',
-                'initDate': { $exists: true }
-              }, { sort: setProperty({}, sortBy, -1) }).fetch();
-    var cons = Comments.find({
-                'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
-                'topicId': this._id, 
-                'side': 'con',
-                'initDate': { $exists: true }
-              }, { sort: setProperty({}, sortBy, -1) }).fetch();
+    // var comments = Comments.find({
+    //   'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
+    //   'topicId': this._id
+    // }, { sort: sort }).fetch();
 
-    pros = _.union(newPros, pros);
-    cons = _.union(newCons, cons);
-    console.log(pros, cons);
+    var comments = _.union(newComments, comments);
+
+    // var len = Math.max(newComments.length, comments.length);
+    var pros = [], cons = [], comment;
+    console.log(comments);
+    var len = comments.length, i = 0;
+    while (i < len) {
+      comment = comments[i];
+      comment.side === 'pro' ? pros.push(comment) : cons.push(comment);
+      i++;
+    }
+
+    var len = Math.max(pros.length, cons.length), i = 0;
+    while (i < len) {
+      res.push({ 'pros': pros[i], 'cons': cons[i] });
+      i++;
+    }
 
     /** 
      * Combines the pro and con comments into an array of objects
@@ -72,12 +107,12 @@ Template.topic.helpers({
      *
      * pair - array that contains the comment object
      */
-    var comments = _.map(_.zip(pros, cons), function (pair) { 
-      return { 'pros': pair[0], 'cons': pair[1] };
-    });
+    // var comments = _.map(_.zip(pros, cons), function (pair) { 
+    //   return { 'pros': pair[0], 'cons': pair[1] };
+    // });
     //a dummy row that solves comment rendering (see docs error 1)
-    comments.push({ 'bottom': true });
-    return comments;
+    res.push({ 'bottom': true });
+    return res;
   }
 });
 

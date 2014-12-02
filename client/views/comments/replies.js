@@ -1,6 +1,6 @@
 Template.replies.helpers({
 	hasReplies: function () {
-		return this.replies.length;
+		return this.replies && this.replies.length;
 	},
 	replies: function () {
 		var sortOptions = {
