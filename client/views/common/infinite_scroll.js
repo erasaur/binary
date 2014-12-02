@@ -1,10 +1,8 @@
-initInfiniteScroll = function (collection, options) {
-  var options = options || {};
-  var items = window[capitalize(collection)].find(options);
+initInfiniteScroll = function (cursor) {
   var count = 0;
 
   // observeChanges will fire for initial set, so count can start at 0
-  this._infiniteScroll = items.observeChanges({
+  this._infiniteScroll = cursor.observeChanges({
     added: function () {
       count++;
     },
