@@ -1,7 +1,8 @@
 Template.topic.created = function () {
-  initInfiniteScroll.call(this, Comments.find({
-    'topicId': this.data._id
-  })); 
+  initInfiniteScroll.call(this, [
+    Comments.find({ 'topicId': this.data._id, 'side': 'pro' }), 
+    Comments.find({ 'topicId': this.data._id, 'side': 'con' })
+  ]); 
 };
 Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
@@ -34,16 +35,36 @@ Template.topic.helpers({
     var query = getCurrentQuery();
     var sortBy = query && sortOptions[query.sort_by] || 'initVotes';
 
+    var newPros = Comments.find({
+      'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
+      'topicId': this._id, 
+      'side': 'pro',
+      'initDate': { $exists: false }
+    }, { sort: { 'createdAt': -1 } }).fetch();
+
+    var newCons = Comments.find({
+      'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
+      'topicId': this._id, 
+      'side': 'con',
+      'initDate': { $exists: false }
+    }, { sort: { 'createdAt': -1 } }).fetch();
+
     var pros = Comments.find({
-                'replyTo': {$nin: SessionAmplify.get('showingReplies')}, 
+                'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
                 'topicId': this._id, 
-                'side': 'pro'
+                'side': 'pro',
+                'initDate': { $exists: true }
               }, { sort: setProperty({}, sortBy, -1) }).fetch();
     var cons = Comments.find({
-                'replyTo': {$nin: SessionAmplify.get('showingReplies')}, 
+                'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
                 'topicId': this._id, 
-                'side': 'con'
+                'side': 'con',
+                'initDate': { $exists: true }
               }, { sort: setProperty({}, sortBy, -1) }).fetch();
+
+    pros = _.union(newPros, pros);
+    cons = _.union(newCons, cons);
+    console.log(pros, cons);
 
     /** 
      * Combines the pro and con comments into an array of objects

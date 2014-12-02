@@ -79,10 +79,13 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   });
 });
 
-Meteor.publishComposite('singleTopic', function (topicId) {
+Meteor.publishComposite('singleTopic', function (topicId, initDate) {
+  var userId = this.userId;
+  console.log(userId, initDate);
+
   return {
     find: function () {
-      if (!this.userId) return this.ready();
+      if (!userId) return this.ready();
 
       return Topics.find(topicId);
     },
@@ -91,6 +94,10 @@ Meteor.publishComposite('singleTopic', function (topicId) {
         return Meteor.users.find(topic.userId, { 
           limit: 1, fields: { 'profile': 1 } 
         });
+      }
+    }, {
+      find: function (topic) { // new comments posted by currentUser
+        return Comments.find({ 'userId': userId, 'createdAt': { $gt: initDate } });
       }
     }]
   };
