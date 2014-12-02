@@ -35,6 +35,8 @@
 .btn.btn-con {
   width: 60px;
   height: 30px;
+  font-weight: 600;
+  font-size: 16px;
 }
 .btn.btn-pro { 
   background-color: @pro-color; 
@@ -384,9 +386,13 @@
 .topic-item .list-item-action {
   padding: 15px 15px 0;
 }
+.topic-item .list-item-action button {
+  margin: 0;
+  width: 40px;
+}
 .topic-item .list-item-action h3 { 
   display: inline-block; 
-  margin-left: 10px;
+  margin-left: 15px;
 }
 .topic-info,
 .topic-item .list-item-info {
@@ -541,6 +547,20 @@
 
 .topic-vote {
   padding: 20px;
+}
+.topic-vote .btn {
+  height: 35px;
+  &:after {
+    content: "";
+    display: block;    
+    height: 5px;
+    width: 5px;
+  }
+  &.selected:after {
+    margin: 0 auto;
+    background: rgba(0,0,0,0.2);
+    border-radius: 50%;
+  }
 }
 .topic-info {
   color: @fontColor-muted;

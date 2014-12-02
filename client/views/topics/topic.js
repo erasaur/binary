@@ -67,6 +67,15 @@ Template.topicButtons.helpers({
 	}
 });
 
+Template.topicHeader.helpers({
+  selected: function (side) {
+    var userId = Meteor.userId();
+    var side = side + 'Users';
+
+    return userId && _.contains(this[side], userId) && 'selected';
+  }
+});
+
 Template.topicHeader.events({
   'click .collapsible': function (event, template) {
     template.$('.topic-description').toggleClass('collapsed');
