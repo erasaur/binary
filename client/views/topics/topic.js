@@ -1,7 +1,7 @@
 Template.topic.created = function () {
-  initInfiniteScroll.call(this, 'comments', {
+  initInfiniteScroll.call(this, Comments.find({
     'topicId': this.data._id
-  }); 
+  })); 
 };
 Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
