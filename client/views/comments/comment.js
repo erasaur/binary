@@ -165,7 +165,6 @@ Template.comment.events({
 													{ id: self._id, side: self.side, color: color }, //data context
 													replyTo.parent().get(0), // insert within
 													replyTo.next().get(0)); // insert before
-	
 		});
 		
 	},
