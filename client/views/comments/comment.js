@@ -142,6 +142,11 @@ Template.comment.events({
 	'click .js-toggle-replies': function (event, template) {
 		if (this.isCommentItem) return;
 		var self = this; //store the reference because context changes when rendering template
+		var controller = Router.current();
+
+		// console.log("THIS IS WHERE WE SET THE NEW RUNAT");
+		// controller.state.set('runAt', new Date());
+		controller._runAt = new Date();
 
 		// remove replies on equal or deeper level than commentRow
 		var commentRow = $(event.target).closest('.comment-row');
@@ -159,12 +164,14 @@ Template.comment.events({
 
 		// add the replies
 		Tracker.afterFlush(function () {
-			scrollToId(self._id);
-			var replyTo = template.$('#' + self._id).closest('.comment-row');
+			// scrollToId(self._id);
+			var replyTo = $('#' + self._id).closest('.comment-row');
+			console.log("THIS IS WHERE WE RENDER THE DATA");
+			console.log(template, template.$('#' + self._id));
 			Blaze.renderWithData(Template.replies, //template to render
 													{ id: self._id, side: self.side, color: color }, //data context
 													replyTo.parent().get(0), // insert within
-													replyTo.next().get(0)); // insert before
+													replyTo.next().get(0)); // insert before	
 		});
 		
 	},

@@ -70,7 +70,9 @@ meteorhacks:npm@1.2.1
 meteorhacks:subs-manager@1.2.2
 minifiers@1.1.2
 minimongo@1.0.5
+mizzao:animated-each@0.2.0
 mizzao:bootstrap-3@3.3.1
+mizzao:build-fetcher@0.2.0
 mobile-status-bar@1.0.1
 mongo-livedata@1.0.6
 mongo@1.0.8
