@@ -19,14 +19,19 @@ Template.replies.helpers({
 		// }).fetch();
 
 		var res = [];
+		var controller = Router.current();
+		// console.log(Iron, controller);
 
-    var newComments = Comments.find({ 'replyTo': this.id, 'initDate': { $exists: false } }, { 
+		// var runAt = controller.state.get('runAt');
+		var runAt = controller._runAt;
+
+    var newComments = Comments.find({ 'replyTo': this.id, 'createdAt': { $gt: runAt }, 'userId': Meteor.userId() }, { 
     	sort: { 'createdAt': -1 } 
     }).fetch();
 
     var sort = setProperty({}, sortBy, -1);
     sort.createdAt = -1;
-    var comments = Comments.find({ 'replyTo': this.id, 'initDate': { $exists: true } }, { 
+    var comments = Comments.find({ 'replyTo': this.id, 'createdAt': { $lt: runAt } }, { 
     	sort: sort 
     }).fetch();
 

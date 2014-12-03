@@ -25,7 +25,7 @@ Template.topic.helpers({
   },
   hasComments: function () { 
     // can't do comments.count (not cursor) or comments.length (dummy row)
-    return Comments.find({ 'topicId': this._id }).count() > 0;
+    return this.commentsCount;
   },
   comments: function () {
     var sortOptions = {
@@ -64,10 +64,16 @@ Template.topic.helpers({
 
     var res = [];
 
+    var controller = Iron.controller();
+    // var runAt = controller.state.get('runAt');
+    var runAt = controller._runAt;
+
     var newComments = Comments.find({
       'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
       'topicId': this._id, 
-      'initDate': { $exists: false }
+      'userId': Meteor.userId(),
+      // 'initDate': { $exists: false }
+      'createdAt': { $gt: runAt }
     }, { sort: { 'createdAt': -1 } }).fetch();
 
     var sort = setProperty({}, sortBy, -1);
@@ -75,7 +81,8 @@ Template.topic.helpers({
     var comments = Comments.find({
       'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
       'topicId': this._id, 
-      'initDate': { $exists: true }
+      // 'initDate': { $exists: true }
+      'createdAt': { $lt: runAt }
     }, { sort: sort }).fetch();
 
     // var comments = Comments.find({
@@ -84,9 +91,8 @@ Template.topic.helpers({
     // }, { sort: sort }).fetch();
 
     var comments = _.union(newComments, comments);
-
-    // var len = Math.max(newComments.length, comments.length);
     var pros = [], cons = [], comment;
+
     console.log(comments);
     var len = comments.length, i = 0;
     while (i < len) {

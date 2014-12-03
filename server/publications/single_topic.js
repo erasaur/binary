@@ -9,7 +9,7 @@
  * values (to be used for sorting client-side) so sorting won't keep
  * changing as the comments change.
  */
-Meteor.publish('topicComments', function (topicId, sortBy, side, limit, initDate) {
+Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   var topic = Topics.findOne(topicId);
 
   // if topic is deleted or no permission to view
@@ -21,7 +21,7 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit, initDate
   var commentOwnersHandle = []; // handlers for owners associated with the comments
 
   var pub = this;
-  var comments = Comments.find({ 'topicId': topicId, 'side': side, 'createdAt': { $lt: initDate } }, { 
+  var comments = Comments.find({ 'topicId': topicId, 'side': side }, { 
     sort: sort, 
     limit: limit
   });
@@ -31,7 +31,7 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit, initDate
     added: function (id, fields) { 
       publishCommentOwner(id, fields); // publish the owner associated with this comment
 
-      fields.initDate = fields.createdAt;
+      // fields.initDate = fields.createdAt;
       fields.initVotes = fields.upvotes;
 
       pub.added('comments', id, fields);
@@ -76,7 +76,7 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit, initDate
   });
 });
 
-Meteor.publish('commentReplies', function (commentIds, sortBy, initDate) {
+Meteor.publish('commentReplies', function (commentIds, sortBy) {
   var userId = this.userId;
   if (!userId) return this.ready();
 
@@ -86,7 +86,7 @@ Meteor.publish('commentReplies', function (commentIds, sortBy, initDate) {
   var commentOwnersHandle = []; // handlers for owners associated with the comments
 
   var pub = this;
-  var comments = Comments.find({ 'replyTo': { $in: commentIds }, 'createdAt': { $lt: initDate } }, { 
+  var comments = Comments.find({ 'replyTo': { $in: commentIds } }, { 
     sort: sort
   });
 
@@ -94,7 +94,7 @@ Meteor.publish('commentReplies', function (commentIds, sortBy, initDate) {
     added: function (id, fields) { 
       publishCommentOwner(id, fields);
 
-      fields.initDate = fields.createdAt;
+      // fields.initDate = fields.createdAt;
       fields.initVotes = fields.upvotes;
 
       pub.added('comments', id, fields);
