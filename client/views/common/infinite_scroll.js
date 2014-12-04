@@ -31,10 +31,8 @@ initInfiniteScroll = function (cursors) {
     self._infiniteScroll.push(obj);
   });
 
-  if (!Session.get('itemsLimit')) {
-    console.log('items limit reset');
-    Session.set('itemsLimit', 2);
-  }
+  console.log('items limit reset');
+  Session.set('itemsLimit', 2);
 
   $(window).on('scroll', _.throttle(function () {
     // trigger at 300px above bottom
