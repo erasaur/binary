@@ -52,61 +52,23 @@ Template.topic.helpers({
     };
     var query = getCurrentQuery();
     var sortBy = query && sortOptions[query.sort_by] || 'initVotes';
-
-    // var newPros = Comments.find({
-    //   'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
-    //   'topicId': this._id, 
-    //   'side': 'pro',
-    //   'initDate': { $exists: false }
-    // }, { sort: { 'createdAt': -1 } }).fetch();
-
-    // var newCons = Comments.find({
-    //   'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
-    //   'topicId': this._id, 
-    //   'side': 'con',
-    //   'initDate': { $exists: false }
-    // }, { sort: { 'createdAt': -1 } }).fetch();
-
-    // var pros = Comments.find({
-    //             'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
-    //             'topicId': this._id, 
-    //             'side': 'pro',
-    //             'initDate': { $exists: true }
-    //           }, { sort: setProperty({}, sortBy, -1) }).fetch();
-    // var cons = Comments.find({
-    //             'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
-    //             'topicId': this._id, 
-    //             'side': 'con',
-    //             'initDate': { $exists: true }
-    //           }, { sort: setProperty({}, sortBy, -1) }).fetch();
-
     var res = [];
 
     var controller = Iron.controller();
-    // var runAt = controller.state.get('runAt');
     var runAt = controller._runAt;
 
     var newComments = Comments.find({
-      'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
       'topicId': this._id, 
       'userId': Meteor.userId(),
-      // 'initDate': { $exists: false }
       'createdAt': { $gt: runAt }
     }, { sort: { 'createdAt': -1 } }).fetch();
 
     var sort = setProperty({}, sortBy, -1);
-    sort.createdAt = -1;
+    sort.createdAt = -1; // less priority than initVotes
     var comments = Comments.find({
-      'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
       'topicId': this._id, 
-      // 'initDate': { $exists: true }
       'createdAt': { $lt: runAt }
     }, { sort: sort }).fetch();
-
-    // var comments = Comments.find({
-    //   'replyTo': { $nin: SessionAmplify.get('showingReplies') }, 
-    //   'topicId': this._id
-    // }, { sort: sort }).fetch();
 
     var comments = _.union(newComments, comments);
     var pros = [], cons = [], comment;
@@ -124,16 +86,6 @@ Template.topic.helpers({
       i++;
     }
 
-    /** 
-     * Combines the pro and con comments into an array of objects
-     * with the format: {'pros': proComment, 'cons': conComment}
-     *
-     * pair - array that contains the comment object
-     */
-    // var comments = _.map(_.zip(pros, cons), function (pair) { 
-    //   return { 'pros': pair[0], 'cons': pair[1] };
-    // });
-    //a dummy row that solves comment rendering (see docs error 1)
     res.push({ 'bottom': true });
     return res;
   }

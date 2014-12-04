@@ -1,6 +1,16 @@
 Template.comment.helpers({
 	containerClass: function () {
-		return this.isDeleted ? 'deleted' : this.isCommentItem ? 'list-item comment-item' : '';
+		var result = ' ';
+		if (this.isDeleted) {
+			result += 'deleted ';
+		}
+		if (this.isCommentItem) {
+			result += 'list-item comment-item ';
+		}
+		// if (this.replyTo && _.contains(SessionAmplify.get('showingReplies'), this.replyTo)) {
+		// 	result += 'comment-reply '; // show faded state
+		// }
+		return result;
 	},
 	author: function () {
 		return Meteor.users.findOne(this.userId);
@@ -87,59 +97,6 @@ Template.newComment.events({
 	}
 });
 
-/**
- * Takes an arbitrary div and recursively removes
- * all reply boxes of equal or deeper nesting, and 
- * updates the session array appropriately
- *
- * commentRow [jQuery obj]
- */
-function closeReplies (commentRow) {
-	if (!commentRow) return;
-
-	// get all siblings that are reply boxes
-	var siblings = commentRow.siblings('.comment-container');
-	// id of the top level reply being closed
-	var closingReply;
-
-	// walk through each sibling (should only be one; opening multiple
-	// replies of same level isn't possible since all siblings
-	// are removed) and store the comment id. then traverse children 
-	// of each sibling recursively. subsequently remove the stored ids
-	// from session, and finally remove siblings from dom
-	if (siblings.length) {
-		var ids = []; // the ids of replies being closed
-		var siblingId; // temporary var to simplify substringing
-
-		siblings.each(function () {
-			siblingId = $(this).attr('id');
-			siblingId = siblingId.substring(0, siblingId.indexOf('-'));
-			ids.push(siblingId);
-
-			if (siblings.length === 1)
-				closingReply = siblingId;
-
-			if ($(this).children('.comment-container').length)
-				closeReplies($(this).children().first());
-		});
-
-		var showingReplies = SessionAmplify.get('showingReplies');
-		showingReplies = _.difference(showingReplies, ids);
-		SessionAmplify.set('showingReplies', showingReplies);
-		Blaze.remove(Blaze.getView(siblings[0]));
-
-		siblings.velocity('slideUp', { 
-			duration: 200, 
-			complete: function () {
-				// console.log($(this), siblings);
-				$(this).remove();
-			}
-		});
-	}
-
-	return closingReply;
-}
-
 function adjustScroll ($elem, initOffset) {
 	if (!$elem || !$elem.length) return;
 	var offset = $elem.offset().top;
@@ -149,7 +106,7 @@ function adjustScroll ($elem, initOffset) {
 Template.comment.events({
 	'mouseover .comment': function (event, template) {
 		event.stopPropagation();
-		if (this._calcCollapsible) return;
+		if (this._calcCollapsible) return;  // don't recalculate
 
 		var $content = $(event.currentTarget).find('.comment-content');
 		if ($content[0].scrollHeight > $content.innerHeight()) {
@@ -172,51 +129,59 @@ Template.comment.events({
 		if (this.isCommentItem) return;
 		var self = this; //store the reference because context changes when rendering template
 		var controller = Router.current();
+		controller._runAt = new Date(); // show new comments up to now
 
-		controller._runAt = new Date();
-
-		var elem = template.find('#' + self._id);
-		var initOffset = elem.getBoundingClientRect().top;
+		var $elem = template.$('#' + self._id);
+		var initOffset = $elem[0].getBoundingClientRect().top;
 
 		// remove replies on equal or deeper level than commentRow
-		var commentRow = $(event.target).closest('.comment-row');
-		var closingReply = closeReplies(commentRow);
+		var showing = SessionAmplify.get('showingReplies');
+		var $replyTo = $elem.closest('.comment-row');
+		var replyRows = $replyTo.siblings('.comment-container');
+		var closingIds = [];
 
-		console.log(initOffset, commentRow[0].getBoundingClientRect().top);
-
-		if (closingReply && closingReply === self._id) {
-			Tracker.afterFlush(function () {
-				Meteor.setTimeout(function () {
-					var $elem = $('#' + self._id);
-					adjustScroll($elem, initOffset);
-				}, 100);
+		if (replyRows.length) {
+			replyRows.each(function (i) {
+				closingIds[i] = $(this).attr('id');
+				closingIds[i] = closingIds[i].slice(0, closingIds[i].indexOf('-'));
+				// all ids to the right must be of nested level, 
+				// because we can only open 1 reply box per level
+				showing = showing.slice(0, showing.indexOf(closingIds[i]));
 			});
+
+			Blaze.remove(Blaze.getView(replyRows[0]));
+
+			// animate only when replyRows is in view
+			var replyRect = replyRows[0].getBoundingClientRect();
+			if (replyRect.top + replyRect.height > 0) {
+				replyRows.velocity('slideUp', { 
+					duration: 200, 
+					progress: function () { adjustScroll($elem, initOffset); },
+					complete: function () { $(this).remove(); }
+				});
+			} else {
+				replyRows.remove();
+				adjustScroll($elem, initOffset);
+			}
+		}
+
+		if (_.contains(closingIds, self._id)) {
+			SessionAmplify.set('showingReplies', showing);
 			return;
 		}
 
-		var arr = SessionAmplify.get('showingReplies');
-		arr.push(self._id.toString());
-		SessionAmplify.set('showingReplies', arr);
+		showing.push(self._id);
+		SessionAmplify.set('showingReplies', showing);
 
 		//update the color index
 		var numColors = 4;
-		var color = (arr.length - 1) % numColors;
+		var color = (showing.length - 1) % numColors;
 
 		// add the replies
-		Tracker.afterFlush(function () {
-			// scrollToId(self._id);
-			Meteor.setTimeout(function () {
-				var $elem = $('#' + self._id);	
-				adjustScroll($elem, initOffset);
-
-				var $replyTo = $elem.closest('.comment-row');
-				Blaze.renderWithData(Template.replies, //template to render
-														{ id: self._id, side: self.side, color: color }, //data context
-														$replyTo.parent()[0], // insert within
-														$replyTo.next()[0]); // insert before	
-			}, 100);
-		});
-		
+		Blaze.renderWithData(Template.replies, //template to render
+												{ id: self._id, side: self.side, color: color }, //data context
+												$replyTo.parent()[0], // insert within
+												$replyTo.next()[0]); // insert before	
 	},
 	'click .js-upvote-comment': function (event, template) {
 		Meteor.call('upvoteComment', this);
