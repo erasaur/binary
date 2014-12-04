@@ -1,3 +1,13 @@
+Template.replies.rendered = function () {
+	var container = this.find('.comment-container');
+	container._uihooks = {
+		insertElement: function (node, next) {
+			container.insertBefore(node, next);
+			$(node).velocity('slideDown', { duration: 100 });
+		}
+	}
+};
+
 Template.replies.helpers({
 	hasReplies: function () {
 		return Comments.findOne(this.id).replies.length;
@@ -38,7 +48,6 @@ Template.replies.helpers({
     var comments = _.union(newComments, comments);
 
     var pros = [], cons = [], comment;
-    console.log(comments);
     var len = comments.length, i = 0;
     while (i < len) {
       comment = comments[i];
@@ -51,8 +60,6 @@ Template.replies.helpers({
       res.push({ 'pros': pros[i], 'cons': cons[i] });
       i++;
     }
-
-    console.log('replies: ', res);
 
 		/** 
 		 * Combines the pro and con comments into an array of objects

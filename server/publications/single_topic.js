@@ -138,7 +138,6 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
 
 Meteor.publishComposite('singleTopic', function (topicId, initDate) {
   var userId = this.userId;
-  console.log(userId, initDate);
 
   return {
     find: function () {
