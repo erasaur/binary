@@ -74,7 +74,7 @@ Template.newComment.events({
 				if (currentRow.hasClass('comment-replies')) {
 					var openReplies = currentRow.siblings(replyClass);
 				} else {
-					var openReplies = currentRow.next().find(replyClass);
+					var openReplies = currentRow.next().find('.list').children(replyClass);
 				}
 				
 				if (!openReplies || !openReplies.length) return;
@@ -126,7 +126,7 @@ function closeReplies (commentRow) {
 		var showingReplies = SessionAmplify.get('showingReplies');
 		showingReplies = _.difference(showingReplies, ids);
 		SessionAmplify.set('showingReplies', showingReplies);
-		Blaze.remove(Blaze.getView(siblings.get(0)));
+		Blaze.remove(Blaze.getView(siblings[0]));
 
 		siblings.velocity('slideUp', { 
 			duration: 200, 
@@ -138,6 +138,12 @@ function closeReplies (commentRow) {
 	}
 
 	return closingReply;
+}
+
+function adjustScroll ($elem, initOffset) {
+	if (!$elem || !$elem.length) return;
+	var offset = $elem.offset().top;
+	$('body').scrollTop(offset - initOffset);
 }
 
 Template.comment.events({
@@ -173,12 +179,18 @@ Template.comment.events({
 		var commentRow = $(event.target).closest('.comment-row');
 		var closingReply = closeReplies(commentRow);
 
-		var elem = template.find('#' + self._id).getBoundingClientRect();
-		var offset = elem.top;
+		var elem = template.find('#' + self._id);
+		var initOffset = elem.getBoundingClientRect().top;
 
-		console.log(offset);
-
-		if (closingReply && closingReply === self._id) return;
+		if (closingReply && closingReply === self._id) {
+			Tracker.afterFlush(function () {
+				Meteor.setTimeout(function () {
+					var $elem = $('#' + self._id);
+					adjustScroll($elem, initOffset);
+				}, 100);
+			});
+			return;
+		}
 
 		var arr = SessionAmplify.get('showingReplies');
 		arr.push(self._id.toString());
@@ -191,14 +203,16 @@ Template.comment.events({
 		// add the replies
 		Tracker.afterFlush(function () {
 			// scrollToId(self._id);
-			var elem = document.getElementById(self._id);
-			var replyTo = $(elem).closest('.comment-row');
-			console.log("THIS IS WHERE WE RENDER THE DATA");
-			Blaze.renderWithData(Template.replies, //template to render
-													{ id: self._id, side: self.side, color: color }, //data context
-													replyTo.parent().get(0), // insert within
-													replyTo.next().get(0)); // insert before	
-			console.log(elem.getBoundingClientRect().top);
+			Meteor.setTimeout(function () {
+				var $elem = $('#' + self._id);	
+				adjustScroll($elem, initOffset);
+
+				var $replyTo = $elem.closest('.comment-row');
+				Blaze.renderWithData(Template.replies, //template to render
+														{ id: self._id, side: self.side, color: color }, //data context
+														$replyTo.parent()[0], // insert within
+														$replyTo.next()[0]); // insert before	
+			}, 100);
 		});
 		
 	},
