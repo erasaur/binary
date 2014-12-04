@@ -65,7 +65,23 @@ Template.newComment.events({
 			else {
 				template.$('.editable').val('');
 				template.editingComment.set(false);
-				scrollToId(result);
+				// scrollToId(result);
+
+				// shift all open reply boxes of same level and same side one row down
+				var replyClass = '.comment-container.' + comment.side;
+				// in root level, new comment box's parent is not sibling of any comments
+				var currentRow = template.$('.comment-new').parent();
+				if (currentRow.hasClass('comment-replies')) {
+					var openReplies = currentRow.siblings(replyClass);
+				} else {
+					var openReplies = currentRow.next().find(replyClass);
+				}
+				
+				if (!openReplies || !openReplies.length) return;
+				openReplies.each(function () {
+					var reply = $(this);
+					reply.insertAfter(reply.next());
+				});
 			}
 		});
 	}
