@@ -100,7 +100,7 @@ Template.newComment.events({
 function adjustScroll ($elem, initOffset) {
 	if (!$elem || !$elem.length) return;
 	var offset = $elem.offset().top;
-	$('body').scrollTop(offset - initOffset);
+	$('html,body').scrollTop(offset - initOffset);
 }
 
 Template.comment.events({
@@ -156,7 +156,7 @@ Template.comment.events({
 			if (replyRect.top + replyRect.height > 0) {
 				replyRows.velocity('slideUp', { 
 					duration: 200, 
-					progress: function () { adjustScroll($elem, initOffset); },
+					progress: _.throttle(function () { adjustScroll($elem, initOffset); }, 40),
 					complete: function () { $(this).remove(); }
 				});
 			} else {
