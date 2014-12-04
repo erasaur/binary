@@ -9,7 +9,6 @@ Template.topic.rendered = function () {
     insertElement: function (node, next) {
       container.insertBefore(node, next);
       $(node).velocity('slideDown', { duration: 100 });
-      console.log('added');
     },
     // moveElement: function (node, next) {
     //   container.insertBefore(node, next);
