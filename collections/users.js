@@ -133,6 +133,16 @@ Meteor.users.allow({
 // end permissions -----------------------------------
 
 
+// search --------------------------------------------
+
+Meteor.users.initEasySearch('profile.name', {
+  limit: 1,
+  use: 'mongo-db'
+});
+
+// end search ----------------------------------------
+
+
 // methods -------------------------------------------
 
 Meteor.methods({
