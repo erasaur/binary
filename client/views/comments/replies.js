@@ -45,7 +45,7 @@ Template.replies.helpers({
     	sort: sort 
     }).fetch();
 
-    var comments = _.union(newComments, comments);
+    var comments = newComments.concat(comments);
 
     var pros = [], cons = [], comment;
     var len = comments.length, i = 0;

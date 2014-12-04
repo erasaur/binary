@@ -89,8 +89,8 @@ Template.newComment.events({
 				
 				if (!openReplies || !openReplies.length) return;
 				openReplies.each(function () {
-					var reply = $(this);
-					reply.insertAfter(reply.next());
+					var $reply = $(this);
+					$reply.insertAfter($reply.next());
 				});
 			}
 		});

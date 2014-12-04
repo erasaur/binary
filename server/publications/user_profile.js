@@ -13,7 +13,7 @@ Meteor.publishComposite('userProfile', function (userId) {
       find: function (user) { // users following/followed by user
         if (!user || !user.activity) return {};
 
-        var userIds = _.union(user.activity.followers, user.activity.followingUsers) || [];
+        var userIds = user.activity.followers.concat(user.activity.followingUsers) || [];
         return Meteor.users.find({ '_id': { $in: userIds } }, {
           'email_hash': 1, 'profile': 1
         });

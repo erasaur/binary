@@ -57,6 +57,7 @@ Template.topic.helpers({
     var runAt = controller._runAt;
 
     var newComments = Comments.find({
+      'replyTo': { $nin: SessionAmplify.get('showingReplies') },
       'topicId': this._id, 
       'userId': Meteor.userId(),
       'createdAt': { $gt: runAt }
@@ -69,7 +70,7 @@ Template.topic.helpers({
       'createdAt': { $lt: runAt }
     }, { sort: sort }).fetch();
 
-    var comments = _.union(newComments, comments);
+    var comments = newComments.concat(comments);
     var pros = [], cons = [], comment;
 
     var len = comments.length, i = 0;
