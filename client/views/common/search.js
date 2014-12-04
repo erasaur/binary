@@ -1,14 +1,16 @@
 var searching = new ReactiveVar(false);
-var searchDeps = new Deps.Dependency();
+var searchTemplate = {
+  'topics': 'topicItem',
+  'users': 'profileItem'
+};
 
-function stopSearching () {
+var stopSearching = function () {
   $('.search-input').val('').blur();
   searching.set(false);
-}
-
-function isSearching () {
+};
+var isSearching = function () {
   return searching.get();
-}
+};
 
 Template.searchInput.helpers({
   indexes: ['topics', 'users'],
@@ -28,6 +30,18 @@ Template.nav.events({
     stopSearching();
   }
 });
+
+Template.searchInput.created = function () {
+  var instance = EasySearch.getComponentInstance(
+    { id : 'js-search', index : 'topics' }
+  );
+
+  instance.on('searchingDone', _.throttle(function (searchingIsDone) {
+    if (searchingIsDone) {
+      console.log(instance.get('searchResults'))
+    }
+  }, 500));
+};
 
 Template.searchInput.events({
   'focus .search-input': function (event, template) {
