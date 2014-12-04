@@ -175,12 +175,14 @@ Template.comment.events({
 
 		controller._runAt = new Date();
 
+		var elem = template.find('#' + self._id);
+		var initOffset = elem.getBoundingClientRect().top;
+
 		// remove replies on equal or deeper level than commentRow
 		var commentRow = $(event.target).closest('.comment-row');
 		var closingReply = closeReplies(commentRow);
 
-		var elem = template.find('#' + self._id);
-		var initOffset = elem.getBoundingClientRect().top;
+		console.log(initOffset, commentRow[0].getBoundingClientRect().top);
 
 		if (closingReply && closingReply === self._id) {
 			Tracker.afterFlush(function () {
