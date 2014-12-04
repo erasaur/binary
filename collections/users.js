@@ -137,7 +137,8 @@ Meteor.users.allow({
 
 Meteor.users.initEasySearch('profile.name', {
   limit: 1,
-  use: 'mongo-db'
+  use: 'mongo-db',
+  reactive: false
 });
 
 // end search ----------------------------------------
