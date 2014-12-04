@@ -1,8 +1,26 @@
-Template.topic.created = function () {
+Template.topic.rendered = function () {
   initInfiniteScroll.call(this, [
     Comments.find({ 'topicId': this.data._id, 'side': 'pro' }), 
     Comments.find({ 'topicId': this.data._id, 'side': 'con' })
   ]); 
+
+  var container = this.find('.list');
+  container._uihooks = {
+    insertElement: function (node, next) {
+      container.insertBefore(node, next);
+      $(node).velocity('slideDown', { duration: 100 });
+      console.log('added');
+    },
+    // moveElement: function (node, next) {
+    //   container.insertBefore(node, next);
+    //   console.log('moved');
+    // },
+    // removeElement: function (node) {
+    //   console.log(node);
+    //   // $(node).remove();
+    //   console.log('removed');
+    // }
+  }
 };
 Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
@@ -93,7 +111,6 @@ Template.topic.helpers({
     var comments = _.union(newComments, comments);
     var pros = [], cons = [], comment;
 
-    console.log(comments);
     var len = comments.length, i = 0;
     while (i < len) {
       comment = comments[i];

@@ -27,7 +27,6 @@ initInfiniteScroll = function (cursors) {
 
   _.each(cursors, function (cursor) {
     var obj = new InfiniteScroll(cursor);
-    console.log(obj);
     self._infiniteScroll.push(obj);
   });
 

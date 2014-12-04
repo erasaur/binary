@@ -111,7 +111,14 @@ function closeReplies (commentRow) {
 		showingReplies = _.difference(showingReplies, ids);
 		SessionAmplify.set('showingReplies', showingReplies);
 		Blaze.remove(Blaze.getView(siblings.get(0)));
-		siblings.remove();
+
+		siblings.velocity('slideUp', { 
+			duration: 200, 
+			complete: function () {
+				// console.log($(this), siblings);
+				$(this).remove();
+			}
+		});
 	}
 
 	return closingReply;
@@ -144,13 +151,16 @@ Template.comment.events({
 		var self = this; //store the reference because context changes when rendering template
 		var controller = Router.current();
 
-		// console.log("THIS IS WHERE WE SET THE NEW RUNAT");
-		// controller.state.set('runAt', new Date());
 		controller._runAt = new Date();
 
 		// remove replies on equal or deeper level than commentRow
 		var commentRow = $(event.target).closest('.comment-row');
 		var closingReply = closeReplies(commentRow);
+
+		var elem = template.find('#' + self._id).getBoundingClientRect();
+		var offset = elem.top;
+
+		console.log(offset);
 
 		if (closingReply && closingReply === self._id) return;
 
@@ -165,13 +175,14 @@ Template.comment.events({
 		// add the replies
 		Tracker.afterFlush(function () {
 			// scrollToId(self._id);
-			var replyTo = $('#' + self._id).closest('.comment-row');
+			var elem = document.getElementById(self._id);
+			var replyTo = $(elem).closest('.comment-row');
 			console.log("THIS IS WHERE WE RENDER THE DATA");
-			console.log(template, template.$('#' + self._id));
 			Blaze.renderWithData(Template.replies, //template to render
 													{ id: self._id, side: self.side, color: color }, //data context
 													replyTo.parent().get(0), // insert within
 													replyTo.next().get(0)); // insert before	
+			console.log(elem.getBoundingClientRect().top);
 		});
 		
 	},
