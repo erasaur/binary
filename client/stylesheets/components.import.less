@@ -75,12 +75,13 @@
   width: 40px; //50px;
   height: 20px; //32px;
   background-color: #ebebeb; //#fff;
-  border-radius: 19px;
+  // border-radius: 19px;
+  // -webkit-border-radius: 19px;
+  // -moz-border-radius: 19px;
   // -webkit-box-shadow: inset 0 0 0 1px #b8bfc8;
   // -moz-box-shadow: inset 0 0 0 1px #b8bfc8;
   // box-shadow: inset 0 0 0 1px #b8bfc8;
-  -webkit-border-radius: 19px;
-  -moz-border-radius: 19px;
+  .border-radius(19px);
 }
 .toggle.comment-side .handle {
   background-color: @pro-color;
@@ -102,8 +103,7 @@
   -webkit-transition: all .25s ease-in-out;
   -moz-transition: all .25s ease-in-out;
   transition: all .25s ease-in-out;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
+  .border-radius(30px);
 }
 .toggle input[type=checkbox]:disabled + .handle,
 .toggle input[type=checkbox]:disabled + .handle:after,
@@ -360,8 +360,8 @@
   margin-bottom: 20px;
   overflow: hidden; 
 
-  &:first-of-type { margin-top: 0; }
-  &:last-of-type { margin-bottom: 0; }
+  &:first-child { margin-top: 0; }
+  &:last-child { margin-bottom: 0; }
 }
 .list-item-info input,
 .list-item-info input:focus {
@@ -620,6 +620,20 @@
 }
 .navbar-form .search-input {
   border-radius: 16px;
+}
+.search-users,
+.search-topics {
+  h3 { margin-bottom: 0; }
+  button { width: 100%; }
+}
+.search-topics {
+  width: 70%;
+  float: left;
+  padding-right: 20px;
+}
+.search-users {
+  width: 30%;
+  float: right;
 }
 
 // notification badge --------------------------------

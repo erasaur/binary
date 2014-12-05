@@ -1,5 +1,5 @@
 <template name="replies">
-	<div id="{{id}}-replies" class="comment-container {{#if side}}{{side}}{{color}}{{/if}}">
+	<div class="comment-container {{side}} {{#if side}}{{side}}{{color}}{{/if}}" id="{{id}}-replies">
 		{{#if currentUser}}
 			<div class="comment-replies clearfix">
 				{{> newComment}}

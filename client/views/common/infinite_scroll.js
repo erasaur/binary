@@ -1,13 +1,14 @@
-InfiniteScroll = function (cursor) {
-  var count = 0;
+function InfiniteScroll (cursor) {
+  var self = this;
 
   // observeChanges will fire for initial set, so count can start at 0
-  this._infiniteScroll = cursor.observeChanges({
+  self.count = 0;
+  var cursor = cursor.observeChanges({
     added: function () {
-      count++;
+      self.count++;
     },
     removed: function () {
-      count--;
+      self.count--;
     }
   });
 
@@ -44,5 +45,7 @@ initInfiniteScroll = function (cursors) {
 
 stopInfiniteScroll = function () {
   $(window).off('scroll');
-  this._infiniteScroll && this._infiniteScroll.stop();
+  _.each(this._infiniteScroll, function (obj) {
+    obj.stop();
+  });
 };

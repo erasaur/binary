@@ -2,7 +2,7 @@
   <ul class="nav navbar-nav navbar-search col-sm-8">
     <form class="navbar-form search-form" id="js-search-form" role="search">
       <div class="search-form-group form-group has-feedback">
-        {{> esInput index="topics" class="form-control search-input" placeholder="Find topics..."}}
+        {{> esInput index=indexes id="js-search" class="form-control search-input" placeholder="Find topics and users..."}}
         {{#if searching}}
           <span id="js-search-cancel" class="icon-group form-control-feedback"><i class="icon-action fa fa-remove"></i></span>
         {{/if}}
@@ -13,24 +13,45 @@
 
 <template name="searchResults">
   <div class="page-body">
-    <div data-animate data-duration="1000" data-from-value="0" data-to-value="1" class="results">
-      <div class="list">
-        {{#ifEsInputIsEmpty index="topics"}}
+    <div data-animate data-duration="1000" data-from-value="0" data-to-value="1" class="results">    
+      <div class="list search-topics">
+        <div class="list-item"><h3>Topics</h3></div>
+        {{#ifEsInputIsEmpty index="topics" id="js-search"}}
           <div class="list-item">Search for topics.</div>
         {{/ifEsInputIsEmpty}}
 
-        {{#ifEsIsSearching index="topics"}}
+        {{#ifEsIsSearching index="topics" id="js-search"}}
           <div class="list-item">Working...</div>
         {{else}}
-          {{#esEach index="topics"}}
+          {{#esEach index="topics" id="js-search"}}
             {{> topicItem}}
           {{/esEach}}
         {{/ifEsIsSearching}}
 
-        {{#ifEsHasNoResults index="topics"}}
+        {{#ifEsHasNoResults index="topics" id="js-search"}}
           <div class="list-item">No search results.</div>
         {{else}}
-          {{> esLoadMoreButton index="topics" class="btn btn-default"}}
+          {{> esLoadMoreButton index="topics" class="btn btn-default" id="js-search"}}
+        {{/ifEsHasNoResults}}
+      </div>
+      <div class="list search-users">
+        <div class="list-item"><h3>Users</h3></div>
+        {{#ifEsInputIsEmpty index="users" id="js-search"}}
+          <div class="list-item">Search for users.</div>
+        {{/ifEsInputIsEmpty}}
+
+        {{#ifEsIsSearching index="users" id="js-search"}}
+          <div class="list-item">Working...</div>
+        {{else}}
+          {{#esEach index="users" id="js-search"}}
+            {{> profileItem}}
+          {{/esEach}}
+        {{/ifEsIsSearching}}
+
+        {{#ifEsHasNoResults index="users" id="js-search"}}
+          <div class="list-item">No search results.</div>
+        {{else}}
+          {{> esLoadMoreButton index="users" class="btn btn-default" id="js-search"}}
         {{/ifEsHasNoResults}}
       </div>
     </div>
