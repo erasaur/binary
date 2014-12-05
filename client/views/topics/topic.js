@@ -1,7 +1,25 @@
-Template.topic.created = function () {
-  initInfiniteScroll.call(this, Comments.find({
-    'topicId': this.data._id
-  })); 
+Template.topic.rendered = function () {
+  initInfiniteScroll.call(this, [
+    Comments.find({ 'topicId': this.data._id, 'side': 'pro' }), 
+    Comments.find({ 'topicId': this.data._id, 'side': 'con' })
+  ]); 
+
+  var container = this.find('.list');
+  container._uihooks = {
+    insertElement: function (node, next) {
+      container.insertBefore(node, next);
+      $(node).velocity('slideDown', { duration: 100 });
+    },
+    // moveElement: function (node, next) {
+    //   container.insertBefore(node, next);
+    //   console.log('moved');
+    // },
+    // removeElement: function (node) {
+    //   console.log(node);
+    //   // $(node).remove();
+    //   console.log('removed');
+    // }
+  }
 };
 Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
@@ -24,7 +42,7 @@ Template.topic.helpers({
   },
   hasComments: function () { 
     // can't do comments.count (not cursor) or comments.length (dummy row)
-    return Comments.find({ 'topicId': this._id }).count() > 0;
+    return this.commentsCount;
   },
   comments: function () {
     var sortOptions = {
@@ -33,30 +51,43 @@ Template.topic.helpers({
     };
     var query = getCurrentQuery();
     var sortBy = query && sortOptions[query.sort_by] || 'initVotes';
+    var res = [];
 
-    var pros = Comments.find({
-                'replyTo': {$nin: SessionAmplify.get('showingReplies')}, 
-                'topicId': this._id, 
-                'side': 'pro'
-              }, { sort: setProperty({}, sortBy, -1) }).fetch();
-    var cons = Comments.find({
-                'replyTo': {$nin: SessionAmplify.get('showingReplies')}, 
-                'topicId': this._id, 
-                'side': 'con'
-              }, { sort: setProperty({}, sortBy, -1) }).fetch();
+    var controller = Iron.controller();
+    var runAt = controller._runAt;
 
-    /** 
-     * Combines the pro and con comments into an array of objects
-     * with the format: {'pros': proComment, 'cons': conComment}
-     *
-     * pair - array that contains the comment object
-     */
-    var comments = _.map(_.zip(pros, cons), function (pair) { 
-      return { 'pros': pair[0], 'cons': pair[1] };
-    });
-    //a dummy row that solves comment rendering (see docs error 1)
-    comments.push({ 'bottom': true });
-    return comments;
+    var newComments = Comments.find({
+      'replyTo': { $nin: SessionAmplify.get('showingReplies') },
+      'topicId': this._id, 
+      'userId': Meteor.userId(),
+      'createdAt': { $gt: runAt }
+    }, { sort: { 'createdAt': -1 } }).fetch();
+
+    var sort = setProperty({}, sortBy, -1);
+    sort.createdAt = -1; // less priority than initVotes
+    var comments = Comments.find({
+      'topicId': this._id, 
+      'createdAt': { $lt: runAt }
+    }, { sort: sort }).fetch();
+
+    var comments = newComments.concat(comments);
+    var pros = [], cons = [], comment;
+
+    var len = comments.length, i = 0;
+    while (i < len) {
+      comment = comments[i];
+      comment.side === 'pro' ? pros.push(comment) : cons.push(comment);
+      i++;
+    }
+
+    var len = Math.max(pros.length, cons.length), i = 0;
+    while (i < len) {
+      res.push({ 'pros': pros[i], 'cons': cons[i] });
+      i++;
+    }
+
+    res.push({ 'bottom': true });
+    return res;
   }
 });
 

@@ -15,17 +15,14 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   // if topic is deleted or no permission to view
   if (!topic || topic.isDeleted || !this.userId) return this.ready();
 
-  var sortOptions = {
-    'top': 'upvotes',
-    'newest': 'createdAt'
-  };
-  var sortBy = sortOptions[sortBy] || 'upvotes';
+  var sort = sortBy === 'newest' ? 
+    { 'createdAt': -1, 'upvotes': -1 } : { 'upvotes': -1, 'createdAt': -1 };
   var commentsHandle; // handler for changes in comments collection
   var commentOwnersHandle = []; // handlers for owners associated with the comments
 
   var pub = this;
   var comments = Comments.find({ 'topicId': topicId, 'side': side }, { 
-    sort: setProperty({}, sortBy, -1), 
+    sort: sort, 
     limit: limit
   });
 
@@ -34,7 +31,7 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
     added: function (id, fields) { 
       publishCommentOwner(id, fields); // publish the owner associated with this comment
 
-      fields.initDate = fields.createdAt;
+      // fields.initDate = fields.createdAt;
       fields.initVotes = fields.upvotes;
 
       pub.added('comments', id, fields);
@@ -79,10 +76,72 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   });
 });
 
-Meteor.publishComposite('singleTopic', function (topicId) {
+Meteor.publish('commentReplies', function (commentIds, sortBy) {
+  var userId = this.userId;
+  if (!userId) return this.ready();
+
+  var sort = sortBy === 'newest' ? 
+    { 'upvotes': -1, 'createdAt': -1 } : { 'createdAt': -1, 'upvotes': -1 };
+  var commentsHandle; // handler for changes in comments collection
+  var commentOwnersHandle = []; // handlers for owners associated with the comments
+
+  var pub = this;
+  var comments = Comments.find({ 'replyTo': { $in: commentIds } }, { 
+    sort: sort
+  });
+
+  commentsHandle = comments.observeChanges({
+    added: function (id, fields) { 
+      publishCommentOwner(id, fields);
+
+      // fields.initDate = fields.createdAt;
+      fields.initVotes = fields.upvotes;
+
+      pub.added('comments', id, fields);
+    },
+    changed: function (id, fields) {
+      pub.changed('comments', id, fields);
+    },
+    removed: function (id) {
+      commentOwnersHandle[id] && commentOwnersHandle[id].stop();
+      pub.removed('comments', id);
+    }
+  });
+
+  function publishCommentOwner (commentId, comment) {
+    var owners = Meteor.users.find({ '_id': comment.userId }, { 
+      fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } 
+    });
+    commentOwnersHandle[commentId] = owners.observeChanges({
+      added: function (id, fields) {
+        pub.added('users', id, fields);
+      },
+      changed: function (id, fields) {
+        pub.changed('users', id, fields);
+      },
+      removed: function (id, fields) {
+        commentOwnersHandle[id] && commentOwnersHandle[id].stop();
+        pub.removed('users', id);
+      }
+    });
+  }
+
+  pub.ready();
+
+  pub.onStop(function () {
+    commentsHandle.stop();
+    _.each(commentOwnersHandle, function (handle) {
+      handle.stop();
+    });
+  });
+});
+
+Meteor.publishComposite('singleTopic', function (topicId, initDate) {
+  var userId = this.userId;
+
   return {
     find: function () {
-      if (!this.userId) return this.ready();
+      if (!userId) return this.ready();
 
       return Topics.find(topicId);
     },
@@ -91,6 +150,10 @@ Meteor.publishComposite('singleTopic', function (topicId) {
         return Meteor.users.find(topic.userId, { 
           limit: 1, fields: { 'profile': 1 } 
         });
+      }
+    }, {
+      find: function (topic) { // new comments posted by currentUser
+        return Comments.find({ 'userId': userId, 'createdAt': { $gt: initDate } });
       }
     }]
   };
