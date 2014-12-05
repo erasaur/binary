@@ -53,22 +53,18 @@ Meteor.methods({
     if (!!replyToId) { // comment reply      
       var replyTo = Comments.findOne(replyToId);
 
-      notificationData.replyTo = _.pick(replyTo, '_id', 'topicId');
-
-      // notify replyTo owner
-      // unless user is just replying to self
+      // notify replyTo owner, unless user is just replying to self
       if (replyTo.userId !== user._id && Herald.userPreference(replyTo.userId, 'onsite', 'newReply')) {
-        
         Herald.createNotification(replyTo.userId, { 
           courier: 'newReply', 
           data: notificationData, 
+          'duplicates': false,
           'aggregate': true,
           'aggregateAt': 5,
-          'aggregateUnder': 'replyTo' // combine notifications that share the same author
+          'aggregateUnder': 'topic' // combine notifications that share the same author
         });
         notified.push(replyTo.userId);
       }
-
     }
 
     // notify topic owner (if topic owner wants to be notified)

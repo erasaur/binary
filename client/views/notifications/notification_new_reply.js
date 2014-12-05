@@ -9,7 +9,10 @@ Template.notificationNewReply.helpers({
     var author = this.data.author;
     return author && author.name;
   },
-  topicTitle: function () {
-    return this.data.topic && this.data.topic.title;
+  topicMessage: function () {
+    var topic = this.data.topic;
+    if (!topic) return;
+    return topic.userId === Meteor.userId() ? 
+      'in your topic: ' + topic.title : 'in: ' + topic.title;
   }
 });

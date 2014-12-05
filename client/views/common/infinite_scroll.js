@@ -1,4 +1,4 @@
-initInfiniteScroll = function (cursor) {
+InfiniteScroll = function (cursor) {
   var count = 0;
 
   // observeChanges will fire for initial set, so count can start at 0
@@ -11,25 +11,38 @@ initInfiniteScroll = function (cursor) {
     }
   });
 
-  console.log('items limit reset');
-  Session.set('itemsLimit', 2);
+  this.stop = function () {
+    cursor.stop();
+  };
+}
+
+initInfiniteScroll = function (cursors) {
+  var cursors = Object.prototype.toString.call(cursors) === '[object Array]' ? 
+    cursors : [cursors];
+  var self = this;
+
+  self._infiniteScroll = self._infiniteScroll || [];
+
+  _.each(cursors, function (cursor) {
+    var obj = new InfiniteScroll(cursor);
+    self._infiniteScroll.push(obj);
+  });
 
   $(window).on('scroll', _.throttle(function () {
     // trigger at 300px above bottom
     var target = document.body.offsetHeight - 300;
 
     if (window.innerHeight + window.scrollY >= target) {
-      console.log(count, Session.get('itemsLimit'))
-
-      if (count >= Session.get('itemsLimit')) {
-        Session.set('itemsLimit', Session.get('itemsLimit') + 2); //fetch more items from server
-      }
+      _.each(self._infiniteScroll, function (obj) {
+        if (obj.count >= Session.get('itemsLimit')) {
+          Session.set('itemsLimit', Session.get('itemsLimit') + 1); //fetch more items from server
+        }
+      });
     }
   }, 300));  
 };
 
 stopInfiniteScroll = function () {
-  console.log('search and destroy!');
   $(window).off('scroll');
   this._infiniteScroll && this._infiniteScroll.stop();
 };
