@@ -179,7 +179,7 @@
 }
 .navbar-nav {
   margin: 0;
-  // padding: 0;
+  padding: 0;
 }
 .navbar-nav > li a {
   padding: 10px;
@@ -487,8 +487,13 @@
   &:hover { background: none; }
 }
 .dropdown-menu.notifications {
-  height: 450px;
+  height: 160px;
   width: 260px;
+}
+@media (min-width: 768px) {
+  .dropdown-menu.notifications {
+    height: 450px;
+  }
 }
 
 // invite menu ---------------------------------------
@@ -497,6 +502,7 @@
   margin: 0; 
   padding: 10px; 
   position: fixed; 
+  z-index: 2;
   bottom: 20px; 
   right: 20px; 
   width: 36px; 
@@ -604,6 +610,8 @@
 
 .navbar-form.search-form {
   margin: 10px 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .navbar-form.search-form,
 .navbar-form .search-input,
