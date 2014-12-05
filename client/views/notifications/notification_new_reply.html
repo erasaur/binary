@@ -1,7 +1,7 @@
 <template name="notificationNewReply">
   {{#if hasCount}}
-    {{author}} and {{count}} people replied to your comment in {{topicTitle}}
+    {{author}} and {{count}} others replied to your comments {{topicMessage}}
   {{else}}
-    {{author}} replied to your comment in {{topicTitle}}
+    {{author}} replied to your comments {{topicMessage}}
   {{/if}}
 </template>
