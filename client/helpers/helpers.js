@@ -1,6 +1,3 @@
-Template.registerHelper('currentPage', function (path) {
-	return getCurrentRoute() === path;
-});
 Template.registerHelper('formatDate', function (date) {
 	return formatDate(date);
 });
