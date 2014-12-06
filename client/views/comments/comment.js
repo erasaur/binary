@@ -15,6 +15,14 @@ Template.comment.helpers({
 	author: function () {
 		return Meteor.users.findOne(this.userId);
 	},
+	replyToUser: function () {
+		if (!this.replyTo) return;
+		if (this.replyToUser) return this.replyToUser;
+
+		var comment = Comments.findOne(this.replyTo);
+		var user = Meteor.users.findOne(comment.userId);
+		return user && user.profile.name;
+	},
 	toggleClass: function () {
 		if (this.isCommentItem) return;
 		return _.contains(SessionAmplify.get('showingReplies'), this._id) && 'showing';
@@ -111,6 +119,7 @@ Template.comment.events({
 		if (this._calcCollapsible) return;  // don't recalculate
 
 		var $content = $(event.currentTarget).find('.comment-content');
+		console.log($content[0].scrollHeight, $content.innerHeight());
 		if ($content[0].scrollHeight > $content.innerHeight()) {
 			$content.parent().addClass('collapsible');
 		}
