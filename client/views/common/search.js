@@ -31,18 +31,6 @@ Template.nav.events({
   }
 });
 
-Template.searchInput.created = function () {
-  var instance = EasySearch.getComponentInstance(
-    { id : 'js-search', index : 'topics' }
-  );
-
-  instance.on('searchingDone', _.throttle(function (searchingIsDone) {
-    if (searchingIsDone) {
-      console.log(instance.get('searchResults'))
-    }
-  }, 500));
-};
-
 Template.searchInput.events({
   'focus .search-input': function (event, template) {
     searching.set(true);
