@@ -45,14 +45,6 @@ Template.topic.helpers({
     return this.commentsCount;
   },
   comments: function () {
-    var sortOptions = {
-      'top': 'initVotes',
-      'newest': 'initDate'
-    };
-    var query = getCurrentQuery();
-    var sortBy = query && sortOptions[query.sort_by] || 'initVotes';
-    var res = [];
-
     var controller = Iron.controller();
     var runAt = controller._runAt;
 
@@ -63,15 +55,20 @@ Template.topic.helpers({
       'createdAt': { $gt: runAt }
     }, { sort: { 'createdAt': -1 } }).fetch();
 
-    var sort = setProperty({}, sortBy, -1);
+    var sort = {};
+    var query = getCurrentQuery();
+    if (!query.sort_by || query.sort_by === 'top') {
+      sort.initVotes = -1;
+    }
     sort.createdAt = -1; // less priority than initVotes
+
     var comments = Comments.find({
       'topicId': this._id, 
       'createdAt': { $lt: runAt }
     }, { sort: sort }).fetch();
 
     var comments = newComments.concat(comments);
-    var pros = [], cons = [], comment;
+    var res = [], pros = [], cons = [], comment;
 
     var len = comments.length, i = 0;
     while (i < len) {

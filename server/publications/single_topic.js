@@ -31,7 +31,6 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
     added: function (id, fields) { 
       publishCommentOwner(id, fields); // publish the owner associated with this comment
 
-      // fields.initDate = fields.createdAt;
       fields.initVotes = fields.upvotes;
 
       pub.added('comments', id, fields);
@@ -94,7 +93,6 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
     added: function (id, fields) { 
       publishCommentOwner(id, fields);
 
-      // fields.initDate = fields.createdAt;
       fields.initVotes = fields.upvotes;
 
       pub.added('comments', id, fields);

@@ -14,41 +14,27 @@ Template.replies.helpers({
 		return comment && comment.replies.length;
 	},
 	replies: function () {
-		var sortOptions = {
-      'top': 'initVotes',
-      'newest': 'initDate'
-    };
-    var query = getCurrentQuery();
-    var sortBy = query && sortOptions[query.sort_by] || 'initVotes';
-
-		// var pros = Comments.find({ 'replyTo': this.id, 'side': 'pro' }, { 
-		// 	sort: setProperty({}, sortBy, -1) 
-		// }).fetch();
-
-		// var	cons = Comments.find({ 'replyTo': this.id, 'side': 'con' }, { 
-		// 	sort: setProperty({}, sortBy, -1) 
-		// }).fetch();
-
-		var res = [];
 		var controller = Router.current();
-		// console.log(Iron, controller);
-
-		// var runAt = controller.state.get('runAt');
 		var runAt = controller._runAt;
 
     var newComments = Comments.find({ 'replyTo': this.id, 'createdAt': { $gt: runAt }, 'userId': Meteor.userId() }, { 
     	sort: { 'createdAt': -1 } 
     }).fetch();
 
-    var sort = setProperty({}, sortBy, -1);
-    sort.createdAt = -1;
+    var sort = {};
+    var query = getCurrentQuery();
+    if (!query.sort_by || query.sort_by === 'top') {
+      sort.initVotes = -1;
+    }
+    sort.createdAt = -1; // less priority than initVotes
+    
     var comments = Comments.find({ 'replyTo': this.id, 'createdAt': { $lt: runAt } }, { 
     	sort: sort 
     }).fetch();
 
     var comments = newComments.concat(comments);
+    var res = [], pros = [], cons = [], comment;
 
-    var pros = [], cons = [], comment;
     var len = comments.length, i = 0;
     while (i < len) {
       comment = comments[i];
