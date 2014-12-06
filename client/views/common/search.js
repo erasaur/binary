@@ -1,14 +1,16 @@
 var searching = new ReactiveVar(false);
-var searchDeps = new Deps.Dependency();
+var searchTemplate = {
+  'topics': 'topicItem',
+  'users': 'profileItem'
+};
 
-function stopSearching () {
-  // $('#js-search-input').val('').blur();
+var stopSearching = function () {
+  $('.search-input').val('').blur();
   searching.set(false);
-}
-
-function isSearching () {
+};
+var isSearching = function () {
   return searching.get();
-}
+};
 
 Template.searchInput.helpers({
   indexes: ['topics', 'users'],

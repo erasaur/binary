@@ -1,23 +1,18 @@
 Template.notificationNewReply.helpers({
-  count: function () {
+  hasCount: function () {
     return this.data.count;
+  },
+  count: function () {
+    return this.data.count - 1;
   },
   author: function () {
     var author = this.data.author;
-    return author && { 
-      'name': author.name, 
-      'url': getProfileRoute(author._id) 
-    };
+    return author && author.name;
   },
-  replyToUrl: function () {
-    return getTopicRoute(this.data.replyTo.topicId) + '#' + this.data.replyTo._id;
-  },
-  topicTitle: function () {
-    return this.data.topic && this.data.topic.title;
-  },
-  commentUrl: function () {
+  topicMessage: function () {
     var topic = this.data.topic;
-    var comment = this.data.comment;
-    return topic && comment && getTopicRoute(topic._id) + '#' + comment._id;
+    if (!topic) return;
+    return topic.userId === Meteor.userId() ? 
+      'in your topic: ' + topic.title : 'in: ' + topic.title;
   }
 });

@@ -38,3 +38,26 @@ Template.invite.events({
 		});
 	}
 });
+
+Template.inviteForm.events({
+	'submit #js-invite-form': function (event, template) {
+		event.preventDefault();
+		event.stopPropagation();
+		
+		var email = template.$('#js-invite-email');
+		
+		Meteor.call('inviteUser', email.val(), function (error) {
+			if (error) {
+				if (error.error === 'no-permission')
+					alert('Oh no, it looks like you are out of invites!');
+				else if (error.error === 'duplicate-content')
+					alert('Your friend has already been invited. Try another?');
+				else
+					alert('Sorry, something went wrong. Please try again in a moment.');
+			} else {
+				alert('Your invite was sent successfully!');
+				email.val('');
+			}
+		});
+	}
+});

@@ -1,12 +1,7 @@
 <template name="notificationNewReply">
-  {{#if count}}
-    {{count}} people replied to 
-    <a href="{{replyToUrl}}" class="action-link">your comment</a> 
+  {{#if hasCount}}
+    {{author}} and {{count}} others replied to your comment {{topicMessage}}
   {{else}}
-    <a href="{{author.url}}" class="action-link">{{author.name}}</a> 
-    replied to 
-    <a href="{{replyToUrl}}" class="action-link">your comment</a> 
-    on 
-    <a href="{{commentUrl}}" class="action-link">{{topicTitle}}</a>
+    {{author}} replied to your comment {{topicMessage}}
   {{/if}}
 </template>

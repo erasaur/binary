@@ -17,3 +17,41 @@
     </div>
   </div>
 </template>
+
+<template name="inviteForm">
+  <div class="modal fade" id="invite-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header center">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3 class="modal-title" id="modalLabel">Invite your friends!</h3>
+        </div>
+        <div class="modal-body">
+          <form role="form" id="js-invite-form">
+            {{#if currentUser.invites.inviteCount}}
+              <div class="form-group">
+                <p class="help-block">
+                  We spent a lot of care cookin’ this site up, and we’d love for your friends to try it out!
+                </p>
+                <p class="help-block">
+                  We are still testing things though, so lest we can’t handle the load, we’ve given you exactly <strong>three</strong> invites. Send them to three friends who you think will enjoy this the most!
+                </p>
+              </div>
+              <div class="form-group">
+                <p class="help-block">You have <b>{{currentUser.invites.inviteCount}}</b> invites left.</p>
+                <input type="text" class="form-control" id="js-invite-email" placeholder="friend@email.com">
+              </div>
+              <div class="action-group clearfix">
+                <button type="submit" class="btn btn-default">Send</button>
+              </div>
+            {{else}}
+              <div class="form-group">
+                <p class="help-block">Thank you for inviting your friends!</p>
+              </div>
+            {{/if}}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

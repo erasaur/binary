@@ -7,15 +7,13 @@ Meteor.methods({
     };
 
     // notify user who follower is following
-    if (Herald.userPreference(followingId, 'onsite', 'newFollower')) {
-      Herald.createNotification(followingId, { 
-        courier: 'newFollower', 
-        data: notificationData, 
-        'duplicates': false, 
-        'aggregate': true,
-        'aggregateAt': 5 
-      });
-    }
+    Herald.createNotification(followingId, { 
+      courier: 'newFollower', 
+      data: notificationData, 
+      'duplicates': false, 
+      'aggregate': true,
+      'aggregateAt': 3 
+    });
   },
   newTopicNotification: function (topic) { // initiated by the topic creator
     var user = Meteor.user(); // topic owner
@@ -29,7 +27,6 @@ Meteor.methods({
 
     // notify owner's followers
     _.each(user.activity.followers, function (followerId) {
-
       if (Herald.userPreference(followerId, 'onsite', 'newTopic')) {
         Herald.createNotification(followerId, { 
           courier: 'newTopic', 
@@ -47,42 +44,36 @@ Meteor.methods({
     var notificationData = {
       author: { '_id': user._id, 'name': user.profile.name },
       comment: _.pick(comment, '_id'),
-      topic: _.pick(topic, '_id', 'title')
+      topic: _.pick(topic, '_id', 'title', 'userId')
     };
 
     if (!!replyToId) { // comment reply      
       var replyTo = Comments.findOne(replyToId);
 
-      notificationData.replyTo = _.pick(replyTo, '_id', 'topicId');
-
-      // notify replyTo owner
-      // unless user is just replying to self
-      if (replyTo.userId !== user._id && Herald.userPreference(replyTo.userId, 'onsite', 'newReply')) {
-        
+      // notify replyTo owner, unless user is just replying to self
+      if (replyTo && replyTo.userId !== user._id) {
         Herald.createNotification(replyTo.userId, { 
           courier: 'newReply', 
           data: notificationData, 
+          // 'duplicates': false,
           'aggregate': true,
-          'aggregateAt': 5,
-          'aggregateUnder': 'replyTo' // combine notifications that share the same author
+          'aggregateAt': 3,
+          'aggregateUnder': 'replyTo' // combine notifications that share the same comment
         });
         notified.push(replyTo.userId);
       }
-
     }
 
     // notify topic owner (if topic owner wants to be notified)
     // unless the comment owner is also the topic owner,
     // or the topic owner is the replyTo owner (in which case we already notified them with 'newReply')
-    if (topic.userId !== user._id && 
-        !_.contains(notified, topic.userId) &&
-        Herald.userPreference(topic.userId, 'onsite', { courier: 'newComment.topicOwner' })) 
-    {
+    if (topic && topic.userId !== user._id && !_.contains(notified, topic.userId)) {
       Herald.createNotification(topic.userId, { 
         courier: 'newComment', 
         data: notificationData, 
+        'duplicates': false,
         'aggregate': true,
-        'aggregateAt': 5,
+        'aggregateAt': 3,
         'aggregateUnder': 'topic'
       });
       notified.push(topic.userId);
@@ -90,17 +81,15 @@ Meteor.methods({
 
     // notify topic followers
     var topicFollowers = _.difference(topic.followers, notified);
+    
     _.each(topicFollowers, function (followerId) {
-
       // in case user is following the topic
-      if (followerId !== user._id && 
-          Herald.userPreference(followerId, 'onsite', { courier: 'newComment.topicFollower' })) 
-      {
+      if (followerId !== user._id) {
         Herald.createNotification(followerId, { 
           courier: 'newComment', 
           data: notificationData, 
           'aggregate': true,
-          'aggregateAt': 5,
+          'aggregateAt': 3,
           'aggregateUnder': 'topic'
         });
         notified.push(followerId);
@@ -109,18 +98,17 @@ Meteor.methods({
 
     // notify commenter's followers
     var commenterFollowers = _.difference(user.activity.followers, notified);
+    
     _.each(commenterFollowers, function (followerId) {
-
-      if (Herald.userPreference(followerId, 'onsite', { courier: 'newComment.follower' })) {
+      if (Herald.userPreference(followerId, 'onsite', 'newComment.follower')) {
         Herald.createNotification(followerId, { 
           courier: 'newComment', 
           data: notificationData, 
           'aggregate': true,
-          'aggregateAt': 5,
-          'aggregateUnder': 'author'
+          'aggregateAt': 3,
+          'aggregateUnder': 'topic'
         });
       }        
-
       // notified.push(followerId);
     });
   }

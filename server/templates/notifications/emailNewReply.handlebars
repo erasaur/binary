@@ -1,0 +1,12 @@
+<p style="margin-top: 0;">
+  Hey there, {{user.profile.name}}! Just wanted to let you know that 
+
+  {{#if count}}
+    {{author.name}} and {{subCount}} others replied to your comment {{topicMessage}}
+  {{else}}
+    {{author.name}} replied to your comment {{topicMessage}}
+  {{/if}}
+</p>
+<div class="action-container">
+  <a href="{{actionLink}}">Discuss</a>
+</div>
