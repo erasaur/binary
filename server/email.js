@@ -7,13 +7,10 @@
 var juice = Meteor.npmRequire('juice');
 var htmlToText = Meteor.npmRequire('html-to-text');
 
-var siteName = 'Yamcha';
-
 buildEmailTemplate = function (htmlContent) {
   var emailProperties = {
-    body: htmlContent,
-    siteName: siteName
-  }
+    body: htmlContent
+  };
 
   var emailHTML = Handlebars.templates['emailWrapper'](emailProperties);
 
@@ -29,6 +26,62 @@ buildEmailTemplate = function (htmlContent) {
   var doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
   
   return doctype + inlinedHTML;
+};
+
+buildEmailNotification = function (notification) {
+  var courier = notification.courier;
+
+  return (function (n) {
+    var email = {
+      'newTopic': {
+        'subject': n.author && n.title && n.author.name + ' created a new topic: ' + n.topic.title,
+        'template': 'emailNewTopic',
+        'properties': {
+          'actionLink': n.topic && getTopicUrl(n.topic._id)
+        }
+      },
+      'newComment': {
+        'subject': n.topic && 'New comments were posted in: ' + n.topic.title,
+        'template': 'emailNewComment',
+        'properties': {
+          'subCount': n.count && n.count - 1,
+          'actionLink': getTopicUrl(n.topic._id, n.comment._id),
+          'topicMessage': n.topic && (n.topic.userId === n.user._id ? 'in your topic: ' : 'in: ') + n.topic.title
+        }
+      }, 
+      'newReply': {
+        'subject': n.author && n.author.name + ' replied to your comment in: ' + n.topic.title,
+        'template': 'emailNewReply',
+        'properties': {
+          'subCount': n.count && n.count - 1,
+          'actionLink': getTopicUrl(n.topic._id, n.comment._id),
+          'topicMessage': n.topic && (n.topic.userId === n.user._id ? 'in your topic: ' : 'in: ') + n.topic.title
+        }
+      },
+      'newFollower': {
+        'subject': n.follower && n.follower.name + ' is now following you',
+        'template': 'emailNewFollower',
+        'properties': {
+          'subCount': n.count && n.count - 1,
+          'actionLink': n.follower && (n.count ? getProfileUrl(n.user._id, 'followers') : getProfileUrl(n.follower._id))
+        }
+      }
+    };
+
+    console.log(email);
+
+    var subject = email[courier]['subject'];
+    var properties = _.extend(n, email[courier]['properties']);
+    var template = email[courier]['template'];
+
+    var templateHTML = Handlebars.templates[template](properties);
+    var emailHTML = buildEmailTemplate(templateHTML);
+
+    return {
+      subject: subject,
+      html: emailHTML
+    };
+  })(notification.data);
 };
 
 buildEmailText = function (html) {
@@ -49,7 +102,6 @@ sendEmail = function (to, subject, html, text) {
   // TODO: fix this error: Error: getaddrinfo ENOTFOUND
   
   var from = 'welcome@yamcha.com';
-  var siteName = siteName;
 
   if (typeof text === 'undefined'){
     var text = buildEmailText(html);

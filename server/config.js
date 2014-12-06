@@ -4,7 +4,7 @@ var resetPassword = {
   },
   html: function (user, url) {
     // var token = url.substring(url.lastIndexOf('/') + 1);
-    // var url = getSiteUrl() + '?reset_code=' + token;
+    // var url = Router.routes['home'].url({}, { 'query': { 'reset_code': token } });
     var properties = {
       name: getDisplayName(user),
       actionLink: url
