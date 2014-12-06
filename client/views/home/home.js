@@ -1,5 +1,5 @@
 Template.home.rendered = function () {
-  initInfiniteScroll.call(this, 'topics');
+  initInfiniteScroll.call(this, Topics.find());
 };
 
 Template.home.destroyed = function () {

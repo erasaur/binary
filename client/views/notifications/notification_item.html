@@ -1,6 +1,6 @@
 <template name="notificationItem">
   <li>
-    <a href="#" class="notification-item list-item {{#if read}}read{{/if}}">
+    <a href="{{actionLink}}" class="notification-item list-item {{readClass}}">
       <div class="notification-content">
         {{{notificationHTML}}}
       </div>

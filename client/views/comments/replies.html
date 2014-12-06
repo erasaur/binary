@@ -1,17 +1,17 @@
 <template name="replies">
-	<div id="{{id}}-replies" class="comment-container {{#if side}}{{side}}{{color}}{{/if}}">
+	<div class="comment-container {{side}} {{#if side}}{{side}}{{color}}{{/if}}" id="{{id}}-replies">
 		{{#if currentUser}}
 			<div class="comment-replies clearfix">
 				{{> newComment}}
 			</div>
 		{{/if}}
 
-		{{#unless hasReplies}}
-			<div>No replies.</div>
-		{{else}}
+		{{#if hasReplies}}
 			{{#each replies}}
 				{{> commentRow}}
 			{{/each}}
-		{{/unless}}
+		{{else}}
+			<div>No replies.</div>
+		{{/if}}
 	</div>
 </template>

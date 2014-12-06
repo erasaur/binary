@@ -1,10 +1,8 @@
 <template name="notifications">
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      {{#notificationBadge count=notificationCount}}
-        <i class="hidden-xs fa fa-lightbulb-o fa-lg"></i>
-        <span class="visible-xs">Notifications</span>
-      {{/notificationBadge}}
+      {{> notificationBadge count=notificationCount class='navbar-item hidden-xs'}}
+      <span class="visible-xs">Notifications ({{notificationCount}})</span>
     </a>
     <div class="dropdown-menu notifications">
       <ul>

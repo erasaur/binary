@@ -41,29 +41,37 @@ Accounts.onCreateUser(function (options, user) {
   // set notifications default preferences
   user.profile.notifications = {
     media: {
-      onsite: true
+      onsite: true,
+      email: true
     },
     couriers: {
       newTopic: {
-        onsite: true
+        onsite: true,
+        email: true
       },
       newComment: {
         onsite: true, // enable comment notifications at all
+        email: true,
         topicOwner: {
-          onsite: true // notify user of comments if he is the topic owner
+          onsite: true, // notify user of comments if he is the topic owner
+          email: true
         },
         topicFollower: {
-          onsite: true // notify user if he is topic follower
+          onsite: true, // notify user if he is topic follower
+          email: true
         },
         follower: {
-          onsite: true // notify user of another's comments if he is a follower
+          onsite: true, // notify user of another's comments if he is a follower
+          email: true
         }
       },
       newReply: {
-        onsite: true
+        onsite: true,
+        email: true
       },
       newFollower: {
-        onsite: true
+        onsite: true,
+        email: true
       }
     }
   };
