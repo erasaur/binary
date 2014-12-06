@@ -29,60 +29,39 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   commentsHandle = comments.observeChanges({
     // in added case, fields essentially is the entirety of the added comment
     added: function (id, fields) { 
-      publishAssociatedOwners(id, fields); // publish the owners associated with this comment
+      var replyToUser = publishAssociatedOwners(id, fields); // publish the owners associated with this comment
 
       fields.initVotes = fields.upvotes;
+      fields.replyToUser = replyToUser; // so we don't necessarily need to pub replyTo comment to get the user
 
       pub.added('comments', id, fields);
     },
     changed: function (id, fields) {
       pub.changed('comments', id, fields);
-    },
-    // removed: function (id) {
-    //   // remove the owner handle attached to this comment
-    //   commentOwnersHandle[id] && commentOwnersHandle[id].stop();
-    //   pub.removed('comments', id);
-    // }
+    }
   });
 
   // we don't need owners to be reactive
   function publishAssociatedOwners (commentId, comment) {
     var replyTo = Comments.findOne(comment.replyTo);
-    var query = { '_id': comment.userId };
+    var fields = { fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } };
+    var owner = Meteor.users.findOne({ '_id': comment.userId }, fields);
 
-    query = typeof replyTo !== 'undefined' ?
-      { $or: [query, { '_id': replyTo.userId }] } : query;
-
-    var owners = Meteor.users.find(query, { 
-      fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } 
-    }).fetch();
-
-    _.each(owners, function (owner) {
-      pub.added('users', owner._id, owner);
-    });
-    // attach an owner handle to this comment, and store it with comment's id
-    // as a key so we can remove the handle when the comment is removed
-    // commentOwnersHandle[commentId] = owners.observeChanges({
-    //   added: function (id, fields) {
-    //     pub.added('users', id, fields);
-    //   },
-    //   changed: function (id, fields) {
-    //     pub.changed('users', id, fields);
-    //   },
-    //   // removed: function (id, fields) {
-    //   //   commentOwnersHandle[id] && commentOwnersHandle[id].stop();
-    //   //   pub.removed('users', id);
-    //   // }
-    // });
+    if (typeof replyTo !== 'undefined') {
+      var replyToUser = Meteor.users.findOne({ '_id': replyTo.userId }, fields);
+    }
+    
+    pub.added('users', owner._id, owner);
+    if (replyToUser) {
+      pub.added('users', replyToUser._id, replyToUser);
+      return replyToUser.profile && replyToUser.profile.name;
+    }
   }
 
   pub.ready();
 
   pub.onStop(function () {
     commentsHandle.stop();
-    // _.each(commentOwnersHandle, function (handle) {
-    //   handle.stop();
-    // });
   });
 });
 
@@ -93,7 +72,6 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
   var sort = sortBy === 'newest' ? 
     { 'upvotes': -1, 'createdAt': -1 } : { 'createdAt': -1, 'upvotes': -1 };
   var commentsHandle; // handler for changes in comments collection
-  var commentOwnersHandle = []; // handlers for owners associated with the comments
 
   var pub = this;
   var comments = Comments.find({ 'replyTo': { $in: commentIds } }, { 
@@ -103,45 +81,28 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
   commentsHandle = comments.observeChanges({
     added: function (id, fields) { 
       publishCommentOwner(id, fields);
-
       fields.initVotes = fields.upvotes;
 
       pub.added('comments', id, fields);
     },
     changed: function (id, fields) {
       pub.changed('comments', id, fields);
-    },
-    removed: function (id) {
-      commentOwnersHandle[id] && commentOwnersHandle[id].stop();
-      pub.removed('comments', id);
     }
   });
 
+  // no need to publish replyTo, already have (otherwise not able to show these replies)
   function publishCommentOwner (commentId, comment) {
-    var owners = Meteor.users.find({ '_id': comment.userId }, { 
+    var owner = Meteor.users.findOne({ '_id': comment.userId }, { 
       fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } 
     });
-    commentOwnersHandle[commentId] = owners.observeChanges({
-      added: function (id, fields) {
-        pub.added('users', id, fields);
-      },
-      changed: function (id, fields) {
-        pub.changed('users', id, fields);
-      },
-      removed: function (id, fields) {
-        commentOwnersHandle[id] && commentOwnersHandle[id].stop();
-        pub.removed('users', id);
-      }
-    });
+
+    pub.added('users', owner._id, owner);
   }
 
   pub.ready();
 
   pub.onStop(function () {
     commentsHandle.stop();
-    _.each(commentOwnersHandle, function (handle) {
-      handle.stop();
-    });
   });
 });
 
