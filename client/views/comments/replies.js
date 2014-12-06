@@ -10,7 +10,7 @@ Template.replies.rendered = function () {
 
 Template.replies.helpers({
 	hasReplies: function () {
-    var comment = Comments.findOne(this._id);
+    var comment = Comments.findOne(this.id);
 		return comment && comment.replies.length;
 	},
 	replies: function () {

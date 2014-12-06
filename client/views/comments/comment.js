@@ -77,20 +77,22 @@ Template.newComment.events({
 				template.editingComment.set(false);
 				// scrollToId(result);
 
-				// shift all open reply boxes of same level and same side one row down
-				var replyClass = '.comment-container.' + comment.side;
-				// in root level, new comment box's parent is not sibling of any comments
-				var currentRow = template.$('.comment-new').parent();
-				if (currentRow.hasClass('comment-replies')) {
-					var openReplies = currentRow.siblings(replyClass);
-				} else {
-					var openReplies = currentRow.next().find('.list').children(replyClass);
-				}
-				
-				if (!openReplies || !openReplies.length) return;
-				openReplies.each(function () {
-					var $reply = $(this);
-					$reply.insertAfter($reply.next());
+				Tracker.afterFlush(function () {
+					// shift all open reply boxes of same level and same side one row down
+					var replyClass = '.comment-container.' + comment.side;
+					// in root level, new comment box's parent is not sibling of any comments
+					var currentRow = template.$('.comment-new').parent();
+					if (currentRow.hasClass('comment-replies')) {
+						var openReplies = currentRow.siblings(replyClass);
+					} else {
+						var openReplies = currentRow.next().find('.list').children(replyClass);
+					}
+					
+					if (!openReplies || !openReplies.length) return;
+					openReplies.each(function () {
+						var $reply = $(this);
+						$reply.insertAfter($reply.next());
+					});
 				});
 			}
 		});
@@ -179,7 +181,7 @@ Template.comment.events({
 
 		// add the replies
 		Blaze.renderWithData(Template.replies, // template to render
-												{ _id: self._id, side: self.side, color: color }, // data context
+												{ id: self._id, side: self.side, color: color }, // data context
 												$replyTo.parent()[0], // insert within
 												$replyTo.next()[0]); // insert before	
 	},
