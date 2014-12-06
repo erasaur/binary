@@ -17,8 +17,8 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
 
   var sort = sortBy === 'newest' ? 
     { 'createdAt': -1, 'upvotes': -1 } : { 'upvotes': -1, 'createdAt': -1 };
-  var commentsHandle; // handler for changes in comments collection
-  var commentOwnersHandle = []; // handlers for owners associated with the comments
+  var commentsHandle; // handle for changes in comments collection
+  // var commentOwnersHandle = []; // handles for owners associated with the comments
 
   var pub = this;
   var comments = Comments.find({ 'topicId': topicId, 'side': side }, { 
@@ -29,7 +29,7 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   commentsHandle = comments.observeChanges({
     // in added case, fields essentially is the entirety of the added comment
     added: function (id, fields) { 
-      publishCommentOwner(id, fields); // publish the owner associated with this comment
+      publishAssociatedOwners(id, fields); // publish the owners associated with this comment
 
       fields.initVotes = fields.upvotes;
 
@@ -38,40 +38,51 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
     changed: function (id, fields) {
       pub.changed('comments', id, fields);
     },
-    removed: function (id) {
-      // remove the owner handle attached to this comment
-      commentOwnersHandle[id] && commentOwnersHandle[id].stop();
-      pub.removed('comments', id);
-    }
+    // removed: function (id) {
+    //   // remove the owner handle attached to this comment
+    //   commentOwnersHandle[id] && commentOwnersHandle[id].stop();
+    //   pub.removed('comments', id);
+    // }
   });
 
-  function publishCommentOwner (commentId, comment) {
-    var owners = Meteor.users.find({ '_id': comment.userId }, { 
+  // we don't need owners to be reactive
+  function publishAssociatedOwners (commentId, comment) {
+    var replyTo = Comments.findOne(comment.replyTo);
+    var query = { '_id': comment.userId };
+
+    query = typeof replyTo !== 'undefined' ?
+      { $or: [query, { '_id': replyTo.userId }] } : query;
+
+    var owners = Meteor.users.find(query, { 
       fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } 
+    }).fetch();
+
+    _.each(owners, function (owner) {
+      pub.added('users', owner._id, owner);
     });
     // attach an owner handle to this comment, and store it with comment's id
     // as a key so we can remove the handle when the comment is removed
-    commentOwnersHandle[commentId] = owners.observeChanges({
-      added: function (id, fields) {
-        pub.added('users', id, fields);
-      },
-      changed: function (id, fields) {
-        pub.changed('users', id, fields);
-      },
-      removed: function (id, fields) {
-        commentOwnersHandle[id] && commentOwnersHandle[id].stop();
-        pub.removed('users', id);
-      }
-    });
+    // commentOwnersHandle[commentId] = owners.observeChanges({
+    //   added: function (id, fields) {
+    //     pub.added('users', id, fields);
+    //   },
+    //   changed: function (id, fields) {
+    //     pub.changed('users', id, fields);
+    //   },
+    //   // removed: function (id, fields) {
+    //   //   commentOwnersHandle[id] && commentOwnersHandle[id].stop();
+    //   //   pub.removed('users', id);
+    //   // }
+    // });
   }
 
   pub.ready();
 
   pub.onStop(function () {
     commentsHandle.stop();
-    _.each(commentOwnersHandle, function (handle) {
-      handle.stop();
-    });
+    // _.each(commentOwnersHandle, function (handle) {
+    //   handle.stop();
+    // });
   });
 });
 
