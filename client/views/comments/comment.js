@@ -178,8 +178,8 @@ Template.comment.events({
 		var color = (showing.length - 1) % numColors;
 
 		// add the replies
-		Blaze.renderWithData(Template.replies, //template to render
-												{ id: self._id, side: self.side, color: color }, //data context
+		Blaze.renderWithData(Template.replies, // template to render
+												{ _id: self._id, side: self.side, color: color }, // data context
 												$replyTo.parent()[0], // insert within
 												$replyTo.next()[0]); // insert before	
 	},
