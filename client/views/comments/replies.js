@@ -10,7 +10,8 @@ Template.replies.rendered = function () {
 
 Template.replies.helpers({
 	hasReplies: function () {
-		return Comments.findOne(this.id).replies.length;
+    var comment = Comments.findOne(this._id);
+		return comment && comment.replies.length;
 	},
 	replies: function () {
 		var sortOptions = {
