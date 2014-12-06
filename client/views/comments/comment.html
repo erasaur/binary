@@ -8,8 +8,11 @@
   	<div class="comment-content markdown" title="Show/hide more">
 		  {{{content}}}
   	</div>
-  	<div class="comment-date">
+  	<div class="comment-info">
   		<span>{{formatDate createdAt}}</span>
+      {{#if replyToUser}}
+        <a href="{{pathFor route='topic' _id=this.topicId hash=this.replyTo}}" class="action-link">Reply to {{replyToUser}}</a>
+      {{/if}}
   	</div>
   	<div class="comment-footer">
       <div class="comment-footer-left float-left">
