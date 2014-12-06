@@ -51,7 +51,7 @@ Template.inviteForm.events({
 				if (error.error === 'no-permission')
 					alert('Oh no, it looks like you are out of invites!');
 				else if (error.error === 'duplicate-content')
-					alert('Your friend has already been invited.');
+					alert('Your friend has already been invited. Try another?');
 				else
 					alert('Sorry, something went wrong. Please try again in a moment.');
 			} else {
