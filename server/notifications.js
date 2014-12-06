@@ -13,7 +13,7 @@ Meteor.methods({
         data: notificationData, 
         'duplicates': false, 
         'aggregate': true,
-        'aggregateAt': 5 
+        'aggregateAt': 3 
       });
     }
   },
@@ -60,8 +60,8 @@ Meteor.methods({
           data: notificationData, 
           'duplicates': false,
           'aggregate': true,
-          'aggregateAt': 5,
-          'aggregateUnder': 'topic' // combine notifications that share the same author
+          'aggregateAt': 3,
+          'aggregateUnder': 'replyTo' // combine notifications that share the same comment
         });
         notified.push(replyTo.userId);
       }
@@ -79,7 +79,7 @@ Meteor.methods({
         data: notificationData, 
         'duplicates': false,
         'aggregate': true,
-        'aggregateAt': 5,
+        'aggregateAt': 3,
         'aggregateUnder': 'topic'
       });
       notified.push(topic.userId);
@@ -97,7 +97,7 @@ Meteor.methods({
           courier: 'newComment', 
           data: notificationData, 
           'aggregate': true,
-          'aggregateAt': 5,
+          'aggregateAt': 3,
           'aggregateUnder': 'topic'
         });
         notified.push(followerId);
@@ -113,7 +113,7 @@ Meteor.methods({
           courier: 'newComment', 
           data: notificationData, 
           'aggregate': true,
-          'aggregateAt': 5,
+          'aggregateAt': 3,
           'aggregateUnder': 'topic'
         });
       }        
