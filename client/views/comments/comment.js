@@ -114,17 +114,14 @@ function adjustScroll ($elem, initOffset) {
 }
 
 Template.comment.events({
-	'mouseover .comment': function (event, template) {
+	'mouseover .comment': _.debounce(function (event, template) {
 		event.stopPropagation();
-		if (this._calcCollapsible) return;  // don't recalculate
-
+		
 		var $content = $(event.currentTarget).find('.comment-content');
-		console.log($content[0].scrollHeight, $content.innerHeight());
 		if ($content[0].scrollHeight > $content.innerHeight()) {
 			$content.parent().addClass('collapsible');
 		}
-		this._calcCollapsible = true;
-	},
+	}, 100, true),
 	'click .comment-content': function (event, template) {
 		var parent = $(event.currentTarget).parent();
 		if (parent.hasClass('collapsible')) {
