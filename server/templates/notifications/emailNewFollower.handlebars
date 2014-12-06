@@ -1,0 +1,12 @@
+<p style="margin-top: 0;">
+  Hey there, {{user.profile.name}}! Just wanted to let you know that 
+
+  {{#if count}}
+    {{follower.name}} and {{subCount}} others are now following you. That's pretty awesome!
+  {{else}}
+    {{follower.name}} is now following you. Better watch your back. (kidding)
+  {{/if}}
+</p>
+<div class="action-container">
+  <a href="{{actionLink}}">View my profile</a>
+</div>
