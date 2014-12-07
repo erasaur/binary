@@ -29,9 +29,7 @@ buildEmailTemplate = function (htmlContent) {
 };
 
 buildEmailNotification = function (notification) {
-  var courier = notification.courier;
-
-  return (function (n) {
+  return (function (n, courier) {
     var email = {
       'newTopic': {
         'subject': n.author && n.title && n.author.name + ' created a new topic: ' + n.topic.title,
@@ -81,7 +79,7 @@ buildEmailNotification = function (notification) {
       subject: subject,
       html: emailHTML
     };
-  })(notification.data);
+  })(notification.data, notification.courier);
 };
 
 buildEmailText = function (html) {
