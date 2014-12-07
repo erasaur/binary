@@ -10,7 +10,7 @@
   	</div>
   	<div class="comment-info">
   		<span>{{formatDate createdAt}}</span>
-      {{#if replyToUser}}
+      {{#if hasReplyTo}}
         <a href="{{pathFor route='topic' _id=this.topicId hash=this.replyTo}}" class="action-link">Reply to {{replyToUser}}</a>
       {{/if}}
   	</div>
