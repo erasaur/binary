@@ -50,8 +50,8 @@ Accounts.onCreateUser(function (options, user) {
         email: true
       },
       newComment: {
-        onsite: true, // enable comment notifications at all
-        email: true,
+        // onsite: true, // enable comment notifications at all
+        // email: true,
         topicOwner: {
           onsite: true, // notify user of comments if he is the topic owner
           email: true
@@ -123,9 +123,9 @@ Meteor.methods({
     });
     Accounts.sendVerificationEmail(Meteor.userId());
   },
-  changePreferences: function (newPreferences) {
-    Meteor.users.update(Meteor.userId(), { $set: newPreferences });
-  },
+  // changePreferences: function (newPreferences) {
+  //   Meteor.users.update(Meteor.userId(), { $set: newPreferences });
+  // },
   sendVerificationEmail: function () {
     Accounts.sendVerificationEmail(Meteor.userId());
   }

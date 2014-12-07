@@ -47,7 +47,7 @@ Meteor.methods({
       topic: _.pick(topic, '_id', 'title', 'userId')
     };
 
-    if (!!replyToId) { // comment reply      
+    if (replyToId) { // comment reply      
       var replyTo = Comments.findOne(replyToId);
 
       // notify replyTo owner, unless user is just replying to self
@@ -69,7 +69,7 @@ Meteor.methods({
     // or the topic owner is the replyTo owner (in which case we already notified them with 'newReply')
     if (topic && topic.userId !== user._id && !_.contains(notified, topic.userId)) {
       Herald.createNotification(topic.userId, { 
-        courier: 'newComment', 
+        courier: 'newComment.topicOwner', 
         data: notificationData, 
         'duplicates': false,
         'aggregate': true,
@@ -86,7 +86,7 @@ Meteor.methods({
       // in case user is following the topic
       if (followerId !== user._id) {
         Herald.createNotification(followerId, { 
-          courier: 'newComment', 
+          courier: 'newComment.topicFollower', 
           data: notificationData, 
           'aggregate': true,
           'aggregateAt': 3,
@@ -102,7 +102,7 @@ Meteor.methods({
     _.each(commenterFollowers, function (followerId) {
       if (Herald.userPreference(followerId, 'onsite', 'newComment.follower')) {
         Herald.createNotification(followerId, { 
-          courier: 'newComment', 
+          courier: 'newComment.follower', 
           data: notificationData, 
           'aggregate': true,
           'aggregateAt': 3,
