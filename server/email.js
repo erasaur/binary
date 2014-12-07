@@ -30,49 +30,50 @@ buildEmailTemplate = function (htmlContent) {
 
 buildEmailNotification = function (notification) {
   return (function (n, courier) {
-    var email = {
-      'newTopic': {
-        'subject': n.author && n.title && n.author.name + ' created a new topic: ' + n.topic.title,
-        'template': 'emailNewTopic',
-        'properties': {
-          'actionLink': n.topic && getTopicUrl(n.topic._id)
-        }
-      },
-      'newComment': {
-        'subject': n.topic && 'New comments were posted in: ' + n.topic.title,
-        'template': 'emailNewComment',
-        'properties': {
+    var email = {};
+    switch (courier) {
+      case 'newTopic': 
+        email.subject = n.author.name + ' created a new topic: ' + n.topic.title;
+        email.template = 'emailNewTopic';
+        email.properties = { 'actionLink': getTopicUrl(n.topic._id) };
+        break;
+      case 'newComment.topicOwner':
+      case 'newComment.topicFollower':
+      case 'newComment.follower':
+        email.subject = 'New comments were posted in: ' + n.topic.title;
+        email.template = 'emailNewComment';
+        email.properties = {
           'subCount': n.count && n.count - 1,
-          'actionLink': getTopicUrl(n.topic._id, n.comment._id),
+          'actionLink': n.topic && n.comment && getTopicUrl(n.topic._id, n.comment._id),
           'topicMessage': n.topic && (n.topic.userId === n.user._id ? 'in your topic: ' : 'in: ') + n.topic.title
-        }
-      }, 
-      'newReply': {
-        'subject': n.author && n.author.name + ' replied to your comment in: ' + n.topic.title,
-        'template': 'emailNewReply',
-        'properties': {
+        };
+        break;
+      case 'newReply':
+        email.subject = n.author.name + ' replied to your comment in: ' + n.topic.title;
+        email.template = 'emailNewReply';
+        email.properties = {
           'subCount': n.count && n.count - 1,
-          'actionLink': getTopicUrl(n.topic._id, n.comment._id),
+          'actionLink': n.topic && n.comment && getTopicUrl(n.topic._id, n.comment._id),
           'topicMessage': n.topic && (n.topic.userId === n.user._id ? 'in your topic: ' : 'in: ') + n.topic.title
-        }
-      },
-      'newFollower': {
-        'subject': n.follower && n.follower.name + ' is now following you',
-        'template': 'emailNewFollower',
-        'properties': {
+        };
+        break;
+      case 'newFollower':
+        email.subject = n.follower.name + ' is now following you';
+        email.template = 'emailNewFollower';
+        email.properties = {
           'subCount': n.count && n.count - 1,
           'actionLink': n.follower && (n.count ? getProfileUrl(n.user._id, 'followers') : getProfileUrl(n.follower._id))
-        }
-      }
-    };
-
+        };
+        break;
+      default:
+        break;
+    }
     console.log(email);
 
-    var subject = email[courier]['subject'];
-    var properties = _.extend(n, email[courier]['properties']);
-    var template = email[courier]['template'];
+    if (!email.subject || !email.template) throw new Meteor.Error('invalid-content', 'Email notification not sent: missing/invalid params!');
 
-    var templateHTML = Handlebars.templates[template](properties);
+    var properties = _.extend(n, email.properties);
+    var templateHTML = Handlebars.templates[email.template](properties);
     var emailHTML = buildEmailTemplate(templateHTML);
 
     return {
