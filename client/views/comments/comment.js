@@ -15,12 +15,15 @@ Template.comment.helpers({
 	author: function () {
 		return Meteor.users.findOne(this.userId);
 	},
+	hasReplyTo: function () {
+		return !this.isCommentItem && this.replyTo;
+	},
 	replyToUser: function () {
 		if (!this.replyTo) return;
 		if (this.replyToUser) return this.replyToUser;
 
 		var comment = Comments.findOne(this.replyTo);
-		var user = Meteor.users.findOne(comment.userId);
+		var user = comment && Meteor.users.findOne(comment.userId);
 		return user && user.profile.name;
 	},
 	toggleClass: function () {
