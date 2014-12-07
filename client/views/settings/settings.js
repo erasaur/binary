@@ -20,10 +20,9 @@ Template.settingsBody.events({
 
 Template.settings.helpers({
   'isEnabled': function (option, value) {
-    if (!Meteor.user()) return;
-
-    var medium = '.onsite'; // use user preferences ?
-    return getProperty(Meteor.user().profile.notifications, option + medium) == value ? 
+    var userId = Meteor.userId();
+    
+    return userId && Herald.userPreference(userId, 'email', option) == value ? 
       'btn-primary' : 'btn-default';
   }
 });
