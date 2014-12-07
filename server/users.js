@@ -123,9 +123,6 @@ Meteor.methods({
     });
     Accounts.sendVerificationEmail(Meteor.userId());
   },
-  // changePreferences: function (newPreferences) {
-  //   Meteor.users.update(Meteor.userId(), { $set: newPreferences });
-  // },
   sendVerificationEmail: function () {
     Accounts.sendVerificationEmail(Meteor.userId());
   }
