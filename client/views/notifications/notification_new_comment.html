@@ -1,6 +1,10 @@
 <template name="notificationNewComment">
-  {{#if hasCount}}
-    {{author}} and {{count}} others posted new comments {{topicMessage}}
+  {{#if count}}
+    {{#if followerCourier}}
+      {{author}} posted {{count}} new comments {{topicMessage}}
+    {{else}}
+      {{author}} and {{subCount}} others posted new comments {{topicMessage}}
+    {{/if}}
   {{else}}
     {{author}} posted a new comment {{topicMessage}}
   {{/if}}

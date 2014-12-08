@@ -1,8 +1,8 @@
 Template.notificationNewComment.helpers({
-  hasCount: function () {
+  count: function () {
     return this.data.count;
   },
-  count: function () {
+  subCount: function () {
     return this.data.count - 1;
   },
   author: function () {
@@ -14,5 +14,8 @@ Template.notificationNewComment.helpers({
     if (!topic) return;
     return topic.userId === Meteor.userId() ? 
       'in your topic: ' + topic.title : 'in: ' + topic.title;
+  },
+  followerCourier: function () {
+    return this.courier === 'newComment.follower';
   }
 });
