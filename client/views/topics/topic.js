@@ -40,7 +40,7 @@ Template.topic.helpers({
     var query = getCurrentQuery();
     return query && camelToTitle(query.sort_by) || 'Top';
   },
-  hasComments: function () { 
+  commentsCount: function () { 
     // can't do comments.count (not cursor) or comments.length (dummy row)
     return this.commentsCount;
   },
