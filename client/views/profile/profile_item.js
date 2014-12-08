@@ -2,13 +2,21 @@ Template.profileItem.helpers({
   canFollow: function () {
     return canFollow(Meteor.user(), this._id);
   },
-  followClass: function () {
+  iconClass: function () {
     var user = Meteor.user();
-    if (!user || !user.activity)
-      return 'js-follow';
+    var follow = {
+      'follow': 'js-follow',
+      'icon': 'b-icon-plus'
+    };
+    var unfollow = {
+      'follow': 'js-unfollow following',
+      'icon': 'b-icon-check'
+    };
 
-    return _.contains(user.activity.followingUsers, this._id) ? 
-      'js-unfollow following' : 'js-follow';
+    if (!user || !user.activity || !_.contains(user.activity.followingUsers, this._id))
+      return follow;
+
+    return unfollow;
   }
 });
 
