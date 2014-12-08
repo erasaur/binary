@@ -146,8 +146,7 @@
 .icon-group.liked .icon-action { // liked comment
   color: #cb2027;
 }
-.icon-group.showing .icon-action, // showing comment replies
-.icon-group.following .icon-action { // following user/topic
+.icon-group.showing .icon-action { // showing comment replies
   color: rgb(132, 132, 132);
 }
 .icon-text {
@@ -433,16 +432,6 @@
 .profile-item {
   height: auto; 
   overflow: hidden;
-}
-// .profile-item .profile-item-right h3 {
-//   font-size: 18px;
-//   margin: 0 0 5px;
-// }
-// .profile-item .list-item-info {
-//   width: auto;
-//   overflow: hidden;
-// }
-.profile-item {
   display: block;
 }
 .profile-item .profile-item-left {
@@ -459,6 +448,26 @@
 }
 .profile-item .profile-item-right .action-link {
   font-weight: bold;
+}
+.profile-item .icon-group {
+  background-color: rgba(0,0,0,0.2);
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  line-height: 24px;
+  border-radius: 4px;
+  position: relative;
+  // &:hover { background-color: @primary-color; }
+}
+.profile-item .icon-group .icon-action {
+  margin-top: 6px;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  color: #fff;
+}
+.profile-item .icon-group.following {
+  background-color: @primary-color;
 }
 
 // dropdown ------------------------------------------

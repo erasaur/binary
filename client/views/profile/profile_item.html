@@ -2,8 +2,10 @@
   <div class="list-item profile-item">
     <div class="list-item-action">
       {{#if canFollow}}
-        <div class="icon-group {{followClass}}">
-          <i class="fa fa-user icon-action"><i class="fa fa-plus fa-xs" style="font-size: 8px; vertical-align: top;"></i></i>
+        <div class="icon-group {{iconClass.follow}}">
+          <!-- <i class="fa fa-user icon-action"><i class="fa fa-plus fa-xs" style="font-size: 8px; vertical-align: top;"></i></i> -->
+
+          <i class="{{iconClass.icon}} icon-action"></i>
         </div>
       {{/if}}
     </div>    
