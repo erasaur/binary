@@ -2,7 +2,11 @@
   Hey there, {{user.profile.name}}! Just wanted to let you know that 
 
   {{#if count}}
-    {{author.name}} and {{subCount}} others posted new comments {{topicMessage}}
+    {{#if followerCourier}}
+      {{author.name}} posted {{subCount}} new comments {{topicMessage}}
+    {{else}}
+      {{author.name}} and {{subCount}} others posted new comments {{topicMessage}}
+    {{/if}}
   {{else}}
     {{author.name}} posted a new comment {{topicMessage}}
   {{/if}}

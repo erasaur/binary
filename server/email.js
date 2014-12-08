@@ -45,7 +45,8 @@ buildEmailNotification = function (notification) {
         email.properties = {
           'subCount': n.count && n.count - 1,
           'actionLink': n.topic && n.comment && getTopicUrl(n.topic._id, n.comment._id),
-          'topicMessage': n.topic && (n.topic.userId === n.user._id ? 'in your topic: ' : 'in: ') + n.topic.title
+          'topicMessage': n.topic && (n.topic.userId === n.user._id ? 'in your topic: ' : 'in: ') + n.topic.title,
+          'followerCourier': courier === 'newComment.follower'
         };
         break;
       case 'newReply':
