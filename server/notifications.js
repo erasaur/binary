@@ -100,15 +100,13 @@ Meteor.methods({
     var commenterFollowers = _.difference(user.activity.followers, notified);
     
     _.each(commenterFollowers, function (followerId) {
-      if (Herald.userPreference(followerId, 'onsite', 'newComment.follower')) {
-        Herald.createNotification(followerId, { 
-          courier: 'newComment.follower', 
-          data: notificationData, 
-          'aggregate': true,
-          'aggregateAt': 3,
-          'aggregateUnder': 'topic'
-        });
-      }        
+      Herald.createNotification(followerId, { 
+        courier: 'newComment.follower', 
+        data: notificationData, 
+        'aggregate': true,
+        'aggregateAt': 3,
+        'aggregateUnder': 'topic'
+      });     
       // notified.push(followerId);
     });
   }
