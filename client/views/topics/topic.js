@@ -8,7 +8,7 @@ Template.topic.rendered = function () {
   container._uihooks = {
     insertElement: function (node, next) {
       container.insertBefore(node, next);
-      $(node).velocity('slideDown', { duration: 100 });
+      $(node).velocity('slideDown', { duration: 200 });
     },
     // moveElement: function (node, next) {
     //   container.insertBefore(node, next);
