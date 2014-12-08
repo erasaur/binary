@@ -86,6 +86,10 @@
 .toggle.comment-side .handle {
   background-color: @pro-color;
 }
+.toggle.comment-side input[type=checkbox]:checked + .handle:before,
+.toggle.comment-side input[type=radio]:checked + .handle:before {
+  background-color: @con-color;
+}
 .toggle .handle:after,
 .toggle .handle:before {
   position: absolute;
@@ -121,7 +125,7 @@
   height: 20px;
   top: 0;
   left: 0;
-  background-color: @con-color; //#a0d468;
+  background-color: @pro-color; //#a0d468;
 }
 .toggle input[type=checkbox]:checked + .handle:after,
 .toggle input[type=radio]:checked + .handle:after {
