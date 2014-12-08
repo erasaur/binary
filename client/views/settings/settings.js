@@ -19,30 +19,19 @@ Template.settingsBody.events({
 });
 
 Template.settings.helpers({
-  'isEnabled': function (option, value) {
+  isEnabled: function (option) {
     var userId = Meteor.userId();
-
-    return userId && Herald.userPreference(userId, 'email', option) == value ? 
-      'btn-primary' : 'btn-default';
+    return Herald.userPreference(userId, 'email', option) && 'checked' || '';
   }
 });
 
 Template.settings.events({
-  'click button[data-action="toggle-setting"]': function (event, template) {
+  'change .settings-input input[type="checkbox"]': function (event, template) {
     var button = event.currentTarget;
-    var actionValue = button.getAttribute('data-action-value');
-    var newValue = !!parseInt(button.getAttribute('value')); // 0 or 1
+    var actionValue = button.getAttribute('data-value');
+    var newValue = button.checked;
 
-    // toggling global notifications
-    if (!actionValue) {
-      Herald.setUserPreference(Meteor.user(), { 'email': newValue });
-    } 
-
-    // toggling courier specific preferences
-    else {
-      actionValue = actionValue.replace(/-/g, '.');
-      Herald.setUserPreference(Meteor.user(), { 'email': newValue }, actionValue);
-    }
+    Herald.setUserPreference(Meteor.user(), { 'email': newValue }, actionValue);
   }
 });
 

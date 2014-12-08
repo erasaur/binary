@@ -41,10 +41,14 @@
             <p class="help-block">Turn all notifications on/off</p>
           </div>
           <div class="list-item-action settings-input">
-            <div class="btn-group">
+            <label class="toggle">
+              <input type="checkbox" {{isEnabled}}>
+              <span class="handle"></span>
+            </label>
+            <!-- <div class="btn-group">
               <button type="button" class="btn {{isEnabled '' 1}}" data-action="toggle-setting" value="1">On</button>
               <button type="button" class="btn {{isEnabled '' 0}}" data-action="toggle-setting" value="0">Off</button>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="list-item settings-item">
@@ -53,12 +57,16 @@
             <p class="help-block">Get notified when you gain a new follower</p>
           </div>
           <div class="list-item-action settings-input">
-            <div class="btn-group">
+            <label class="toggle">
+              <input type="checkbox" {{isEnabled 'newFollower'}} data-value="newFollower">
+              <span class="handle"></span>
+            </label>
+            <!-- <div class="btn-group">
               <button type="button" class="btn {{isEnabled 'newFollower' 1}}" data-action="toggle-setting" 
               data-action-value="newFollower" value="1">On</button>
               <button type="button" class="btn {{isEnabled 'newFollower' 0}}" data-action="toggle-setting" 
               data-action-value="newFollower" value="0">Off</button>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="list-item settings-item">
@@ -67,12 +75,16 @@
             <p class="help-block">Get notified when someone you are following posts a new comment</p>
           </div>
           <div class="list-item-action settings-input">
-            <div class="btn-group">
+            <label class="toggle">
+              <input type="checkbox" {{isEnabled 'newComment.follower'}} data-value="newComment.follower">
+              <span class="handle"></span>
+            </label>
+            <!-- <div class="btn-group">
               <button type="button" class="btn {{isEnabled 'newComment.follower' 1}}" data-action="toggle-setting" 
               data-action-value="newComment-follower" value="1">On</button>
               <button type="button" class="btn {{isEnabled 'newComment.follower' 0}}" data-action="toggle-setting" 
               data-action-value="newComment-follower" value="0">Off</button>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="list-item settings-item">
@@ -81,12 +93,16 @@
             <p class="help-block">Get notified when someone you are following creates a new topic</p>
           </div>
           <div class="list-item-action settings-input">
-            <div class="btn-group">
+            <label class="toggle">
+              <input type="checkbox" {{isEnabled 'newTopic'}} data-value="newTopic">
+              <span class="handle"></span>
+            </label>
+            <!-- <div class="btn-group">
               <button type="button" class="btn {{isEnabled 'newTopic' 1}}" data-action="toggle-setting" 
               data-action-value="newTopic" value="1">On</button>
               <button type="button" class="btn {{isEnabled 'newTopic' 0}}" data-action="toggle-setting" 
               data-action-value="newTopic" value="0">Off</button>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="list-item settings-item">
@@ -95,12 +111,16 @@
             <p class="help-block">Get notified whenever someone replies to your comment</p>
           </div>
           <div class="list-item-action settings-input">
-            <div class="btn-group">
+            <label class="toggle">
+              <input type="checkbox" {{isEnabled 'newReply'}} data-value="newReply">
+              <span class="handle"></span>
+            </label>
+            <!-- <div class="btn-group">
               <button type="button" class="btn {{isEnabled 'newReply' 1}}" data-action="toggle-setting" 
               data-action-value="newReply" value="1">On</button>
               <button type="button" class="btn {{isEnabled 'newReply' 0}}" data-action="toggle-setting" 
               data-action-value="newReply" value="0">Off</button>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="list-item settings-item">
@@ -109,12 +129,16 @@
             <p class="help-block">Get notified whenever someone posts a comment in your topic</p>
           </div>
           <div class="list-item-action settings-input">
-            <div class="btn-group">
+            <label class="toggle">
+              <input type="checkbox" {{isEnabled 'newComment.topicOwner'}} data-value="newComment.topicOwner">
+              <span class="handle"></span>
+            </label>
+            <!-- <div class="btn-group">
               <button type="button" class="btn {{isEnabled 'newComment.topicOwner' 1}}" data-action="toggle-setting" 
               data-action-value="newComment-topicOwner" value="1">On</button>
               <button type="button" class="btn {{isEnabled 'newComment.topicOwner' 0}}" data-action="toggle-setting" 
               data-action-value="newComment-topicOwner" value="0">Off</button>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="list-item settings-item">
@@ -123,12 +147,16 @@
             <p class="help-block">Get notified when someone posts a comment in a topic you are following</p>
           </div>
           <div class="list-item-action settings-input">
-            <div class="btn-group">
+            <label class="toggle">
+              <input type="checkbox" {{isEnabled 'newComment.topicFollower'}} data-value="newComment.topicFollower">
+              <span class="handle"></span>
+            </label>
+            <!-- <div class="btn-group">
               <button type="button" class="btn {{isEnabled 'newComment.topicFollower' 1}}" data-action="toggle-setting" 
               data-action-value="newComment-topicFollower" value="1">On</button>
               <button type="button" class="btn {{isEnabled 'newComment.topicFollower' 0}}" data-action="toggle-setting" 
               data-action-value="newComment-topicFollower" value="0">Off</button>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
