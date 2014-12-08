@@ -7,9 +7,9 @@ Template.comment.helpers({
 		if (this.isCommentItem) {
 			result += 'list-item comment-item ';
 		}
-		// if (this.replyTo && _.contains(SessionAmplify.get('showingReplies'), this.replyTo)) {
-		// 	result += 'comment-reply '; // show faded state
-		// }
+		if (this.replyTo && _.contains(SessionAmplify.get('showingReplies'), this.replyTo)) {
+			result += 'comment-reply '; // show faded state
+		}
 		return result;
 	},
 	author: function () {

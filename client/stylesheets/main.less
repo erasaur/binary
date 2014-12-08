@@ -31,13 +31,17 @@ h3 {
 	.content-header;
 	margin-top: 0;
 }
-a {
-	text-decoration: none !important;
-	color: @fontColor-muted !important;
+a, 
+a:link, 
+a:visited,
+a:hover,
+a:active {
+	text-decoration: none;
+	color: #454545;
 }
 .action-link:hover,
 a.action-group:hover .action-link {
-  text-decoration: underline !important;
+  text-decoration: underline;
 }
 // a:hover, 
 .icon-group:hover { 
@@ -93,7 +97,7 @@ textarea,
     font-style: italic;
   }
   a:hover {
-    text-decoration: underline !important;
+    text-decoration: underline;
   }
   code {
     font-family: monospace;
