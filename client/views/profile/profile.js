@@ -45,7 +45,6 @@ Template.profileButtons.events({
 		});
 	},
 	'click #js-settings': function (event, template) {
-		// Router.go(getSettingsRoute(this._id));
 		Router.go('settings', { '_id': this._id });
 	}
 });
