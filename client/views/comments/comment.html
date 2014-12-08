@@ -28,13 +28,16 @@
         </div>
       </div>
 
-      {{#if isAdmin}}
-        <div class="comment-footer-right float-right">
+      <div class="comment-footer-right float-right">
+        <div class="icon-group js-flag-comment">
+          <i class="icon-action b-icon-flag"></i>
+        </div>
+        {{#if isAdmin}}
           <div class="icon-group js-delete-comment">
             <i class="icon-action fa fa-remove"></i>
           </div>
-        </div>
-      {{/if}}
+        {{/if}}
+      </div>
   	</div>
 	</div>
 </template>

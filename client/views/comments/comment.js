@@ -131,11 +131,6 @@ Template.comment.events({
 			parent.toggleClass('collapsed');
 		}
 	},
-	// 'click .comment-replyto': function (event, template) {
-	// 	event.preventDefault();
-	// 	if(this.replyTo)
-	// 		scrollToId(this.replyTo);
-	// },
 	'click .js-toggle-replies': function (event, template) {
 		if (this.isCommentItem) return;
 		var self = this; //store the reference because context changes when rendering template
@@ -199,6 +194,12 @@ Template.comment.events({
 	},
 	'click .js-downvote-comment': function (event, template) {
 		Meteor.call('cancelUpvoteComment', this);
+	},	
+	'click .js-flag-comment': function (event, template) {
+		var modal = Blaze.renderWithData(Template.flagForm, { _id: this._id, type: 'comment' }, $('body')[0]);
+		$('#flag-modal').modal('show').on('hidden.bs.modal', function () {
+			Blaze.remove(modal);
+		});
 	},
 	'click .js-delete-comment': function (event, template) {
 		if (confirm('Are you sure you want to delete this comment?')) {
