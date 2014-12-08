@@ -166,8 +166,8 @@ Template.comment.events({
 			var replyRect = replyRows[0].getBoundingClientRect();
 			if (replyRect.top + replyRect.height > 0) {
 				replyRows.velocity('slideUp', { 
-					duration: 200, 
-					progress: _.throttle(function () { adjustScroll($elem, initOffset); }, 40),
+					duration: 300, 
+					progress: _.throttle(function () { adjustScroll($elem, initOffset); }, 100),
 					complete: function () { $(this).remove(); }
 				});
 			} else {
