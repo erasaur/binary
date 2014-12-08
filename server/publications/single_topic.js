@@ -17,8 +17,6 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
 
   var sort = sortBy === 'newest' ? 
     { 'createdAt': -1, 'upvotes': -1 } : { 'upvotes': -1, 'createdAt': -1 };
-  var commentsHandle; // handle for changes in comments collection
-  // var commentOwnersHandle = []; // handles for owners associated with the comments
 
   var pub = this;
   var comments = Comments.find({ 'topicId': topicId, 'side': side }, { 
@@ -26,7 +24,7 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
     limit: limit
   });
 
-  commentsHandle = comments.observeChanges({
+  var commentsHandle = comments.observeChanges({
     // in added case, fields essentially is the entirety of the added comment
     added: function (id, fields) { 
       var replyToUser = publishAssociatedOwners(id, fields); // publish the owners associated with this comment
@@ -71,14 +69,13 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
 
   var sort = sortBy === 'newest' ? 
     { 'upvotes': -1, 'createdAt': -1 } : { 'createdAt': -1, 'upvotes': -1 };
-  var commentsHandle; // handler for changes in comments collection
 
   var pub = this;
   var comments = Comments.find({ 'replyTo': { $in: commentIds } }, { 
     sort: sort
   });
 
-  commentsHandle = comments.observeChanges({
+  var commentsHandle = comments.observeChanges({
     added: function (id, fields) { 
       publishCommentOwner(id, fields);
       fields.initVotes = fields.upvotes;

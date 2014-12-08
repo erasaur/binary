@@ -18,8 +18,7 @@ function InfiniteScroll (cursor) {
 }
 
 initInfiniteScroll = function (cursors) {
-  var cursors = Object.prototype.toString.call(cursors) === '[object Array]' ? 
-    cursors : [cursors];
+  var cursors = _.isArray(cursors) ? cursors : [cursors];
   var self = this;
 
   self._infiniteScroll = self._infiniteScroll || [];
@@ -35,8 +34,8 @@ initInfiniteScroll = function (cursors) {
 
     if (window.innerHeight + window.scrollY >= target) {
       _.each(self._infiniteScroll, function (obj) {
-        if (obj.count >= Session.get('itemsLimit')) {
-          Session.set('itemsLimit', Session.get('itemsLimit') + 1); //fetch more items from server
+        if (obj.count >= SessionAmplify.get('itemsLimit')) {
+          SessionAmplify.set('itemsLimit', SessionAmplify.get('itemsLimit') + 1); //fetch more items from server
         }
       });
     }

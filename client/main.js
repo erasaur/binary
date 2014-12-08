@@ -1,6 +1,6 @@
 Session.set('currentTopic');
-Session.setDefault('itemsLimit', 10);
 Session.setDefault('currentTab', 'profileComments');
+SessionAmplify.set('itemsLimit', 1);
 SessionAmplify.set('showingReplies', []);
 
 Accounts.onResetPasswordLink(function (token, done) {
