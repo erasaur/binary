@@ -68,7 +68,6 @@ buildEmailNotification = function (notification) {
       default:
         break;
     }
-    console.log(email);
 
     if (!email.subject || !email.template) throw new Meteor.Error('invalid-content', 'Email notification not sent: missing/invalid params!');
 
@@ -77,7 +76,7 @@ buildEmailNotification = function (notification) {
     var emailHTML = buildEmailTemplate(templateHTML);
 
     return {
-      subject: subject,
+      subject: email.subject,
       html: emailHTML
     };
   })(notification.data, notification.courier);
