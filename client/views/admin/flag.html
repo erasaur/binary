@@ -1,0 +1,63 @@
+<template name="flagForm">
+  <div class="modal fade" id="flag-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header center">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3 class="modal-title" id="modalLabel">Flag Content</h3>
+        </div>
+        <div class="modal-body">
+          <form role="form" id="js-flag-form">
+            <div class="form-group">
+              <label>Why are you reporting this?</label>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="flag-option" value="Spam">Spam
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="flag-option" value="Hateful Speech">Hateful speech
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="flag-option" value="Harasses or threatens others">Harasses or threatens others
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="flag-option" value="Encourages self-harm">Encourages self-harm
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="flag-option" value="Compromises others' privacy or security">Compromises others' privacy or security
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="flag-option" value="Infringes IP">Infringes IP
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="flag-option" value="Illegal activity">Illegal activity
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="flag-option" value="other">Some other reason (Max 100 characters):
+                </label>
+                <input type="text" id="js-other-reason" maxlength="100" class="form-control" disabled>
+              </div>
+            </div>
+            <div class="action-group clearfix">
+              <button type="submit" class="btn btn-default">Send</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
