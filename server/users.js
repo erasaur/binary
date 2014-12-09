@@ -10,9 +10,10 @@ Accounts.onCreateUser(function (options, user) {
     },
     stats: {
       reputation: 0,
+      flagsCount: 0, // helpful flags
       topicsCount: 0,
       commentsCount: 0,
-      followersCount: 0
+      followersCount: 0,
     },
     activity: { // activity involving other users/collections
       upvotedComments: [],
