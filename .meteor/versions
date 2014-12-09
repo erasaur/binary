@@ -22,6 +22,7 @@ codepoet:medium-editor-npm@0.0.1
 coffeescript@1.0.4
 ctl-helper@1.0.4
 ctl@1.0.2
+dburles:collection-helpers@1.0.1
 ddp@1.0.11
 deps@1.0.5
 djedi:sanitize-html@1.3.0
