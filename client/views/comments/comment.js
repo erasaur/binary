@@ -40,6 +40,10 @@ Template.comment.helpers({
 	},
 	numReplies: function () {
 		return this.replies && this.replies.length;
+	},
+	canFlag: function () {
+		var user = Meteor.user();
+		return user && !isAdmin(user) && user.flags && !_.contains(user.flags.comments, this._id);
 	}
 });
 
@@ -196,7 +200,7 @@ Template.comment.events({
 		Meteor.call('cancelUpvoteComment', this);
 	},	
 	'click .js-flag-comment': function (event, template) {
-		var modal = Blaze.renderWithData(Template.flagForm, { _id: this._id, type: 'comment' }, $('body')[0]);
+		var modal = Blaze.renderWithData(Template.flagForm, { _id: this._id, type: 'comments' }, $('body')[0]);
 		$('#flag-modal').modal('show').on('hidden.bs.modal', function () {
 			Blaze.remove(modal);
 		});
