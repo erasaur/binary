@@ -18,7 +18,12 @@ FlagSchema = new SimpleSchema({
   },
   itemType: { // topic or comment
     type: String,
-    allowedValues: ['topic', 'comment']
+    allowedValues: ['topics', 'comments']
+  },
+  status: {
+    type: Number, // 0 - pending, 1 - approved
+    defaultValue: 0,
+    allowedValues: [0,1]
   }
 });
 
@@ -27,9 +32,7 @@ Flags.attachSchema(FlagSchema);
 
 Flags.allow({
   insert: canPostById,
-  update: function () {
-    return false;
-  },
+  update: isAdminById,
   remove: function () {
     return false;
   }
@@ -49,5 +52,21 @@ Meteor.methods({
       itemId: itemId,
       itemType: itemType
     });
+  },
+  changeFlag: function (flag, newStatus) {
+    var user = Meteor.user();
+
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', 'This user does not have permission to continue.');
+
+    if (!flag)
+      throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
+
+    var flagId = flag._id;
+    var userId = flag.userId;
+    var count = newStatus === 0 ? -1 : 1; // decrease helpful flags count if helpful status is retracted
+
+    Flags.update(flagId, { $set: { 'status': newStatus } });
+    Meteor.users.update(userId, { $inc: { 'stats.flagsCount': count } });
   }
 });

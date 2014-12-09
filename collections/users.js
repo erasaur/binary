@@ -44,11 +44,15 @@ Schema.UserStats = new SimpleSchema({
     type: Number,
     min: 0
   },
+  topicsCount: {
+    type: Number,
+    min: 0
+  },
   reputation: {
     type: Number,
     min: 0 // possibly negative if we have downvotes ?
   },
-  topicsCount: {
+  flagsCount: { // number of helpful flags
     type: Number,
     min: 0
   }
@@ -112,7 +116,7 @@ Meteor.users.attachSchema(Schema.User);
 
 Meteor.users.deny({
   update: function (userId, user, fields) {
-    if(isAdminById(userId)) return false;
+    if (isAdminById(userId)) return false;
 
     // deny the update if it contains something other than the profile field
     return (_.without(fields, 'profile').length > 0);
