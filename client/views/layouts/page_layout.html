@@ -38,19 +38,17 @@
   <div class="page-body-header clearfix">
     {{> Template.contentBlock}}
   </div>
-  {{#if hasItems}}
-    <div class="page-body-content {{class}}">
-      <div class="list">
+  <div class="page-body-content {{class}}">
+    <div class="list">
+      {{#if hasItems}}
         {{#each items}}
           {{> Template.dynamic template=../item}}
         {{/each}}
-      </div>
+      {{else}}
+        <div class="show-more">
+          {{message}}
+        </div>
+      {{/if}}
     </div>
-  {{else}}
-    <div class="page-body-content no-container">
-      <div class="show-more">
-        {{message}}
-      </div>
-    </div>
-  {{/if}}
+  </div>
 </template>
