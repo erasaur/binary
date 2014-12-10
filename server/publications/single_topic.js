@@ -30,7 +30,7 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
       var replyToUser = publishAssociatedOwners(id, fields); // publish the owners associated with this comment
 
       fields.initVotes = fields.upvotes;
-      fields.replyToUser = replyToUser; // so we don't necessarily need to pub replyTo comment to get the user
+      if (replyToUser) fields.replyToUser = replyToUser; // so we don't necessarily need to pub replyTo comment to get the user
 
       pub.added('comments', id, fields);
     },
@@ -42,16 +42,18 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   // we don't need owners to be reactive
   function publishAssociatedOwners (commentId, comment) {
     var replyTo = Comments.findOne(comment.replyTo);
-    var fields = { fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } };
-    var owner = Meteor.users.findOne({ '_id': comment.userId }, fields);
+    // var fields = { fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } };
+    var owner = Meteor.users.findOne({ '_id': comment.userId }, { 
+      fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } 
+    });
+
+    pub.added('users', owner._id, owner);
 
     if (typeof replyTo !== 'undefined') {
-      var replyToUser = Meteor.users.findOne({ '_id': replyTo.userId }, fields);
-    }
-    
-    pub.added('users', owner._id, owner);
-    if (replyToUser) {
-      pub.added('users', replyToUser._id, replyToUser);
+      var replyToUser = Meteor.users.findOne({ '_id': replyTo.userId });
+      if (!replyToUser) return;
+      
+      // pub.added('users', replyToUser._id, replyToUser);
       return replyToUser.profile && replyToUser.profile.name;
     }
   }
@@ -77,8 +79,9 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
 
   var commentsHandle = comments.observeChanges({
     added: function (id, fields) { 
-      publishCommentOwner(id, fields);
+      var replyToUser = publishAssociatedOwners(id, fields);
       fields.initVotes = fields.upvotes;
+      if (replyToUser) fields.replyToUser = replyToUser;
 
       pub.added('comments', id, fields);
     },
@@ -87,13 +90,21 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
     }
   });
 
-  // no need to publish replyTo, already have (otherwise not able to show these replies)
-  function publishCommentOwner (commentId, comment) {
+  function publishAssociatedOwners (commentId, comment) {
+    var replyTo = Comments.findOne(comment.replyTo);
     var owner = Meteor.users.findOne({ '_id': comment.userId }, { 
       fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } 
     });
 
     pub.added('users', owner._id, owner);
+
+    if (typeof replyTo !== 'undefined') {
+      var replyToUser = Meteor.users.findOne({ '_id': replyTo.userId });
+      if (!replyToUser) return;
+      
+      // pub.added('users', replyToUser._id, replyToUser);
+      return replyToUser.profile && replyToUser.profile.name;
+    }
   }
 
   pub.ready();

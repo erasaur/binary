@@ -16,16 +16,16 @@ Template.comment.helpers({
 		return Meteor.users.findOne(this.userId);
 	},
 	hasReplyTo: function () {
-		return !this.isCommentItem && this.replyTo;
+		return !this.isCommentItem && this.replyToUser;
 	},
-	replyToUser: function () {
-		if (!this.replyTo) return;
-		if (this.replyToUser) return this.replyToUser;
+	// replyToUser: function () {
+	// 	if (!this.replyTo) return;
+	// 	if (this.replyToUser) return this.replyToUser;
 
-		var comment = Comments.findOne(this.replyTo);
-		var user = comment && Meteor.users.findOne(comment.userId);
-		return user && user.profile.name;
-	},
+	// 	var comment = Comments.findOne(this.replyTo);
+	// 	var user = comment && Meteor.users.findOne(comment.userId);
+	// 	return user && user.profile.name;
+	// },
 	toggleClass: function () {
 		if (this.isCommentItem) return;
 		return _.contains(SessionAmplify.get('showingReplies'), this._id) && 'showing';
