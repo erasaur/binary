@@ -48,9 +48,9 @@ TopicSchema = new SimpleSchema({
     type: [String],
     optional: true
   },
-  isDeleted: {
-    type: Boolean
-  }
+  // isDeleted: {
+  //   type: Boolean
+  // }
 });
 
 Topics = new Mongo.Collection('topics');
@@ -75,9 +75,7 @@ Topics.initEasySearch('title', {
 Topics.allow({
   // insert: canPostById,
   update: canEditById,
-  remove: function () {
-    return false; // allow for admins?
-  }
+  remove: isAdminById
 });
 
 Topics.deny({
@@ -156,7 +154,7 @@ Meteor.methods({
       proUsers: [],
       conUsers: [],
       followers: [],
-      isDeleted: false
+      // isDeleted: false
     };
 
     topic._id = Topics.insert(topic);
