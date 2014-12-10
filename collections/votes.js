@@ -25,7 +25,7 @@ Meteor.methods({
 
       // if the comment is upvoted by owner, don't modify reputation
       if (comment.userId !== userId) 
-        Meteor.users.update(userId, { $inc: { 'stats.reputation': 1 } });
+        Meteor.users.update(comment.userId, { $inc: { 'stats.reputation': 1 } });
     }
   },
   cancelUpvoteComment: function (comment) {
@@ -52,7 +52,7 @@ Meteor.methods({
 
       // if the item is upvoted by owner, don't modify reputation
       if (comment.userId !== userId) 
-        Meteor.users.update(userId, { $inc: { 'stats.reputation': -1 } });
+        Meteor.users.update(comment.userId, { $inc: { 'stats.reputation': -1 } });
     }
   },
   vote: function (topic, side) {
