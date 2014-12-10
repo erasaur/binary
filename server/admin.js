@@ -9,16 +9,20 @@ Meteor.methods({
     var upvotes = comment.upvotes;
     var upvoters = comment.upvoters;
 
+    // subtract comment count from topic
     Topics.update(topicId, {
       $inc: { 'commentsCount': -1 }
     });
+    // mark comment as deleted
     Comments.update(commentId, { 
       $set: { 'isDeleted': true, 'content': 'Sorry, this comment has been deleted.' } 
     });
+    // subtract comments count and reputation
     Meteor.users.update(userId, { 
       $inc: { 'stats.commentsCount': -1, 'stats.reputation': -upvotes }, 
       $pull: { 'activity.discussedTopics': topicId }
     });
+    // remove comment from users upvotedComments
     Meteor.users.update(upvoters, {
       $pull: { 'activity.upvotedComments': commentId }
     }, { multi: true });
@@ -30,9 +34,41 @@ Meteor.methods({
     var topicId = topic._id;
     var userId = topic.userId;
 
-    Topics.update(topicId, {
-      $set: { 'title': 'This topic has been deleted.', 'description': 'This topic has been deleted.', 'isDeleted': true }
+    var commentIds = [];
+    var commenters = {}; // all users related to the topic comments (creators, upvoters, etc)
+    var opts = { // the fields that could be changed
+      'commentsCount': 0,
+      'reputation': 0,
+      'upvotedComments': []
+    };
+
+    Comments.find({ 'topicId': topicId }).forEach(function (comment) {
+      commenters[comment.userId] = commenters[comment.userId] || opts;
+      commenters[comment.userId].commentsCount++;
+      commenters[comment.userId].reputation += comment.upvotes;
+
+      _.each(comment.upvoters, function (upvoter) {
+        commenters[upvoter] = commenters[upvoter] || opts;
+        commenters[upvoter].upvotedComments.push(comment._id);
+      });
+      
+      commentIds.push(comment._id);
     });
+    
+    var commenterIds = _.keys(commenters);
+    _.each(commenterIds, function (commenterId) {
+      var commenter = commenters[commenterId];
+      // subtract comments count & reputation, remove upvoted comments
+      Meteor.users.update({ '_id': commenterId }, {
+        $inc: { 
+          'stats.commentsCount': -commenter.commentsCount, 
+          'stats.reputation': -commenter.reputation
+        },
+        $pullAll: { 'activity.upvotedComments': commenter.upvotedComments }
+      });
+    });
+
+    Comments.remove({ '_id': { $in: commentIds } });
 
     // remove topic from users following
     Meteor.users.update({ '_id': { $in: topic.followers } }, {
@@ -43,7 +79,11 @@ Meteor.methods({
     Meteor.users.update({ '_id': { $in: topic.commenters } }, {
       $pull: { 'activity.discussedTopics': topicId }
     }, { multi: true });
+    
+    // subtract topics count for creator
+    Meteor.users.update(userId, { $inc: { 'stats.topicsCount': -1 } });
 
-    // subtract comments count for users ?
+    // delete the topic
+    Topics.remove(topicId);
   }
 });
