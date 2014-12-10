@@ -54,7 +54,8 @@ Meteor.publishComposite('userTopics', function (userId, limit) {
     find: function () { // topics created/followed by user
       if (!this.userId) return this.ready();
 
-      return Topics.find({ 'userId': userId, 'isDeleted': false }, { 
+      // return Topics.find({ 'userId': userId, 'isDeleted': false }, { 
+      return Topics.find({ 'userId': userId }, { 
         sort: { 'createdAt': -1 },
         limit: limit,
         fields: { '_id': 1, 'title': 1, 'createdAt': 1, 'userId': 1, 'pro': 1, 'con': 1 } 
