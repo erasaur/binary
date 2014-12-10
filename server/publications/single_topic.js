@@ -13,7 +13,7 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   var topic = Topics.findOne(topicId);
 
   // if topic is deleted or no permission to view
-  if (!topic || topic.isDeleted || !this.userId) return this.ready();
+  if (!topic || !this.userId) return this.ready();
 
   var sort = sortBy === 'newest' ? 
     { 'createdAt': -1, 'upvotes': -1 } : { 'upvotes': -1, 'createdAt': -1 };
