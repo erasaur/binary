@@ -15,6 +15,10 @@ Accounts.onCreateUser(function (options, user) {
       commentsCount: 0,
       followersCount: 0,
     },
+    flags: {
+      comments: [],
+      topics: []
+    },
     activity: { // activity involving other users/collections
       upvotedComments: [],
       followers: [], 
@@ -51,8 +55,6 @@ Accounts.onCreateUser(function (options, user) {
         email: true
       },
       newComment: {
-        // onsite: true, // enable comment notifications at all
-        // email: true,
         topicOwner: {
           onsite: true, // notify user of comments if he is the topic owner
           email: true

@@ -52,6 +52,8 @@ Meteor.methods({
       itemId: itemId,
       itemType: itemType
     });
+    var query = setProperty({}, 'flags.' + itemType, itemId);
+    Meteor.users.update(userId, { $addToSet: query });
   },
   changeFlag: function (flag, newStatus) {
     var user = Meteor.user();
