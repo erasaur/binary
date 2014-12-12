@@ -25,6 +25,12 @@
 	{{else}}
 		<button id="js-follow" class="btn btn-default">Follow</button>
 	{{/if}}
+
+	{{#if canFlag}}
+    <div class="icon-group" id="js-flag-topic">
+      <i class="icon-action b-icon-flag"></i>
+    </div>
+  {{/if}}
 	{{#if isAdmin}}
 		<div id="js-delete-topic" class="icon-group">
       <i class="icon-action fa fa-remove"></i>

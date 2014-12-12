@@ -9,17 +9,8 @@ Template.topic.rendered = function () {
     insertElement: function (node, next) {
       container.insertBefore(node, next);
       $(node).velocity('slideDown', { duration: 200 });
-    },
-    // moveElement: function (node, next) {
-    //   container.insertBefore(node, next);
-    //   console.log('moved');
-    // },
-    // removeElement: function (node) {
-    //   console.log(node);
-    //   // $(node).remove();
-    //   console.log('removed');
-    // }
-  }
+    }
+  };
 };
 Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
@@ -92,7 +83,11 @@ Template.topicButtons.helpers({
 	following: function () {
 		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.followingTopics)
 			return _.contains(Meteor.user().activity.followingTopics, this._id);
-	}
+	},
+  canFlag: function () {
+    var user = Meteor.user();
+    return user && !isAdmin(user) && user.flags && !_.contains(user.flags.topics, this._id);
+  }
 });
 
 Template.topicHeader.helpers({
@@ -137,6 +132,12 @@ Template.topicButtons.events({
 			}
 		});
 	},
+  'click #js-flag-topic': function (event, template) {
+    var modal = Blaze.renderWithData(Template.flagForm, { _id: this._id, type: 'topics' }, $('body')[0]);
+    $('#flag-modal').modal('show').on('hidden.bs.modal', function () {
+      Blaze.remove(modal);
+    });
+  },
 	'click #js-delete-topic': function (event, template) {
     if (confirm('Are you sure you want to delete this topic?')) {
       Meteor.call('removeTopic', this, function (error) {
