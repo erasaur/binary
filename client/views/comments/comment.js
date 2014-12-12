@@ -1,6 +1,6 @@
 Template.comment.helpers({
 	containerClass: function () {
-		var result = ' ';
+		var result = '';
 		if (this.isDeleted) {
 			result += 'deleted ';
 		}
@@ -10,7 +10,7 @@ Template.comment.helpers({
 		if (this.replyTo && _.contains(SessionAmplify.get('showingReplies'), this.replyTo)) {
 			result += 'comment-reply '; // show faded state
 		}
-		return result;
+		return result + this.side;
 	},
 	author: function () {
 		return Meteor.users.findOne(this.userId);

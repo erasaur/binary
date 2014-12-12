@@ -52,8 +52,30 @@
 .comment-con { 
   padding: 7.5px;
 }
-.comment-pro { padding-left: 0; }
-.comment-con { padding-right: 0; }
+.comment.pro,
+.comment.con {
+  .avatar { position: relative; }
+  .avatar:after {
+    content: " ";
+    display: block;
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    bottom: -2px;
+    right: 0;
+    border: 3px solid #fff;
+    .border-radius(50%);
+  }
+}
+.comment-pro { 
+  padding-left: 0; 
+}
+.comment.pro .avatar:after { background-color: @pro-color; }
+
+.comment-con { 
+  padding-right: 0; 
+}
+.comment.con .avatar:after { background-color: @con-color; }
 
 .comment-row {
   padding: 0;
