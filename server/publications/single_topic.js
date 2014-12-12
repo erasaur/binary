@@ -114,51 +114,25 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
   });
 });
 
-// Meteor.publishComposite('singleTopic', function (topicId, initDate) {
-Meteor.publish('singleTopic', function (topicId, initDate) {
+Meteor.publishComposite('singleTopic', function (topicId, initDate) {
   var userId = this.userId;
-  if (!this.userId) return this.ready();
 
-  var pub = this;
-  var topic = Topics.findOne(topicId);
-  var user = Meteor.users.findOne(topic.userId, { limit: 1, fields: { 'profile': 1 } });
+  return {
+    find: function () {
+      if (!userId) return this.ready();
 
-  pub.added('topics', topic._id, topic);
-  pub.added('users', user._id, user);
-
-  // publish new comments by user
-  var comments = Comments.find({ 'userId': userId, 'createdAt': { $gt: initDate } });
-  var commentsHandle = comments.observeChanges({
-    added: function (id, fields) {
-      pub.added('comments', id, fields);
+      return Topics.find(topicId);
     },
-    changed: function (id, fields) {
-      pub.changed('comments', id, fields);
-    }
-  });
-
-  pub.ready();
-
-  pub.onStop(function () {
-    commentsHandle.stop();
-  });
-
-  // return {
-  //   find: function () {
-  //     if (!userId) return this.ready();
-
-  //     return Topics.find(topicId);
-  //   },
-  //   children: [{
-  //     find: function (topic) { // topic author
-  //       return Meteor.users.find(topic.userId, { 
-  //         limit: 1, fields: { 'profile': 1 } 
-  //       });
-  //     }
-  //   }, {
-  //     find: function (topic) { // new comments posted by currentUser
-  //       return Comments.find({ 'userId': userId, 'createdAt': { $gt: initDate } });
-  //     }
-  //   }]
-  // };
+    children: [{
+      find: function (topic) { // topic author
+        return Meteor.users.find(topic.userId, { 
+          limit: 1, fields: { 'profile': 1 } 
+        });
+      }
+    }, {
+      find: function (topic) { // new comments posted by currentUser
+        return Comments.find({ 'userId': userId, 'createdAt': { $gt: initDate } });
+      }
+    }]
+  };
 });

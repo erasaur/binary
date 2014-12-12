@@ -55,7 +55,7 @@ Meteor.methods({
         Herald.createNotification(replyTo.userId, { 
           courier: 'newReply', 
           data: notificationData, 
-          // 'duplicates': false,
+          'duplicates': false,
           'aggregate': true,
           'aggregateAt': 3,
           'aggregateUnder': 'replyTo' // combine notifications that share the same comment
