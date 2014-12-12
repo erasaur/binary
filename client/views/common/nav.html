@@ -27,17 +27,11 @@
 <template name="navItems">
   {{#if currentUser}}
     <ul class="nav navbar-nav col-sm-2">
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" id="nav-profile" data-toggle="dropdown">
+      <li role="presentation">
+        <a href="{{pathFor route='profile' data=currentUser}}" id="nav-profile">
           {{> avatar user=currentUser size='small' shape='circle' class='navbar-item hidden-xs'}}
           <span class="visible-xs">Your Profile</span>
         </a>
-        <div class="dropdown-menu">
-          <ul>
-            <li><a href="{{pathFor route='profile' data=currentUser}}" class="list-item"><span>Profile</span></a></li>
-            <li><a href="#" id="js-logout" class="list-item"><span>Log Out</span></a></li>
-          </ul>
-        </div>
       </li>
       {{> notifications}}
       <li class="dropdown">

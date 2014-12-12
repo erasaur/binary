@@ -19,11 +19,6 @@ Template.nav.events({
 			event.preventDefault();
 			event.returnValue = false;
 		}
-	},
-	'click #js-logout': function (event, template) {
-		Meteor.logout(function (error) {
-			Router.go('home');
-		});
 	}
 });
 
