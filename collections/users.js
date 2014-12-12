@@ -35,6 +35,15 @@ Schema.UserProfile = new SimpleSchema({
   }
 });
 
+Schema.UserFlags = new SimpleSchema({
+  comments: {
+    type: [String]
+  },
+  topics: {
+    type: [String]
+  }
+});
+
 Schema.UserStats = new SimpleSchema({
   commentsCount: {
     type: Number,
@@ -91,6 +100,10 @@ Schema.User = new SimpleSchema({
   },
   stats: { // public but not modifiable
     type: Schema.UserStats,
+    optional: true
+  },
+  flags: {
+    type: Schema.UserFlags,
     optional: true
   },
   profile: { // public and modifiable

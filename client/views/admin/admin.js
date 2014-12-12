@@ -1,3 +1,10 @@
+Template.admin.created = function () {
+  initInfiniteScroll.call(this, Flags.find());
+};
+Template.admin.destroyed = function () {
+  stopInfiniteScroll.call(this);
+};
+
 Template.admin.helpers({
   flags: function () {
     return Flags.find();
