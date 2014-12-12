@@ -15,7 +15,11 @@ Meteor.methods({
     });
     // mark comment as deleted
     Comments.update(commentId, { 
-      $set: { 'isDeleted': true, 'content': 'Sorry, this comment has been deleted.' } 
+      $set: { 
+        'isDeleted': true, 
+        'upvotes': 0,
+        'content': 'Sorry, this comment has been deleted.' 
+      } 
     });
     // subtract comments count and reputation
     Meteor.users.update(userId, { 
