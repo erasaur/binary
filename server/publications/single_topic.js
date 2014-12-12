@@ -121,7 +121,7 @@ Meteor.publish('singleTopic', function (topicId, initDate) {
 
   var pub = this;
   var topic = Topics.findOne(topicId);
-  var user = Meteor.users.findOne(userId, { limit: 1, fields: { 'profile': 1 } });
+  var user = Meteor.users.findOne(topic.userId, { limit: 1, fields: { 'profile': 1 } });
 
   pub.added('topics', topic._id, topic);
   pub.added('users', user._id, user);

@@ -8,7 +8,8 @@ Meteor.publish('currentUser', function () {
     'email_hash': 1, 
     'stats': 1, 
     'activity': 1, 
-    'isAdmin': 1
+    'isAdmin': 1,
+    'flags': 1
   }; 
   return Meteor.users.find(this.userId, { fields: fields });
 });
