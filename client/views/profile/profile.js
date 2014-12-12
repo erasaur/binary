@@ -46,7 +46,12 @@ Template.profileButtons.events({
 	},
 	'click #js-settings': function (event, template) {
 		Router.go('settings', { '_id': this._id });
-	}
+	},
+  'click #js-logout': function (event, template) {
+    Meteor.logout(function (error) {
+      Router.go('home');
+    });
+  }
 });
 
 Template.profileNav.events({
