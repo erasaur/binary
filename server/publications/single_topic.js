@@ -1,18 +1,18 @@
-// Publish a single topic
-
+// We don't use publish-composite here since we need to transform
+// the documents as they are added, by inserting temporary *non-reactive*
+// values (to be used for sorting client-side) so sorting won't keep
+// changing as the comments change.
+ 
 /**
- * Publish all the comments associated with topicId, as well as
- * all of the users who are owners of these comments.
- * 
- * We don't use publish-composite here since we need to transform
- * the documents as they are added, by inserting temporary *non-reactive*
- * values (to be used for sorting client-side) so sorting won't keep
- * changing as the comments change.
+ * @summary Publish all comments for a topic, limited by topicId, each transformed with an additional `initVotes` property
+ * @param {String} topicId Id of the specific topic
+ * @param {String} sortBy Sort option. Possible values: 'top' [default] or 'newest'
+ * @param {String} side Each column of comments is published separately. Possible values: 'pro' or 'con'
+ * @param {Number} limit Limit the amount of comments published (note that each side of comments is limited separately)
  */
 Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   var topic = Topics.findOne(topicId);
 
-  // if topic is deleted or no permission to view
   if (!topic || !this.userId) return this.ready();
 
   var sort = sortBy === 'newest' ? 
@@ -65,10 +65,15 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   });
 });
 
+/**
+ * @summary Publish replies for specific comment
+ * @param {Array} commentIds The id's of the comment replies
+ * @param {String} sortBy Sort option. Possible values: 'top' [default] or 'newest'
+ */
 Meteor.publish('commentReplies', function (commentIds, sortBy) {
-  var userId = this.userId;
-  if (!userId) return this.ready();
+  if (!this.userId) return this.ready();
 
+  var userId = this.userId;
   var sort = sortBy === 'newest' ? 
     { 'upvotes': -1, 'createdAt': -1 } : { 'createdAt': -1, 'upvotes': -1 };
 
@@ -114,6 +119,11 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
   });
 });
 
+/**
+ * @summary Publish specific topic document, along with owner and current user's new comments within this topic
+ * @param {String} topicId Id of the specific topic
+ * @param {Date} initDate Initial date of visiting the topic route. Used to determine which comments are new
+ */
 Meteor.publishComposite('singleTopic', function (topicId, initDate) {
   var userId = this.userId;
 
