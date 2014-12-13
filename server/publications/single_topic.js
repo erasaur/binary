@@ -42,7 +42,6 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   // we don't need owners to be reactive
   function publishAssociatedOwners (commentId, comment) {
     var replyTo = Comments.findOne(comment.replyTo);
-    // var fields = { fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } };
     var owner = Meteor.users.findOne({ '_id': comment.userId }, { 
       fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } 
     });
@@ -53,7 +52,6 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
       var replyToUser = Meteor.users.findOne({ '_id': replyTo.userId });
       if (!replyToUser) return;
       
-      // pub.added('users', replyToUser._id, replyToUser);
       return replyToUser.profile && replyToUser.profile.name;
     }
   }
