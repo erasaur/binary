@@ -1,11 +1,14 @@
 Template.replies.rendered = function () {
-	var container = this.find('.comment-container');
-	container._uihooks = {
-		insertElement: function (node, next) {
-			container.insertBefore(node, next);
-			$(node).velocity('slideDown', { duration: 100 });
-		}
-	}
+  var container = this.firstNode;
+  container._uihooks = {
+    insertElement: function (node, next) {
+      Meteor.setTimeout(function () {
+        console.log('replies insertElement');
+        container.insertBefore(node, next);
+        $(node).velocity('slideDown', { duration: 500 });
+      }, 1);
+    }
+  }
 };
 
 Template.replies.helpers({
@@ -47,20 +50,6 @@ Template.replies.helpers({
       res.push({ 'pros': pros[i], 'cons': cons[i] });
       i++;
     }
-
-		/** 
-		 * Combines the pro and con comments into an array of objects
-		 * with the format: {'pros': proComment, 'cons': conComment}
-		 *
-		 * pair [array] - contains the comment object
-		 */
-		// var comments = _.map(_.zip(pros, cons), function (pair) {
-		// 	return {'pros': pair[0], 'cons': pair[1]};
-		// });
-
-		// a dummy row that solves comment rendering problem (see docs error 1)
-		// comments.push({'bottom': true});
-		// return comments;
 
 		res.push({ 'bottom': true });
     return res;

@@ -7,8 +7,11 @@ Template.topic.rendered = function () {
   var container = this.find('.list');
   container._uihooks = {
     insertElement: function (node, next) {
-      container.insertBefore(node, next);
-      $(node).velocity('slideDown', { duration: 200 });
+      Meteor.setTimeout(function () {
+        console.log('container insertElement: ', node, next);
+        container.insertBefore(node, next);
+        $(node).velocity('slideDown', { duration: 500 });
+      }, 1);
     }
   };
 };

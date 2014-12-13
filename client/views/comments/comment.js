@@ -156,11 +156,13 @@ Template.comment.events({
 			// animate only when replyRows is in view
 			var replyRect = replyRows[0].getBoundingClientRect();
 			if (replyRect.top + replyRect.height > 0) {
-				replyRows.velocity('slideUp', { 
-					duration: 500, 
-					progress: _.throttle(function () { adjustScroll($elem, initOffset); }, 50),
-					complete: function () { $(this).remove(); }
-				});
+				Meteor.setTimeout(function () {
+					replyRows.velocity('slideUp', { 
+						duration: 500, 
+						progress: _.throttle(function () { adjustScroll($elem, initOffset); }, 30),
+						complete: function () { $(this).remove(); }
+					});
+				}, 1);
 			} else {
 				replyRows.remove();
 				adjustScroll($elem, initOffset);
