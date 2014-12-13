@@ -130,8 +130,8 @@ Template.comment.events({
 	'click .js-toggle-replies': function (event, template) {
 		if (this.isCommentItem) return;
 		var self = this; //store the reference because context changes when rendering template
-		var controller = Router.current();
-		controller._runAt = new Date(); // show new comments up to now
+		// var controller = Router.current();
+		// controller._runAt = new Date(); // show new comments up to now
 
 		var $elem = template.$('#' + self._id);
 		var initOffset = $elem[0].getBoundingClientRect().top;
@@ -157,8 +157,8 @@ Template.comment.events({
 			var replyRect = replyRows[0].getBoundingClientRect();
 			if (replyRect.top + replyRect.height > 0) {
 				replyRows.velocity('slideUp', { 
-					duration: 300, 
-					progress: _.throttle(function () { adjustScroll($elem, initOffset); }, 100),
+					duration: 500, 
+					progress: _.throttle(function () { adjustScroll($elem, initOffset); }, 50),
 					complete: function () { $(this).remove(); }
 				});
 			} else {
