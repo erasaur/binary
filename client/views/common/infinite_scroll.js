@@ -29,8 +29,8 @@ initInfiniteScroll = function (cursors) {
   });
 
   $(window).on('scroll', _.throttle(function () {
-    // trigger at 300px above bottom
-    var target = document.body.offsetHeight - 300;
+    // trigger at 400px above bottom
+    var target = document.body.offsetHeight - 400;
 
     if (window.innerHeight + window.scrollY >= target) {
       _.each(self._infiniteScroll, function (obj) {
