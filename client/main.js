@@ -1,5 +1,5 @@
 Session.set('currentTopic');
-Session.setDefault('itemsLimit', 1);
+Session.setDefault('itemsLimit', 15);
 Session.setDefault('currentTab', 'profileComments');
 SessionAmplify.set('showingReplies', []);
 

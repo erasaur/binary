@@ -35,7 +35,7 @@ initInfiniteScroll = function (cursors) {
     if (window.innerHeight + window.scrollY >= target) {
       _.each(self._infiniteScroll, function (obj) {
         if (obj.count >= Session.get('itemsLimit')) {
-          Session.set('itemsLimit', Session.get('itemsLimit') + 1); //fetch more items from server
+          Session.set('itemsLimit', Session.get('itemsLimit') + 10); //fetch more items from server
         }
       });
     }
