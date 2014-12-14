@@ -618,18 +618,16 @@
   margin: 0 auto;
   height: 100%;
   text-align: center;
+  h1 { font-weight: 400; }
+  h2 { 
+    font-weight: 300; 
+    font-size: 1.8em;
+  }
 }
 .landing-header {
   display: table;
   padding: 100px 0 80px;  
   margin: 0 auto;
-  h1 { 
-    font-weight: 400; 
-  }
-  h2 { 
-    font-weight: 300; 
-    font-size: 1.8em;
-  }
 }
 .landing-image {
   display: table-cell;
@@ -661,12 +659,28 @@
   text-align: center;
   padding: 0 @main-padding @main-padding;
 }
+
+// landing form --------------------------------------
+
 .landing-form-header {
-  margin-bottom: 30px;
+  padding: 100px 0 30px;
 }
-.landing-form-body > form > button {
-  width: 100%;
-  margin: @main-padding 0 10px;
+.landing-form-body form {
+  width: 300px;
+  margin: 0 auto;
+
+  button {
+    width: 100%;
+    margin: @main-padding 0 10px;
+  }
+  input {
+    background: #fff;
+    border-radius: 0 0 4px 4px;
+    &:first-of-type {
+      border-bottom: 0;
+      border-radius: 4px 4px 0 0;
+    }
+  }
 }
 
 // search form ---------------------------------------
