@@ -1,17 +1,13 @@
 <template name="invite">
-  <div class="landing-container">
+  <div class="landing-form-container">
     <div class="landing-form-header">
-      <h1>yamcha</h1>
+      <h1><a href="{{pathFor route='landing'}}">binary</a></h1>
     </div>
     <ul class="landing-form-errors"></ul>
     <div class="landing-form-body">
       <form id="js-signup-form" role="form">
-        <div class="control-group">
-          <input type="text" class="form-control" id="js-create-name" placeholder="Your Name" maxlength="25">
-        </div>
-        <div class="control-group">
-          <input type="password" class="form-control" id="js-create-password" placeholder="Password">
-        </div>
+        <input type="text" class="form-control" id="js-create-name" placeholder="Your Name" maxlength="25">
+        <input type="password" class="form-control" id="js-create-password" placeholder="Password">
         <button type="submit" class="btn btn-primary">Sign Up</button>
       </form>
     </div>

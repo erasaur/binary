@@ -1,10 +1,20 @@
 <template name="landing">
-  <div class="landing-container">
-    <div class="landing-form-header">
-      <h1><a href="{{pathFor route='landing'}}">yamcha</a></h1>
+  {{#AnimateWithVelocity}}
+    <div data-animate data-duration="500">
+      <div class="landing-container">
+        <div class="landing-header">
+          <h1>binary</h1>
+          <h2>explore the fascinating world of binary questions</h2>
+        </div>
+        <div class="landing-image">
+          <h3 id="landing-image-header"></h3>
+          <span id="landing-image-pro"></span>
+          <span id="landing-image-con"></span>
+          
+          <img src="/binary-frontpage-image.png">
+        </div>
+        <a href="{{pathFor route='login'}}" class="btn btn-default landing-login">Log In</a>
+      </div>
     </div>
-    landing page aldsfkasldkfjasdkljf
-    <br>
-    <a href="{{pathFor route='login'}}">Log In</a>
-  </div>
+  {{/AnimateWithVelocity}}
 </template>
