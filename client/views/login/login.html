@@ -1,20 +1,16 @@
 <template name="login">
-	<div class="landing-container">
+	<div class="landing-form-container">
 		<div class="landing-form-header">
-			<h1><a href="{{pathFor route='landing'}}">yamcha</a></h1>
+			<h1><a href="{{pathFor route='landing'}}">binary</a></h1>
 		</div>
 		<ul class="landing-form-errors"></ul>
 		<div class="landing-form-body">
 			<form id="js-login-form" role="form">
-				<div class="control-group">
-					<input type="text" class="form-control" id="js-email" placeholder="Email">
-				</div>
-				<div class="control-group">
-					<input type="password" class="form-control" id="js-password" placeholder="Password">
-				</div>
+				<input type="text" class="form-control" id="js-email" placeholder="Email">
+				<input type="password" class="form-control" id="js-password" placeholder="Password">
 				<button type="submit" class="btn btn-primary">Login</button>
 			</form>
-			<a href="{{pathFor route='forgotPassword'}}">Forgot Password?</a>
+			<a href="{{pathFor route='forgotPassword'}}" class="action-link">Forgot Password?</a>
 		</div>
 	</div>
 </template>
