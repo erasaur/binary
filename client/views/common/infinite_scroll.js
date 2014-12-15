@@ -29,13 +29,13 @@ initInfiniteScroll = function (cursors) {
   });
 
   $(window).on('scroll', _.throttle(function () {
-    // trigger at 400px above bottom
-    var target = document.body.offsetHeight - 400;
+    // trigger at 20% above bottom
+    var target = document.body.offsetHeight * 0.8;
 
     if (window.innerHeight + window.scrollY >= target) {
       _.each(self._infiniteScroll, function (obj) {
         if (obj.count >= Session.get('itemsLimit')) {
-          Session.set('itemsLimit', Session.get('itemsLimit') + 10); //fetch more items from server
+          Session.set('itemsLimit', Session.get('itemsLimit') + 30); //fetch more items from server
         }
       });
     }
