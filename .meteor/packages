@@ -28,7 +28,6 @@ meteorhacks:subs-manager
 codepoet:medium-editor-npm
 reactive-var
 meteorhacks:kadira
-matteodem:easy-search
 jparker:gravatar
 email
 cmather:handlebars-server
@@ -47,4 +46,6 @@ reywood:publish-composite
 kestanous:herald-email
 percolate:velocityjs
 dburles:collection-helpers
+browser-policy
+matteodem:easy-search
 
