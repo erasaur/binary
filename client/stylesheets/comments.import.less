@@ -9,8 +9,8 @@
   top: -18px;
 }
 .comment-container {
-  margin: 20px -15px;
-  padding: 0 15px 10px;
+  margin: @padding-large -@padding-main;
+  padding: 0 @padding-main @padding-small;
   box-shadow: 0px -5px 6px -3px rgba(0,0,0,0.3), 0px 7px 6px -3px rgba(0,0,0,0.3);
   .border-radius(@radius-main);
   .comment.comment-reply, 
@@ -19,22 +19,20 @@
     color: #333;
   }
 }
-// .comment-container.main {
-//   margin-top: 0;
-//   box-shadow: none;
-//   &:before { content: none; }
-// }
 
-.comment-container.pro0:before { left: 12%; color: @color-pro0; }
-.comment-container.pro1:before { left: 12%; color: @color-pro1; }
-.comment-container.pro2:before { left: 12%; color: @color-pro2; }
-.comment-container.pro3:before { left: 12%; color: @color-pro3; }
-.comment-container.pro4:before { left: 12%; color: @color-pro4; }
-.comment-container.con0:before { left: 85%; color: @color-con0; }
-.comment-container.con1:before { left: 85%; color: @color-con1; }
-.comment-container.con2:before { left: 85%; color: @color-con2; }
-.comment-container.con3:before { left: 85%; color: @color-con3; }
-.comment-container.con4:before { left: 85%; color: @color-con4; }
+.comment-container.pro:before { left: 13%; }
+.comment-container.pro0:before { color: @color-pro0; }
+.comment-container.pro1:before { color: @color-pro1; }
+.comment-container.pro2:before { color: @color-pro2; }
+.comment-container.pro3:before { color: @color-pro3; }
+.comment-container.pro4:before { color: @color-pro4; }
+
+.comment-container.con:before { left: 85%; }
+.comment-container.con0:before { color: @color-con0; }
+.comment-container.con1:before { color: @color-con1; }
+.comment-container.con2:before { color: @color-con2; }
+.comment-container.con3:before { color: @color-con3; }
+.comment-container.con4:before { color: @color-con4; }
 
 .pro0 { background: @color-pro0; }
 .pro1 { background: @color-pro1; }
@@ -81,31 +79,27 @@
   padding: 0;
   width: 100%;
 }
-// .comment-replies {
-//   padding: 0 @main-padding;
-// }
+// .comment-replies {}
 .comment-new {
-  // padding-top: 10px;
   margin-bottom: 7.5px;
 }
 .comment-new > input.form-control {
   background-color: #fff;
-  padding: 20px 10px;
+  padding: @padding-large @padding-small;
 }
 .comment-new textarea {
-  // margin: 5px 0;
-  padding: 12px 10px 0;
+  padding: 12px @padding-small 0;
   background-color: transparent;
 }
 .comment-new .comment-new-action {
-  padding: 0 10px 10px;
+  padding: 0 @padding-small @padding-small;
 }
 .comment-new .comment-new-action a {
   float: left;
 }
 .comment-new .comment-new-action a,
 .comment-new .comment-new-action .toggle {
-  margin: 3px 10px 0 0;
+  margin: 3px @padding-small 0 0;
 }
 .comment-new .comment-new-action .toggle,
 .comment-new .comment-new-action button {
@@ -118,10 +112,10 @@
   overflow: hidden;
 }
 .comment .comment-header {
-  padding: 20px 15px 10px;
+  padding: @padding-large @padding-main @padding-small;
 }
 .comment .comment-content {
-  padding: 0 15px;
+  padding: 0 @padding-main;
   word-wrap: break-word;
 }
 .comment.collapsed .comment-content {
@@ -138,18 +132,18 @@
 }
 .comment.deleted .comment-content {
   height: 195px;
-  padding-top: 20px;
+  padding-top: @padding-large;
   cursor: default; 
 }
 .comment .comment-info {
-  padding: 0 15px;
-  margin-top: 10px;
+  padding: 0 @padding-main;
+  margin-top: @padding-small;
   height: 20px;
-  font-size: 10px;
+  font-size: @fontSize-small;
   span { padding-right: 8px; }
 }
 .comment .comment-footer {
-  padding: 10px 15px;
+  padding: @padding-small @padding-main;
   height: 36px;
   background: @color-gray;
   .comment-footer-left,
