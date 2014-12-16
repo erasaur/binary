@@ -159,7 +159,7 @@ Template.comment.events({
 				Meteor.setTimeout(function () {
 					replyRows.velocity('slideUp', { 
 						duration: 500, 
-						progress: _.throttle(function () { adjustScroll($elem, initOffset); }, 30),
+						progress: _.throttle(function () { adjustScroll($elem, initOffset); }, 20),
 						complete: function () { $(this).remove(); }
 					});
 				}, 1);
