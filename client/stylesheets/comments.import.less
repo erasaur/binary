@@ -12,7 +12,7 @@
   margin: 20px -15px;
   padding: 0 15px 10px;
   box-shadow: 0px -5px 6px -3px rgba(0,0,0,0.3), 0px 7px 6px -3px rgba(0,0,0,0.3);
-  .border-radius(@main-radius);
+  .border-radius(@radius-main);
   .comment.comment-reply, 
   .comment.comment-reply a {
     background-color: #fff;
@@ -25,28 +25,28 @@
 //   &:before { content: none; }
 // }
 
-.comment-container.pro0:before { left: 12%; color: @pro0; }
-.comment-container.pro1:before { left: 12%; color: @pro1; }
-.comment-container.pro2:before { left: 12%; color: @pro2; }
-.comment-container.pro3:before { left: 12%; color: @pro3; }
-.comment-container.pro4:before { left: 12%; color: @pro4; }
-.comment-container.con0:before { left: 85%; color: @con0; }
-.comment-container.con1:before { left: 85%; color: @con1; }
-.comment-container.con2:before { left: 85%; color: @con2; }
-.comment-container.con3:before { left: 85%; color: @con3; }
-.comment-container.con4:before { left: 85%; color: @con4; }
+.comment-container.pro0:before { left: 12%; color: @color-pro0; }
+.comment-container.pro1:before { left: 12%; color: @color-pro1; }
+.comment-container.pro2:before { left: 12%; color: @color-pro2; }
+.comment-container.pro3:before { left: 12%; color: @color-pro3; }
+.comment-container.pro4:before { left: 12%; color: @color-pro4; }
+.comment-container.con0:before { left: 85%; color: @color-con0; }
+.comment-container.con1:before { left: 85%; color: @color-con1; }
+.comment-container.con2:before { left: 85%; color: @color-con2; }
+.comment-container.con3:before { left: 85%; color: @color-con3; }
+.comment-container.con4:before { left: 85%; color: @color-con4; }
 
-.pro0 { background: @pro0; }
-.pro1 { background: @pro1; }
-.pro2 { background: @pro2; }
-.pro3 { background: @pro3; }
-.pro4 { background: @pro4; }
+.pro0 { background: @color-pro0; }
+.pro1 { background: @color-pro1; }
+.pro2 { background: @color-pro2; }
+.pro3 { background: @color-pro3; }
+.pro4 { background: @color-pro4; }
 
-.con0 { background: @con0; }
-.con1 { background: @con1; }
-.con2 { background: @con2; }
-.con3 { background: @con3; }
-.con4 { background: @con4; }
+.con0 { background: @color-con0; }
+.con1 { background: @color-con1; }
+.con2 { background: @color-con2; }
+.con3 { background: @color-con3; }
+.con4 { background: @color-con4; }
 
 .comment-pro, 
 .comment-con { 
@@ -70,12 +70,12 @@
 .comment-pro { 
   padding-left: 0; 
 }
-.comment.pro .avatar:after { background-color: @pro-color; }
+.comment.pro .avatar:after { background-color: @color-pro; }
 
 .comment-con { 
   padding-right: 0; 
 }
-.comment.con .avatar:after { background-color: @con-color; }
+.comment.con .avatar:after { background-color: @color-con; }
 
 .comment-row {
   padding: 0;
@@ -151,7 +151,7 @@
 .comment .comment-footer {
   padding: 10px 15px;
   height: 36px;
-  background: @gray;
+  background: @color-gray;
   .comment-footer-left,
   .comment-footer-left .icon-group {
     height: 16px;

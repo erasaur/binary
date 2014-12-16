@@ -16,7 +16,7 @@ html {
   font-family: 'Lato', sans-serif;
 }
 body {
-	background-color: @background-color;
+	background-color: @color-background;
   height: 100%;
 }
 .row {
@@ -28,7 +28,7 @@ body {
 input, 
 textarea, 
 button {
-	.border-radius(@main-radius);
+	.border-radius(@radius-main);
 }
 h1 { font-weight: 400; }
 h2 { 
@@ -82,11 +82,11 @@ textarea,
   // border: 1px solid #ccc;
   border: none;
   box-shadow: none;
-  background-color: @gray;
+  background-color: @color-gray;
 }
 .editable {
   background: #fff;
-  border-radius: @main-radius;
+  border-radius: @radius-main;
   outline: none;
   padding: 10px;
   margin-bottom: 10px;
