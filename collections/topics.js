@@ -62,9 +62,8 @@ Topics.attachSchema(TopicSchema);
 // search --------------------------------------------
 
 Topics.initEasySearch('title', {
-	limit: 1,
-  use: 'mongo-db',
-  reactive: false
+	limit: 10,
+  use: 'mongo-db'
 });
 
 // end search ----------------------------------------
