@@ -1,3 +1,9 @@
+Meteor.startup(function () {
+  BrowserPolicy.framing.disallow();
+  BrowserPolicy.content.disallowInlineScripts();
+  BrowserPolicy.content.allowFontOrigin('http://fonts.googleapis.com');
+});
+
 var resetPassword = {
   subject: function (user) {
     return 'Recovering your password on Yamcha';
