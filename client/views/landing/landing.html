@@ -1,20 +1,15 @@
 <template name="landing">
-  {{#AnimateWithVelocity}}
-    <div data-animate data-duration="500">
-      <div class="landing-container">
-        <div class="landing-header">
-          <h1>binary</h1>
-          <h2>explore the fascinating world of binary questions</h2>
-        </div>
-        <div class="landing-image">
-          <h3 id="landing-image-header"></h3>
-          <span id="landing-image-pro"></span>
-          <span id="landing-image-con"></span>
-          
-          <img src="/binary-frontpage-image.png">
-        </div>
-        <a href="{{pathFor route='login'}}" class="btn btn-default landing-login">Log In</a>
-      </div>
+  <div class="landing-container">
+    <div class="landing-header">
+      <h1>binary</h1>
+      <h2 class="muted">explore the fascinating world of binary questions</h2>
+      <a href="{{pathFor route='login'}}" class="btn btn-default landing-login">Log In</a>
     </div>
-  {{/AnimateWithVelocity}}
+    <div class="push"></div>
+  </div>
+  <div class="landing-image">
+    <h3 id="landing-image-header"></h3>
+    <span id="landing-image-pro"></span>
+    <span id="landing-image-con"></span>
+  </div>
 </template>

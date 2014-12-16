@@ -12,11 +12,13 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100%;
   font-family: 'Lato', sans-serif;
 }
 body {
 	background-color: @color-background;
+}
+html,
+body {
   height: 100%;
 }
 .row {
@@ -30,11 +32,11 @@ textarea,
 button {
 	.border-radius(@radius-main);
 }
-h1 { font-weight: 400; }
-h2 { 
-  font-weight: 300; 
-  font-size: 1.8em;
+h1, h2, h3 {
+  font-family: 'Lato', sans-serif;
 }
+h1, h2 { font-weight: 300; }
+h2 { font-size: 1.8em; }
 h3 {
 	.content-header;
 	margin-top: 0;

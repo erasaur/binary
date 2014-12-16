@@ -338,7 +338,7 @@
 
 .list-item {
   display: block;
-  margin-bottom: @padding-larger;
+  margin-bottom: @padding-large;
   overflow: hidden; 
 
   &:first-child { margin-top: 0; }
@@ -508,10 +508,8 @@
   .border-radius(50%); 
   .border-shadow;
   display: block; 
-  // color: rgba(0,0,0,0.5);
   color: @fontColor-muted;
   &:hover {
-    // color: rgba(0,0,0,0.5);
     color: @fontColor-muted;
     background-color: #f0f0f0;
   }
@@ -588,20 +586,28 @@
 // landing page --------------------------------------
 
 .landing-container {
-  max-width: 600px;
-  margin: 0 auto;
+  // max-width: 600px;
+  min-height: 100%;
+  height: auto !important;
   height: 100%;
+  margin: 0 auto -440px;
   text-align: center;
 }
 .landing-header {
-  display: table;
   padding: 100px 0 80px;  
-  margin: 0 auto;
+  width: 100%;
+}
+.push,
+.landing-image {
+  height: 440px;
 }
 .landing-image {
-  display: table-cell;
   position: relative;
-  img { width: 600px; }
+  width: 600px;
+  margin: 0 auto;
+  background-image: url('/binary-frontpage-image.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .landing-image h3 { 
   position: absolute; 
