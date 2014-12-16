@@ -15,7 +15,7 @@
   <div class="page-body">
     <div data-animate data-duration="1000" data-from-value="0" data-to-value="1" class="results">    
       <div class="list search-topics">
-        <div class="list-item"><h3>Topics</h3></div>
+        <div class="list-item"><h3 class="muted uppercase">Topics</h3></div>
         {{#ifEsInputIsEmpty index="topics" id="js-search"}}
           <div class="list-item">Search for topics.</div>
         {{/ifEsInputIsEmpty}}
@@ -35,7 +35,7 @@
         {{/ifEsHasNoResults}}
       </div>
       <div class="list search-users">
-        <div class="list-item"><h3>Users</h3></div>
+        <div class="list-item"><h3 class="muted uppercase">Users</h3></div>
         {{#ifEsInputIsEmpty index="users" id="js-search"}}
           <div class="list-item">Search for users.</div>
         {{/ifEsInputIsEmpty}}

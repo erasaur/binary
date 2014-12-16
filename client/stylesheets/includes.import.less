@@ -74,8 +74,7 @@
   user-select: none;
 }
 .content-header {
-  // line-height: 24px;
-  font-size: 18px;
+  font-size: @fontSize-large;
   font-weight: 400;
 }
 .content-header(@color) {
@@ -99,17 +98,20 @@
       -ms-transform: none;
           transform: none;
 }
-// .popout-button(@color) {
-//   background: fade(@color, 80%); //rgba(@color, 0.8)
-//   border-bottom: 4px solid @color;
-//   &:hover { background: @color; }
-// }
 .overflow-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
+.muted {
+  color: @fontColor-muted;
+}
+.uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 500;
+  &.muted { color: rgba(0, 0, 0, 0.4); }
+}
 
 
 
