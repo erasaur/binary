@@ -20,7 +20,7 @@ Template.flagForm.events({
         else
           alert('Make sure you provide a valid reason for flagging. Thank you!');
       } else {
-        alert('Thank you for helping keep Yamcha clean!');
+        alert('Thank you for helping keep Binary clean!');
         template.$('#flag-modal').modal('hide');
       }
     });
