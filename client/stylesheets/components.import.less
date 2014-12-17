@@ -26,15 +26,18 @@
 
 .btn {
   border: none;
-  color: white !important;
+  color: #fff !important;
   box-shadow: none;
   padding: .3em .6em;
   .border-radius;
 }
+.btn:active, 
+.btn.active {
+  .border-shadow(none);
+}
 .btn.btn-pro, 
 .btn.btn-con {
   width: 60px;
-  // height: 30px;
   font-weight: 500;
   line-height: 1.1em;
   font-size: @fontSize-large;
@@ -47,12 +50,29 @@
   background-color: @color-con;
   margin-left: 7.5px;
 }
-.btn.btn-default {
+.btn-default, 
+.btn-default.disabled, 
+.btn-default[disabled] {
+  background-color: @color-darkGray;
+}
+.btn-default:hover, 
+.btn-default:focus, 
+.btn-default:active, 
+.btn-default.active {
+  background-color: @color-gray;
+}
+.btn-primary, 
+.btn-primary:active, 
+.btn-primary.active, 
+.btn-primary.disabled, 
+.btn-primary[disabled] {
+  background-color: @color-darkPrimary;
+}
+.btn-primary:hover, 
+.btn-primary:focus {
   background-color: @color-primary;
 }
-.btn.btn-primary { 
-  background-color: @color-darkPrimary; 
-}
+
 
 .toggle {
   height: 20px;
@@ -263,7 +283,7 @@
   height: 45px;
 }
 .page-head .page-head-action i {
-  color: @color-darkGray;
+  color: @color-gray;
   &:hover { 
     cursor: pointer; 
     color: black; 
@@ -374,6 +394,8 @@
 .topic-item .list-item-action h3 { 
   display: inline-block; 
   margin-left: @padding-main;
+  position: relative;
+  top: 3px;
 }
 .topic-info,
 .topic-item .list-item-info {
@@ -477,7 +499,7 @@
 }
 .notification-item.read,
 .dropdown-menu .list-item:hover {
-  background-color: @color-gray;
+  background-color: @color-lightGray;
 }
 .dropdown-menu .no-notifications a {
   cursor: default;
@@ -519,7 +541,7 @@
 
 .form-control-feedback { 
   right: 0; 
-  color: @color-darkGray;
+  color: @color-lightGray;
   pointer-events: auto;
   &:hover { cursor: pointer; }
 }
@@ -585,8 +607,7 @@
 
 // landing page --------------------------------------
 
-.landing-container {
-  // max-width: 600px;
+.landing-container { // weird but necessary hack
   min-height: 100%;
   height: auto !important;
   height: 100%;
@@ -614,7 +635,7 @@
   top: 65px; 
   left: 40px;
   font-size: @fontSize-large;
-  color: rgba(0, 0, 0, 0.6);
+  color: @fontColor-muted;
   text-align: left;
 }
 .landing-image span {
