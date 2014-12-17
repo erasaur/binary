@@ -79,6 +79,20 @@ Accounts.onCreateUser(function (options, user) {
     }
   };
 
+  // notify admins
+  var admins = Meteor.users.find({ 'isAdmin': true });
+  admins.forEach(function (admin) {
+    var properties = {
+      name: getDisplayName(user),
+      actionLink: getProfileUrl(user._id)
+    };
+
+    var email = admin.emails[0].address;
+    buildAndSendEmail(email, 'A new user just joined Binary', 'emailNewUser', properties);
+  });
+
+  // subscribe user to newsletter
+
   return user;
 });
 
