@@ -53,7 +53,8 @@ a.action-group:hover .action-link {
 }
 // a:hover, 
 .icon-group:hover { 
-  color: black;
+  // color: black;
+  color: @color-primary;
 }
 textarea {
 	width: 100%;
@@ -102,8 +103,15 @@ textarea,
   em {
     font-style: italic;
   }
-  a:hover {
+  a, 
+  a:link, 
+  a:visited,
+  a:hover,
+  a:active {
     text-decoration: underline;
+  }
+  a:hover {
+    color: @color-primary;
   }
   code {
     font-family: monospace;
