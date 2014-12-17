@@ -76,6 +76,7 @@ meteorhacks:npm@1.2.1
 meteorhacks:subs-manager@1.2.2
 minifiers@1.1.2
 minimongo@1.0.5
+miro:mailchimp@1.0.3
 mizzao:bootstrap-3@3.3.1_1
 mobile-status-bar@1.0.1
 mongo-livedata@1.0.6
@@ -89,6 +90,7 @@ npm-bcrypt@0.7.7
 npm-container@1.0.0
 observe-sequence@1.0.3
 ordered-dict@1.0.1
+percolate:synced-cron@1.1.0
 percolate:velocityjs@1.1.0
 random@1.0.1
 reactive-dict@1.0.4
