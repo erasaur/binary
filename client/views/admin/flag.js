@@ -1,6 +1,7 @@
 Template.flagForm.events({
-  'change input[name="flag-option"][value="other"]': function (event, template) {
-    template.$('#js-other-reason').prop('disabled', false);
+  'change input[name="flag-option"]': function (event, template) {
+    var $input = template.$('#js-other-reason');
+    $input.prop('disabled', event.target.value !== 'other');
   },
   'submit #js-flag-form': function (event, template) {
     event.preventDefault();

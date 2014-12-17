@@ -19,7 +19,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header center">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <div class="icon-group close" data-dismiss="modal" aria-hidden="true">
+            <i class="icon-action fa fa-remove"></i>
+          </div>
           <h3 class="modal-title muted uppercase" id="modalLabel">Invite your friends!</h3>
         </div>
         <div class="modal-body">
@@ -38,7 +40,7 @@
                 <input type="text" class="form-control" id="js-invite-email" placeholder="friend@email.com">
               </div>
               <div class="action-group clearfix">
-                <button type="submit" class="btn btn-default">Send</button>
+                <button type="submit" class="btn btn-primary">Send</button>
               </div>
             {{else}}
               <div class="form-group">
