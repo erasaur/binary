@@ -147,8 +147,11 @@
   display: inline-block;
   cursor: pointer;
   padding-right: 8px;
-  color: rgb(176, 176, 176);
+  color: @color-gray;
   &:last-of-type { padding-right: 0; }
+}
+.icon-group.close {
+  opacity: 1;
 }
 .icon-group.liked .icon-action { // liked comment
   color: #cb2027;
@@ -286,7 +289,7 @@
   color: @color-gray;
   &:hover { 
     cursor: pointer; 
-    color: black; 
+    color: @color-primary;
   }
 }
 .page-head .page-head-content {
@@ -411,6 +414,9 @@
 .settings-item {
   margin-bottom: 0;
 }
+.settings-item .list-item-action a {
+  padding-right: 8px;
+}
 .settings-item .list-item-info,
 .settings-item .settings-input {
   padding: @padding-smaller 0;
@@ -530,9 +536,8 @@
   .border-radius(50%); 
   .border-shadow;
   display: block; 
-  color: @fontColor-muted;
   &:hover {
-    color: @fontColor-muted;
+    color: @color-primary;
     background-color: #f0f0f0;
   }
 }
@@ -541,7 +546,7 @@
 
 .form-control-feedback { 
   right: 0; 
-  color: @color-lightGray;
+  color: @color-gray;
   pointer-events: auto;
   &:hover { cursor: pointer; }
 }
@@ -735,6 +740,12 @@
   box-shadow: 0 0 5px #B4FCF7;
 
   &:before { display: none !important; }
+}
+
+// flag form -----------------------------------------
+
+#flag-modal .radio:last-of-type label {
+  margin-bottom: 10px;
 }
 
 // modal ---------------------------------------------
