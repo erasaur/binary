@@ -3,8 +3,10 @@ Template.replies.rendered = function () {
   container._uihooks = {
     insertElement: function (node, next) {
       Meteor.setTimeout(function () {
-        container.insertBefore(node, next);
-        $(node).velocity('slideDown', { duration: 500 });
+        // container.insertBefore(node, next);
+        var $node = $(node);
+        $node.insertBefore(next);
+        $node.velocity('slideDown', { duration: 500 });
       }, 1);
     }
   }
