@@ -1,7 +1,7 @@
 // fonts
-// @fontSize-small
-// @fontSize-base
-// @fontSize-large
+@fontSize-small: 0.75em;
+// @fontSize-base: 1em;
+@fontSize-large: 1.3em;
 @fontColor-muted: rgba(0, 0, 0, 0.6);
 
 // line heights
@@ -10,40 +10,43 @@
 // @lineHeight-loose
 
 // paddings
-@top-padding: 20px;
-@main-padding: 15px;
+@padding-smaller: 5px;
+@padding-small: 10px;
+@padding-main: 15px;
+@padding-large: 20px;
+@padding-larger: 30px;
 
 // misc
-@main-radius: 0.3em;// 6px; // use em?
+@radius-main: 0.3em;
 
 // margins
 
 // colors --------------------------------------------
 
-@pro0: rgb(153, 218, 213);
-@pro1: rgb(200, 230, 200);
-@pro2: rgb(180, 236, 252);
-@pro3: rgb(203, 224, 172);
-@pro4: rgb(124, 178, 211);
+@color-pro0: rgb(153, 218, 213);
+@color-pro1: rgb(200, 230, 200);
+@color-pro2: rgb(180, 236, 252);
+@color-pro3: rgb(203, 224, 172);
+@color-pro4: rgb(124, 178, 211);
 
-@con0: rgb(238, 121, 137);
-@con1: rgb(245, 181, 135);
-@con2: rgb(228, 103, 87);
-@con3: rgb(218, 127, 154);
-@con4: rgb(225, 150, 206);
+@color-con0: rgb(238, 121, 137);
+@color-con1: rgb(245, 181, 135);
+@color-con2: rgb(228, 103, 87);
+@color-con3: rgb(218, 127, 154);
+@color-con4: rgb(225, 150, 206);
 
 // layout element colors
-@light-gray: rgb(235, 235, 235); // rgba(220, 220, 220, 0.6);
-@gray: rgb(240, 240, 240);
-@dark-gray: rgb(160, 160, 160);
+@color-lightGray: rgb(235, 235, 235); // rgba(220, 220, 220, 0.6);
+@color-gray: rgb(240, 240, 240);
+@color-darkGray: rgb(160, 160, 160);
 
-@light-primary-color: rgb(127, 175, 247);
-@primary-color: rgb(62, 130, 231);
-@dark-primary-color: rgb(27, 103, 215);
+@color-lightPrimary: rgb(127, 175, 247);
+@color-primary: rgb(62, 130, 231);
+@color-darkPrimary: rgb(27, 103, 215);
 
-@background-color: #ebebeb;
-@pro-color: rgb(146, 240, 52);
-@con-color: rgb(255, 82, 76);
+@color-background: #ebebeb;
+@color-pro: rgb(146, 240, 52);
+@color-con: rgb(255, 82, 76);
 
 // bg color fade effect ----------------------------
 
@@ -71,8 +74,7 @@
   user-select: none;
 }
 .content-header {
-  // line-height: 24px;
-  font-size: 18px;
+  font-size: @fontSize-large;
   font-weight: 400;
 }
 .content-header(@color) {
@@ -82,7 +84,7 @@
 .border-shadow(@shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2)) {
   box-shadow: @shadow;
 }
-.border-radius(@radius: @main-radius) {
+.border-radius(@radius: @radius-main) {
   -webkit-border-radius: @radius;
      -moz-border-radius: @radius;
           border-radius: @radius;
@@ -96,17 +98,20 @@
       -ms-transform: none;
           transform: none;
 }
-// .popout-button(@color) {
-//   background: fade(@color, 80%); //rgba(@color, 0.8)
-//   border-bottom: 4px solid @color;
-//   &:hover { background: @color; }
-// }
 .overflow-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
+.muted {
+  color: @fontColor-muted;
+}
+.uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 500;
+  &.muted { color: rgba(0, 0, 0, 0.4); }
+}
 
 
 

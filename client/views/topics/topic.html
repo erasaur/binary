@@ -2,9 +2,9 @@
 	<div class="page-body">
 		{{#pageBody items=comments item='commentRow' hasItems=commentsCount message='No comments yet.' class='no-container'}}
 			<div class="page-title">
-				<h3>{{commentsCount}} Comments</h3>
+				<h3 class="muted uppercase">{{commentsCount}} Comments</h3>
 				<span class="dropdown">
-				  <button class="dropdown-toggle" type="button" id="comment-category" data-toggle="dropdown">
+				  <button class="dropdown-toggle muted" type="button" id="comment-category" data-toggle="dropdown">
 				    {{commentCategory}} <span class="caret"></span>
 				  </button>
 				  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">

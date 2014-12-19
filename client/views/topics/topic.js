@@ -8,7 +8,6 @@ Template.topic.rendered = function () {
   container._uihooks = {
     insertElement: function (node, next) {
       Meteor.setTimeout(function () {
-        console.log('container insertElement: ', node, next);
         container.insertBefore(node, next);
         $(node).velocity('slideDown', { duration: 500 });
       }, 1);

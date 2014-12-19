@@ -1,6 +1,12 @@
+Meteor.startup(function () {
+  BrowserPolicy.framing.disallow();
+  BrowserPolicy.content.disallowInlineScripts();
+  BrowserPolicy.content.allowFontOrigin('http://fonts.googleapis.com');
+});
+
 var resetPassword = {
   subject: function (user) {
-    return 'Recovering your password on Yamcha';
+    return 'Recovering your password on Binary';
   },
   html: function (user, url) {
     // var token = url.substring(url.lastIndexOf('/') + 1);
@@ -18,7 +24,7 @@ resetPassword.text = function (user, url) {
 
 var verifyEmail = {
   subject: function (user) {
-    return 'Verify your email on Yamcha';
+    return 'Verify your email on Binary';
   },
   html: function (user, url) {
     var properties = {
@@ -33,8 +39,8 @@ verifyEmail.text = function (user, url) {
 };
 
 Accounts.emailTemplates = {
-  from: 'hello@yamcha.com',
-  siteName: 'Yamcha',
+  from: 'hello@binary.com',
+  siteName: 'Binary',
   resetPassword: resetPassword,
   verifyEmail: verifyEmail
 };
