@@ -26,6 +26,7 @@ Template.forgotPassword.events({
           $('.landing-form-errors').fadeTo('slow', 1);
         } else {
           Session.set('resetPassword', '');
+          Meteor.call('emailResetPassword');
           Router.go('home');
         }
       });
