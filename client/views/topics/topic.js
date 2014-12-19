@@ -10,8 +10,11 @@ Template.topic.rendered = function () {
       Meteor.setTimeout(function () {
         // container.insertBefore(node, next);
         var $node = $(node);
-        $node.insertBefore(next).css('opacity', 0);
-        $node.velocity('slideDown', { duration: 500 }).css('opacity', 1);
+        $node.insertBefore(next);
+
+        if ($node.hasClass('comment-container')) {
+          $node.velocity('slideDown', { duration: 500 });  
+        }
       }, 1);
     }
   };

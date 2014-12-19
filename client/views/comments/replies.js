@@ -6,7 +6,9 @@ Template.replies.rendered = function () {
         // container.insertBefore(node, next);
         var $node = $(node);
         $node.insertBefore(next);
-        $node.velocity('slideDown', { duration: 500 });
+        if ($node.hasClass('comment-container')) {
+          $node.velocity('slideDown', { duration: 500 });
+        }
       }, 1);
     }
   }
