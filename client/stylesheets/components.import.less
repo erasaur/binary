@@ -523,7 +523,8 @@
 
 // invite menu ---------------------------------------
 
-.invite.icon-group {
+.invite.icon-group,
+.feedback.icon-group {
   margin: 0; 
   padding: @padding-small; 
   position: fixed; 
@@ -538,8 +539,13 @@
   display: block; 
   &:hover {
     color: @color-primary;
-    background-color: #f0f0f0;
+    // background-color: #f0f0f0;
   }
+}
+.feedback.icon-group {
+  bottom: 66px;
+  text-align: center;
+  i { font-size: 18px; }
 }
 
 // navbar --------------------------------------------
