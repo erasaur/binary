@@ -7,15 +7,15 @@ Template.topic.rendered = function () {
   var container = this.find('.list');
   container._uihooks = {
     insertElement: function (node, next) {
-      Meteor.setTimeout(function () {
-        // container.insertBefore(node, next);
-        var $node = $(node);
+      var $node = $(node);
+      if ($node.hasClass('comment-container')) {
+        Meteor.setTimeout(function () {
+          $node.insertBefore(next);
+          $node.velocity('slideDown', { duration: 500 });
+        }, 1);  
+      } else {
         $node.insertBefore(next);
-
-        if ($node.hasClass('comment-container')) {
-          $node.velocity('slideDown', { duration: 500 });  
-        }
-      }, 1);
+      }
     }
   };
 };
@@ -43,42 +43,24 @@ Template.topic.helpers({
     return this.commentsCount;
   },
   comments: function () {
-    var controller = Iron.controller();
-    var runAt = controller._runAt;
-
-    var newComments = Comments.find({
+    var incomingComments = getIncomingComments({
       'replyTo': { $nin: SessionAmplify.get('showingReplies') },
-      'topicId': this._id, 
-      'userId': Meteor.userId(),
-      'createdAt': { $gt: runAt }
-    }, { sort: { 'createdAt': -1 } }).fetch();
+      'topicId': this._id 
+    });
+    var comments = getComments({
+      'topicId': this._id
+    });
 
-    var sort = {};
-    var query = getCurrentQuery();
-    if (!query.sort_by || query.sort_by === 'top') {
-      sort.initVotes = -1;
-    }
-    sort.createdAt = -1; // less priority than initVotes
+    comments = incomingComments.concat(comments);
+    var pros = [], cons = [];
 
-    var comments = Comments.find({
-      'topicId': this._id, 
-      'createdAt': { $lt: runAt }
-    }, { sort: sort }).fetch();
-
-    var comments = newComments.concat(comments);
-    var res = [], pros = [], cons = [], comment;
-
-    var len = comments.length, i = 0;
-    while (i < len) {
-      comment = comments[i];
+    _.each(comments, function (comment) {
       comment.side === 'pro' ? pros.push(comment) : cons.push(comment);
-      i++;
-    }
+    });
 
-    var len = Math.max(pros.length, cons.length), i = 0;
-    while (i < len) {
+    var res = [], len = Math.max(pros.length, cons.length), i = -1;
+    while (++i < len) {
       res.push({ 'pros': pros[i], 'cons': cons[i] });
-      i++;
     }
 
     res.push({ 'bottom': true });
