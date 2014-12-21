@@ -154,7 +154,14 @@ Meteor.users.allow({
 
 Meteor.users.initEasySearch('profile.name', {
   limit: 15,
-  use: 'mongo-db'
+  use: 'mongo-db',
+  query: function (searchString) {
+    var query = EasySearch.getSearcher('mongo-db').defaultQuery(this, searchString);
+    var user = Meteor.users.findOne(this.publishScope.userId);
+
+    query['profile.name'] = { $ne: user.profile.name };
+    return query;
+  }
 });
 
 // end search ----------------------------------------
