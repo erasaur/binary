@@ -21,20 +21,26 @@
   }
   *zoom: 1;
 }
+.logo {
+  font-size: 46px;
+}
 
 // buttons -------------------------------------------
 
 .btn {
   border: none;
-  color: white !important;
+  color: #fff !important;
   box-shadow: none;
   padding: .3em .6em;
   .border-radius;
 }
+.btn:active, 
+.btn.active {
+  .border-shadow(none);
+}
 .btn.btn-pro, 
 .btn.btn-con {
   width: 60px;
-  // height: 30px;
   font-weight: 500;
   line-height: 1.1em;
   font-size: @fontSize-large;
@@ -47,12 +53,29 @@
   background-color: @color-con;
   margin-left: 7.5px;
 }
-.btn.btn-default {
+.btn-default, 
+.btn-default.disabled, 
+.btn-default[disabled] {
+  background-color: @color-darkGray;
+}
+.btn-default:hover, 
+.btn-default:focus, 
+.btn-default:active, 
+.btn-default.active {
+  background-color: @color-gray;
+}
+.btn-primary, 
+.btn-primary:active, 
+.btn-primary.active, 
+.btn-primary.disabled, 
+.btn-primary[disabled] {
+  background-color: @color-darkPrimary;
+}
+.btn-primary:hover, 
+.btn-primary:focus {
   background-color: @color-primary;
 }
-.btn.btn-primary { 
-  background-color: @color-darkPrimary; 
-}
+
 
 .toggle {
   height: 20px;
@@ -127,8 +150,11 @@
   display: inline-block;
   cursor: pointer;
   padding-right: 8px;
-  color: rgb(176, 176, 176);
+  color: @color-gray;
   &:last-of-type { padding-right: 0; }
+}
+.icon-group.close {
+  opacity: 1;
 }
 .icon-group.liked .icon-action { // liked comment
   color: #cb2027;
@@ -263,10 +289,10 @@
   height: 45px;
 }
 .page-head .page-head-action i {
-  color: @color-darkGray;
+  color: @color-gray;
   &:hover { 
     cursor: pointer; 
-    color: black; 
+    color: @color-primary;
   }
 }
 .page-head .page-head-content {
@@ -338,7 +364,7 @@
 
 .list-item {
   display: block;
-  margin-bottom: @padding-larger;
+  margin-bottom: @padding-large;
   overflow: hidden; 
 
   &:first-child { margin-top: 0; }
@@ -374,6 +400,8 @@
 .topic-item .list-item-action h3 { 
   display: inline-block; 
   margin-left: @padding-main;
+  position: relative;
+  top: 3px;
 }
 .topic-info,
 .topic-item .list-item-info {
@@ -388,6 +416,9 @@
 
 .settings-item {
   margin-bottom: 0;
+}
+.settings-item .list-item-action a {
+  padding-right: 8px;
 }
 .settings-item .list-item-info,
 .settings-item .settings-input {
@@ -477,7 +508,7 @@
 }
 .notification-item.read,
 .dropdown-menu .list-item:hover {
-  background-color: @color-gray;
+  background-color: @color-lightGray;
 }
 .dropdown-menu .no-notifications a {
   cursor: default;
@@ -495,7 +526,8 @@
 
 // invite menu ---------------------------------------
 
-.invite.icon-group {
+.invite.icon-group,
+.feedback.icon-group {
   margin: 0; 
   padding: @padding-small; 
   position: fixed; 
@@ -508,20 +540,22 @@
   .border-radius(50%); 
   .border-shadow;
   display: block; 
-  // color: rgba(0,0,0,0.5);
-  color: @fontColor-muted;
   &:hover {
-    // color: rgba(0,0,0,0.5);
-    color: @fontColor-muted;
-    background-color: #f0f0f0;
+    color: @color-primary;
+    // background-color: #f0f0f0;
   }
+}
+.feedback.icon-group {
+  bottom: 66px;
+  text-align: center;
+  i { font-size: 18px; }
 }
 
 // navbar --------------------------------------------
 
 .form-control-feedback { 
   right: 0; 
-  color: @color-darkGray;
+  color: @color-gray;
   pointer-events: auto;
   &:hover { cursor: pointer; }
 }
@@ -587,28 +621,35 @@
 
 // landing page --------------------------------------
 
-.landing-container {
-  max-width: 600px;
-  margin: 0 auto;
+.landing-container { // weird but necessary hack
+  min-height: 100%;
+  height: auto !important;
   height: 100%;
+  margin: 0 auto -440px;
   text-align: center;
 }
 .landing-header {
-  display: table;
   padding: 100px 0 80px;  
-  margin: 0 auto;
+  width: 100%;
+}
+.push,
+.landing-image {
+  height: 440px;
 }
 .landing-image {
-  display: table-cell;
   position: relative;
-  img { width: 600px; }
+  width: 600px;
+  margin: 0 auto;
+  background-image: url('/binary-frontpage-image.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .landing-image h3 { 
   position: absolute; 
   top: 65px; 
   left: 40px;
   font-size: @fontSize-large;
-  color: rgba(0, 0, 0, 0.6);
+  color: @fontColor-muted;
   text-align: left;
 }
 .landing-image span {
@@ -708,6 +749,12 @@
   box-shadow: 0 0 5px #B4FCF7;
 
   &:before { display: none !important; }
+}
+
+// flag form -----------------------------------------
+
+#flag-modal .radio:last-of-type label {
+  margin-bottom: 10px;
 }
 
 // modal ---------------------------------------------

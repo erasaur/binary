@@ -79,6 +79,27 @@ Accounts.onCreateUser(function (options, user) {
     }
   };
 
+  // notify admins
+  var admins = Meteor.users.find({ 'isAdmin': true });
+  admins.forEach(function (admin) {
+    var properties = {
+      name: getDisplayName(user),
+      actionLink: getProfileUrl(user._id)
+    };
+
+    var adminEmail = admin.emails[0].address;
+    Meteor.setTimeout(function () {
+      buildAndSendEmail(adminEmail, 'A new user just joined Binary', 'emailNewUser', properties);
+    }, 1);
+  });
+
+  // send welcome email
+  Meteor.setTimeout(function () {
+    buildAndSendEmail(email, 'Welcome to Binary!', 'emailWelcome', { name: user.profile.name });
+  }, 1);
+
+  // TODO: subscribe user to newsletter
+
   return user;
 });
 
@@ -128,7 +149,18 @@ Meteor.methods({
   },
   sendVerificationEmail: function () {
     Accounts.sendVerificationEmail(Meteor.userId());
-  }
+  },
+  // sendResetSuccessEmail: function () {
+  //   var user = Meteor.user();
+  //   if (!user) return;
+
+  //   Meteor.setTimeout(function () {
+  //     buildAndSendEmail(user.emails[0].address, 'Your password on Binary has been reset', 'emailResetSuccess', {
+  //       name: user.profile.name,
+  //       actionLink: ''
+  //     });
+  //   }, 1);
+  // }
 });
   
 

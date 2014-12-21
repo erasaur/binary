@@ -9,7 +9,8 @@ var htmlToText = Meteor.npmRequire('html-to-text');
 
 buildEmailTemplate = function (htmlContent) {
   var emailProperties = {
-    body: htmlContent
+    body: htmlContent,
+    settingsUrl: getSettingsUrl()
   };
 
   var emailHTML = Handlebars.templates['emailWrapper'](emailProperties);
