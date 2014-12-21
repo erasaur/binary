@@ -7,9 +7,10 @@ Template.replies.rendered = function () {
         Meteor.setTimeout(function () {
           $node.insertBefore(next);
           $node.velocity('slideDown', { duration: 500 });
+          Meteor.setTimeout(function () { $node.css('opacity', 1); }, 1);
         }, 1);
       } else {
-        $node.insertBefore(next);  
+        $node.insertBefore(next);
       }
     }
   }
