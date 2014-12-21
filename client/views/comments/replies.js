@@ -2,14 +2,15 @@ Template.replies.rendered = function () {
   var container = this.firstNode;
   container._uihooks = {
     insertElement: function (node, next) {
-      Meteor.setTimeout(function () {
-        // container.insertBefore(node, next);
-        var $node = $(node);
-        $node.insertBefore(next);
-        if ($node.hasClass('comment-container')) {
+      var $node = $(node);
+      if ($node.hasClass('comment-container')) {
+        Meteor.setTimeout(function () {
+          $node.insertBefore(next);
           $node.velocity('slideDown', { duration: 500 });
-        }
-      }, 1);
+        }, 1);
+      } else {
+        $node.insertBefore(next);  
+      }
     }
   }
 };
