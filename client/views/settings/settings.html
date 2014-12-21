@@ -37,18 +37,6 @@
         </div>
         <div class="list-item settings-item">
           <div class="list-item-info">
-            <label>General</label>
-            <p class="help-block">I want to receive email notifications</p>
-          </div>
-          <div class="list-item-action settings-input">
-            <label class="toggle">
-              <input type="checkbox" {{isEnabled}}>
-              <span class="handle"></span>
-            </label>
-          </div>
-        </div>
-        <div class="list-item settings-item">
-          <div class="list-item-info">
             <label>Followers</label>
             <p class="help-block">Email me when I gain a new follower</p>
           </div>
@@ -103,18 +91,6 @@
           <div class="list-item-action settings-input">
             <label class="toggle">
               <input type="checkbox" {{isEnabled 'newComment.topicOwner'}} data-value="newComment.topicOwner">
-              <span class="handle"></span>
-            </label>
-          </div>
-        </div>
-        <div class="list-item settings-item">
-          <div class="list-item-info">
-            <label>Following Topics</label>
-            <p class="help-block">Email me when someone comments in a topic I am following</p>
-          </div>
-          <div class="list-item-action settings-input">
-            <label class="toggle">
-              <input type="checkbox" {{isEnabled 'newComment.topicFollower'}} data-value="newComment.topicFollower">
               <span class="handle"></span>
             </label>
           </div>
