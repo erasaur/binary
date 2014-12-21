@@ -16,11 +16,11 @@ Template.replies.rendered = function () {
 };
 
 Template.replies.helpers({
-	hasReplies: function () {
+  hasReplies: function () {
     var comment = Comments.findOne(this.id);
-		return comment && comment.replies.length;
-	},
-	replies: function () {
+    return comment && comment.replies.length;
+  },
+  replies: function () {
     var incomingComments = getIncomingComments({ 'replyTo': this.id });
     var comments = getComments({ 'replyTo': this.id });
 
@@ -38,7 +38,7 @@ Template.replies.helpers({
 
     res.push({ 'bottom': true });
     return res;
-	}
+  }
 });
 
 

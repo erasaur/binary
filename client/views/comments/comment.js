@@ -151,20 +151,24 @@ Template.comment.events({
 				showing = showing.slice(0, showing.indexOf(closingIds[i]));
 			});
 
-			Blaze.remove(Blaze.getView(replyRows[0]));
 
 			// animate only when replyRows is in view
 			var replyRect = replyRows[0].getBoundingClientRect();
+                                  console.log(replyRect.top + replyRect.height);
 			if (replyRect.top + replyRect.height > 0) {
 				Meteor.setTimeout(function () {
 					replyRows.velocity('slideUp', { 
 						duration: 500, 
 						progress: _.throttle(function () { adjustScroll($elem, initOffset); }, 20),
-						complete: function () { $(this).remove(); }
+						complete: function () { 
+                                                  // $(this).remove(); 
+                                                  Blaze.remove(Blaze.getView(replyRows[0]));
+                                                }
 					});
 				}, 1);
 			} else {
-				replyRows.remove();
+				// replyRows.remove();
+                          Blaze.remove(Blaze.getView(replyRows[0]));
 				adjustScroll($elem, initOffset);
 			}
 		}
