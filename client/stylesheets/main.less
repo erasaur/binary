@@ -10,9 +10,9 @@
 // general styles ------------------------------------
 
 html {
+  min-height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100%;
   font-family: 'Lato', sans-serif;
 }
 body {
@@ -30,11 +30,11 @@ textarea,
 button {
 	.border-radius(@radius-main);
 }
-h1 { font-weight: 400; }
-h2 { 
-  font-weight: 300; 
-  font-size: 1.8em;
+h1, h2, h3 {
+  font-family: 'Lato', sans-serif;
 }
+h1, h2 { font-weight: 300; }
+h2 { font-size: 1.8em; }
 h3 {
 	.content-header;
 	margin-top: 0;
@@ -53,7 +53,8 @@ a.action-group:hover .action-link {
 }
 // a:hover, 
 .icon-group:hover { 
-  color: black;
+  // color: black;
+  color: @color-primary;
 }
 textarea {
 	width: 100%;
@@ -80,7 +81,7 @@ textarea,
 .form-control:focus { 
   border: none;
   box-shadow: none;
-  background-color: @color-gray;
+  background-color: @color-lightGray;
 }
 .editable {
   background: #fff;
@@ -102,8 +103,15 @@ textarea,
   em {
     font-style: italic;
   }
-  a:hover {
+  a, 
+  a:link, 
+  a:visited,
+  a:hover,
+  a:active {
     text-decoration: underline;
+  }
+  a:hover {
+    color: @color-primary;
   }
   code {
     font-family: monospace;

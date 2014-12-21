@@ -1,7 +1,8 @@
 Meteor.startup(function () {
   BrowserPolicy.framing.disallow();
+  BrowserPolicy.content.allowFontOrigin('fonts.gstatic.com');
+  BrowserPolicy.content.allowOriginForAll('fonts.googleapis.com');
   BrowserPolicy.content.disallowInlineScripts();
-  BrowserPolicy.content.allowFontOrigin('http://fonts.googleapis.com');
 });
 
 var resetPassword = {

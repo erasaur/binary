@@ -5,9 +5,10 @@ Meteor.publishComposite('userProfile', function (userId) {
     find: function () { // the user
       if (!this.userId) return this.ready();
 
-      return Meteor.users.find(userId, { limit: 1, fields: { 
-        'email_hash': 1, 'profile': 1, 'stats': 1, 'activity': 1 
-      }});
+      return Meteor.users.find(userId, { 
+        limit: 1, 
+        fields: { 'email_hash': 1, 'profile': 1, 'stats': 1, 'activity': 1 }
+      });
     },
     children: [{
       find: function (user) { // users following/followed by user
@@ -15,7 +16,7 @@ Meteor.publishComposite('userProfile', function (userId) {
 
         var userIds = user.activity.followers.concat(user.activity.followingUsers) || [];
         return Meteor.users.find({ '_id': { $in: userIds } }, {
-          'email_hash': 1, 'profile': 1
+          fields: { 'email_hash': 1, 'profile': 1 }
         });
       }
     }]

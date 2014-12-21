@@ -3,12 +3,13 @@
 .comment-container:before {
   content: "▲";
   display: inline-block;
-  text-shadow: 0 -3px 1px rgba(0,0,0,0.18);
-  transform: scale(3, 2);
+  text-shadow: 0 -2px 1px rgba(0,0,0,0.18);
   position: relative;
   top: -18px;
+  .transform(scale(3,2));
 }
 .comment-container {
+  opacity: 0;
   margin: @padding-large -@padding-main;
   padding: 0 @padding-main @padding-small;
   box-shadow: 0px -5px 6px -3px rgba(0,0,0,0.3), 0px 7px 6px -3px rgba(0,0,0,0.3);
@@ -145,7 +146,7 @@
 .comment .comment-footer {
   padding: @padding-small @padding-main;
   height: 36px;
-  background: @color-gray;
+  background: @color-lightGray;
   .comment-footer-left,
   .comment-footer-left .icon-group {
     height: 16px;

@@ -2,57 +2,44 @@ Template.replies.rendered = function () {
   var container = this.firstNode;
   container._uihooks = {
     insertElement: function (node, next) {
-      Meteor.setTimeout(function () {
-        container.insertBefore(node, next);
-        $(node).velocity('slideDown', { duration: 500 });
-      }, 1);
+      var $node = $(node);
+      if ($node.hasClass('comment-container')) {
+        Meteor.setTimeout(function () {
+          $node.insertBefore(next);
+          $node.velocity('slideDown', { duration: 500 });
+          Meteor.setTimeout(function () { $node.css('opacity', 1); }, 1);
+        }, 1);
+      } else {
+        $node.insertBefore(next);
+      }
     }
   }
 };
 
 Template.replies.helpers({
-	hasReplies: function () {
+  hasReplies: function () {
     var comment = Comments.findOne(this.id);
-		return comment && comment.replies.length;
-	},
-	replies: function () {
-		var controller = Router.current();
-		var runAt = controller._runAt;
+    return comment && comment.replies.length;
+  },
+  replies: function () {
+    var incomingComments = getIncomingComments({ 'replyTo': this.id });
+    var comments = getComments({ 'replyTo': this.id });
 
-    var newComments = Comments.find({ 'replyTo': this.id, 'createdAt': { $gt: runAt }, 'userId': Meteor.userId() }, { 
-    	sort: { 'createdAt': -1 } 
-    }).fetch();
+    comments = incomingComments.concat(comments);
+    var pros = [], cons = [];
 
-    var sort = {};
-    var query = getCurrentQuery();
-    if (!query.sort_by || query.sort_by === 'top') {
-      sort.initVotes = -1;
-    }
-    sort.createdAt = -1; // less priority than initVotes
-    
-    var comments = Comments.find({ 'replyTo': this.id, 'createdAt': { $lt: runAt } }, { 
-    	sort: sort 
-    }).fetch();
-
-    var comments = newComments.concat(comments);
-    var res = [], pros = [], cons = [], comment;
-
-    var len = comments.length, i = 0;
-    while (i < len) {
-      comment = comments[i];
+    _.each(comments, function (comment) {
       comment.side === 'pro' ? pros.push(comment) : cons.push(comment);
-      i++;
-    }
+    });
 
-    var len = Math.max(pros.length, cons.length), i = 0;
-    while (i < len) {
+    var res = [], len = Math.max(pros.length, cons.length), i = -1;
+    while (++i < len) {
       res.push({ 'pros': pros[i], 'cons': cons[i] });
-      i++;
     }
 
-		res.push({ 'bottom': true });
+    res.push({ 'bottom': true });
     return res;
-	}
+  }
 });
 
 
