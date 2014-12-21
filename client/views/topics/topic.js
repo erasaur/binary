@@ -1,8 +1,8 @@
 Template.topic.rendered = function () {
   initInfiniteScroll.call(this, [
-    Comments.find({ 'topicId': this.data._id, 'side': 'pro' }), 
+    Comments.find({ 'topicId': this.data._id, 'side': 'pro' }),
     Comments.find({ 'topicId': this.data._id, 'side': 'con' })
-  ]); 
+  ]);
 
   var container = this.find('.list');
   container._uihooks = {
@@ -12,7 +12,8 @@ Template.topic.rendered = function () {
         Meteor.setTimeout(function () {
           $node.insertBefore(next);
           $node.velocity('slideDown', { duration: 500 });
-        }, 1);  
+          Meteor.setTimeout(function () { $node.css('opacity', 1); }, 1);
+        }, 1);
       } else {
         $node.insertBefore(next);
       }
@@ -38,14 +39,14 @@ Template.topic.helpers({
     var query = getCurrentQuery();
     return query && camelToTitle(query.sort_by) || 'Top';
   },
-  commentsCount: function () { 
+  commentsCount: function () {
     // can't do comments.count (not cursor) or comments.length (dummy row)
     return this.commentsCount;
   },
   comments: function () {
     var incomingComments = getIncomingComments({
       'replyTo': { $nin: SessionAmplify.get('showingReplies') },
-      'topicId': this._id 
+      'topicId': this._id
     });
     var comments = getComments({
       'topicId': this._id
@@ -69,10 +70,10 @@ Template.topic.helpers({
 });
 
 Template.topicButtons.helpers({
-	following: function () {
-		if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.followingTopics)
-			return _.contains(Meteor.user().activity.followingTopics, this._id);
-	},
+  following: function () {
+    if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.followingTopics)
+      return _.contains(Meteor.user().activity.followingTopics, this._id);
+  },
   canFlag: function () {
     var user = Meteor.user();
     return user && !isAdmin(user) && user.flags && !_.contains(user.flags.topics, this._id);
@@ -92,42 +93,42 @@ Template.topicHeader.events({
   'click .collapsible': function (event, template) {
     template.$('.topic-description').toggleClass('collapsed');
   },
-	'click #js-vote-pro': function (event, template) {
-		Meteor.call('vote', this, 'pro');
-	},
-	'click #js-vote-con': function (event, template) {
-		Meteor.call('vote', this, 'con');
-	}
+  'click #js-vote-pro': function (event, template) {
+    Meteor.call('vote', this, 'pro');
+  },
+  'click #js-vote-con': function (event, template) {
+    Meteor.call('vote', this, 'con');
+  }
 });
 
 Template.topicButtons.events({
-	'click #js-follow': function (event, template) {
-		Meteor.call('followTopic', this._id, function (error) {
-			if (error) {
-				if (error.error === 'logged-out')
-					alert('Please log in to follow topics. Thank you!');
-				else
-					alert('Sorry, something went wrong. Please try again in a moment.');
-			}
-		});
-	},
-	'click #js-unfollow': function (event, template) {
-		Meteor.call('unfollowTopic', this._id, function (error) {
-			if (error) {
-				if (error.error === 'logged-out')
-					alert('Please log in to follow topics. Thank you!');
-				else
-					alert('Sorry, something went wrong. Please try again in a moment.');
-			}
-		});
-	},
+  'click #js-follow': function (event, template) {
+    Meteor.call('followTopic', this._id, function (error) {
+      if (error) {
+        if (error.error === 'logged-out')
+          alert('Please log in to follow topics. Thank you!');
+        else
+          alert('Sorry, something went wrong. Please try again in a moment.');
+      }
+    });
+  },
+  'click #js-unfollow': function (event, template) {
+    Meteor.call('unfollowTopic', this._id, function (error) {
+      if (error) {
+        if (error.error === 'logged-out')
+          alert('Please log in to follow topics. Thank you!');
+        else
+          alert('Sorry, something went wrong. Please try again in a moment.');
+      }
+    });
+  },
   'click #js-flag-topic': function (event, template) {
     var modal = Blaze.renderWithData(Template.flagForm, { _id: this._id, type: 'topics' }, $('body')[0]);
     $('#flag-modal').modal('show').on('hidden.bs.modal', function () {
       Blaze.remove(modal);
     });
   },
-	'click #js-delete-topic': function (event, template) {
+  'click #js-delete-topic': function (event, template) {
     if (confirm('Are you sure you want to delete this topic?')) {
       Meteor.call('removeTopic', this, function (error) {
         if (error) {
@@ -138,7 +139,7 @@ Template.topicButtons.events({
         }
       });
     }
-	}
+  }
 });
 
 
