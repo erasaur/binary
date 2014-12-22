@@ -14,7 +14,10 @@ var isSearching = function () {
 
 Template.searchInput.helpers({
   indexes: ['topics', 'users'],
-  searching: isSearching
+  searching: isSearching,
+  placeholder: function () {
+    return i18n.t('search_prompt');
+  }
 });
 
 Template.mainLayout.helpers({
@@ -36,7 +39,7 @@ Template.searchInput.events({
     searching.set(true);
   },
   'click #js-search-cancel': function (event, template) {
-    stopSearching(); 
+    stopSearching();
   }
 });
 
