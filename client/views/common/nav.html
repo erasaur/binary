@@ -3,7 +3,7 @@
     <div class="container">
       <div class="navbar-header col-sm-2">
         <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar">
-          <span class="sr-only">Toggle navigation</span>
+          <span class="sr-only">{{_ "toggle_navigation"}}</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -34,7 +34,7 @@
       <li role="presentation">
         <a href="{{pathFor route='profile' data=currentUser}}" id="nav-profile">
           {{> avatar user=currentUser size='small' shape='circle' class='navbar-item hidden-xs'}}
-          <span class="visible-xs">Your Profile</span>
+          <span class="visible-xs">{{_ "your_profile"}}</span>
         </a>
       </li>
       {{> notifications}}
@@ -43,7 +43,7 @@
           <div class="navbar-item icon-group hidden-xs">
             <i class="b-icon-write"></i>
           </div>
-          <span class="visible-xs">Add New Topic</span>
+          <span class="visible-xs">{{_ "add_new_topic"}}</span>
         </a>
       </li>
     </ul>
