@@ -156,7 +156,7 @@ Meteor.users.initEasySearch('profile.name', {
   limit: 15,
   use: 'mongo-db',
   query: function (searchString) {
-    var query = EasySearch.getSearcher('mongo-db').defaultQuery(this, searchString);
+    var query = EasySearch.getSearcher(this.use).defaultQuery(this, searchString);
     var user = Meteor.users.findOne(this.publishScope.userId);
 
     query['profile.name'] = { $ne: user.profile.name };
@@ -177,14 +177,14 @@ Meteor.methods({
       throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 
     // update user being followed
-    Meteor.users.update(userId, { 
-      $addToSet: { 'activity.followingUsers': followingId } 
+    Meteor.users.update(userId, {
+      $addToSet: { 'activity.followingUsers': followingId }
     });
 
     // update the user who is following
-    Meteor.users.update(followingId, { 
+    Meteor.users.update(followingId, {
       $addToSet: { 'activity.followers': userId },
-      $inc: { 'stats.followersCount': 1 } 
+      $inc: { 'stats.followersCount': 1 }
     });
 
     Meteor.call('newFollowerNotification', followingId);
@@ -197,13 +197,13 @@ Meteor.methods({
 
     // update user being followed
     Meteor.users.update(userId, {
-      $pull: { 'activity.followingUsers': followingId } 
+      $pull: { 'activity.followingUsers': followingId }
     });
 
     // update the user who is following
-    Meteor.users.update(followingId, { 
+    Meteor.users.update(followingId, {
       $pull: { 'activity.followers': userId },
-      $inc: { 'stats.followersCount': -1 } 
+      $inc: { 'stats.followersCount': -1 }
     });
   }
 });
