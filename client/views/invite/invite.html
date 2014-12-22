@@ -6,9 +6,9 @@
     <ul class="landing-form-errors"></ul>
     <div class="landing-form-body">
       <form id="js-signup-form" role="form">
-        <input type="text" class="form-control" id="js-create-name" placeholder="Your Name" maxlength="25">
-        <input type="password" class="form-control" id="js-create-password" placeholder="Password">
-        <button type="submit" class="btn btn-primary">Welcome In!</button>
+        <input type="text" class="form-control" id="js-create-name" placeholder="{{_ 'your_name'}}" maxlength="25">
+        <input type="password" class="form-control" id="js-create-password" placeholder="{{_ 'password'}}">
+        <button type="submit" class="btn btn-primary">{{_ "sign_up"}}</button>
       </form>
     </div>
   </div>
@@ -22,29 +22,25 @@
           <div class="icon-group close" data-dismiss="modal" aria-hidden="true">
             <i class="icon-action fa fa-remove"></i>
           </div>
-          <h3 class="modal-title muted uppercase" id="modalLabel">Invite your friends!</h3>
+          <h3 class="modal-title muted uppercase" id="modalLabel">{{_ "invite_your_friends"}}</h3>
         </div>
         <div class="modal-body">
           <form role="form" id="js-invite-form">
             {{#if currentUser.invites.inviteCount}}
               <div class="form-group">
-                <p class="help-block">
-                  We spent a lot of care cookin’ this site up, and we’d love for your friends to try it out!
-                </p>
-                <p class="help-block">
-                  We are still testing things though, so lest we can’t handle the load, we’ve given you exactly <strong>three</strong> invites. Send them to three friends who you think will enjoy this the most!
-                </p>
+                <p class="help-block">{{_ "invite_message_0"}}</p>
+                <p class="help-block">{{_ "invite_message_1"}} <strong>three</strong> {{_ "invite_message_2"}}</p>
               </div>
               <div class="form-group">
-                <p class="help-block">You have <b>{{currentUser.invites.inviteCount}}</b> invites left.</p>
+                <p class="help-block">{{_ "num_invites_left" count=currentUser.invites.inviteCount}}</p>
                 <input type="text" class="form-control" id="js-invite-email" placeholder="friend@email.com">
               </div>
               <div class="action-group clearfix">
-                <button type="submit" class="btn btn-primary">Send</button>
+                <button type="submit" class="btn btn-primary">{{_ "send"}}</button>
               </div>
             {{else}}
               <div class="form-group">
-                <p class="help-block">Thank you for inviting your friends!</p>
+                <p class="help-block">{{_ "thank_you_for_inviting"}}</p>
               </div>
             {{/if}}
           </form>
