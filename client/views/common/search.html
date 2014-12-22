@@ -2,7 +2,7 @@
   <ul class="nav navbar-nav navbar-search col-sm-8">
     <form class="navbar-form search-form" id="js-search-form" role="search">
       <div class="search-form-group form-group has-feedback">
-        {{> esInput index=indexes id="js-search" class="form-control search-input" placeholder="{{_ 'search_prompt'}}"}}
+        {{> esInput index=indexes id="js-search" class="form-control search-input" placeholder=placeholder}}
         {{#if searching}}
           <span id="js-search-cancel" class="icon-group form-control-feedback"><i class="icon-action fa fa-remove"></i></span>
         {{/if}}
