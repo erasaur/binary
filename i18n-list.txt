@@ -1,0 +1,213 @@
+// admin/flag.js
+make sure you provide a valid reason for flagging
+thank you for helping keep the site clean!
+
+// comments/comment.html
+show/hide more (when hovering over the comment)
+reply to 
+please login to comment
+please wait %s seconds before posting again (also for posting new topic)
+sorry, your comment has to have at least 10 characters
+
+// comments/new_comment.html
+what do you think? (input)
+
+// common/forgot_password.html
+new password
+send recovery link (use send?)
+login
+
+// common/forgot_password.js
+success! please check your email for a recovery link
+
+// common/nav.html
+toggle navigation
+your profile
+add new topic
+
+// common/search.html
+find topics and users...
+topics (search category title)
+users
+search for topics.
+search for users.
+no search results.
+
+// errors/not_found.html
+sorry!
+We were unable to find what you were looking for. It may have been moved or deleted... who knows?
+
+// home/home.html
+loading more...
+no more topics.
+
+// invite/invite.html
+your name
+sign up
+invite your friends! (title)
+We spent a lot of care cookin’ this site up, and we’d love for your friends to try it out! 
+We are still testing things though, so lest we can’t handle the load, we’ve given you exactly three invites.
+Send them to three friends who you think will enjoy this the most!
+you have %s invites left
+thank you for inviting your friends!
+
+// invite/invite.js
+sorry, the invitation link provided is broken!
+Please use alphanumeric characters (minimum 3, maximum 25) to keep names identifiable. Thank you!
+Your password should have 6 characters at minimum. We don\'t want your account to be compromised! (also for settings change pass)
+Oh no, it looks like you are out of invites!
+Your friend has already been invited. Try another?
+Your invite was sent successfully!
+
+// landing/landing.html
+explore the fascinating world of binary questions
+Log In
+
+// landing/landing.js
+[frontpage questions]
+
+// login/login.html
+forgot password?
+
+// notifications/notification_new_comment.html
+posted %s new comments
+and %s others posted new comments
+posted a new comment
+
+// notifications/notification_new_comment.js
+in your topic: 
+in: 
+
+// notifications/notification_new_follower.html
+and %s others are now following you
+is now following you
+
+// notifications/notification_new_reply.html
+and %s others replied to your comment
+replied to your comment
+
+// notifications/notification_new_topic.html
+created a new topic: 
+
+// notifications/notifications.html
+Notifications (title)
+no notifications
+
+// profile/profile.html
+comments (title)
+no comments yet
+topics (title)
+no topics yet
+followers (title)
+no followers yet
+following
+not following anybody yet
+unfollow
+follow
+rep (short for reputation)
+
+// profile/profile.js
+Please log in to follow other users
+
+// settings/settings.html
+saved
+
+// settings/settings_account.html
+account settings (title)
+resend verification 
+change password
+current password
+new password
+
+// settings/settings_account.js
+please check your email for a verification link. thanks!
+please verify that you have entered the correct password.
+
+// settings/settings_profile.html
+name
+bio
+Sorry, please stick to alphanumeric characters, hyphens, periods, and apostrophes!
+
+// topics/new_topic.html
+create topic (title)
+ask a question!
+Some context for the question would be nice.
+please login to post a topic. (use generic login message?)
+sorry, the topic title has to have at least 8 characters
+sorry, there is already a topic with that title
+
+// topics/topic.html
+no comments yet
+%s Comments (title)
+Top
+Newest
+
+// topics/topic.js
+please login to follow topics
+
+// main.js
+success! your email has been verified.
+
+// email/emailInvite.handlebars
+Greetings! You have been invited by {{inviter}} ({{inviterEmail}})
+to join:
+Take me there!
+
+// email/emailResetPassword.handlebars
+We heard you lost your password, but no worries. Simply click the link below to reset it:
+Recover My Password!
+
+// email/emailVerifyEmail.handlebars
+Please verify your email by clicking the link below:
+Verify this email
+
+// email/emailWrapper.handlebars
+Best,
+the Binary Team
+We're currently in invitation-only private beta.
+If you feel that you have received this in error, we apologize and promise you won't be bothered again!
+©2014 Binary, All Rights Reserved.
+
+// notifications/emailNewComment.handlebars
+Just wanted to let you know that
+%s posted %s new comments
+%s and %s others posted new comments
+%s posted a new comment
+Discuss
+
+// notifications/emailNewFollower.handlebars
+%s and %s others are now following you. Gooood
+%s is now following you. better watch your back. (kidding)
+View my profile
+
+// notifications/emailNewReply.handlebars
+%s and %s others replied to your comment
+%s replied to your comment
+%s created a new topic: 
+
+// server/admin.js
+Sorry, this comment has been deleted.
+
+// server/config.js
+Recovering your password on Binary
+Verify your email on Binary
+
+// server/email.js
+New comments were posted in (email subject)
+Email notification not sent: missing/invalid params!
+
+// server/fixtures.js, server/users.js
+Not much is known about him/her, except that not much is known about him/her.
+
+// general errors
+hey there, %s!
+sorry, something went wrong. please try again later
+email
+password
+send
+save
+cancel
+submit/post
+working...
+please fill in the fields
+we're sorry but we can't let you continue (no permission)

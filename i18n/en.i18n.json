@@ -1,0 +1,161 @@
+{
+  // Flags - Admin Page
+  "no_flags": "No flags",
+  "flagged_by": "Flagged by ",
+  "num_helpful_flags": "__count__ helpful flag",
+  "num_helpful_flags_plural": "__count__ helpful flags",
+  "reason": "Reason: $t(__reason__)",
+
+  // Flags - Form
+  "flag_content": "Flag Content",
+  "why_are_you_reporting_this": "Why are you reporting this?",
+  "spam": "Spam",
+  "hateful_speech": "Hateful speech",
+  "harasses_or_threatens_others": "Harasses or threatens others",
+  "encourages_self_harm": "Encourages self harm",
+  "compromises_others_privacy_or_security": "Compromises others' privacy or security",
+  "infringes_ip": "Infringes IP",
+  "illegal_activity": "Illegal activity",
+  "other_reason": "Some other reason",
+  "thank_you_for_flagging": "We appreciate your helping us in keeping the site clean!",
+
+  // Comments
+  "show_hide_more": "Show/hide more",
+  "reply_to": "Reply to",
+  "comment_too_short": "Sorry, your comment has to have at least 10 characters.",
+  "new_comment_placeholder": "What do you think?",
+
+  // Forgot Password
+  "new_password": "New Password",
+  "send_recovery_link": "Send Recovery Link",
+  "check_email_for_recovery": "Please check your email for a recovery link.",
+
+  // Login/Forgot Password
+  "login": "Login",
+
+  // Nav
+  "toggle_navigation": "Toggle Navigation",
+  "your_profile": "Your Profile",
+  "add_new_topic": "Add New Topic",
+
+  // Search
+  "search_placeholder": "Find topics and users...",
+  "topics": "Topics",
+  "users": "Users",
+  "search_for_topics": "Search for topics.",
+  "search_for_users": "Search for users.",
+  "no_search_results": "Sorry, we couldn't find anything! Try another search?",
+
+  // Not Found
+  "sorry": "Sorry!",
+  "not_found": "We were unable to find what you were looking for. It may have been moved or deleted... who knows?",
+
+  // Invite
+  "your_name": "Your Name",
+  "sign_up": "Sign Up",
+  "invite_your_friends": "Invite Your Friends!",
+  "invite_message": "<p>We spent a lot of care cookin’ this site up, and we’d love for your friends to try it out!</p><p>We are still testing things though, so lest we can’t handle the load, we’ve given you exactly three invites.</p><p>Send them to three friends who you think will enjoy this the most!</p>",
+  "num_invites_left": "You have %s invites left.",
+  "thank_you_for_inviting": "Thank you for inviting your friends!",
+  "invalid_invitation_link": "Sorry, the invitation link is broken!",
+  "no_more_invites": "Oh no, it looks like you are out of invites!",
+  "already_invited": "Your friend has already been invited. Try another?",
+  "invite_success": "Your invite has been sent!",
+
+  // Landing
+  "heading": "explore the fascinating world of binary questions",
+  "login": "Log In",
+  
+  // Notifications
+  "notifications": "Notifications",
+  "no_notifications": "No Notifications",
+
+  "notification_new_comment": "__user__ posted a new comment __topic__",
+  "notification_new_comment_plural": "__user__ posted %s new comments __topic__",
+  "notification_new_comment_users_plural": "__user__ and %s others posted new comments __topic__",
+  
+  "notification_new_follower": "__user__ is now following you.",
+  "notification_new_follower_plural": "__user__ and %s others are now following you.",
+  "notification_new_reply": "__user__ replied to your comment __topic__",
+  "notification_new_reply_plural": "__user__ and %s others replied to your comment __topic__",
+  "notification_new_topic": "__user__ created a new topic: __topic__",
+
+  "discuss": "Discuss",
+  "view_my_profile": "View my profile",
+  "email_notification_error": "Email notification not sent: missing/invalid params.",
+
+  // Profile
+  "comments": "Comments",
+  "topics": "Topics",
+  "followers": "Followers",
+  "following": "Following",
+  "unfollow": "Unfollow",
+  "follow": "Follow",
+  "reputation": "Rep",
+  "default_profile": "Not much is known about him/her, except that not much is known about him/her.",
+  
+  // Settings
+  "saved": "Saved",
+  "account_settings": "Account Settings",
+  "resend_verification": "Resend Verification",
+  "change_password": "Change Password",
+  "current_password": "Current Password",
+  "new_password": "New Password",
+  "check_email_for_verification": "Please check your email for a verification link.",
+  "email_verified": "Success! Your email has been verified.",
+  "incorrect_password": "Please check that you have entered the correct password.",
+  "name": "Name",
+  "biography": "Bio",
+  "use_valid_characters": "Please stick to alphanumeric characters, hyphens, periods, and apostrophes.",
+
+  // Invite/Settings
+  "use_alphanumeric_name": "Please try to stick to alphanumeric characters (minimum 3, maximum 25) to keep names identifiable.",
+  "password_too_short": "Your password should have 6 characters at minimum. Don't be so easy on the hackers!",
+
+  // Topics
+  "create_topic": "Create Topic",
+  "ask_question": "Ask a question!",
+  "question_context": "Some context for the question would be nice.",
+  "topic_too_short": "Sorry, the topic title has to have at least 8 characters.",
+  "topic_title_exists": "Oops! It looks like a topic with the same title already exists. Comment on there instead?",
+  "num_comments": "%s Comments",
+  "top": "Top",
+  "newest": "Newest",
+
+  // Comments/Topics
+  "please_wait": "Please wait %s seconds before posting again.",
+
+  // Emails
+  "recover_password_subject": "Recovering your password on Binary",
+  "verify_email_subject": "Verify your email on Binary",
+  "you_are_invited": "Greetings! You have been invited by",
+  "to_join": "to join.",
+  "accept_invite": "Take me there!",
+  "click_link_to_reset": "We heard you lost your password, but no worries. Simply click the link below to reset it:",
+  "recover_password": "Recover my password",
+  "click_link_to_verify": "Please verify your email by clicking the link below:",
+  "verify_email": "Verify this email",
+  "signature": "Best,",
+  "email_from": "the Binary Team",
+  "we_are_in_private_beta": "We're currently in invitation-only private beta.",
+  "if_received_in_error_we_apologize": "If you feel that you have received this in error, we apologize and promise you won't be bothered again!",
+  "just_wanted_to_let_you_know_that": "Just wanted to let you know that",
+  
+  // Admin
+  "comment_deleted": "Sorry, this comment has been deleted.",
+
+  // Common
+  "copyright": "©2014 Binary, All Rights Reserved.",
+  "greeting": "Hey there, %s!",
+  "email": "Email",
+  "password": "Password",
+  "no_more": "Looks like you've hit the bottom of the well.",
+  "loading": "Working on it...",
+  "submit": "Submit",
+  "send": "Send",
+  "save": "Save",
+  "cancel": "Cancel",
+  "fill_in_fields": "Oops! Looks like you left some fields empty.",
+  "error": "Sorry, something went wrong. Please try again later.",
+  "please_login": "That's something you have to be logged in to do."
+}
