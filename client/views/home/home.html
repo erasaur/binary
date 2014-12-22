@@ -1,19 +1,19 @@
 <template name="home">
-	<div class="page-body">
-		{{#if topics.count}}
-			{{#each topics}}
-				{{> topicItem}}
-			{{/each}}
-		{{/if}}
+  <div class="page-body">
+    {{#if topics.count}}
+      {{#each topics}}
+        {{> topicItem}}
+      {{/each}}
+    {{/if}}
 
-		{{#if moreTopics}}
-			<div class="show-more">
-				<span>Loading more...</span>
-			</div>
-		{{else}}
-			<div class="show-more">
-				<span>No more topics.</span>
-			</div>
-		{{/if}}
-	</div>
+    {{#if moreTopics}}
+      <div class="show-more">
+        <span>{{_ "loading"}}</span>
+      </div>
+    {{else}}
+      <div class="show-more">
+        <span>{{_ "no_more"}}</span>
+      </div>
+    {{/if}}
+  </div>
 </template>
