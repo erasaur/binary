@@ -71,13 +71,13 @@ Template.newComment.events({
     Meteor.call('newComment', Session.get('currentTopic'), comment, function (error, result) {
       if (error) {
         if (error.error === 'logged-out')
-          alert('Please log in to comment. Thank you!');
+          alert(i18n.t('please_login'));
         else if (error.error === 'wait')
-          alert('Please wait ' + error.reason + ' seconds before commenting again. Thank you!');
+          alert(i18n.t('please_wait', { num: error.reason }));
         else if (error.error === 'invalid-content')
-          alert('Sorry, your comment has to have at least 10 characters.');
+          alert(i18n.t('comment_too_short'));
         else
-          alert('Sorry, something went wrong. Please try again in a moment.');
+          alert(i18n.t('error'));
       }
       else {
         template.$('.editable').val('');
@@ -203,13 +203,13 @@ Template.comment.events({
     });
   },
   'click .js-delete-comment': function (event, template) {
-    if (confirm('Are you sure you want to delete this comment?')) {
+    if (confirm(i18n.t('are_you_sure', { action: 'delete_comment' }))) {
       Meteor.call('removeComment', this, function (error) {
         if (error) {
           if (error.error === 'no-permission')
-            alert('Oops! We\'re sorry but we can\'t let you continue.');
+            alert(i18n.t('no-permission'));
           else
-            alert('Sorry, something went wrong. Please try again in a moment.');
+            alert(i18n.t('error'));
         }
       });
     }

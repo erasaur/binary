@@ -21,7 +21,7 @@
 
   // Comments
   "show_hide_more": "Show/hide more",
-  "reply_to": "Reply to",
+  "reply_to": "Reply to __user__",
   "comment_too_short": "Sorry, your comment has to have at least 10 characters.",
   "new_comment_placeholder": "What do you think?",
 
@@ -123,7 +123,7 @@
   "newest": "Newest",
 
   // Comments/Topics
-  "please_wait": "Please wait %s seconds before posting again.",
+  "please_wait": "Please wait __num__ seconds before posting again.",
 
   // Emails
   "recover_password_subject": "Recovering your password on Binary",
@@ -143,8 +143,11 @@
   
   // Admin
   "comment_deleted": "Sorry, this comment has been deleted.",
+  "delete_comment": "delete this comment",
+  "delete_topic": "delete this topic",
 
   // Common
+  "are_you_sure": "Are you sure you want to $t(__action__)?",
   "copyright": "©2014 Binary, All Rights Reserved.",
   "greeting": "Hey there, %s!",
   "email": "Email",
@@ -157,5 +160,6 @@
   "cancel": "Cancel",
   "missing_fields": "Oops! Looks like you left some fields empty.",
   "error": "Sorry, something went wrong. Please try again later.",
-  "please_login": "That's something you have to be logged in to do."
+  "please_login": "That's something you have to be logged in to do.",
+  "no_permission": "Sorry, we can't let you do that."
 }
