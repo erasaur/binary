@@ -155,7 +155,7 @@
   "send": "Send",
   "save": "Save",
   "cancel": "Cancel",
-  "fill_in_fields": "Oops! Looks like you left some fields empty.",
+  "missing_fields": "Oops! Looks like you left some fields empty.",
   "error": "Sorry, something went wrong. Please try again later.",
   "please_login": "That's something you have to be logged in to do."
 }
