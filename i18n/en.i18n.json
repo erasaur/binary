@@ -28,7 +28,7 @@
   // Forgot Password
   "new_password": "New Password",
   "send_recovery_link": "Send Recovery Link",
-  "check_email_for_recovery": "Please check your email for a recovery link.",
+  "check_email_for_recovery": "Please check your email for a recovery link. Thanks!",
 
   // Login/Forgot Password
   "login": "Login",
@@ -44,7 +44,7 @@
   "users": "Users",
   "search_for_topics": "Search for topics.",
   "search_for_users": "Search for users.",
-  "no_search_results": "Sorry, we couldn't find anything! Try another search?",
+  "no_search_results": "Sorry, we couldn't find anything. Try another search?",
 
   // Not Found
   "sorry": "Sorry!",
