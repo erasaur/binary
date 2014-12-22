@@ -19,6 +19,7 @@ browser-policy-content@1.0.3
 browser-policy-framing@1.0.3
 callback-hook@1.0.2
 check@1.0.3
+chrismbeckett:toastr@2.1.0
 chuangbo:cookie@1.1.0
 chuangbo:marked@0.3.5
 cmather:handlebars-server@2.0.0
@@ -104,6 +105,8 @@ spacebars-compiler@1.0.4
 srp@1.0.2
 standard-app-packages@1.0.4
 stylus@1.0.6
+tap:http-methods@0.0.23
+tap:i18n@1.2.1
 templating@1.0.10
 tracker@1.0.4
 ui@1.0.5
