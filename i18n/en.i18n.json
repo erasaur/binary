@@ -13,10 +13,10 @@
   "hateful_speech": "Hateful speech",
   "harasses_or_threatens_others": "Harasses or threatens others",
   "encourages_self_harm": "Encourages self harm",
-  "compromises_others_privacy_or_security": "Compromises others' privacy or security",
+  "compromises_privacy_or_security": "Compromises others' privacy or security",
   "infringes_ip": "Infringes IP",
   "illegal_activity": "Illegal activity",
-  "other_reason": "Some other reason",
+  "other_reason": "Some other reason (max 100 characters):",
   "thank_you_for_flagging": "We appreciate your helping us in keeping the site clean!",
 
   // Comments
