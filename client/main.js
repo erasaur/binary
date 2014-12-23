@@ -10,10 +10,10 @@ Accounts.onResetPasswordLink(function (token, done) {
 
 Accounts.onEmailVerificationLink(function (token, done) {
   Accounts.verifyEmail(token, function (error) {
-    if (error) 
-      alert(formatError(error));
-    else 
-      alert('Success! Your email has been verified.');
+    if (error)
+      alert(i18n.t('error'));
+    else
+      alert(i18n.t('email_verified'));
   });
   done();
 });

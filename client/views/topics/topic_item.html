@@ -6,7 +6,7 @@
       <h3>{{title}}</h3>
     </div>
     <div class="list-item-info">
-      <div>{{commentsCount}} Comments</div>
+      <div>{{_ "num_comments" count=commentsCount}}</div>
       <div>{{formatDate createdAt}} {{_ "by"}} <a href="{{pathFor 'profile' _id=userId}}" class="action-link">{{formatName userId}}</a></div>
       {{#if isAdmin}}  
         <div class="icon-group float-right js-delete-topic">
