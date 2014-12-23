@@ -1,10 +1,10 @@
 <template name="settingsAccount">
-  {{#settingsBody title='Account Settings'}}
+  {{#settingsBody title=settingsTitle}}
     <div class="list-item settings-item">
       <div class="list-item-info">
-        <label for="js-email">Email</label>
+        <label for="js-email">{{_ "email"}}</label>
         {{#unless currentUser.emails.[0].verified}}
-          <a href="#" id="js-email-verification" class="action-link">(Resend Verification)</a>
+          <a href="#" id="js-email-verification" class="action-link">{{_ "resend_verification"}}</a>
         {{/unless}}
       </div>
       <div class="settings-input">
@@ -13,18 +13,18 @@
     </div>
     <div class="list-item settings-item">
       <div class="list-item-info">
-        <label for="js-password">Password</label>
+        <label for="js-password">{{_ "password"}}</label>
       </div>
       {{#if changingPassword}}
         <div class="settings-input">
-          <input type="password" class="form-control" id="js-password" placeholder="Current Password">
+          <input type="password" class="form-control" id="js-password" placeholder="{{_ 'current_password'}}">
         </div>
         <div class="settings-input">
-          <input type="password" class="form-control" id="js-newPassword" placeholder="New Password">
+          <input type="password" class="form-control" id="js-newPassword" placeholder="{{_ 'new_password'}}">
         </div>
       {{else}}
         <div class="settings-input">
-          <a href="#" id="js-edit-password" class="action-link">Change Password</a>
+          <a href="#" id="js-edit-password" class="action-link">{{_ "change_password"}}</a>
         </div>
       {{/if}}
     </div>
