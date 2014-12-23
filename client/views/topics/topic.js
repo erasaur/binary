@@ -102,9 +102,9 @@ Template.topicButtons.events({
     Meteor.call('followTopic', this._id, function (error) {
       if (error) {
         if (error.error === 'logged-out')
-          alert('Please log in to follow topics. Thank you!');
+          alert(i18n.t('please_login'));
         else
-          alert('Sorry, something went wrong. Please try again in a moment.');
+          alert(i18n.t('error'));
       }
     });
   },
@@ -112,9 +112,9 @@ Template.topicButtons.events({
     Meteor.call('unfollowTopic', this._id, function (error) {
       if (error) {
         if (error.error === 'logged-out')
-          alert('Please log in to follow topics. Thank you!');
+          alert(i18n.t('please_login'));
         else
-          alert('Sorry, something went wrong. Please try again in a moment.');
+          alert(i18n.t('error'));
       }
     });
   },
@@ -125,13 +125,13 @@ Template.topicButtons.events({
     });
   },
   'click #js-delete-topic': function (event, template) {
-    if (confirm('Are you sure you want to delete this topic?')) {
+    if (confirm(i18n.t('are_you_sure', { action: 'delete this topic' }))) {
       Meteor.call('removeTopic', this, function (error) {
         if (error) {
           if (error.error === 'no-permission')
-            alert('Oops! We\'re sorry but we can\'t let you continue.');
+            alert(i18n.t('no_permission'));
           else
-            alert('Sorry, something went wrong. Please try again in a moment.');
+            alert(i18n.t('error'));
         }
       });
     }
