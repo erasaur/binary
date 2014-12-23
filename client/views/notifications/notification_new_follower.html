@@ -1,7 +1,7 @@
 <template name="notificationNewFollower">
-  {{#if count}}
-    {{follower}} and {{count}} others are now following you.
+  {{#if hasCount}}
+    {{_ "notification_new_follower_plural" user=follower count=count}}
   {{else}}
-    {{follower}} is now following you.
+    {{_ "notification_new_follower" user=follower}}
   {{/if}}
 </template>

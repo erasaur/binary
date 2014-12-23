@@ -2,7 +2,7 @@
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       {{> notificationBadge count=notificationCount class='navbar-item hidden-xs'}}
-      <span class="visible-xs">Notifications ({{notificationCount}})</span>
+      <span class="visible-xs">{{_ "notifications"}} ({{notificationCount}})</span>
     </a>
     <div class="dropdown-menu notifications">
       <ul>
@@ -12,7 +12,7 @@
           {{/each}}
         {{else}}
           <li class="no-notifications">
-            <a href="#" class="list-item"><span>No notifications.</span></a>
+            <a href="#" class="list-item"><span>{{_ "no_notifications"}}</span></a>
           </li>
         {{/if}}
       </ul>
