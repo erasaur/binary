@@ -12,7 +12,9 @@ Template.notificationNewReply.helpers({
   topicMessage: function () {
     var topic = this.data.topic;
     if (!topic) return;
-    return topic.userId === Meteor.userId() ? 
-      'in your topic: ' + topic.title : 'in: ' + topic.title;
+    return i18n.t('in_topic', {
+      topic: topic.title,
+      context: topic.userId === Meteor.userId() && 'owning' || ''
+    });
   }
 });
