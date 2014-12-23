@@ -134,13 +134,14 @@
 
   // Topics
   "create_topic": "Create Topic",
-  "ask_question": "Ask a question!",
-  "question_context": "Some context for the question would be nice.",
+  "new_topic_prompt": "Ask a question!",
+  "new_topic_context": "Some context for the question would be nice.",
   "topic_too_short": "Sorry, the topic title has to have at least 8 characters.",
   "topic_title_exists": "Oops! It looks like a topic with the same title already exists. Comment on there instead?",
   "num_comments": "__count__ Comments",
   "top": "Top",
   "newest": "Newest",
+  "by": "by",
 
   // Comments/Topics
   "please_wait": "Please wait __num__ seconds before posting again.",

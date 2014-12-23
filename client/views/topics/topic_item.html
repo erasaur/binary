@@ -7,8 +7,7 @@
     </div>
     <div class="list-item-info">
       <div>{{commentsCount}} Comments</div>
-      <div>{{formatDate createdAt}}</div>
-      <div><a href="{{pathFor 'profile' _id=userId}}" class="action-link">{{formatName userId}}</a></div>
+      <div>{{formatDate createdAt}} {{_ "by"}} <a href="{{pathFor 'profile' _id=userId}}" class="action-link">{{formatName userId}}</a></div>
       {{#if isAdmin}}  
         <div class="icon-group float-right js-delete-topic">
           <i class="icon-action fa fa-remove"></i>
