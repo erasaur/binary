@@ -37,20 +37,16 @@ Template.topicHeader.rendered = function () {
 Template.topic.helpers({
   commentCategory: function () {
     var query = getCurrentQuery();
-    return query && camelToTitle(query.sort_by) || 'Top';
-  },
-  commentsCount: function () {
-    // can't do comments.count (not cursor) or comments.length (dummy row)
-    return this.commentsCount;
+    var validSorts = ['top', 'newest'];
+    return query && _.contains(validSorts, query) ?
+      i18n.t(query.sort_by) : 'Top';
   },
   comments: function () {
     var incomingComments = getIncomingComments({
       'replyTo': { $nin: SessionAmplify.get('showingReplies') },
       'topicId': this._id
     });
-    var comments = getComments({
-      'topicId': this._id
-    });
+    var comments = getComments({ 'topicId': this._id });
 
     comments = incomingComments.concat(comments);
     var pros = [], cons = [];

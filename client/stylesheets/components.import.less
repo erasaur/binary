@@ -410,7 +410,9 @@
 .topic-info div,
 .topic-item .list-item-info div {
   display: inline-block;
-  margin: @padding-small @padding-small 0 0;
+  margin: @padding-small @padding-main 0 0;
+  color: @color-darkGray;
+  a, a:link, a:visited, a:hover, a:active { color: @color-darkGray; }
   &:last-of-type { margin-right: 0; }
 }
 
@@ -604,11 +606,14 @@
     border-radius: 50%;
   }
 }
-.topic-info {
-  color: @fontColor-muted;
-}
+// .topic-info {
+//   // color: @fontColor-muted;
+//   color: #aaa;
+//   a { color: #aaa !important; }
+// }
 .topic-description {
   word-wrap: break-word;
+  margin-bottom: @padding-main;
 }
 .topic-description.collapsed {
   max-height: 75px;
