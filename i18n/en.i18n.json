@@ -26,6 +26,7 @@
   "new_comment_prompt": "What do you think?",
 
   // Forgot Password
+  "forgot_password": "Forgot Password?",
   "new_password": "New Password",
   "send_recovery_link": "Send Recovery Link",
   "check_email_for_recovery": "Please check your email for a recovery link. Thanks!",
@@ -39,7 +40,7 @@
   "add_new_topic": "Add New Topic",
 
   // Search
-  "search_placeholder": "Find topics and users...",
+  "search_prompt": "Find topics and users...",
   "topics": "Topics",
   "users": "Users",
   "search_for_topics": "Search for topics.",
@@ -65,21 +66,24 @@
   "invite_success": "Your invite has been sent!",
 
   // Landing
-  "heading": "explore the fascinating world of binary questions",
+  "landing_lead": "explore the fascinating world of binary questions",
   "login": "Log In",
   
   // Notifications
   "notifications": "Notifications",
   "no_notifications": "No Notifications",
 
+  "in_topic_owning": "in your topic: __topic__",
+  "in_topic": "in: __topic__",
+
   "notification_new_comment": "__user__ posted a new comment __topic__",
-  "notification_new_comment_plural": "__user__ posted %s new comments __topic__",
-  "notification_new_comment_users_plural": "__user__ and %s others posted new comments __topic__",
+  "notification_new_comment_plural": "__user__ posted __count__ new comments __topic__",
+  "notification_new_comment_users_plural": "__user__ and __count__ others posted new comments __topic__",
   
   "notification_new_follower": "__user__ is now following you.",
-  "notification_new_follower_plural": "__user__ and %s others are now following you.",
+  "notification_new_follower_plural": "__user__ and __count__ others are now following you.",
   "notification_new_reply": "__user__ replied to your comment __topic__",
-  "notification_new_reply_plural": "__user__ and %s others replied to your comment __topic__",
+  "notification_new_reply_plural": "__user__ and __count__ others replied to your comment __topic__",
   "notification_new_topic": "__user__ created a new topic: __topic__",
 
   "discuss": "Discuss",
@@ -98,17 +102,31 @@
   
   // Settings
   "saved": "Saved",
+  "email_notifications": "Email Notifications",
   "account_settings": "Account Settings",
+  "edit_profile": "Edit Profile",
   "resend_verification": "Resend Verification",
   "change_password": "Change Password",
   "current_password": "Current Password",
   "new_password": "New Password",
-  "check_email_for_verification": "Please check your email for a verification link.",
+  "check_email_for_verification": "Please check your email for a verification link. Thanks!",
   "email_verified": "Success! Your email has been verified.",
   "incorrect_password": "Please check that you have entered the correct password.",
   "name": "Name",
-  "biography": "Bio",
+  "bio": "Bio",
   "use_valid_characters": "Please stick to alphanumeric characters, hyphens, periods, and apostrophes.",
+
+  "new_followers": "New Followers",
+  "new_comments": "New Comments",
+  "new_replies": "New Replies",
+  "new_topics": "New Topics",
+  
+  "settings_new_follower": "Email me when I gain a new follower",
+  "settings_newComment_follower": "Email me when someone I follow posts a new comment",
+  "settings_newTopic": "Email me when someone I follow creates a new topic",
+  "settings_newReply": "Email me when someone replies to my comment",
+  "settings_newComment_topicOwner": "Email me when someone comments in my topic",
+  "settings_newComment_topicFollower": "Email me when someone comments in a topic I am following",
 
   // Invite/Settings
   "use_alphanumeric_name": "Please try to stick to alphanumeric characters (minimum 3, maximum 25) to keep names identifiable.",
@@ -120,7 +138,7 @@
   "question_context": "Some context for the question would be nice.",
   "topic_too_short": "Sorry, the topic title has to have at least 8 characters.",
   "topic_title_exists": "Oops! It looks like a topic with the same title already exists. Comment on there instead?",
-  "num_comments": "%s Comments",
+  "num_comments": "__count__ Comments",
   "top": "Top",
   "newest": "Newest",
 
