@@ -18,7 +18,7 @@ Meteor.methods({
       $set: { 
         'isDeleted': true, 
         'upvotes': 0,
-        'content': 'Sorry, this comment has been deleted.' 
+        'content': i18n.t('comment_deleted') 
       } 
     });
     // subtract comments count and reputation
