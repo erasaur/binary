@@ -31,6 +31,12 @@ Template.profileButtons.helpers({
 	}
 });
 
+Template.profileHeader.helpers({
+  canFollow: function () {
+    return canFollow(Meteor.user(), this._id);
+  }
+});
+
 Template.profileButtons.events({
 	'click #js-follow': function (event, template) {
 		Meteor.call('newFollower', this._id, function (error) {
