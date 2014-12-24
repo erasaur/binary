@@ -1,6 +1,8 @@
 // Accounts.validateNewUser(function (user) {
 // });
 Accounts.onCreateUser(function (options, user) {
+  console.log(this.connection.clientAddress);
+
   var userProperties = {
     profile: options.profile || {},
     isAdmin: false,

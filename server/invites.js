@@ -30,21 +30,26 @@ Meteor.methods({
 
     Invites.insert(invite);
 
-    Meteor.users.update(invite.inviterId, { 
-      $inc: { 'invites.inviteCount': -1 }, 
-      $addToSet: { 'invites.invitedEmails': email } 
+    Meteor.users.update(invite.inviterId, {
+      $inc: { 'invites.inviteCount': -1 },
+      $addToSet: { 'invites.invitedEmails': email }
     });
 
-    var emailSubject = 'You are invited!';
+    var emailSubject = i18n.t('email_invite_subject');
     var emailProperties = {
-      actionLink: getSiteUrl() + 'invite?inviter_id=' + invite.inviterId + '&invite_code=' + invite.inviteCode,
-      inviter: getDisplayName(currentUser),
-      inviterEmail: getEmail(currentUser)
+      action: {
+        link: getSiteUrl() + 'invite?inviter_id=' + invite.inviterId + '&invite_code=' + invite.inviteCode,
+        message: i18n.t('email_invite_action')
+      },
+      message: i18n.t('email_invite_message', {
+        user: getDisplayName(currentUser),
+        email: getEmail(currentUser)
+      })
     };
 
     // send email
     Meteor.setTimeout(function () {
-      buildAndSendEmail(email, emailSubject, 'emailInvite', emailProperties);
+      buildAndSendEmail(email, emailSubject, 'emailNotification', emailProperties);
     }, 1);
   }
 });
