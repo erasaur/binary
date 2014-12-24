@@ -1,4 +1,4 @@
-// Accounts.validateNewUser(function (user) { 
+// Accounts.validateNewUser(function (user) {
 // });
 Accounts.onCreateUser(function (options, user) {
   var userProperties = {
@@ -6,7 +6,7 @@ Accounts.onCreateUser(function (options, user) {
     isAdmin: false,
     invites: {
       inviteCount: 3,
-      invitedEmails: []  
+      invitedEmails: []
     },
     stats: {
       reputation: 0,
@@ -21,9 +21,9 @@ Accounts.onCreateUser(function (options, user) {
     },
     activity: { // activity involving other users/collections
       upvotedComments: [],
-      followers: [], 
-      followingUsers: [], 
-      followingTopics: [], 
+      followers: [],
+      followingUsers: [],
+      followingTopics: [],
       discussedTopics: []
     }
   };
@@ -37,12 +37,12 @@ Accounts.onCreateUser(function (options, user) {
 
     var invite = Invites.findOne({ 'invitedEmail': email });
 
-    // update the user who invited 
+    // update the user who invited
     user.invites.invitedBy = invite && invite.inviterId;
     // update the invite status to accepted
     Invites.update(invite._id, { $set: { 'accepted': true } });
   }
-  
+
   // set notifications default preferences
   user.profile.notifications = {
     media: {
@@ -95,7 +95,9 @@ Accounts.onCreateUser(function (options, user) {
 
   // send welcome email
   Meteor.setTimeout(function () {
-    buildAndSendEmail(email, 'Welcome to Binary!', 'emailWelcome', { name: user.profile.name });
+    buildAndSendEmail(email, i18n.t('email_invite_subject'), 'emailWelcome', {
+      name: user.profile.name
+    });
   }, 1);
 
   // TODO: subscribe user to newsletter
@@ -123,25 +125,25 @@ Meteor.methods({
       throw new Meteor.Error('weak-password', 'This password must have at least 6 characters.');
 
     Accounts.createUser({
-      'email': invite.invitedEmail, 
+      'email': invite.invitedEmail,
       'password': password,
       'profile': {
         'name': name,
-        'bio': 'Not much is known about him/her, except that not much is known about him/her.'
+        'bio': i18n.t('default_profile')
       }
     });
 
     return invite.invitedEmail;
   },
   changeProfile: function (newName, newBio) {
-    Meteor.users.update(Meteor.userId(), { 
-      $set: { 'profile.name': newName, 'profile.bio': newBio } 
+    Meteor.users.update(Meteor.userId(), {
+      $set: { 'profile.name': newName, 'profile.bio': newBio }
     });
   },
   changeEmail: function (newEmail) {
-    Meteor.users.update(Meteor.userId(), { 
-      $set: { 
-        'emails': [{ 'address': newEmail, 'verified': false }], 
+    Meteor.users.update(Meteor.userId(), {
+      $set: {
+        'emails': [{ 'address': newEmail, 'verified': false }],
         'email_hash': Gravatar.hash(newEmail)
       }
     });
@@ -162,7 +164,7 @@ Meteor.methods({
   //   }, 1);
   // }
 });
-  
+
 
 
 

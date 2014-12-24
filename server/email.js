@@ -29,16 +29,12 @@ buildEmailTemplate = function (htmlContent) {
 
   var doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
 
-  console.log(inlinedHTML);
-
   return doctype + inlinedHTML;
 };
 
 buildEmailNotification = function (notification) {
   return (function (n, courier) {
     var email = {};
-
-    console.log('building email notification');
 
     switch (courier) {
       case 'newTopic':
@@ -130,13 +126,11 @@ buildEmailNotification = function (notification) {
 
     if (!email.message || !email.action) throw new Meteor.Error('invalid-content', 'Email notification not sent: missing/invalid params!');
 
-    console.log('asdfsadfasdf');
     // var properties = _.extend(n, email.properties);
     var templateHTML = Handlebars.templates['emailNotification'](email);
     // var templateHTML = Handlebars.templates[email.template](properties);
     var emailHTML = buildEmailTemplate(templateHTML);
 
-    console.log({ subject: email.message, html: emailHTML });
     return {
       subject: email.message,
       html: emailHTML

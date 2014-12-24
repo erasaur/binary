@@ -36,7 +36,6 @@ Meteor.methods({
     });
   },
   newCommentNotification: function (comment) { // initiated by the comment creator
-    console.log('new comment notif');
     var topic = Topics.findOne(comment.topicId);
     var replyToId = comment.replyTo;
     var user = Meteor.user(); // comment owner
