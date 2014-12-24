@@ -7,7 +7,7 @@ Meteor.startup(function () {
 
 var resetPassword = {
   subject: function (user) {
-    return 'Recovering your password on Binary';
+    return i18n.t('email_resetPassword_subject');
   },
   html: function (user, url) {
     // var token = url.substring(url.lastIndexOf('/') + 1);
@@ -25,7 +25,7 @@ resetPassword.text = function (user, url) {
 
 var verifyEmail = {
   subject: function (user) {
-    return 'Verify your email on Binary';
+    return i18n.t('email_verifyEmail_subject');
   },
   html: function (user, url) {
     var properties = {

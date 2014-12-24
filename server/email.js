@@ -10,7 +10,10 @@ var htmlToText = Meteor.npmRequire('html-to-text');
 buildEmailTemplate = function (htmlContent) {
   var emailProperties = {
     body: htmlContent,
-    settingsUrl: getSettingsUrl()
+    signature: i18n.t('email_signature'),
+    footer_message: i18n.t('email_footer_message'),
+    opt_out: i18n.t('email_opt_out', { url: getSettingsUrl() }),
+    copyright: i18n.t('copyright')
   };
 
   var emailHTML = Handlebars.templates['emailWrapper'](emailProperties);
@@ -25,67 +28,124 @@ buildEmailTemplate = function (htmlContent) {
   }).result;
 
   var doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
-  
+
+  console.log(inlinedHTML);
+
   return doctype + inlinedHTML;
 };
 
 buildEmailNotification = function (notification) {
   return (function (n, courier) {
     var email = {};
+
+    console.log('building email notification');
+
     switch (courier) {
-      case 'newTopic': 
-        email.subject = n.author.name + ' created a new topic: ' + n.topic.title;
-        email.template = 'emailNewTopic';
-        email.properties = { 'actionLink': getTopicUrl(n.topic._id) };
+      case 'newTopic':
+        if (!n.author || !n.topic) break;
+
+        email.message = i18n.t('notification_new_topic', {
+          user: n.author.name,
+          topic: n.topic.title
+        });
+        email.action = {
+          link: getTopicUrl(n.topic._id),
+          message: i18n.t('discuss')
+        };
+
         break;
       case 'newComment.topicOwner':
       case 'newComment.topicFollower':
       case 'newComment.follower':
-        email.subject = 'New comments were posted in: ' + n.topic.title;
-        email.template = 'emailNewComment';
-        email.properties = {
-          'subCount': n.count && n.count - 1,
-          'actionLink': n.topic && n.comment && getTopicUrl(n.topic._id, n.comment._id),
-          'topicMessage': n.topic && (n.topic.userId === n.user._id ? 'in your topic: ' : 'in: ') + n.topic.title,
-          'followerCourier': courier === 'newComment.follower'
+        if (!n.topic || !n.comment) break;
+        email.action = {
+          link: getTopicUrl(n.topic._id, n.comment._id),
+          message: i18n.t('discuss')
         };
+
+        var topicMessage = n.topic.userId === n.user._id ?
+          i18n.t('in_topic_owning', n.topic.title) : i18n.t('in_topic', n.topic.title);
+        var options = {
+          user: n.author.name,
+          topic: topicMessage
+        };
+
+        if (!n.count) {
+          email.message = i18n.t('notification_new_comment', options);
+          break;
+        }
+
+        options.count = n.count - 1;
+        if (courier === 'newComment.follower') {
+          email.message = i18n.t('notification_new_comment_plural', options);
+        } else {
+          email.message = i18n.t('notification_new_comment_users_plural', options);
+        }
+
         break;
       case 'newReply':
-        email.subject = n.author.name + ' replied to your comment in: ' + n.topic.title;
-        email.template = 'emailNewReply';
-        email.properties = {
-          'subCount': n.count && n.count - 1,
-          'actionLink': n.topic && n.comment && getTopicUrl(n.topic._id, n.comment._id),
-          'topicMessage': n.topic && (n.topic.userId === n.user._id ? 'in your topic: ' : 'in: ') + n.topic.title
+        if (!n.author || !n.topic) break;
+
+        email.action = {
+          link: getTopicUrl(n.topic._id, n.comment._id),
+          message: i18n.t('discuss')
         };
+
+        var topicMessage = n.topic.userId === n.user._id ?
+          i18n.t('in_topic_owning', n.topic.title) : i18n.t('in_topic', n.topic.title);
+        var options = {
+          user: n.author.name,
+          topic: topicMessage
+        };
+        if (n.count) {
+          options.count = n.count - 1;
+          email.message = i18n.t('notification_new_reply_plural', options);
+        } else {
+          email.message = i18n.t('notification_new_reply', options);
+        }
+
         break;
       case 'newFollower':
-        email.subject = n.follower.name + ' is now following you';
-        email.template = 'emailNewFollower';
-        email.properties = {
-          'subCount': n.count && n.count - 1,
-          'actionLink': n.follower && (n.count ? getProfileUrl(n.user._id, 'followers') : getProfileUrl(n.follower._id))
+        if (!n.follower || !n.user) break;
+
+        email.action = {
+          link: n.count ?
+            getProfileUrl(n.user._id, 'followers') : getProfileUrl(n.follower._id),
+          message: i18n.t('view_profile')
         };
+
+        if (n.count) {
+          email.message = i18n.t('notification_new_follower_plural', {
+            user: n.user.name,
+            count: n.count - 1
+          });
+        } else {
+          email.message = i18n.t('notification_new_follower', { user: n.user.name });
+        }
+
         break;
       default:
         break;
     }
 
-    if (!email.subject || !email.template) throw new Meteor.Error('invalid-content', 'Email notification not sent: missing/invalid params!');
+    if (!email.message || !email.action) throw new Meteor.Error('invalid-content', 'Email notification not sent: missing/invalid params!');
 
-    var properties = _.extend(n, email.properties);
-    var templateHTML = Handlebars.templates[email.template](properties);
+    console.log('asdfsadfasdf');
+    // var properties = _.extend(n, email.properties);
+    var templateHTML = Handlebars.templates['emailNotification'](email);
+    // var templateHTML = Handlebars.templates[email.template](properties);
     var emailHTML = buildEmailTemplate(templateHTML);
 
+    console.log({ subject: email.message, html: emailHTML });
     return {
-      subject: email.subject,
+      subject: email.message,
       html: emailHTML
     };
   })(notification.data, notification.courier);
 };
 
 buildEmailText = function (html) {
-  // Auto-generate text version if it doesn't exist. Has bugs, but should be good enough. 
+  // Auto-generate text version if it doesn't exist. Has bugs, but should be good enough.
   return htmlToText.fromString(html, {
     wordwrap: 130
   });
@@ -100,7 +160,7 @@ sendEmail = function (to, subject, html, text) {
 
   // TODO: limit who can send emails
   // TODO: fix this error: Error: getaddrinfo ENOTFOUND
-  
+
   var from = 'welcome@binary.com';
 
   if (typeof text === 'undefined'){
@@ -115,9 +175,9 @@ sendEmail = function (to, subject, html, text) {
   // console.log('text: ' + text);
 
   var email = {
-    from: from, 
-    to: to, 
-    subject: subject, 
+    from: from,
+    to: to,
+    subject: subject,
     text: text,
     html: html
   }
