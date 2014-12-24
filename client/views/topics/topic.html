@@ -26,16 +26,6 @@
     <button id="js-follow" class="btn btn-default">{{_ "follow"}}</button>
   {{/if}}
 
-  {{#if canFlag}}
-    <div class="icon-group" id="js-flag-topic">
-      <i class="icon-action b-icon-flag"></i>
-    </div>
-  {{/if}}
-  {{#if isAdmin}}
-    <div id="js-delete-topic" class="icon-group">
-      <i class="icon-action fa fa-remove"></i>
-    </div>
-  {{/if}}
 </template>
 
 <template name="topicHeader">
@@ -55,7 +45,19 @@
 <template name="topicNav">
   <div class="divider"><hr></div>
   <div class="topic-info">
-    <div>{{formatDate createdAt}} {{_ "by"}} <a href="{{pathFor 'profile' _id=userId}}" class="action-link">{{formatName userId}}</a></div>
+    <span>{{formatDate createdAt}} {{_ "by"}} <a href="{{pathFor 'profile' _id=userId}}" class="action-link">{{formatName userId}}</a></span>
+    <div class="float-right">
+      {{#if canFlag}}
+        <div class="icon-group" id="js-flag-topic">
+          <i class="icon-action b-icon-flag"></i>
+        </div>
+      {{/if}}
+      {{#if isAdmin}}
+        <div id="js-delete-topic" class="icon-group">
+          <i class="icon-action fa fa-remove"></i>
+        </div>
+      {{/if}}
+      </div>
   </div>
 </template>
 

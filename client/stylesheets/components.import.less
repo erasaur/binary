@@ -404,16 +404,22 @@
   top: 3px;
 }
 .topic-info,
-.topic-item .list-item-info {
-  padding: 0 @padding-main @padding-small;
+.topic-item .list-item-info,
+.comment .comment-footer {
+  padding: @padding-small @padding-main;
 }
-.topic-info div,
-.topic-item .list-item-info div {
-  display: inline-block;
-  margin: @padding-small @padding-main 0 0;
+.topic-info span,
+.topic-item .list-item-info span {
   color: @color-darkGray;
   a, a:link, a:visited, a:hover, a:active { color: @color-darkGray; }
+  margin-right: @padding-main;
   &:last-of-type { margin-right: 0; }
+}
+
+.topic-info .icon-action,
+.topic-item .list-item-info .icon-action {
+  position: relative;
+  top: 3px;
 }
 
 .settings-item {

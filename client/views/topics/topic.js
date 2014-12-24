@@ -23,6 +23,7 @@ Template.topic.rendered = function () {
 Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
 };
+
 Template.topicHeader.rendered = function () {
   var description = this.find('.topic-description');
   var $description = $(description);
@@ -69,10 +70,6 @@ Template.topicButtons.helpers({
   following: function () {
     if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.followingTopics)
       return _.contains(Meteor.user().activity.followingTopics, this._id);
-  },
-  canFlag: function () {
-    var user = Meteor.user();
-    return user && !isAdmin(user) && user.flags && !_.contains(user.flags.topics, this._id);
   }
 });
 
@@ -82,6 +79,13 @@ Template.topicHeader.helpers({
     var side = side + 'Users';
 
     return userId && _.contains(this[side], userId) && 'selected';
+  }
+});
+
+Template.topicNav.helpers({
+  canFlag: function () {
+    var user = Meteor.user();
+    return user && !isAdmin(user) && user.flags && !_.contains(user.flags.topics, this._id);
   }
 });
 
