@@ -44,7 +44,8 @@ Template.inviteForm.events({
 		event.preventDefault();
 		event.stopPropagation();
 
-		var email = template.$('#js-invite-email').val();
+		var $email = template.$('#js-invite-email');
+    var email = $email.val();
 
     if (!email) {
       alert(i18n.t('missing_fields'));
@@ -61,7 +62,7 @@ Template.inviteForm.events({
 					alert(i18n.t('error'));
 			} else {
 				alert(i18n.t('invite_success'));
-				email.val('');
+				$email.val('');
 			}
 		});
 	}

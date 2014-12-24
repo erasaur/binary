@@ -147,6 +147,7 @@
   "please_wait": "Please wait __num__ seconds before posting again.",
 
   // Emails
+  "email_invite_subject": "You are invited to join Binary!",
   "email_invite_message": "Greetings! You have been invited by __user__ (__email__) to join.",
   "email_invite_action": "Take me there!",
 
