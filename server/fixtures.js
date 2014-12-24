@@ -4,7 +4,7 @@ if (Meteor.users.find().count() === 0) {
     password: 'asdf123',
     profile: {
       name: 'Test User',
-      bio: 'Not much is known about him/her, except that not much is known about him/her.'
+      bio: i18n.t('default_profile')
     }
   });
 }
