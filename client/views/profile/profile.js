@@ -41,13 +41,13 @@ Template.profileButtons.events({
 	'click #js-follow': function (event, template) {
 		Meteor.call('newFollower', this._id, function (error) {
 			if (error && error.error === 'logged-out')
-				alert(i18n.t('please_login'));
+				toastr.warning(i18n.t('please_login'));
 		});
 	},
 	'click #js-unfollow': function (event, template) {
 		Meteor.call('removeFollower', this._id, function (error) {
 			if (error && error.error === 'logged-out')
-				alert(i18n.t('please_login'));
+				toastr.warning(i18n.t('please_login'));
     });
 	},
 	'click #js-settings': function (event, template) {

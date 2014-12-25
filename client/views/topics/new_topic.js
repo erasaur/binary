@@ -13,15 +13,15 @@ Template.newTopic.events({
     Meteor.call('newTopic', topic, function (error, result) {
       if (error) {
         if (error.error === 'logged-out')
-          alert(i18n.t('please_login'));
+          toastr.warning(i18n.t('please_login'));
         else if (error.error === 'wait')
-          alert(i18n.t('please_wait', { num: error.reason }));
+          toastr.warning(i18n.t('please_wait', { num: error.reason }));
         else if (error.error === 'invalid-content')
-          alert(i18n.t('topic_too_short'));
+          toastr.warning(i18n.t('topic_too_short'));
         else if (error.error === 'duplicate-content')
-          alert(i18n.t('topic_title_exists'));
+          toastr.warning(i18n.t('topic_title_exists'));
         else
-          alert(i18n.t('error'));
+          toastr.warning(i18n.t('error'));
       }
       else {
         $title.val('');

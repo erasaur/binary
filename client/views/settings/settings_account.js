@@ -9,7 +9,7 @@ function changeEmail (email) {
     if (error) {
       throw i18n.t('error');
     } else {
-      alert(i18n.t('check_email_for_verification'));
+      toastr.success(i18n.t('check_email_for_verification'));
     }
   });
 }
@@ -38,9 +38,9 @@ Template.settingsAccount.events({
   'click #js-email-verification': function (event, template) {
     Meteor.call('sendVerificationEmail', function (error) {
       if (error)
-        alert(i18n.t('error'));
+        toastr.warning(i18n.t('error'));
       else
-        alert(i18n.t('check_email_for_verification'));
+        toastr.success(i18n.t('check_email_for_verification'));
     });
   },
   'click #js-edit-password': function (event, template) {
@@ -57,7 +57,7 @@ Template.settingsAccount.events({
         changeEmail(email);
         return;
       } catch (e) {
-        alert(e);
+        toastr.warning(e);
       }
     }
 
@@ -65,14 +65,14 @@ Template.settingsAccount.events({
     var newPassword = template.find('#js-newPassword').value;
 
     if (newPassword.length < 6) {
-      alert(i18n.t('password_too_short'));
+      toastr.warning(i18n.t('password_too_short'));
       $('#js-newPassword').focus();
       return;
     }
 
     Accounts.changePassword(oldPassword, newPassword, function (error) {
       if (error) {
-        alert(i18n.t('incorrect_password'));
+        toastr.warning(i18n.t('incorrect_password'));
         $('#js-password').focus();
         return;
       } else {
@@ -80,7 +80,7 @@ Template.settingsAccount.events({
           changeEmail(email);
           stopEditing(template);
         } catch (e) {
-          alert(e);
+          toastr.warning(e);
         }
       }
     });

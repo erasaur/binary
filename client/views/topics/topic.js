@@ -89,6 +89,21 @@ Template.topicNav.helpers({
   }
 });
 
+Template.topicNav.events({
+  'click #js-delete-topic': function (event, template) {
+    if (confirm(i18n.t('are_you_sure', { action: 'delete this topic' }))) {
+      Meteor.call('removeTopic', this, function (error) {
+        if (error) {
+          if (error.error === 'no-permission')
+            toastr.warning(i18n.t('no_permission'));
+          else
+            toastr.warning(i18n.t('error'));
+        }
+      });
+    }
+  }
+});
+
 Template.topicHeader.events({
   'click .collapsible': function (event, template) {
     template.$('.topic-description').toggleClass('collapsed');
@@ -106,9 +121,9 @@ Template.topicButtons.events({
     Meteor.call('followTopic', this._id, function (error) {
       if (error) {
         if (error.error === 'logged-out')
-          alert(i18n.t('please_login'));
+          toastr.warning(i18n.t('please_login'));
         else
-          alert(i18n.t('error'));
+          toastr.warning(i18n.t('error'));
       }
     });
   },
@@ -116,9 +131,9 @@ Template.topicButtons.events({
     Meteor.call('unfollowTopic', this._id, function (error) {
       if (error) {
         if (error.error === 'logged-out')
-          alert(i18n.t('please_login'));
+          toastr.warning(i18n.t('please_login'));
         else
-          alert(i18n.t('error'));
+          toastr.warning(i18n.t('error'));
       }
     });
   },
@@ -127,18 +142,6 @@ Template.topicButtons.events({
     $('#flag-modal').modal('show').on('hidden.bs.modal', function () {
       Blaze.remove(modal);
     });
-  },
-  'click #js-delete-topic': function (event, template) {
-    if (confirm(i18n.t('are_you_sure', { action: 'delete this topic' }))) {
-      Meteor.call('removeTopic', this, function (error) {
-        if (error) {
-          if (error.error === 'no-permission')
-            alert(i18n.t('no_permission'));
-          else
-            alert(i18n.t('error'));
-        }
-      });
-    }
   }
 });
 

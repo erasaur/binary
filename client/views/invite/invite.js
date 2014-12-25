@@ -30,7 +30,7 @@ Template.invite.events({
 				var email = result;
 				Meteor.loginWithPassword(email, password, function (error) {
 					if (error)
-						alert(i18n.t('error'));
+						toastr.warning(i18n.t('error'));
 					else
 						Router.go('home');
 				});
@@ -48,20 +48,20 @@ Template.inviteForm.events({
     var email = $email.val();
 
     if (!email) {
-      alert(i18n.t('missing_fields'));
+      toastr.warning(i18n.t('missing_fields'));
       return;
     }
 
 		Meteor.call('inviteUser', email, function (error) {
 			if (error) {
 				if (error.error === 'no-permission')
-					alert(i18n.t('no_more_invites'));
+					toastr.warning(i18n.t('no_more_invites'));
 				else if (error.error === 'duplicate-content')
-					alert(i18n.t('already_invited'));
+					toastr.warning(i18n.t('already_invited'));
 				else
-					alert(i18n.t('error'));
+					toastr.warning(i18n.t('error'));
 			} else {
-				alert(i18n.t('invite_success'));
+				toastr.success(i18n.t('invite_success'));
 				$email.val('');
 			}
 		});
