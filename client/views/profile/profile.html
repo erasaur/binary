@@ -3,7 +3,7 @@
 <template name="profileComments">
   {{#pageBody items=comments item='comment' class='no-container'}}
     <div class="page-title">
-      <h3 class="muted uppercase">{{_ "comments"}}</h3>
+      <h4 class="muted uppercase">{{_ "comments"}}</h4>
     </div>
   {{/pageBody}}
 </template>
@@ -11,7 +11,7 @@
 <template name="profileTopics">
   {{#pageBody items=topics item='topicItem' class='no-container'}}
     <div class="page-title">
-      <h3 class="muted uppercase">{{_ "topics"}}</h3>
+      <h4 class="muted uppercase">{{_ "topics"}}</h4>
     </div>
   {{/pageBody}}
 </template>
@@ -19,7 +19,7 @@
 <template name="profileFollowers">
   {{#pageBody items=followers item='profileItem'}}
     <div class="page-title">
-      <h3 class="muted uppercase">{{_ "followers"}}</h3>
+      <h4 class="muted uppercase">{{_ "followers"}}</h4>
     </div>
   {{/pageBody}}
 </template>
@@ -27,7 +27,7 @@
 <template name="profileFollowing">
   {{#pageBody items=following item='profileItem'}}
     <div class="page-title">
-      <h3 class="muted uppercase">{{_ "following"}}</h3>
+      <h4 class="muted uppercase">{{_ "following"}}</h4>
     </div>
   {{/pageBody}}
 </template>
@@ -43,13 +43,6 @@
 </template>
 
 <template name="profileButtons">
-  <!-- {{#if canFollow}} -->
-  <!--   {{#if following}} -->
-  <!--     <button id="js-unfollow" class="btn btn-primary">{{_ "unfollow"}}</button> -->
-  <!--   {{else}} -->
-  <!--     <button id="js-follow" class="btn btn-default">{{_ "follow"}}</button> -->
-  <!--   {{/if}} -->
-  <!-- {{else}} -->
   {{#unless canFollow}}
     <div class="icon-group">
       <i id="js-settings" class="icon-action b-icon-gear"></i>
@@ -58,7 +51,6 @@
       <i id="js-logout" class="icon-action b-icon-logout"></i>
     </div>
   {{/unless}}
-  <!-- {{/if}} -->
 </template>
 
 <template name="profileHeader">
@@ -69,7 +61,6 @@
     <div class="profile-info">
       <h3 class="profile-title">{{profile.name}}</h3>
       <p class="muted">{{profile.bio}}</p>
-      <!-- <p class="muted"><small>{{stats.reputation}} {{_ "reputation"}}</small></p> -->
       {{#if canFollow}}
         {{#if following}}
           <button id="js-unfollow" class="btn btn-primary">{{_ "unfollow"}}</button>

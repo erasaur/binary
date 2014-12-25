@@ -4,7 +4,7 @@
 
 // media queries -------------------------------------
 // @media (min-width: 768px) {
-// 	body { padding-top: @top-padding; }	//no top padding when xs
+  // 	body { padding-top: @top-padding; }	//no top padding when xs
 // }
 
 // general styles ------------------------------------
@@ -16,36 +16,44 @@ html {
   font-family: 'Lato', sans-serif;
 }
 body {
-	background-color: @color-background;
+  background-color: @color-background;
   height: 100%;
 }
 .row {
   margin: 0;
 }
 // .col-sm-8 {
-//   max-width: 1066px;
+  //   max-width: 1066px;
 // }
 input, 
 textarea, 
 button {
-	.border-radius(@radius-main);
+  .border-radius(@radius-main);
 }
 h1, h2, h3 {
   font-family: 'Lato', sans-serif;
 }
-h1, h2 { font-weight: 300; }
-h2 { font-size: 1.8em; }
-h3 {
-	.content-header;
-	margin-top: 0;
+h1, h2 { 
+  font-weight: 300; 
 }
+h2 { 
+  font-size: 1.8em; 
+}
+h3, h4 {
+  .content-header;
+  margin-top: 0;
+}
+h3 { 
+  font-size: @fontSize-larger; 
+}
+
 a, 
 a:link, 
 a:visited,
 a:hover,
 a:active {
-	text-decoration: none;
-	color: #454545;
+  text-decoration: none;
+  color: #454545;
 }
 .action-link:hover,
 a.action-group:hover .action-link {
@@ -57,24 +65,24 @@ a.action-group:hover .action-link {
   color: @color-primary;
 }
 textarea {
-	width: 100%;
-	max-width: 100%;
+  width: 100%;
+  max-width: 100%;
   overflow: auto;
   outline: none;
-	-webkit-box-shadow: none;
+  -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
 ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 a,
 input,
 button {
-	&:active, 
-	&:focus { outline: none !important; }
+  &:active, 
+  &:focus { outline: none !important; }
 }
 textarea,
 .form-control,
@@ -90,7 +98,7 @@ textarea,
   padding: @padding-small;
   margin-bottom: @padding-small;
   min-height: 80px;
-  
+
   &:after {
     top: 10px;
     left: 10px;
