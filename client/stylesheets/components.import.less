@@ -763,6 +763,20 @@
   &:before { display: none !important; }
 }
 
+// toastr notification -------------------------------
+
+#toast-container {
+  z-index: 1;
+}
+#toast-container.toast-top-center > div { 
+  opacity: 0.9;
+  font-weight: bold;
+  margin-top: 60px;
+  background-image: none !important;
+  padding: @padding-main;
+  .border-shadow(0 1px 5px 0 rgba(0, 0, 0, 0.3));
+}
+
 // flag form -----------------------------------------
 
 #flag-modal .radio:last-of-type label {
