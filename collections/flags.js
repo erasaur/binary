@@ -45,8 +45,11 @@ Meteor.methods({
     if (!userId)
       throw new Meteor.Error('no-permission', 'This user does not have permission to continue.');
 
-    Flags.insert({ 
-      userId: userId,  
+    if (!_.contains(['comments', 'topics'], itemType))
+      throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
+
+    Flags.insert({
+      userId: userId,
       createdAt: new Date(),
       reason: reason,
       itemId: itemId,
