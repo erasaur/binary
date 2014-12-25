@@ -4,6 +4,7 @@ Accounts.onCreateUser(function (options, user) {
   var userProperties = {
     profile: options.profile || {},
     isAdmin: false,
+    ipAddress: options.ipAddress,
     invites: {
       inviteCount: 3,
       invitedEmails: []
@@ -35,10 +36,12 @@ Accounts.onCreateUser(function (options, user) {
   if (email) {
     user.email_hash = Gravatar.hash(email);
 
-    var invite = Invites.findOne({ 'invitedEmail': email });
+    var invite = Invites.findOne({ 'invitedEmail': email, 'accepted': false });
+
+    if (!invite) throw new Meteor.Error('invalid-invite', 'This invitation does not match any existing invitations.');
 
     // update the user who invited
-    user.invites.invitedBy = invite && invite.inviterId;
+    user.invites.invitedBy = invite.inviterId;
     // update the invite status to accepted
     Invites.update(invite._id, { $set: { 'accepted': true } });
   }
@@ -129,11 +132,10 @@ Meteor.methods({
     if (password.length < 6)
       throw new Meteor.Error('weak-password', 'This password must have at least 6 characters.');
 
-    console.log(this.connection.clientAddress);
-
     Accounts.createUser({
       'email': invite.invitedEmail,
       'password': password,
+      'ipAddress': this.connection.clientAddress,
       'profile': {
         'name': name,
         'bio': i18n.t('default_profile')
