@@ -87,10 +87,14 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     optional: true
   },
-  email_hash: {
+  ipAddress: {
     type: String,
     optional: true
   },
+  // email_hash: {
+  //   type: String,
+  //   optional: true
+  // },
   createdAt: {
     type: Date
   },
