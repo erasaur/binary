@@ -1,6 +1,6 @@
 <p style="margin-top: 0;">
-  <p>Hey there, {{name}}!</p>
-  <p>Thanks for joining us at Binary; we're so glad to have you here in the community. If you ever have any questions or feedback, feel free to reply to this email or use the feedback form (located at the bottom right of the screen once you've logged in). We read and reply to every email that makes it through, so please, reach out any time!</p>
-  <p>One other thing: there's another icon at the bottom right of the screen (again, once you've logged in) that opens up a form that you can use to invite your friends. We've given you three invites, so go ahead and ask your three best friends to join us :)</p>
-  <p>Welcome in, and thanks for joining us!</p>
+  <p>{{greeting}}</p>
+  {{#each message}}
+    <p>{{this}}</p>
+  {{/each}}
 </p>

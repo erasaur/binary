@@ -1,8 +1,6 @@
 // Accounts.validateNewUser(function (user) {
 // });
 Accounts.onCreateUser(function (options, user) {
-  console.log(this.connection.clientAddress);
-
   var userProperties = {
     profile: options.profile || {},
     isAdmin: false,
@@ -97,8 +95,13 @@ Accounts.onCreateUser(function (options, user) {
 
   // send welcome email
   Meteor.setTimeout(function () {
-    buildAndSendEmail(email, i18n.t('email_invite_subject'), 'emailWelcome', {
-      name: user.profile.name
+    buildAndSendEmail(email, i18n.t('email_welcome_subject'), 'emailWelcome', {
+      greeting: i18n.t('greeting', user.profile.name),
+      message: [
+        i18n.t('email_welcome_message_0'),
+        i18n.t('email_welcome_message_1'),
+        i18n.t('email_welcome_message_2')
+      ]
     });
   }, 1);
 
@@ -125,6 +128,8 @@ Meteor.methods({
 
     if (password.length < 6)
       throw new Meteor.Error('weak-password', 'This password must have at least 6 characters.');
+
+    console.log(this.connection.clientAddress);
 
     Accounts.createUser({
       'email': invite.invitedEmail,
