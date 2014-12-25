@@ -17,11 +17,11 @@ Template.flagForm.events({
     Meteor.call('newFlag', this._id, this.type, reason, function (error, result) {
       if (error) {
         if (error.error === 'no-permission')
-          alert(i18n.t('please_login'));
+          toastr.warning(i18n.t('please_login'));
         else
-          alert(i18n.t('missing_fields'));
+          toastr.warning(i18n.t('missing_fields'));
       } else {
-        alert(i18n.t('thank_you_for_flagging'));
+        toastr.success(i18n.t('thank_you_for_flagging'));
         template.$('#flag-modal').modal('hide');
       }
     });

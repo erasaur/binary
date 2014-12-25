@@ -71,13 +71,13 @@ Template.newComment.events({
     Meteor.call('newComment', Session.get('currentTopic'), comment, function (error, result) {
       if (error) {
         if (error.error === 'logged-out')
-          alert(i18n.t('please_login'));
+          toastr.warning(i18n.t('please_login'));
         else if (error.error === 'wait')
-          alert(i18n.t('please_wait', { num: error.reason }));
+          toastr.warning(i18n.t('please_wait', { num: error.reason }));
         else if (error.error === 'invalid-content')
-          alert(i18n.t('comment_too_short'));
+          toastr.warning(i18n.t('comment_too_short'));
         else
-          alert(i18n.t('error'));
+          toastr.warning(i18n.t('error'));
       }
       else {
         template.$('.editable').val('');
@@ -207,9 +207,9 @@ Template.comment.events({
       Meteor.call('removeComment', this, function (error) {
         if (error) {
           if (error.error === 'no-permission')
-            alert(i18n.t('no-permission'));
+            toastr.warning(i18n.t('no-permission'));
           else
-            alert(i18n.t('error'));
+            toastr.warning(i18n.t('error'));
         }
       });
     }

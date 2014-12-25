@@ -12,7 +12,7 @@ Template.settingsProfile.events({
     Meteor.call('changeProfile', name, bio, function (error, result) {
       if (error) {
         console.log(error.invalidKeys);
-        alert(i18n.t('use_valid_characters'));
+        toastr.warning(i18n.t('use_valid_characters'));
       }
     });
   },

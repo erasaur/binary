@@ -31,7 +31,7 @@ Template.forgotPassword.events({
       });
     } else {
       Accounts.forgotPassword({ email: value }, function () {
-        alert(i18n.t('check_email_for_recovery'));
+        toastr.success(i18n.t('check_email_for_recovery'));
         Router.go('landing');
       });
     }
