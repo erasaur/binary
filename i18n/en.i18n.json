@@ -151,12 +151,17 @@
   "email_invite_message": "Greetings! You have been invited by __user__ (__email__) to join.",
   "email_invite_action": "Take me there!",
 
+  "email_welcome_subject": "Welcome to Binary!",
+  "email_welcome_message_0": "Thanks for joining us at Binary; we're so glad to have you here. If you ever have any questions or feedback, feel free to reply to this email. We read and reply to every email that makes it through, so please, reach out any time!",
+  "email_welcome_message_1": "One other thing: there's another icon at the bottom right of the screen (once you've logged in) that opens up a form that you can use to invite your friends. We've given you three invites, so go ahead and ask your three best friends to join us :)",
+  "email_welcome_message_2": "Welcome in, and thanks for joining us!",
+
   "email_resetPassword_subject": "Recovering your password on Binary",
   "email_resetPassword_message": "We heard you lost your password, but no worries. Simply click the link below to reset it:",
   "email_resetPassword_action": "Recover my password",
 
   "email_verifyEmail_subject": "Verify your email on Binary",
-  "email_verifyEmail_message": "Please verify your email by clicking the link below:",
+  "email_verifyEmail_message": "Please verify your email by clicking the button below:",
   "email_verifyEmail_action": "Verify this email",
 
   "email_signature": "Best,<br/>the Binary Team",
