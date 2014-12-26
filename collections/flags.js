@@ -40,6 +40,10 @@ Flags.allow({
 
 Meteor.methods({
   newFlag: function (itemId, itemType, reason) {
+    check(itemId, String);
+    check(itemType, String);
+    check(reason, String);
+
     var userId = Meteor.userId();
 
     if (!userId)
@@ -59,6 +63,12 @@ Meteor.methods({
     Meteor.users.update(userId, { $addToSet: query });
   },
   changeFlag: function (flag, newStatus) {
+    check(flag, Match.ObjectIncluding({
+      _id: String,
+      userId: String
+    }));
+    check(newStatus, String);
+
     var user = Meteor.user();
 
     if (!user || !isAdmin(user))

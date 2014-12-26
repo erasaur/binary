@@ -1,7 +1,9 @@
 Meteor.methods({
   upvoteComment: function (comment) {
-    if (!comment)
-      throw new Meteor.Error('invalid-content', 'This content does not exist.');
+    check(comment, Match.ObjectIncluding({
+      _id: String,
+      userId: String
+    }));
 
     var user = Meteor.user();
     var userId = this.userId;
@@ -24,13 +26,15 @@ Meteor.methods({
       Meteor.users.update(userId, { $addToSet: { 'activity.upvotedComments': commentId } });
 
       // if the comment is upvoted by owner, don't modify reputation
-      if (comment.userId !== userId) 
+      if (comment.userId !== userId)
         Meteor.users.update(comment.userId, { $inc: { 'stats.reputation': 1 } });
     }
   },
   cancelUpvoteComment: function (comment) {
-    if (!comment)
-      throw new Meteor.Error('invalid-content', 'This content does not exist.');
+    check(comment, Match.ObjectIncluding({
+      _id: String,
+      userId: String
+    }));
 
     var user = Meteor.user();
     var userId = this.userId;
@@ -51,13 +55,17 @@ Meteor.methods({
       Meteor.users.update(userId, { $pull: { 'activity.upvotedComments': commentId } });
 
       // if the item is upvoted by owner, don't modify reputation
-      if (comment.userId !== userId) 
+      if (comment.userId !== userId)
         Meteor.users.update(comment.userId, { $inc: { 'stats.reputation': -1 } });
     }
   },
   vote: function (topic, side) {
-    if (!topic || !side)
-      throw new Meteor.Error('invalid-content', 'This content does not exist.');
+    check(topic, Match.ObjectIncluding({
+      _id: String,
+      proUsers: [String],
+      conUsers: [String]
+    }));
+    check(side, String);
 
     var user = Meteor.user();
     var userId = this.userId;
@@ -67,19 +75,19 @@ Meteor.methods({
       throw new Meteor.Error('invalid-content', 'This content already exists.');
 
     // in case user voted already, cancel previous vote
-    if (topic.proUsers && _.contains(topic.proUsers, userId))
+    if (_.contains(topic.proUsers, userId))
       var field = 'pro';
-    else if (topic.conUsers && _.contains(topic.conUsers, userId))
+    else if (_.contains(topic.conUsers, userId))
       var field = 'con';
 
     if (field) {
       Topics.update(topicId, {
         $pull: setProperty({}, field + 'Users', userId),
         $inc: setProperty({}, field, -1) // need the function to convert variable key
-      });  
+      });
 
       // just cancelling vote, not switching. so don't revote after cancel
-      if (field === side) return; 
+      if (field === side) return;
     }
 
     Topics.update(topicId, {
@@ -90,3 +98,4 @@ Meteor.methods({
     // store voting history in user activity ?
   }
 });
+

@@ -175,6 +175,8 @@ Meteor.users.initEasySearch('profile.name', {
 
 Meteor.methods({
   newFollower: function (followingId) {
+    check(followingId, String);
+
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
@@ -194,6 +196,8 @@ Meteor.methods({
     Meteor.call('newFollowerNotification', followingId);
   },
   removeFollower: function (followingId) {
+    check(followingId, String);
+
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
@@ -213,11 +217,4 @@ Meteor.methods({
 });
 
 // end methods ---------------------------------------
-
-
-
-
-
-
-
 

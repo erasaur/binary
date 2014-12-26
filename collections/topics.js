@@ -80,7 +80,7 @@ Topics.allow({
 Topics.deny({
   update: function (userId, topic, fields) {
     if (isAdminById(userId)) return false;
-    
+
     var validFields = [
       'title',
       'description'
@@ -115,6 +115,11 @@ Topics.before.update(function (userId, doc, fields, modifier, options) {
 
 Meteor.methods({
   newTopic: function (topic) {
+    check(topic, {
+      title: String,
+      description: String
+    });
+
     var user = Meteor.user();
     var userId = this.userId;
     var title = topic.title;
@@ -164,6 +169,8 @@ Meteor.methods({
     return topic._id;
   },
   followTopic: function (topicId) {
+    check(topicId, String);
+
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
@@ -173,21 +180,17 @@ Meteor.methods({
     Meteor.users.update(userId, { $addToSet: { 'activity.followingTopics': topicId } });
   },
   unfollowTopic: function (topicId) {
+    check(topicId, String);
+
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
       throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
-    
+
     Topics.update(topicId, { $pull: { 'followers': userId } });
     Meteor.users.update(userId, { $pull: { 'activity.followingTopics': topicId } });
   }
 });
 
 // end methods ---------------------------------------
-
-
-
-
-
-
 
