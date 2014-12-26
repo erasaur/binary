@@ -1,6 +1,8 @@
 // Publish list of topics (sorted by date) and top comment for each
 
 Meteor.publishComposite('topicsList', function (limit) {
+  check(limit, Match.Integer);
+
   return {
     find: function () {
       if (!this.userId) return this.ready();
@@ -23,7 +25,7 @@ Meteor.publishComposite('topicsList', function (limit) {
     }, {
       find: function (topic) { // owner of each topic
         return Meteor.users.find(topic.userId, { fields: { 'email_hash': 1, 'profile': 1 } });
-      }  
+      }
     }]
   };
 });

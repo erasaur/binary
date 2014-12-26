@@ -1,6 +1,9 @@
 Meteor.methods({
   newFollowerNotification: function (followingId) { // initiated by the follower
+    check(followingId, String);
+
     var follower = Meteor.user();
+    if (!user) return;
 
     var notificationData = {
       follower: { '_id': follower._id, 'name': follower.profile.name }
@@ -16,9 +19,13 @@ Meteor.methods({
     });
   },
   newTopicNotification: function (topic) { // initiated by the topic creator
-    var user = Meteor.user(); // topic owner
+    check(topic, Match.ObjectIncluding({
+      _id: String,
+      title: String
+    }));
 
-    if (!user.activity || !user.activity.followers) return;
+    var user = Meteor.user(); // topic owner
+    if (!user || !user.activity || !user.activity.followers) return;
 
     var notificationData = {
       author: { '_id': user._id, 'name': user.profile.name },
@@ -36,11 +43,19 @@ Meteor.methods({
     });
   },
   newCommentNotification: function (comment) { // initiated by the comment creator
-    var topic = Topics.findOne(comment.topicId);
-    var replyToId = comment.replyTo;
-    var user = Meteor.user(); // comment owner
-    var notified = [];
+    check(comment, Match.ObjectIncluding({
+      _id: String,
+      topicId: String,
+      replyTo: String
+    }));
 
+    var topic = Topics.findOne(comment.topicId);
+    var user = Meteor.user(); // comment owner
+
+    if (!topic || !user) return;
+
+    var replyToId = comment.replyTo;
+    var notified = [];
     var notificationData = {
       author: { '_id': user._id, 'name': user.profile.name },
       comment: _.pick(comment, '_id'),
@@ -67,7 +82,7 @@ Meteor.methods({
     // notify topic owner (if topic owner wants to be notified)
     // unless the comment owner is also the topic owner,
     // or the topic owner is the replyTo owner (in which case we already notified them with 'newReply')
-    if (topic && topic.userId !== user._id && !_.contains(notified, topic.userId)) {
+    if (topic.userId !== user._id && !_.contains(notified, topic.userId)) {
       Herald.createNotification(topic.userId, {
         courier: 'newComment.topicOwner',
         data: notificationData,
