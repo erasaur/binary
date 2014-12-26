@@ -1,5 +1,13 @@
 Meteor.methods({
   removeComment: function (comment) {
+    check(comment, Match.ObjectIncluding({
+      _id: String,
+      topicId: String,
+      userId: String,
+      upvotes: Match.Integer,
+      upvoters: [String]
+    }));
+
     if (!isAdmin(Meteor.user()))
       throw new Meteor.Error('no-permission', 'This user does not have permission to continue.');
 
@@ -10,20 +18,19 @@ Meteor.methods({
     var upvoters = comment.upvoters;
 
     // subtract comment count from topic
-    Topics.update(topicId, {
-      $inc: { 'commentsCount': -1 }
-    });
+    Topics.update(topicId, { $inc: { 'commentsCount': -1 } });
+
     // mark comment as deleted
-    Comments.update(commentId, { 
-      $set: { 
-        'isDeleted': true, 
+    Comments.update(commentId, {
+      $set: {
+        'isDeleted': true,
         'upvotes': 0,
-        'content': i18n.t('comment_deleted') 
-      } 
+        'content': i18n.t('comment_deleted')
+      }
     });
     // subtract comments count and reputation
-    Meteor.users.update(userId, { 
-      $inc: { 'stats.commentsCount': -1, 'stats.reputation': -upvotes }, 
+    Meteor.users.update(userId, {
+      $inc: { 'stats.commentsCount': -1, 'stats.reputation': -upvotes },
       $pull: { 'activity.discussedTopics': topicId }
     });
     // remove comment from users upvotedComments
@@ -32,6 +39,13 @@ Meteor.methods({
     }, { multi: true });
   },
   removeTopic: function (topic) {
+    check(topic, Match.ObjectIncluding({
+      _id: String,
+      userId: String,
+      followers: [String],
+      commenters: [String]
+    }));
+
     if (!isAdmin(Meteor.user()))
       throw new Meteor.Error('no-permission', 'This user does not have permission to continue.');
 
@@ -55,17 +69,17 @@ Meteor.methods({
         commenters[upvoter] = commenters[upvoter] || opts;
         commenters[upvoter].upvotedComments.push(comment._id);
       });
-      
+
       commentIds.push(comment._id);
     });
-    
+
     var commenterIds = _.keys(commenters);
     _.each(commenterIds, function (commenterId) {
       var commenter = commenters[commenterId];
       // subtract comments count & reputation, remove upvoted comments
       Meteor.users.update({ '_id': commenterId }, {
-        $inc: { 
-          'stats.commentsCount': -commenter.commentsCount, 
+        $inc: {
+          'stats.commentsCount': -commenter.commentsCount,
           'stats.reputation': -commenter.reputation
         },
         $pullAll: { 'activity.upvotedComments': commenter.upvotedComments }
@@ -83,7 +97,7 @@ Meteor.methods({
     Meteor.users.update({ '_id': { $in: topic.commenters } }, {
       $pull: { 'activity.discussedTopics': topicId }
     }, { multi: true });
-    
+
     // subtract topics count for creator
     Meteor.users.update(userId, { $inc: { 'stats.topicsCount': -1 } });
 

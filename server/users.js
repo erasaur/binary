@@ -115,8 +115,11 @@ Accounts.onCreateUser(function (options, user) {
 
 Meteor.methods({
   newUser: function (name, password, inviteCode) {
-    var name = stripHTML(name);
+    check(name, String);
+    check(password, String);
+    check(inviteCode, String);
 
+    var name = stripHTML(name);
     var invite = {
       inviteCode: inviteCode,
       accepted: false
@@ -145,11 +148,20 @@ Meteor.methods({
     return invite.invitedEmail;
   },
   changeProfile: function (newName, newBio) {
-    Meteor.users.update(Meteor.userId(), {
-      $set: { 'profile.name': newName, 'profile.bio': newBio }
+    check(newName, String);
+    check(newBio, String);
+
+    var query = { $set: { 'profile.name': newName, 'profile.bio': newBio } };
+    Meteor.users.update(Meteor.userId(), query, function (error, result) {
+      if (error) {
+        // throw error.sanitizedError;
+        throw error;
+      }
     });
   },
   changeEmail: function (newEmail) {
+    check(newEmail, String);
+
     Meteor.users.update(Meteor.userId(), {
       $set: {
         'emails': [{ 'address': newEmail, 'verified': false }],
