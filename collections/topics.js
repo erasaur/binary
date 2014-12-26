@@ -157,8 +157,7 @@ Meteor.methods({
       commenters: [],
       proUsers: [],
       conUsers: [],
-      followers: [],
-      // isDeleted: false
+      followers: []
     };
 
     topic._id = Topics.insert(topic);
