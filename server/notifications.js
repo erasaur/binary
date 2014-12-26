@@ -46,7 +46,7 @@ Meteor.methods({
     check(comment, Match.ObjectIncluding({
       _id: String,
       topicId: String,
-      replyTo: String
+      replyTo: Match.Optional(String)
     }));
 
     var topic = Topics.findOne(comment.topicId);
