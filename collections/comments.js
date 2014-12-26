@@ -88,6 +88,13 @@ Comments.before.update(function (userId, doc, fields, modifier, options) {
 
 Meteor.methods({
   newComment: function(topicId, comment) {
+    check(topicId, String);
+    check(comment, {
+      content: String,
+      side: String,
+      replyTo: Match.Optional(String)
+    });
+
     var user = Meteor.user();
     var userId = this.userId;
     var content = comment.content;
@@ -124,13 +131,13 @@ Meteor.methods({
     if (!!replyTo)
       Comments.update(replyTo, { $addToSet: { 'replies': comment._id } });
 
-    Meteor.users.update(userId, { 
-      $inc: { 'stats.commentsCount': 1 }, 
+    Meteor.users.update(userId, {
+      $inc: { 'stats.commentsCount': 1 },
       $addToSet: { 'activity.discussedTopics': topicId }
     });
-    Topics.update(topicId, { 
-      $inc: { 'commentsCount': 1 }, 
-      $addToSet: { 'commenters': userId } 
+    Topics.update(topicId, {
+      $inc: { 'commentsCount': 1 },
+      $addToSet: { 'commenters': userId }
     });
     Meteor.call('newCommentNotification', comment);
 
