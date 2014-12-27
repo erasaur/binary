@@ -2,6 +2,7 @@ Template.landing.rendered = function () {
   var questions = ['kjhkjhkjhkjhkjhkjhkjhkjh kjhkjhkjhkjhkjhkjhkjhkjh', 'asdfasdfasdfasdfsdf asdf asdf', 'zcxzxczxczxczxczxczxczx'];
   var questionIndex = 0;
 
+  $('body').css('height', '100%');
   var $text = this.$('#landing-image-header');
   var $pro = this.$('#landing-image-pro');
   var $con = this.$('#landing-image-con');
@@ -36,5 +37,6 @@ Template.landing.rendered = function () {
 };
 
 Template.landing.destroyed = function () {
+  $('body').css('height', '');
   Meteor.clearInterval(this._animateHandle);
 };
