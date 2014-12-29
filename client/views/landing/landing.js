@@ -33,10 +33,10 @@ Template.landing.rendered = function () {
   };
 
   animateText();
-  this._animateHandle = Meteor.setInterval(animateText, 6000);
+  this._animateHandle = setInterval(animateText, 6000);
 };
 
 Template.landing.destroyed = function () {
   $('body').css('height', '');
-  Meteor.clearInterval(this._animateHandle);
+  clearInterval(this._animateHandle);
 };
