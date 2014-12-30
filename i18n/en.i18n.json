@@ -188,7 +188,7 @@
   "save": "Save",
   "cancel": "Cancel",
   "missing_fields": "Oops! Looks like you left some fields empty.",
-  "error": "Sorry, something went wrong. Please try again later.",
+  "error": "Sorry, something went wrong. Please try again.",
   "please_login": "That's something you have to be logged in to do.",
   "no_permission": "Sorry, we can't let you do that."
 }
