@@ -8,7 +8,6 @@ less
 accounts-base
 accounts-password
 underscore
-mizzao:bootstrap-3
 meteor-platform
 blaze
 mrt:animation-helper-velocity
@@ -53,3 +52,4 @@ chrismbeckett:toastr
 tap:i18n
 audit-argument-checks
 check
+twbs:bootstrap
