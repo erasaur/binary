@@ -9,7 +9,7 @@ Meteor.publishComposite('userProfile', function (userId) {
 
       return Meteor.users.find(userId, {
         limit: 1,
-        fields: { 'email_hash': 1, 'profile': 1, 'stats': 1, 'activity': 1 }
+        fields: { 'profile': 1, 'stats': 1, 'activity': 1 }
       });
     },
     children: [{
@@ -18,7 +18,7 @@ Meteor.publishComposite('userProfile', function (userId) {
 
         var userIds = user.activity.followers.concat(user.activity.followingUsers) || [];
         return Meteor.users.find({ '_id': { $in: userIds } }, {
-          fields: { 'email_hash': 1, 'profile': 1 }
+          fields: { 'profile': 1 }
         });
       }
     }]
@@ -42,7 +42,7 @@ Meteor.publishComposite('userComments', function (userId, limit) {
       find: function (comment) { // owners of said comments
         return Meteor.users.find(comment.userId, {
           limit: 1,
-          fields: { 'email_hash': 1, 'profile': 1 }
+          fields: { 'profile': 1 }
         });
       }
     },{
@@ -74,7 +74,7 @@ Meteor.publishComposite('userTopics', function (userId, limit) {
       find: function (topic) { // owner of each topic
         return Meteor.users.find(topic.userId, {
           limit: 1,
-          fields: { 'email_hash': 1, 'profile': 1 }
+          fields: { 'profile': 1 }
         });
       }
     }, {
@@ -87,7 +87,7 @@ Meteor.publishComposite('userTopics', function (userId, limit) {
         find: function (comment) { // owner of each top comment
           return Meteor.users.find(comment.userId, {
             limit: 1,
-            fields: { 'email_hash': 1, 'profile': 1 }
+            fields: { 'profile': 1 }
           });
         }
       }]

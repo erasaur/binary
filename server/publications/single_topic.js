@@ -48,7 +48,7 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   function publishAssociatedOwners (commentId, comment) {
     var replyTo = Comments.findOne(comment.replyTo);
     var owner = Meteor.users.findOne({ '_id': comment.userId }, {
-      fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 }
+      fields: { 'profile': 1, 'stats': 1 }
     });
 
     pub.added('users', owner._id, owner);
@@ -104,7 +104,7 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
   function publishAssociatedOwners (commentId, comment) {
     var replyTo = Comments.findOne(comment.replyTo);
     var owner = Meteor.users.findOne({ '_id': comment.userId }, {
-      fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 }
+      fields: { 'profile': 1, 'stats': 1 }
     });
 
     pub.added('users', owner._id, owner);

@@ -33,20 +33,19 @@ Accounts.onCreateUser(function (options, user) {
 
   user.emails[0].verified = true;
 
-  // add email hash
   var email = user.emails[0].address;
-  if (email) {
-    // user.email_hash = Gravatar.hash(email);
-
-    var invite = Invites.findOne({ 'invitedEmail': email, 'accepted': false });
-
-    if (!invite) throw new Meteor.Error('invalid-invite', 'This invitation does not match any existing invitations.');
-
-    // update the user who invited
-    user.invites.invitedBy = invite.inviterId;
-    // update the invite status to accepted
-    Invites.update(invite._id, { $set: { 'accepted': true } });
+  if (!email) {
+    throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
   }
+
+  var invite = Invites.findOne({ 'invitedEmail': email, 'accepted': false });
+
+  if (!invite) throw new Meteor.Error('invalid-invite', 'This invitation does not match any existing invitations.');
+
+  // update the user who invited
+  user.invites.invitedBy = invite.inviterId;
+  // update the invite status to accepted
+  Invites.update(invite._id, { $set: { 'accepted': true } });
 
   // set notifications default preferences
   user.profile.notifications = {
@@ -166,8 +165,7 @@ Meteor.methods({
 
     Meteor.users.update(Meteor.userId(), {
       $set: {
-        'emails': [{ 'address': newEmail, 'verified': false }],
-        'email_hash': Gravatar.hash(newEmail)
+        'emails': [{ 'address': newEmail, 'verified': false }]
       }
     });
     Accounts.sendVerificationEmail(Meteor.userId());
