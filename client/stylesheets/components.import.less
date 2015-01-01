@@ -647,7 +647,7 @@
   position: static;
   min-height: 100%;
   height: auto !important;
-  margin: 0 auto -430px;
+  margin: 0 auto -440px;
 }
 .landing-header {
   padding: 100px 0 80px;  
@@ -655,33 +655,51 @@
 }
 .push,
 .landing-image {
-  height: 430px;
+  height: 440px;
 }
 .landing-image {
   position: relative;
-  width: 600px;
+  width: 352px;
   margin: 0 auto;
-  background-image: url('/binary-frontpage-image.png');
+  background-image: url('/binary-frontpage-mobile.png');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
 }
 .landing-image h3 { 
   position: absolute; 
-  top: 75px; 
-  left: 53px;
+  top: 130px; 
+  left: 55px;
   font-size: @fontSize-large;
   color: @fontColor-muted;
   text-align: left;
+  max-width: 240px;
 }
 .landing-image span {
   position: absolute;
-  top: 115px;
+  top: 185px;
   font-size: 16px;
   font-weight: bold;
   color: #fff;
-  &:first-of-type { left: 250px; }
-  &:last-of-type { right: 254px; }
+  &:first-of-type { left: 125px; }
+  &:last-of-type { right: 125px; }
 }
+@media (min-width: 768px) {
+  .landing-image {
+    width: 640px;
+    background-image: url('/binary-frontpage-web.png');
+  }
+  .landing-image h3 {
+    top: 68px;
+    left: 133px;
+    max-width: 370px;
+  }
+  .landing-image span {
+    top: 98px;
+    &:first-of-type { left: 277px; }
+    &:last-of-type { right: 277px; }
+  }
+}
+
 .landing-login {
   position: absolute;
   top: 20px;
