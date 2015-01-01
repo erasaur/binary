@@ -4,7 +4,7 @@
 //   // defaultType: 'image'
 // };
 
-Herald.settings.queueTimer = 5000; // 86400000; // once a day
+Herald.settings.queueTimer = 300000; // every 5 minutes
 Herald.settings.useIronRouter = false;
 
 toastr.options.timeOut = 5000;
