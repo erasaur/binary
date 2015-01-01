@@ -21,8 +21,17 @@
   }
   *zoom: 1;
 }
-.logo {
+.logo,
+.logo-sub {
+  font-family: 'Roboto Slab', serif;
+  color: rgb(151, 151, 151);
+  a, a:link, a:visited, a:hover, a:active { color: rgb(151, 151, 151); }
+}
+.logo.main {
   font-size: 60px;
+}
+.logo-sub {
+  font-size: 22px; 
 }
 
 // buttons -------------------------------------------
@@ -695,8 +704,9 @@
   }
   .landing-image span {
     top: 98px;
-    &:first-of-type { left: 277px; }
-    &:last-of-type { right: 277px; }
+    font-size: 14px;
+    &:first-of-type { left: 278px; }
+    &:last-of-type { right: 278px; }
   }
 }
 
