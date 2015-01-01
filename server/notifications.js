@@ -3,7 +3,7 @@ Meteor.methods({
     check(followingId, String);
 
     var follower = Meteor.user();
-    if (!user) return;
+    if (!follower) return;
 
     var notificationData = {
       follower: { '_id': follower._id, 'name': follower.profile.name }

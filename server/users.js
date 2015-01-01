@@ -31,10 +31,12 @@ Accounts.onCreateUser(function (options, user) {
   // add default properties
   user = _.extend(user, userProperties);
 
+  user.emails[0].verified = true;
+
   // add email hash
   var email = user.emails[0].address;
   if (email) {
-    user.email_hash = Gravatar.hash(email);
+    // user.email_hash = Gravatar.hash(email);
 
     var invite = Invites.findOne({ 'invitedEmail': email, 'accepted': false });
 
