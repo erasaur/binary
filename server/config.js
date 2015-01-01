@@ -28,7 +28,7 @@ var emailOptions = function (emailType) {
 };
 
 Accounts.emailTemplates = {
-  from: 'hi@binary10.co',
+  from: 'Binary <hi@binary10.co>',
   siteName: 'Binary',
   resetPassword: new emailOptions('resetPassword'),
   verifyEmail: new emailOptions('verifyEmail')
