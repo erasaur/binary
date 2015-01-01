@@ -19,12 +19,12 @@ Meteor.publishComposite('topicsList', function (limit) {
       },
       children: [{
         find: function (comment) { // owner of each top comment
-          return Meteor.users.find(comment.userId, { fields: { 'email_hash': 1, 'profile': 1 } });
+          return Meteor.users.find(comment.userId, { fields: { 'profile': 1 } });
         }
       }]
     }, {
       find: function (topic) { // owner of each topic
-        return Meteor.users.find(topic.userId, { fields: { 'email_hash': 1, 'profile': 1 } });
+        return Meteor.users.find(topic.userId, { fields: { 'profile': 1 } });
       }
     }]
   };
