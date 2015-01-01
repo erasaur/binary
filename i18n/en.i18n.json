@@ -53,7 +53,7 @@
 
   // Invite
   "your_name": "Your Name",
-  "sign_up": "Welcome In!",
+  "sign_up": "Sign Up",
   "invite_your_friends": "Invite Your Friends!",
   "invite_message_0": "We spent a lot of care cookin’ this site up, and we’d love for your friends to try it out!",
   "invite_message_1": "We are still testing things though, so lest we can’t handle the load, we’ve given you exactly",
@@ -177,6 +177,7 @@
 
   // Common
   "are_you_sure": "Are you sure you want to $t(__action__)?",
+  "go_home": "Take me home!",
   "copyright": "©2014 Binary, All Rights Reserved.",
   "greeting": "Hey there, %s!",
   "email": "Email",

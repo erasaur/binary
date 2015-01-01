@@ -1,5 +1,15 @@
 Template.landing.rendered = function () {
-  var questions = ['kjhkjhkjhkjhkjhkjhkjhkjh kjhkjhkjhkjhkjhkjhkjhkjh', 'asdfasdfasdfasdfsdf asdf asdf', 'zcxzxczxczxczxczxczxczx'];
+  var questions = [
+    'Should police be required to wear body cameras?',
+    'Should Sony have pulled The Interview from theaters?',
+    'Will the Seahawks win Super Bowl 2015?',
+    'Rails or Django?',
+    'Let\'s settle it: vim or emacs?',
+    'Umbrella revolution: good or bad for Hong Kong?',
+    'Are investors betting too much on messaging apps?',
+    'Should same-sex marriage be legal?',
+    'Does God exist?'
+  ];
   var questionIndex = 0;
 
   $('body').css('height', '100%');
