@@ -60,7 +60,8 @@ buildEmailNotification = function (notification) {
         };
 
         var topicMessage = n.topic.userId === n.user._id ?
-          i18n.t('in_topic_owning', n.topic.title) : i18n.t('in_topic', n.topic.title);
+          i18n.t('in_topic_owning', { topic: n.topic.title }) :
+          i18n.t('in_topic', { topic: n.topic.title });
         var options = {
           user: n.author.name,
           topic: topicMessage
@@ -88,7 +89,8 @@ buildEmailNotification = function (notification) {
         };
 
         var topicMessage = n.topic.userId === n.user._id ?
-          i18n.t('in_topic_owning', n.topic.title) : i18n.t('in_topic', n.topic.title);
+          i18n.t('in_topic_owning', { topic: n.topic.title }) :
+          i18n.t('in_topic', { topic: n.topic.title });
         var options = {
           user: n.author.name,
           topic: topicMessage
