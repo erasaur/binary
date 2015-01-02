@@ -155,7 +155,7 @@ sendEmail = function (to, subject, html, text) {
   // TODO: limit who can send emails
   // TODO: fix this error: Error: getaddrinfo ENOTFOUND
 
-  var from = 'hi@binary10.co';
+  var from = 'Binary <hi@binary10.co>';
 
   if (typeof text === 'undefined'){
     var text = buildEmailText(html);
