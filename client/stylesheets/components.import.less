@@ -415,10 +415,12 @@
   margin: 0;
   width: 40px;
 }
-.topic-item .list-item-action h3 { 
-  display: inline-block; 
-  margin-left: @padding-main;
+.topic-item .topic-item-title {
+  margin-left: 85px;
 }
+// .topic-item .list-item-action h3 { 
+//   display: inline-block; 
+// }
 .topic-info,
 .topic-item .list-item-info,
 .comment .comment-footer {
@@ -433,7 +435,6 @@
 }
 
 .topic-info .icon-action,
-.topic-item .list-item-action h3,
 .topic-item .list-item-info .icon-action {
   position: relative;
   top: 3px;
@@ -468,7 +469,8 @@
   overflow: hidden;
   display: block;
 }
-.profile-item .profile-item-left {
+.topic-item .topic-item-vote,
+.profile-item .profile-item-left { 
   margin-right: @padding-main; 
   float: left;
 }

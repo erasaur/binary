@@ -164,6 +164,7 @@ Meteor.methods({
 
     Meteor.users.update(userId, { $inc: { 'stats.topicsCount': 1 } });
     Meteor.call('newTopicNotification', topic);
+    Meteor.call('followTopic', topic._id);
 
     return topic._id;
   },
