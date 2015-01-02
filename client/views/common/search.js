@@ -35,9 +35,13 @@ Template.nav.events({
 });
 
 Template.searchInput.events({
-  'focus .search-input': function (event, template) {
-    searching.set(true);
-  },
+  'input .search-input': _.debounce(function (event, template) {
+    if (event.target.value == '') {
+      searching.set(false);
+    } else {
+      searching.set(true);
+    }
+  }, 200),
   'click #js-search-cancel': function (event, template) {
     stopSearching();
   }
