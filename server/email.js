@@ -112,11 +112,11 @@ buildEmailNotification = function (notification) {
 
         if (n.count) {
           email.message = i18n.t('notification_new_follower_plural', {
-            user: n.user.name,
+            user: n.follower.name,
             count: n.count - 1
           });
         } else {
-          email.message = i18n.t('notification_new_follower', { user: n.user.name });
+          email.message = i18n.t('notification_new_follower', { user: n.follower.name });
         }
 
         break;
