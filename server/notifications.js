@@ -103,6 +103,7 @@ Meteor.methods({
         Herald.createNotification(followerId, {
           courier: 'newComment.topicFollower',
           data: notificationData,
+          'duplicates': false,
           'aggregate': true,
           'aggregateAt': 3,
           'aggregateUnder': 'topic'
