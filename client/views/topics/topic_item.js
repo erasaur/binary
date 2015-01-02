@@ -8,3 +8,19 @@ Template.topicItem.helpers({
     return comment;
   }
 });
+Template.topicItem.events({
+  'click .js-delete-topic': function (event, template) {
+    event.preventDefault();
+
+    if (confirm(i18n.t('are_you_sure', { action: 'delete this topic' }))) {
+      Meteor.call('removeTopic', this, function (error) {
+        if (error) {
+          if (error.error === 'no-permission')
+            toastr.warning(i18n.t('no_permission'));
+          else
+            toastr.warning(i18n.t('error'));
+        }
+      });
+    }
+  }
+});
