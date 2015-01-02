@@ -333,9 +333,14 @@
 .page-nav .page-nav-action li a {
   display: block;
   font-weight: normal;
+  width: 80px;
   padding: 0;
-  width: 120px;
   .overflow-ellipsis;
+}
+@media (min-width: 768px) {
+  .page-nav .page-nav-action li a {
+    width: 120px;
+  }
 }
 .page-nav .page-nav-action li a:hover .value,
 .page-nav .page-nav-action li a:hover .label,
@@ -596,7 +601,7 @@
 }
 .profile-header {
   margin: 0 auto; 
-  width: 400px; 
+  max-width: 400px; 
   text-align: center;
 }
 .profile-info,
