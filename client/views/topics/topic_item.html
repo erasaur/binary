@@ -1,9 +1,13 @@
 <template name="topicItem">
   <a href="{{pathFor route='topic'}}" class="list-item topic-item {{#if topComment}}has-comment{{/if}}" id="{{_id}}">
     <div class="list-item-action">
-      <button type="button" class="btn btn-pro">{{pro}}</button> 
-      <button type="button" class="btn btn-con">{{con}}</button>
-      <h3>{{title}}</h3>
+      <div class="topic-item-vote">
+        <button type="button" class="btn btn-pro">{{pro}}</button> 
+        <button type="button" class="btn btn-con">{{con}}</button>
+      </div>
+      <div class="topic-item-title">
+        <h3>{{title}}</h3>
+      </div>
     </div>
     <div class="list-item-info">
       <span>{{_ "num_comments" count=commentsCount}}</span>
