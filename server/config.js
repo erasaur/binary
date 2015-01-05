@@ -3,6 +3,17 @@ Meteor.startup(function () {
   BrowserPolicy.content.allowFontOrigin('fonts.gstatic.com');
   BrowserPolicy.content.allowOriginForAll('fonts.googleapis.com');
   BrowserPolicy.content.disallowInlineScripts();
+
+  // update scores every minute
+  Meteor.setInterval(function () {
+    Topics.find().forEach(function (topic) {
+      Topics.update(topic._id, {
+        $set: {
+          score: getTopicScore(topic)
+        }
+      });
+    });
+  }, 60 * 1000);
 });
 
 var emailOptions = function (emailType) {
