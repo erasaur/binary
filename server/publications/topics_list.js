@@ -7,8 +7,7 @@ Meteor.publishComposite('topicsList', function (limit) {
     find: function () {
       if (!this.userId) return this.ready();
 
-      // return Topics.find({ 'isDeleted': false }, { sort: { 'createdAt': -1 }, limit: limit });
-      return Topics.find({}, { sort: { 'createdAt': -1 }, limit: limit });
+      return Topics.find({}, { sort: { 'score': 1, 'createdAt': -1 }, limit: limit });
     },
     children: [{
       find: function (topic) { // top comment for each topic

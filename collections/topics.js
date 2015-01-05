@@ -18,39 +18,34 @@ TopicSchema = new SimpleSchema({
   createdAt: {
     type: Date
   },
-  commentsCount: {
+  score: {
     type: Number,
-    optional: true
+    min: 0,
+    decimal: true
+  },
+  commentsCount: {
+    type: Number
   },
   commenters: {
-    type: [String],
-    optional: true
+    type: [String]
   },
   pro: {
     type: Number,
-    min: 0,
-    optional: true
+    min: 0
   },
   proUsers: {
-    type: [String],
-    optional: true
+    type: [String]
   },
   con: {
     type: Number,
-    min: 0,
-    optional: true
+    min: 0
   },
   conUsers: {
-    type: [String],
-    optional: true
+    type: [String]
   },
   followers: {
-    type: [String],
-    optional: true
-  },
-  // isDeleted: {
-  //   type: Boolean
-  // }
+    type: [String]
+  }
 });
 
 Topics = new Mongo.Collection('topics');
@@ -147,10 +142,7 @@ Meteor.methods({
       description: description,
       userId: userId,
       createdAt: new Date(),
-      // author: getDisplayNameById(userId),
       // category: category,
-      // baseScore: 0,
-      // score: 0,
       commentsCount: 0,
       pro: 0,
       con: 0,
@@ -160,6 +152,7 @@ Meteor.methods({
       followers: []
     };
 
+    topic.score = getTopicScore(topic);
     topic._id = Topics.insert(topic);
 
     Meteor.users.update(userId, { $inc: { 'stats.topicsCount': 1 } });
