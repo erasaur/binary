@@ -103,5 +103,62 @@ Meteor.methods({
 
     // delete the topic
     Topics.remove(topicId);
+  },
+  newFlag: function (itemId, itemType, reason) {
+    check([itemId, itemType, reason], [String]);
+
+    var user = Meteor.user();
+    var userId = user._id;
+
+    if (!userId)
+      throw new Meteor.Error('no-permission', 'This user does not have permission to continue.');
+
+    if (!_.contains(['comments', 'topics'], itemType))
+      throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
+
+    Flags.insert({
+      userId: userId,
+      createdAt: new Date(),
+      reason: reason,
+      itemId: itemId,
+      itemType: itemType
+    });
+    var query = setProperty({}, 'flags.' + itemType, itemId);
+    Meteor.users.update(userId, { $addToSet: query });
+
+    var admins = Meteor.users.find({ 'isAdmin': true });
+    admins.forEach(function (admin) {
+      var properties = {
+        message: getDisplayName(user) + ' flagged item of type: ' + itemType,
+        actionLink: getSiteUrl() + 'admin'
+      };
+
+      var adminEmail = admin.emails[0].address;
+      Meteor.setTimeout(function () {
+        buildAndSendEmail(adminEmail, 'New flag on Binary', 'emailNotification', properties);
+      }, 1);
+    });
+  },
+  changeFlag: function (flag, newStatus) {
+    check(flag, Match.ObjectIncluding({
+      _id: String,
+      userId: String
+    }));
+    check(newStatus, String);
+
+    var user = Meteor.user();
+
+    if (!user || !isAdmin(user))
+      throw new Meteor.Error('no-permission', 'This user does not have permission to continue.');
+
+    if (!flag)
+      throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
+
+    var flagId = flag._id;
+    var userId = flag.userId;
+    var count = newStatus === 0 ? -1 : 1; // decrease helpful flags count if helpful status is retracted
+
+    Flags.update(flagId, { $set: { 'status': newStatus } });
+    Meteor.users.update(userId, { $inc: { 'stats.flagsCount': count } });
   }
 });

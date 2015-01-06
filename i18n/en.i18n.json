@@ -1,6 +1,5 @@
 {
   // Flags - Admin Page
-  "no_flags": "No flags",
   "flagged_by": "Flagged by ",
   "num_helpful_flags": "__count__ helpful flag",
   "num_helpful_flags_plural": "__count__ helpful flags",
