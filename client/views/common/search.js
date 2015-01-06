@@ -44,13 +44,13 @@ Template.searchInput.events({
   }, 200),
   'click #js-search-cancel': function (event, template) {
     stopSearching();
+  },
+  'submit #js-search-form': function (event, template) {
+    event.preventDefault();
   }
 });
 
 Template.searchResults.events({
-  'submit #js-search-form': function (event, template) {
-    event.preventDefault();
-  },
   'click a[href]': function (event, template) {
     stopSearching();
   }
