@@ -89,11 +89,10 @@ Comments.before.update(function (userId, doc, fields, modifier, options) {
 Meteor.methods({
   newComment: function(topicId, comment) {
     check(topicId, String);
-    check(comment, {
+    check(comment, Match.ObjectIncluding({
       content: String,
-      side: String,
-      replyTo: Match.OneOf(String, undefined, null)
-    });
+      side: String
+    }));
 
     var user = Meteor.user();
     var userId = this.userId;
