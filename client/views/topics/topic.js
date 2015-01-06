@@ -101,6 +101,12 @@ Template.topicNav.events({
         }
       });
     }
+  },
+  'click #js-flag-topic': function (event, template) {
+    var modal = Blaze.renderWithData(Template.flagForm, { _id: this._id, type: 'topics' }, $('body')[0]);
+    $('#flag-modal').modal('show').on('hidden.bs.modal', function () {
+      Blaze.remove(modal);
+    });
   }
 });
 
@@ -136,13 +142,6 @@ Template.topicButtons.events({
           toastr.warning(i18n.t('error'));
       }
     });
-  },
-  'click #js-flag-topic': function (event, template) {
-    var modal = Blaze.renderWithData(Template.flagForm, { _id: this._id, type: 'topics' }, $('body')[0]);
-    $('#flag-modal').modal('show').on('hidden.bs.modal', function () {
-      Blaze.remove(modal);
-    });
   }
 });
-
 
