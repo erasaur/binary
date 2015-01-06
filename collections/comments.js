@@ -92,7 +92,7 @@ Meteor.methods({
     check(comment, {
       content: String,
       side: String,
-      replyTo: Match.Optional(String)
+      replyTo: Match.OneOf(String, undefined, null)
     });
 
     var user = Meteor.user();
