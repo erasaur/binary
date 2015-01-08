@@ -36,14 +36,22 @@ Template.topicHeader.rendered = function () {
 };
 
 Template.topic.helpers({
+  showOriginal: function () {
+    var hash = getCurrentHash();
+    return hash && Comments.findOne(hash);
+  },
   comments: function () {
-    var options = { 'replyTo': { $exists: false }, 'topicId': this._id };
-    var incomingComments = getIncomingComments(options);
-    var comments = getComments(options);
+    var hash = getCurrentHash();
+    var comment = hash && Comments.findOne(hash);
+    var selector = comment ?
+      { '_id': comment._id } : // show only the reply on top level
+      { 'replyTo': { $exists: false }, 'topicId': this._id };
 
+    var incomingComments = getIncomingComments(selector);
+    var comments = getComments(selector);
     comments = incomingComments.concat(comments);
-    var pros = [], cons = [];
 
+    var pros = [], cons = [];
     _.each(comments, function (comment) {
       comment.side === 'pro' ? pros.push(comment) : cons.push(comment);
     });
