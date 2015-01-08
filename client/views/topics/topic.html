@@ -7,10 +7,6 @@
           <button class="dropdown-toggle muted" type="button" id="comment-category" data-toggle="dropdown">
             {{commentCategory}} <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-            <li><a role="menuitem" tabindex="-1" href="{{pathFor route='topic' query='sort_by=top'}}" class="list-item">{{_ "top"}}</a></li>
-            <li><a role="menuitem" tabindex="-1" href="{{pathFor route='topic' query='sort_by=newest'}}" class="list-item">{{_ "newest"}}</a></li>
-          </ul>
         </span>
       </div>
 

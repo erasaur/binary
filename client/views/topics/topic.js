@@ -36,12 +36,6 @@ Template.topicHeader.rendered = function () {
 };
 
 Template.topic.helpers({
-  commentCategory: function () {
-    var query = getCurrentQuery();
-    var validSorts = ['top', 'newest'];
-    return query && _.contains(validSorts, query) ?
-      i18n.t(query.sort_by) : 'Top';
-  },
   comments: function () {
     var options = { 'replyTo': { $exists: false }, 'topicId': this._id };
     var incomingComments = getIncomingComments(options);
