@@ -6,7 +6,7 @@ Template.replies.rendered = function () {
       if ($node.hasClass('comment-container')) {
         Meteor.setTimeout(function () {
           $node.insertBefore(next);
-          $node.velocity('slideDown', { duration: 500 });
+          $node.velocity('slideDown', { duration: 200 });
           Meteor.setTimeout(function () { $node.css('opacity', 1); }, 1);
         }, 1);
       } else {

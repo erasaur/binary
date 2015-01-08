@@ -11,7 +11,7 @@ Template.topic.rendered = function () {
       if ($node.hasClass('comment-container')) {
         Meteor.setTimeout(function () {
           $node.insertBefore(next);
-          $node.velocity('slideDown', { duration: 500 });
+          $node.velocity('slideDown', { duration: 200 });
           Meteor.setTimeout(function () { $node.css('opacity', 1); }, 1);
         }, 1);
       } else {
@@ -43,11 +43,9 @@ Template.topic.helpers({
       i18n.t(query.sort_by) : 'Top';
   },
   comments: function () {
-    var incomingComments = getIncomingComments({
-      'replyTo': { $nin: SessionAmplify.get('showingReplies') },
-      'topicId': this._id
-    });
-    var comments = getComments({ 'topicId': this._id });
+    var options = { 'replyTo': { $exists: false }, 'topicId': this._id };
+    var incomingComments = getIncomingComments(options);
+    var comments = getComments(options);
 
     comments = incomingComments.concat(comments);
     var pros = [], cons = [];

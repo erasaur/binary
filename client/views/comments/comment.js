@@ -7,9 +7,6 @@ Template.comment.helpers({
     if (this.isCommentItem) {
       result += 'list-item comment-item ';
     }
-    else if (this.replyTo && _.contains(SessionAmplify.get('showingReplies'), this.replyTo)) {
-      result += 'comment-reply '; // show faded state
-    }
     return result + this.side;
   },
   author: function () {
@@ -130,9 +127,6 @@ Template.comment.events({
   'click .js-toggle-replies': function (event, template) {
     if (this.isCommentItem) return;
     var self = this; //store the reference because context changes when rendering template
-    // var controller = Router.current();
-    // controller._runAt = new Date(); // show new comments up to now
-
     var $elem = template.$('#' + self._id);
     var initOffset = $elem[0].getBoundingClientRect().top;
 
@@ -150,7 +144,6 @@ Template.comment.events({
         // because we can only open 1 reply box per level
         showing = showing.slice(0, showing.indexOf(closingIds[i]));
       });
-
 
       // animate only when replyRows is in view
       var replyRect = replyRows[0].getBoundingClientRect();
