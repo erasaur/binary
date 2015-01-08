@@ -1,15 +1,13 @@
 /**
  * @summary Publish all comments for a topic, limited by topicId, each transformed with an additional `initVotes` property
  * @param {String} topicId Id of the specific topic
- * @param {String} sortBy Sort option. Possible values: 'top' [default] or 'newest'
  * @param {String} side Each column of comments is published separately. Possible values: 'pro' or 'con'
  * @param {Number} limit Limit the amount of comments published (note that each side of comments is limited separately)
  * @param {String} startId Id of specific comment to start with (optional)
  */
-Meteor.publish('topicComments', function (topicId, sortBy, side, limit, startId) {
+Meteor.publish('topicComments', function (topicId, side, limit, startId) {
   check([topicId, side], [String]);
   check(limit, Match.Integer);
-  check(sortBy, Match.OneOf(String, undefined, null));
   check(startId, Match.OneOf(String, undefined, null));
 
   var pub = this;
@@ -63,11 +61,9 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit, startId)
 /**
  * @summary Publish replies for specific comment
  * @param {Array} commentIds The id's of the comment replies
- * @param {String} sortBy Sort option. Possible values: 'top' [default] or 'newest'
  */
-Meteor.publish('commentReplies', function (commentIds, sortBy) {
+Meteor.publish('commentReplies', function (commentIds) {
   check(commentIds, [String]);
-  check(sortBy, Match.OneOf(String, undefined, null));
 
   if (!this.userId) return this.ready();
 
