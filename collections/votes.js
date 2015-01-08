@@ -2,11 +2,12 @@ Meteor.methods({
   upvoteComment: function (comment) {
     check(comment, Match.ObjectIncluding({
       _id: String,
-      userId: String
+      userId: String,
+      upvotes: Number
     }));
 
     var user = Meteor.user();
-    var userId = this.userId;
+    var userId = user._id;
     var commentId = comment._id;
 
     if (!user || !canUpvote(user, comment))
@@ -16,9 +17,12 @@ Meteor.methods({
     // cancelDownvote(collection, comment, user);
 
     // votes/score
+    comment.upvotes++;
+    var score = getCommentScore(comment);
     var result = Comments.update({ '_id': commentId, 'upvoters': { $ne: userId } }, {
       $addToSet: { 'upvoters': userId },
-      $inc: { 'upvotes': 1 }
+      $inc: { 'upvotes': 1 },
+      $set: { 'score': score }
     });
 
     if (!!result) {
@@ -33,7 +37,8 @@ Meteor.methods({
   cancelUpvoteComment: function (comment) {
     check(comment, Match.ObjectIncluding({
       _id: String,
-      userId: String
+      userId: String,
+      upvotes: Number
     }));
 
     var user = Meteor.user();
@@ -45,9 +50,12 @@ Meteor.methods({
       throw new Meteor.Error('invalid-content', 'This content does not exist.');
 
     // votes/score
+    comment.upvotes--;
+    var score = getCommentScore(comment);
     var result = Comments.update({ '_id': commentId, 'upvoters': userId }, {
       $pull: { 'upvoters': userId },
-      $inc: { 'upvotes': -1 }
+      $inc: { 'upvotes': -1 },
+      $set: { 'score': score }
     });
 
     if (!!result) {

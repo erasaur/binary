@@ -17,14 +17,15 @@ CommentSchema = new SimpleSchema({
   isDeleted: {
     type: Boolean
   },
+  score: {
+    type: Number
+  },
   upvotes: { // scoring system ?
     type: Number,
-    min: 0,
-    optional: true
+    min: 0
   },
   upvoters: {
-    type: [String],
-    optional: true
+    type: [String]
   },
   replies: {
     type: [String]
@@ -125,10 +126,12 @@ Meteor.methods({
       isDeleted: false
     };
 
+    comment.score = getCommentScore(comment);
     comment._id = Comments.insert(comment);
 
-    if (!!replyTo)
+    if (!!replyTo) {
       Comments.update(replyTo, { $addToSet: { 'replies': comment._id } });
+    }
 
     Meteor.users.update(userId, {
       $inc: { 'stats.commentsCount': 1 },
