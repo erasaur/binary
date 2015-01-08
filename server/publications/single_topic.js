@@ -11,23 +11,22 @@
  * @param {Number} limit Limit the amount of comments published (note that each side of comments is limited separately)
  */
 Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
-  check(topicId, String);
+  check([topicId, side], [String]);
   check(sortBy, Match.OneOf(String, undefined, null));
-  check(side, String);
   check(limit, Match.Integer);
 
   var topic = Topics.findOne(topicId);
 
   if (!topic || !this.userId) return this.ready();
 
-  var sort = sortBy === 'newest' ?
+  var options = { limit: limit };
+  options.sort = sortBy === 'newest' ?
     { 'createdAt': -1, 'upvotes': -1 } : { 'upvotes': -1, 'createdAt': -1 };
 
   var pub = this;
-  var comments = Comments.find({ 'topicId': topicId, 'side': side }, {
-    sort: sort,
-    limit: limit
-  });
+  var comments = Comments.find({
+    'topicId': topicId, 'side': side, 'replyTo': { $exists: false }
+  }, options);
 
   var commentsHandle = comments.observeChanges({
     // in added case, fields essentially is the entirety of the added comment
