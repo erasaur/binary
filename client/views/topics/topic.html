@@ -10,7 +10,11 @@
         </span>
       </div>
 
-    {{> newComment}}
+    {{#if showOriginal}}
+      load original comments adfsadfsd
+    {{else}}
+      {{> newComment}}
+    {{/if}}
     {{/pageBody}}
   </div>
 </template>
