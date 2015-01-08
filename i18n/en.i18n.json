@@ -20,7 +20,6 @@
 
   // Comments
   "show_hide_more": "Show/hide more",
-  "reply_to": "Reply to __user__",
   "comment_too_short": "Sorry, your comment has to have at least 10 characters.",
   "new_comment_prompt": "What do you think?",
 

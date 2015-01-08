@@ -1,19 +1,12 @@
 Template.comment.helpers({
   containerClass: function () {
     var result = '';
-    if (this.isDeleted) {
-      result += 'deleted ';
-    }
-    if (this.isCommentItem) {
-      result += 'list-item comment-item ';
-    }
+    if (this.isDeleted) result += 'deleted ';
+    if (this.isCommentItem) result += 'list-item comment-item ';
     return result + this.side;
   },
   author: function () {
     return Meteor.users.findOne(this.userId);
-  },
-  hasReplyTo: function () {
-    return !this.isCommentItem && this.replyToUser;
   },
   toggleClass: function () {
     if (this.isCommentItem) return;
@@ -79,7 +72,7 @@ Template.newComment.events({
       else {
         template.$('.editable').val('');
         template.editingComment.set(false);
-        // scrollToId(result);
+        scrollToId(result);
 
         Tracker.afterFlush(function () {
           // shift all open reply boxes of same level and same side one row down

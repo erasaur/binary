@@ -21,13 +21,9 @@ Meteor.publish('topicComments', function (topicId, side, limit, startId) {
 
   var comments = Comments.find(selector, { sort: { 'score': -1 }, limit: limit });
   var commentsHandle = comments.observeChanges({
-    // in added case, fields essentially is the entirety of the added comment
     added: function (id, fields) {
-      var replyToUser = publishAssociatedOwners(id, fields); // publish the owners associated with this comment
-
+      publishOwner(fields);
       fields.initScore = fields.score;
-      if (replyToUser) fields.replyToUser = replyToUser; // so we don't necessarily need to pub replyTo comment to get the user
-
       pub.added('comments', id, fields);
     },
     changed: function (id, fields) {
@@ -36,20 +32,11 @@ Meteor.publish('topicComments', function (topicId, side, limit, startId) {
   });
 
   // we don't need owners to be reactive
-  function publishAssociatedOwners (commentId, comment) {
-    var replyTo = Comments.findOne(comment.replyTo);
+  function publishOwner (comment) {
     var owner = Meteor.users.findOne({ '_id': comment.userId }, {
       fields: { 'profile': 1, 'stats': 1 }
     });
-
     pub.added('users', owner._id, owner);
-
-    if (typeof replyTo !== 'undefined') {
-      var replyToUser = Meteor.users.findOne({ '_id': replyTo.userId });
-      if (!replyToUser) return;
-
-      return replyToUser.profile && replyToUser.profile.name;
-    }
   }
 
   pub.ready();
@@ -75,10 +62,8 @@ Meteor.publish('commentReplies', function (commentIds) {
 
   var commentsHandle = comments.observeChanges({
     added: function (id, fields) {
-      var replyToUser = publishAssociatedOwners(id, fields);
+      publishOwner(fields);
       fields.initScore = fields.score;
-      if (replyToUser) fields.replyToUser = replyToUser;
-
       pub.added('comments', id, fields);
     },
     changed: function (id, fields) {
@@ -86,20 +71,11 @@ Meteor.publish('commentReplies', function (commentIds) {
     }
   });
 
-  function publishAssociatedOwners (commentId, comment) {
-    var replyTo = Comments.findOne(comment.replyTo);
+  function publishOwner (comment) {
     var owner = Meteor.users.findOne({ '_id': comment.userId }, {
       fields: { 'profile': 1, 'stats': 1 }
     });
-
     pub.added('users', owner._id, owner);
-
-    if (typeof replyTo !== 'undefined') {
-      var replyToUser = Meteor.users.findOne({ '_id': replyTo.userId });
-      if (!replyToUser) return;
-
-      return replyToUser.profile && replyToUser.profile.name;
-    }
   }
 
   pub.ready();
