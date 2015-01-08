@@ -1,18 +1,15 @@
 <template name="comment">
   <div id="{{_id}}" class="comment collapsed {{containerClass}}">
     {{#unless isDeleted}}
-    <div class="comment-header">      
-      {{> profileInfo author}}
-    </div>
+      <div class="comment-header">      
+        {{> profileInfo author}}
+      </div>
     {{/unless}}
     <div class="comment-content markdown" title="{{_ 'show_hide_more'}}">
       {{{content}}}
     </div>
     <div class="comment-info">
       <span>{{formatDate createdAt}}</span>
-      {{#if hasReplyTo}}
-        <a href="{{pathFor route='topic' _id=this.topicId hash=this.replyTo}}" class="action-link">{{_ "reply_to" user=replyToUser}}</a>
-      {{/if}}
     </div>
     <div class="comment-footer">
       <div class="comment-footer-left float-left">
@@ -43,11 +40,4 @@
     </div>
   </div>
 </template>
-
-
-
-
-
-
-
 
