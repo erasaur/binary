@@ -1,39 +1,33 @@
-// We don't use publish-composite here since we need to transform
-// the documents as they are added, by inserting temporary *non-reactive*
-// values (to be used for sorting client-side) so sorting won't keep
-// changing as the comments change.
-
 /**
  * @summary Publish all comments for a topic, limited by topicId, each transformed with an additional `initVotes` property
  * @param {String} topicId Id of the specific topic
  * @param {String} sortBy Sort option. Possible values: 'top' [default] or 'newest'
  * @param {String} side Each column of comments is published separately. Possible values: 'pro' or 'con'
  * @param {Number} limit Limit the amount of comments published (note that each side of comments is limited separately)
+ * @param {String} startId Id of specific comment to start with (optional)
  */
-Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
+Meteor.publish('topicComments', function (topicId, sortBy, side, limit, startId) {
   check([topicId, side], [String]);
-  check(sortBy, Match.OneOf(String, undefined, null));
   check(limit, Match.Integer);
+  check(sortBy, Match.OneOf(String, undefined, null));
+  check(startId, Match.OneOf(String, undefined, null));
 
+  var pub = this;
   var topic = Topics.findOne(topicId);
 
   if (!topic || !this.userId) return this.ready();
 
-  var options = { limit: limit };
-  options.sort = sortBy === 'newest' ?
-    { 'createdAt': -1, 'upvotes': -1 } : { 'upvotes': -1, 'createdAt': -1 };
+  var startAt = Comments.findOne(startId);
+  var selector = { 'topicId': topicId, 'side': side, 'replyTo': { $exists: false } };
+  if (startAt) selector.score = { $lte: startAt.score };
 
-  var pub = this;
-  var comments = Comments.find({
-    'topicId': topicId, 'side': side, 'replyTo': { $exists: false }
-  }, options);
-
+  var comments = Comments.find(selector, { sort: { 'score': -1 }, limit: limit });
   var commentsHandle = comments.observeChanges({
     // in added case, fields essentially is the entirety of the added comment
     added: function (id, fields) {
       var replyToUser = publishAssociatedOwners(id, fields); // publish the owners associated with this comment
 
-      fields.initVotes = fields.upvotes;
+      fields.initScore = fields.score;
       if (replyToUser) fields.replyToUser = replyToUser; // so we don't necessarily need to pub replyTo comment to get the user
 
       pub.added('comments', id, fields);
@@ -61,7 +55,6 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   }
 
   pub.ready();
-
   pub.onStop(function () {
     commentsHandle.stop();
   });
@@ -78,19 +71,16 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
 
   if (!this.userId) return this.ready();
 
-  var userId = this.userId;
-  var sort = sortBy === 'newest' ?
-    { 'upvotes': -1, 'createdAt': -1 } : { 'createdAt': -1, 'upvotes': -1 };
-
   var pub = this;
+  var userId = this.userId;
   var comments = Comments.find({ 'replyTo': { $in: commentIds } }, {
-    sort: sort
+    sort: { 'score': -1 }
   });
 
   var commentsHandle = comments.observeChanges({
     added: function (id, fields) {
       var replyToUser = publishAssociatedOwners(id, fields);
-      fields.initVotes = fields.upvotes;
+      fields.initScore = fields.score;
       if (replyToUser) fields.replyToUser = replyToUser;
 
       pub.added('comments', id, fields);
@@ -112,13 +102,11 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
       var replyToUser = Meteor.users.findOne({ '_id': replyTo.userId });
       if (!replyToUser) return;
 
-      // pub.added('users', replyToUser._id, replyToUser);
       return replyToUser.profile && replyToUser.profile.name;
     }
   }
 
   pub.ready();
-
   pub.onStop(function () {
     commentsHandle.stop();
   });
