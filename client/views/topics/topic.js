@@ -64,10 +64,14 @@ Template.topic.helpers({
     var controller = getCurrentController();
     var hash = controller && controller._hash && controller._hash.get();
     var comment = hash && Comments.findOne(hash);
-    var selector = comment ?
-      { '_id': comment._id } : // show only the reply on top level
-      { 'replyTo': { $exists: false }, 'topicId': this._id };
 
+    if (comment) {
+      return comment.side === 'pro' ?
+        [{ 'pros': comment, 'cons': null }] :
+        [{ 'pros': null, 'cons': comment }];
+    }
+
+    var selector = { 'replyTo': { $exists: false }, 'topicId': this._id };
     var incomingComments = getIncomingComments(selector);
     var comments = getComments(selector);
     comments = incomingComments.concat(comments);

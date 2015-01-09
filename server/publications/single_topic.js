@@ -3,22 +3,17 @@
  * @param {String} topicId Id of the specific topic
  * @param {String} side Each column of comments is published separately. Possible values: 'pro' or 'con'
  * @param {Number} limit Limit the amount of comments published (note that each side of comments is limited separately)
- * @param {String} startId Id of specific comment to start with (optional)
  */
-Meteor.publish('topicComments', function (topicId, side, limit, startId) {
+Meteor.publish('topicComments', function (topicId, side, limit) {
   check([topicId, side], [String]);
   check(limit, Match.Integer);
-  check(startId, Match.OneOf(String, undefined, null));
 
   var pub = this;
   var topic = Topics.findOne(topicId);
 
   if (!topic || !this.userId) return this.ready();
 
-  var startAt = Comments.findOne(startId);
   var selector = { 'topicId': topicId, 'side': side, 'replyTo': { $exists: false } };
-  if (startAt) selector.score = { $lte: startAt.score };
-
   var comments = Comments.find(selector, { sort: { 'score': -1 }, limit: limit });
   var commentsHandle = comments.observeChanges({
     added: function (id, fields) {
@@ -56,9 +51,11 @@ Meteor.publish('commentReplies', function (commentIds) {
 
   var pub = this;
   var userId = this.userId;
-  var comments = Comments.find({ 'replyTo': { $in: commentIds } }, {
-    sort: { 'score': -1 }
-  });
+  var sort = { sort: { 'score': -1 } };
+  var comments = Comments.find({ $or: [
+    { '_id': { $in: commentIds } },
+    { 'replyTo': { $in: commentIds } }
+  ]}, sort);
 
   var commentsHandle = comments.observeChanges({
     added: function (id, fields) {
