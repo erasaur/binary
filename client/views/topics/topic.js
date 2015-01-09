@@ -35,13 +35,34 @@ Template.topicHeader.rendered = function () {
   }
 };
 
+Template.topic.events({
+  'click #js-load-original': function (event, template) {
+    // reset showing single comment
+    var controller = getCurrentController();
+    controller && controller._hash && controller._hash.set();
+
+    // remove all reply boxes
+    var showing = SessionAmplify.get('showingReplies');
+    var $replyTo = template.$('#' + showing[0]);
+    if ($replyTo.length) {
+      var $replyToRow = $replyTo.closest('.comment-row');
+      var replyRows = $replyToRow.siblings('.comment-container');
+      Blaze.remove(Blaze.getView(replyRows[0]));
+    }
+
+    // reset replies
+    SessionAmplify.set('showingReplies', []);
+  }
+});
 Template.topic.helpers({
   showOriginal: function () {
-    var hash = getCurrentHash();
+    var controller = getCurrentController();
+    var hash = controller && controller._hash && controller._hash.get();
     return hash && Comments.findOne(hash);
   },
   comments: function () {
-    var hash = getCurrentHash();
+    var controller = getCurrentController();
+    var hash = controller && controller._hash && controller._hash.get();
     var comment = hash && Comments.findOne(hash);
     var selector = comment ?
       { '_id': comment._id } : // show only the reply on top level
