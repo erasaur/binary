@@ -146,13 +146,11 @@ Template.comment.events({
             duration: 500,
             progress: _.throttle(function () { adjustScroll($elem, initOffset); }, 20),
             complete: function () {
-              // $(this).remove();
               Blaze.remove(Blaze.getView(replyRows[0]));
             }
           });
         }, 1);
       } else {
-        // replyRows.remove();
         Blaze.remove(Blaze.getView(replyRows[0]));
         adjustScroll($elem, initOffset);
       }
