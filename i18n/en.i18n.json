@@ -22,6 +22,7 @@
   "show_hide_more": "Show/hide more",
   "comment_too_short": "Sorry, your comment has to have at least 10 characters.",
   "new_comment_prompt": "What do you think?",
+  "load_original_comments": "Load original comments",
 
   // Forgot Password
   "forgot_password": "Forgot Password?",
