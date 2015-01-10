@@ -1,8 +1,3 @@
-Meteor.startup(function () {
-  Comments.find().forEach(function (comment) {
-    Comments.update(comment._id, { $set: { score: getCommentScore(comment) } });
-  });
-});
 // if (Meteor.users.find().count() === 0) {
 //   Accounts.createUser({
 //     email: 'mmaarrkklleeee@gmail.com',
