@@ -187,7 +187,7 @@ Template.comment.events({
     });
   },
   'click .js-delete-comment': function (event, template) {
-    if (confirm(i18n.t('are_you_sure', { action: 'delete_comment' }))) {
+    if (confirm(i18n.t('are_you_sure', { action: i18n.t('delete_comment') }))) {
       Meteor.call('removeComment', this, function (error) {
         if (error) {
           if (error.error === 'no-permission')
