@@ -172,7 +172,7 @@
   "delete_topic": "delete this topic",
 
   // Common
-  "are_you_sure": "Are you sure you want to $t(__action__)?",
+  "are_you_sure": "Are you sure you want to __action__?",
   "go_home": "Take me home!",
   "copyright": "©2014 Binary, All Rights Reserved.",
   "greeting": "Hey there, %s!",
