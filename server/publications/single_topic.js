@@ -1,5 +1,5 @@
 /**
- * @summary Publish all comments for a topic, limited by topicId, each transformed with an additional `initVotes` property
+ * @summary Publish all comments for a topic, limited by topicId, each transformed with an additional `initScore` property
  * @param {String} topicId Id of the specific topic
  * @param {String} side Each column of comments is published separately. Possible values: 'pro' or 'con'
  * @param {Number} limit Limit the amount of comments published (note that each side of comments is limited separately)

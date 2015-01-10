@@ -18,9 +18,10 @@ CommentSchema = new SimpleSchema({
     type: Boolean
   },
   score: {
-    type: Number
+    type: Number,
+    decimal: true
   },
-  upvotes: { // scoring system ?
+  upvotes: {
     type: Number,
     min: 0
   },
