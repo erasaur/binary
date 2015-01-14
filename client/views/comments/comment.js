@@ -126,11 +126,11 @@ Template.comment.events({
     // remove replies on equal or deeper level than commentRow
     var showing = SessionAmplify.get('showingReplies');
     var $replyTo = $elem.closest('.comment-row');
-    var replyRows = $replyTo.siblings('.comment-container');
+    var $replyRows = $replyTo.siblings('.comment-container');
     var closingIds = [];
 
-    if (replyRows.length) {
-      replyRows.each(function (i) {
+    if ($replyRows.length) {
+      $replyRows.each(function (i) {
         closingIds[i] = $(this).attr('id');
         closingIds[i] = closingIds[i].slice(0, closingIds[i].indexOf('-'));
         // all ids to the right must be of nested level,
@@ -139,19 +139,19 @@ Template.comment.events({
       });
 
       // animate only when replyRows is in view
-      var replyRect = replyRows[0].getBoundingClientRect();
+      var replyRect = $replyRows[0].getBoundingClientRect();
       if (replyRect.top + replyRect.height > 0) {
         Meteor.setTimeout(function () {
-          replyRows.velocity('slideUp', {
-            duration: 500,
+          $replyRows.velocity('slideUp', {
+            duration: 300,
             progress: _.throttle(function () { adjustScroll($elem, initOffset); }, 20),
             complete: function () {
-              Blaze.remove(Blaze.getView(replyRows[0]));
+              Blaze.remove(Blaze.getView($replyRows[0]));
             }
           });
         }, 1);
       } else {
-        Blaze.remove(Blaze.getView(replyRows[0]));
+        Blaze.remove(Blaze.getView($replyRows[0]));
         adjustScroll($elem, initOffset);
       }
     }

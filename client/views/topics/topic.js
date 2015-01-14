@@ -1,4 +1,5 @@
 Template.topic.rendered = function () {
+  console.log(this.data);
   initInfiniteScroll.call(this, [
     Comments.find({ 'topicId': this.data._id, 'side': 'pro' }),
     Comments.find({ 'topicId': this.data._id, 'side': 'con' })
@@ -22,6 +23,12 @@ Template.topic.rendered = function () {
 };
 Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
+
+  // var $replyRows = $('.comment-container');
+  // if ($replyRows.length) {
+  //   Blaze.remove(Blaze.getView($replyRows[0]));
+  // }
+  // SessionAmplify.set('showingReplies', []);
 };
 
 Template.topicHeader.rendered = function () {
@@ -64,11 +71,14 @@ Template.topic.helpers({
     var controller = getCurrentController();
     var hash = controller && controller._hash && controller._hash.get();
     var comment = hash && Comments.findOne(hash);
+    var res = [];
 
     if (comment) {
-      return comment.side === 'pro' ?
-        [{ 'pros': comment, 'cons': null }] :
-        [{ 'pros': null, 'cons': comment }];
+      comment.side === 'pro' ?
+        res.push({ 'pros': comment, 'cons': null }) :
+        res.push({ 'pros': null, 'cons': comment });
+      res.push({ 'bottom': true });
+      return res;
     }
 
     var selector = { 'replyTo': { $exists: false }, 'topicId': this._id };
@@ -81,7 +91,7 @@ Template.topic.helpers({
       comment.side === 'pro' ? pros.push(comment) : cons.push(comment);
     });
 
-    var res = [], len = Math.max(pros.length, cons.length), i = -1;
+    var len = Math.max(pros.length, cons.length), i = -1;
     while (++i < len) {
       res.push({ 'pros': pros[i], 'cons': cons[i] });
     }
