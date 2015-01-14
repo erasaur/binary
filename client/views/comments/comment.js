@@ -117,7 +117,7 @@ Template.comment.events({
       parent.toggleClass('collapsed');
     }
   },
-  'click .js-toggle-replies': function (event, template) {
+  'click .js-toggle-replies': _.debounce(function (event, template) {
     if (this.isCommentItem) return;
     var self = this; //store the reference because context changes when rendering template
     var $elem = template.$('#' + self._id);
@@ -127,15 +127,15 @@ Template.comment.events({
     var showing = SessionAmplify.get('showingReplies');
     var $replyTo = $elem.closest('.comment-row');
     var $replyRows = $replyTo.siblings('.comment-container');
-    var closingIds = [];
+    var closing = _.contains(showing, self._id);
 
-    if ($replyRows.length) {
+    if (closing && $replyRows.length) {
       $replyRows.each(function (i) {
-        closingIds[i] = $(this).attr('id');
-        closingIds[i] = closingIds[i].slice(0, closingIds[i].indexOf('-'));
+        var id = $(this).attr('id');
+        id = id.slice(0, id.indexOf('-'));
         // all ids to the right must be of nested level,
         // because we can only open 1 reply box per level
-        showing = showing.slice(0, showing.indexOf(closingIds[i]));
+        showing = showing.slice(0, showing.indexOf(id));
       });
 
       // animate only when replyRows is in view
@@ -156,7 +156,7 @@ Template.comment.events({
       }
     }
 
-    if (_.contains(closingIds, self._id)) {
+    if (closing) {
       SessionAmplify.set('showingReplies', showing);
       return;
     }
@@ -169,11 +169,13 @@ Template.comment.events({
     var color = (showing.length - 1) % numColors;
 
     // add the replies
-    Blaze.renderWithData(Template.replies, // template to render
-                         { id: self._id, side: self.side, color: color }, // data context
-                         $replyTo.parent()[0], // insert within
-                         $replyTo.next()[0]); // insert before
-  },
+    Blaze.renderWithData(
+      Template.replies, // template to render
+      { id: self._id, side: self.side, color: color }, // data context
+      $replyTo.parent()[0], // insert within
+      $replyTo.next()[0] // insert before
+    );
+  }, 200, true),
   'click .js-upvote-comment': function (event, template) {
     Meteor.call('upvoteComment', this);
   },
