@@ -3,18 +3,13 @@
     {{#pageBody items=comments item='commentRow' hasItems=commentsCount class='no-container'}}
       <div class="page-title">
         <h4 class="muted uppercase">{{_ "num_comments" count=commentsCount}}</h4>
-        <span class="dropdown">
-          <button class="dropdown-toggle muted" type="button" id="comment-category" data-toggle="dropdown">
-            {{commentCategory}} <span class="caret"></span>
-          </button>
-        </span>
       </div>
 
-    {{#if showOriginal}}
-    <div class="alert alert-info center load-original" id="js-load-original">{{_ "load_original_comments"}}</div>
-    {{else}}
-      {{> newComment}}
-    {{/if}}
+      {{#if showOriginal}}
+        <div class="alert alert-info center load-original" id="js-load-original">{{_ "load_original_comments"}}</div>
+      {{else}}
+        {{> newComment}}
+      {{/if}}
     {{/pageBody}}
   </div>
 </template>
@@ -25,7 +20,6 @@
   {{else}}
     <button id="js-follow" class="btn btn-default">{{_ "follow"}}</button>
   {{/if}}
-
 </template>
 
 <template name="topicHeader">
@@ -57,7 +51,7 @@
           <i class="icon-action fa fa-remove"></i>
         </div>
       {{/if}}
-      </div>
+    </div>
   </div>
 </template>
 
