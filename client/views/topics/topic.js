@@ -1,5 +1,6 @@
 Template.topic.rendered = function () {
-  console.log(this.data);
+  if (!this.data) return;
+
   initInfiniteScroll.call(this, [
     Comments.find({ 'topicId': this.data._id, 'side': 'pro' }),
     Comments.find({ 'topicId': this.data._id, 'side': 'con' })
