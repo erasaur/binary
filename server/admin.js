@@ -130,7 +130,10 @@ Meteor.methods({
     admins.forEach(function (admin) {
       var properties = {
         message: getDisplayName(user) + ' flagged item of type: ' + itemType,
-        actionLink: getSiteUrl() + 'admin'
+        action: {
+          link: getSiteUrl() + 'admin',
+          message: 'Admin Panel'
+        }
       };
 
       var adminEmail = admin.emails[0].address;
