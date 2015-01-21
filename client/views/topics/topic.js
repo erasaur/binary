@@ -25,9 +25,7 @@ Template.topic.rendered = function () {
 Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
 
-  console.log('asdf');
   var $replyRows = $('.comment-container');
-  console.log($replyRows);
   if ($replyRows.length) {
     Blaze.remove(Blaze.getView($replyRows[0]));
     $replyRows.remove();
