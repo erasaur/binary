@@ -147,7 +147,7 @@ Meteor.methods({
       _id: String,
       userId: String
     }));
-    check(newStatus, String);
+    check(newStatus, Match.Integer);
 
     var user = Meteor.user();
 
