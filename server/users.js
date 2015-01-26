@@ -116,9 +116,7 @@ Accounts.onCreateUser(function (options, user) {
 
 Meteor.methods({
   newUser: function (name, password, inviteCode) {
-    check(name, String);
-    check(password, String);
-    check(inviteCode, String);
+    check([name, password, inviteCode], [String]);
 
     var name = stripHTML(name);
     var invite = {
