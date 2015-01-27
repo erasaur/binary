@@ -31,7 +31,7 @@
   font-size: 60px;
 }
 .logo-sub {
-  font-size: 22px; 
+  font-size: 24px; 
   padding: 0 10px;
 }
 
@@ -213,12 +213,12 @@
 .navbar-nav > li a {
   padding: @padding-small;
 }
-.navbar-nav .navbar-search {
+.navbar-nav > .navbar-search {
   width: auto;
   overflow: hidden;
   float: none;
 }
-.navbar-nav .navbar-topic-new {
+.navbar-nav > .navbar-topic-new {
   width: 50px;
   float: right;
 }
@@ -672,26 +672,18 @@
 }
 .landing-container.front-page { // weird but necessary hack
   text-align: center;
-  position: static;
   min-height: 100%;
   height: auto !important;
-  margin: 0 auto -350px;
 }
 .landing-header {
   padding: 60px 0 15px;  
   width: 100%;
 }
-.push,
 .landing-image {
   height: 350px;
-}
-.landing-image {
   position: relative;
   width: 280px;
   margin: 0 auto;
-  background-image: url('/binary-frontpage-mobile.png');
-  background-repeat: no-repeat;
-  background-size: contain;
 }
 .landing-image h3 { 
   position: absolute; 
@@ -711,6 +703,27 @@
   &:first-of-type { left: 97px; }
   &:last-of-type { right: 97px; }
 }
+.landing-feature.row {
+  padding: 120px 0;
+  background: @color-background;
+  margin-top: @padding-large;
+}
+.landing-feature-left {
+  text-align: center;
+  padding-right: @padding-larger;
+}
+.landing-feature-left .logo-sub {
+  margin: 0;
+}
+.landing-feature-right {
+  text-align: left;
+  padding-left: @padding-larger;
+}
+.logo-sub.feature-1 { height: 71px; padding-top: 30px; }
+.logo-sub.feature-2 { height: 99px; padding-top: 45px; }
+.logo-sub.feature-3 { height: 224px; padding-top: 110px; }
+.logo-sub.feature-4 { height: 262px; padding-top: 130px; }
+.logo-sub.feature-5 { height: 224px; padding-top: 110px; }
 
 .landing-login {
   position: absolute;
@@ -757,16 +770,16 @@
   .landing-form-container {
     margin: 100px auto;
   }
-  .landing-container.front-page {
-    margin-bottom: -440px;
-  }
-  .push,
+  // .landing-container.front-page {
+  //   margin-bottom: -440px;
+  // }
+  // .push,
   .landing-image {
     height: 440px;
   }
   .landing-image {
     width: 640px;
-    background-image: url('/binary-frontpage-web.png');
+    // background-image: url('/binary-frontpage-web.png');
   }
   .landing-image h3 {
     font-size: @fontSize-large;
