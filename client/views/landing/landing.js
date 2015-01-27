@@ -45,6 +45,5 @@ Template.landing.rendered = function () {
 };
 
 Template.landing.destroyed = function () {
-  $('body').css('height', '');
   clearInterval(this._animateHandle);
 };
