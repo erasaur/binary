@@ -29,23 +29,18 @@
 </template>
 
 <template name="navItems">
-  {{#if currentUser}}
-    <ul class="nav navbar-nav col-sm-2">
-      <li role="presentation">
-        <a href="{{pathFor route='profile' data=currentUser}}" id="nav-profile">
-          {{> avatar user=currentUser size='small' shape='circle' class='navbar-item hidden-xs'}}
-          <span class="visible-xs">{{_ "your_profile"}}</span>
-        </a>
-      </li>
-      {{> notifications}}
-      <li class="dropdown">
-        <a href="#" data-toggle="modal" data-target="#new-topic-modal">
-          <div class="navbar-item icon-group hidden-xs">
-            <i class="b-icon-write"></i>
-          </div>
-          <span class="visible-xs">{{_ "add_new_topic"}}</span>
-        </a>
-      </li>
-    </ul>
-  {{/if}} 
+  <ul class="nav navbar-nav col-sm-2 navbar-buttons">
+    <li role="presentation" class="visible-xs">
+      <a href="#" data-toggle="modal" data-target="#new-topic-modal">
+        <span>{{_ "add_new_topic"}}</span>
+      </a>
+    </li>
+    <li role="presentation">
+      <a href="{{pathFor route='profile' data=currentUser}}" id="nav-profile">
+        {{> avatar user=currentUser size='small' shape='circle' class='navbar-item hidden-xs'}}
+        <span class="visible-xs">{{_ "your_profile"}}</span>
+      </a>
+    </li>
+    {{> notifications}}
+  </ul>
 </template>

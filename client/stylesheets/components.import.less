@@ -198,8 +198,7 @@
   margin-bottom: 0;
   .border-shadow;
 }
-.navbar-header, 
-.navbar-search {
+.navbar-header {
   padding-right: 0;
 }
 .navbar-brand {
@@ -214,8 +213,17 @@
 .navbar-nav > li a {
   padding: @padding-small;
 }
+.navbar-nav .navbar-search {
+  width: auto;
+  overflow: hidden;
+  float: none;
+}
+.navbar-nav .navbar-topic-new {
+  width: 50px;
+  float: right;
+}
 @media (min-width: 768px) {
-  .navbar-nav > li {
+  .navbar-buttons > li {
     float: right;
   }
   .navbar-nav:last-of-type {
