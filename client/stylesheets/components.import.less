@@ -223,7 +223,7 @@
   float: right;
 }
 @media (min-width: 768px) {
-  .navbar-buttons > li {
+  .navbar-items > li {
     float: right;
   }
   .navbar-nav:last-of-type {
@@ -247,18 +247,21 @@
   height: 30px;
   line-height: 31px;
 }
-.navbar-nav > li .icon-group {
+.navbar-nav .icon-group {
   border-radius: 50%; 
   background-color: rgba(0,0,0,0.4);
   padding: 2px 8px;
   color: #fff;
 }
-.navbar-nav > li .notification-badge {
+.navbar-nav .notification-badge {
   position: relative;
   top: 0; 
   left: 0;
   font-size: 15px;
   font-weight: bold;
+}
+.moderator .avatar-initials {
+  background-color: @color-primary;
 }
 .navbar-right {
   float: left;
@@ -272,7 +275,7 @@
   margin-right: 30px;
 }
 .navbar-toggle.collapsed {
-  background-color: #e3e3e3;
+  background-color: @color-gray;
 }
 
 .col {

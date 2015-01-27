@@ -173,6 +173,8 @@
   "greeting_extended": "$t('greeting', %s) Just wanted to let you know that",
   
   // Admin
+  "moderator": "M",
+  "moderation": "Moderation",
   "comment_deleted": "Sorry, this comment has been deleted.",
   "delete_comment": "delete this comment",
   "delete_topic": "delete this topic",
