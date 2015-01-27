@@ -11,8 +11,6 @@ Template.landing.rendered = function () {
     'Does God exist?'
   ];
   var questionIndex = 0;
-
-  $('body').css('height', '100%');
   var $text = this.$('#landing-image-header');
   var $pro = this.$('#landing-image-pro');
   var $con = this.$('#landing-image-con');

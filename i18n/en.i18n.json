@@ -66,6 +66,12 @@
 
   // Landing
   "landing_lead": "explore the fascinating world of binary questions",
+  "feature_lead": "What's this, you ask?",
+  "feature_1": "a binary question has only 2 possible answers",
+  "feature_2": "you can vote on a side",
+  "feature_3": "or comment on a side",
+  "feature_4": "even comment on somebody's comment (wow)",
+  "feature_5": "browse questions about tech, sports, politics... anything really!",
   "login": "Log In",
   
   // Notifications
