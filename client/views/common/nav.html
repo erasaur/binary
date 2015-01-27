@@ -29,7 +29,7 @@
 </template>
 
 <template name="navItems">
-  <ul class="nav navbar-nav col-sm-2 navbar-buttons">
+  <ul class="nav navbar-nav col-sm-2 navbar-items">
     <li role="presentation" class="visible-xs">
       <a href="#" data-toggle="modal" data-target="#new-topic-modal">
         <span>{{_ "add_new_topic"}}</span>
@@ -41,6 +41,18 @@
         <span class="visible-xs">{{_ "your_profile"}}</span>
       </a>
     </li>
+
     {{> notifications}}
+
+    {{#if isAdmin}}
+      <li role="presentation">
+        <a href="{{pathFor 'admin'}}">
+          <div class="moderator avatar avatar-small avatar-circle navbar-item hidden-xs">
+            <span class="avatar-initials">{{_ "moderator"}}</span>
+          </div>
+          <span class="visible-xs">{{_ "moderation"}}</span>
+        </a>
+      </li>
+    {{/if}}
   </ul>
 </template>
