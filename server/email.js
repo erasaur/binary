@@ -22,9 +22,7 @@ buildEmailTemplate = function (htmlContent) {
     juice.juiceContent(emailHTML, {
       url: getSiteUrl(),
       removeStyleTags: false
-    }, function (error, result) {
-      done(null, result);
-    });
+    }, done);
   }).result;
 
   var doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
