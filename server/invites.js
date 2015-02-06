@@ -16,7 +16,7 @@ Meteor.methods({
       throw new Meteor.Error('no-permission', 'This user does not have permission to continue.');
 
     // check that invited user doesn't exist
-    if (Meteor.users.findOne({ 'emails': { $elemMatch: { 'address': email } } }))
+    if (Meteor.users.findOne({ 'emails.address': email }))
       throw new Meteor.Error('duplicate-content', 'This content already exists.');
 
     // check that invited user hasn't been invited
