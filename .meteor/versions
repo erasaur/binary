@@ -89,6 +89,7 @@ multiply:iron-router-progress@1.0.1
 npm-bcrypt@0.7.7
 npm-container@1.0.0
 observe-sequence@1.0.4
+okgrow:iron-router-autoscroll@0.0.6
 ordered-dict@1.0.2
 percolate:velocityjs@1.1.0
 random@1.0.2
