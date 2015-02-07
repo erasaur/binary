@@ -153,6 +153,7 @@ Meteor.methods({
     };
 
     topic.score = getTopicScore(topic);
+    console.log(topic.score);
     topic._id = Topics.insert(topic);
 
     Meteor.users.update(userId, { $inc: { 'stats.topicsCount': 1 } });
