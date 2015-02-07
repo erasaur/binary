@@ -1,46 +1,46 @@
 Meteor.startup(function () {
   BrowserPolicy.framing.disallow();
+  BrowserPolicy.content.allowFontOrigin('fonts.gstatic.com');
+  BrowserPolicy.content.allowOriginForAll('fonts.googleapis.com');
   BrowserPolicy.content.disallowInlineScripts();
-  BrowserPolicy.content.allowFontOrigin('http://fonts.googleapis.com');
+
+  // update scores every minute
+  Meteor.setInterval(function () {
+    Topics.find().forEach(function (topic) {
+      Topics.update(topic._id, {
+        $set: {
+          score: getTopicScore(topic)
+        }
+      });
+    });
+  }, 60 * 1000);
 });
 
-var resetPassword = {
-  subject: function (user) {
-    return 'Recovering your password on Binary';
-  },
-  html: function (user, url) {
-    // var token = url.substring(url.lastIndexOf('/') + 1);
-    // var url = Router.routes['home'].url({}, { 'query': { 'reset_code': token } });
-    var properties = {
-      name: getDisplayName(user),
-      actionLink: url
-    };
-    return buildEmailTemplate(Handlebars.templates['emailResetPassword'](properties));
-  }
-};
-resetPassword.text = function (user, url) {
-  return buildEmailText(resetPassword.html);
-};
+var emailOptions = function (emailType) {
+  emailType = 'email_' + emailType;
 
-var verifyEmail = {
-  subject: function (user) {
-    return 'Verify your email on Binary';
-  },
-  html: function (user, url) {
+  this.subject = function (user) {
+    return i18n.t(emailType + '_subject');
+  };
+  this.html = function (user, url) {
     var properties = {
-      name: getDisplayName(user),
-      actionLink: url
+      greeting: i18n.t('greeting', getDisplayName(user)),
+      message: i18n.t(emailType + '_message'),
+      action: {
+        link: url,
+        message: i18n.t(emailType + '_action')
+      }
     };
-    return buildEmailTemplate(Handlebars.templates['emailVerifyEmail'](properties));
-  }
-};
-verifyEmail.text = function (user, url) {
-  return buildEmailText(verifyEmail.html);
+    return buildEmailTemplate(Handlebars.templates['emailTemplate'](properties));
+  };
+  this.text = function (user, url) {
+    return buildEmailText(this.html);
+  };
 };
 
 Accounts.emailTemplates = {
-  from: 'hello@binary.com',
+  from: 'Binary <hi@binary10.co>',
   siteName: 'Binary',
-  resetPassword: resetPassword,
-  verifyEmail: verifyEmail
+  resetPassword: new emailOptions('resetPassword'),
+  verifyEmail: new emailOptions('verifyEmail')
 };

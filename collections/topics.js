@@ -18,39 +18,34 @@ TopicSchema = new SimpleSchema({
   createdAt: {
     type: Date
   },
-  commentsCount: {
+  score: {
     type: Number,
-    optional: true
+    min: 0,
+    decimal: true
+  },
+  commentsCount: {
+    type: Number
   },
   commenters: {
-    type: [String],
-    optional: true
+    type: [String]
   },
   pro: {
     type: Number,
-    min: 0,
-    optional: true
+    min: 0
   },
   proUsers: {
-    type: [String],
-    optional: true
+    type: [String]
   },
   con: {
     type: Number,
-    min: 0,
-    optional: true
+    min: 0
   },
   conUsers: {
-    type: [String],
-    optional: true
+    type: [String]
   },
   followers: {
-    type: [String],
-    optional: true
-  },
-  // isDeleted: {
-  //   type: Boolean
-  // }
+    type: [String]
+  }
 });
 
 Topics = new Mongo.Collection('topics');
@@ -80,7 +75,7 @@ Topics.allow({
 Topics.deny({
   update: function (userId, topic, fields) {
     if (isAdminById(userId)) return false;
-    
+
     var validFields = [
       'title',
       'description'
@@ -115,6 +110,11 @@ Topics.before.update(function (userId, doc, fields, modifier, options) {
 
 Meteor.methods({
   newTopic: function (topic) {
+    check(topic, {
+      title: String,
+      description: String
+    });
+
     var user = Meteor.user();
     var userId = this.userId;
     var title = topic.title;
@@ -142,28 +142,29 @@ Meteor.methods({
       description: description,
       userId: userId,
       createdAt: new Date(),
-      // author: getDisplayNameById(userId),
       // category: category,
-      // baseScore: 0,
-      // score: 0,
       commentsCount: 0,
       pro: 0,
       con: 0,
       commenters: [],
       proUsers: [],
       conUsers: [],
-      followers: [],
-      // isDeleted: false
+      followers: []
     };
 
+    topic.score = getTopicScore(topic);
+    console.log(topic.score);
     topic._id = Topics.insert(topic);
 
     Meteor.users.update(userId, { $inc: { 'stats.topicsCount': 1 } });
     Meteor.call('newTopicNotification', topic);
+    Meteor.call('followTopic', topic._id);
 
     return topic._id;
   },
   followTopic: function (topicId) {
+    check(topicId, String);
+
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
@@ -173,21 +174,17 @@ Meteor.methods({
     Meteor.users.update(userId, { $addToSet: { 'activity.followingTopics': topicId } });
   },
   unfollowTopic: function (topicId) {
+    check(topicId, String);
+
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
       throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
-    
+
     Topics.update(topicId, { $pull: { 'followers': userId } });
     Meteor.users.update(userId, { $pull: { 'activity.followingTopics': topicId } });
   }
 });
 
 // end methods ---------------------------------------
-
-
-
-
-
-
 

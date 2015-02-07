@@ -1,3 +1,9 @@
+Template.settingsProfile.helpers({
+  settingsTitle: function () {
+    return i18n.t('edit_profile');
+  }
+});
+
 Template.settingsProfile.events({
   'submit form': function (event, template) {
     var name = template.find('#js-name').value;
@@ -5,8 +11,7 @@ Template.settingsProfile.events({
 
     Meteor.call('changeProfile', name, bio, function (error, result) {
       if (error) {
-        console.log(error.invalidKeys);
-        alert('Sorry, please try to stick to alphanumeric characters, hyphens, periods, and apostrophes!')
+        toastr.warning(i18n.t('use_valid_characters'));
       }
     });
   },

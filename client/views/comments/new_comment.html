@@ -1,17 +1,17 @@
 <template name="newComment">
   <div class="comment-new">
     {{#if editing}}
-      <textarea class="editable markdown" placeholder="What do you think?"></textarea>
+      <textarea class="editable markdown" placeholder="{{_ 'new_comment_prompt'}}"></textarea>
       <div class="comment-new-action clearfix">
-        <a href="#" class="js-comment-cancel action-link">Cancel</a>
-        <button class="btn btn-default js-comment-post">Comment</button>
+        <a href="#" class="js-comment-cancel action-link">{{_ "cancel"}}</a>
+        <button class="btn btn-primary js-comment-post">{{_ "submit"}}</button>
         <label class="toggle comment-side">
           <input type="checkbox" class="js-comment-side">
           <span class="handle"></span>
         </label>
       </div>
     {{else}}
-      <input type="text" class="js-comment-new form-control" placeholder="What do you think?">
+      <input type="text" class="js-comment-new form-control" placeholder="{{_ 'new_comment_prompt'}}">
     {{/if}}
   </div>
 </template>

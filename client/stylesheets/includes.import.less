@@ -1,7 +1,8 @@
 // fonts
 @fontSize-small: 0.75em;
 // @fontSize-base: 1em;
-@fontSize-large: 1.3em;
+@fontSize-large: 1.2em;
+@fontSize-larger: 1.5em;
 @fontColor-muted: rgba(0, 0, 0, 0.6);
 
 // line heights
@@ -36,13 +37,15 @@
 @color-con4: rgb(225, 150, 206);
 
 // layout element colors
-@color-lightGray: rgb(235, 235, 235); // rgba(220, 220, 220, 0.6);
-@color-gray: rgb(240, 240, 240);
-@color-darkGray: rgb(160, 160, 160);
+// @color-lightGray: rgb(235, 235, 235); // rgba(220, 220, 220, 0.6);
+@color-lightGray: rgb(240, 240, 240);
+// @color-darkGray: rgb(160, 160, 160);
 
-@color-lightPrimary: rgb(127, 175, 247);
-@color-primary: rgb(62, 130, 231);
-@color-darkPrimary: rgb(27, 103, 215);
+@color-gray: #ABB7B7; // rgb(127, 175, 247);
+@color-darkGray: #95A5A6; // rgb(127, 175, 247);
+
+@color-primary: #4fc1e9; // rgb(62, 130, 231);
+@color-darkPrimary: #3bafda; // rgb(27, 103, 215);
 
 @color-background: #ebebeb;
 @color-pro: rgb(146, 240, 52);
@@ -82,12 +85,19 @@
   color: @color;
 }
 .border-shadow(@shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2)) {
-  box-shadow: @shadow;
+  -webkit-box-shadow: @shadow;
+     -moz-box-shadow: @shadow;
+          box-shadow: @shadow;
 }
 .border-radius(@radius: @radius-main) {
   -webkit-border-radius: @radius;
      -moz-border-radius: @radius;
           border-radius: @radius;
+}
+.transform(@transform) {
+  -webkit-transform: @transform;
+      -ms-transform: @transform;
+          transform: @transform;
 }
 .transition(@type) {
   -webkit-transition: -webkit-transform .3s @type;
@@ -108,9 +118,9 @@
 }
 .uppercase {
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   font-weight: 500;
-  &.muted { color: rgba(0, 0, 0, 0.4); }
+  &.muted { color: rgba(0, 0, 0, 0.35); }
 }
 
 

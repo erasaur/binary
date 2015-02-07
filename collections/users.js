@@ -87,10 +87,14 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     optional: true
   },
-  email_hash: {
+  ipAddress: {
     type: String,
     optional: true
   },
+  // email_hash: {
+  //   type: String,
+  //   optional: true
+  // },
   createdAt: {
     type: Date
   },
@@ -154,7 +158,14 @@ Meteor.users.allow({
 
 Meteor.users.initEasySearch('profile.name', {
   limit: 15,
-  use: 'mongo-db'
+  use: 'mongo-db',
+  query: function (searchString) {
+    var query = EasySearch.getSearcher(this.use).defaultQuery(this, searchString);
+    var user = Meteor.users.findOne(this.publishScope.userId);
+
+    query['profile.name'] = { $ne: user.profile.name };
+    return query;
+  }
 });
 
 // end search ----------------------------------------
@@ -164,25 +175,8 @@ Meteor.users.initEasySearch('profile.name', {
 
 Meteor.methods({
   newFollower: function (followingId) {
-    var userId = this.userId;
+    check(followingId, String);
 
-    if (!userId || !canFollowById(userId))
-      throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
-
-    // update user being followed
-    Meteor.users.update(userId, { 
-      $addToSet: { 'activity.followingUsers': followingId } 
-    });
-
-    // update the user who is following
-    Meteor.users.update(followingId, { 
-      $addToSet: { 'activity.followers': userId },
-      $inc: { 'stats.followersCount': 1 } 
-    });
-
-    Meteor.call('newFollowerNotification', followingId);
-  },
-  removeFollower: function (followingId) {
     var userId = this.userId;
 
     if (!userId || !canFollowById(userId))
@@ -190,23 +184,37 @@ Meteor.methods({
 
     // update user being followed
     Meteor.users.update(userId, {
-      $pull: { 'activity.followingUsers': followingId } 
+      $addToSet: { 'activity.followingUsers': followingId }
     });
 
     // update the user who is following
-    Meteor.users.update(followingId, { 
+    Meteor.users.update(followingId, {
+      $addToSet: { 'activity.followers': userId },
+      $inc: { 'stats.followersCount': 1 }
+    });
+
+    Meteor.call('newFollowerNotification', followingId);
+  },
+  removeFollower: function (followingId) {
+    check(followingId, String);
+
+    var userId = this.userId;
+
+    if (!userId || !canFollowById(userId))
+      throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
+
+    // update user being followed
+    Meteor.users.update(userId, {
+      $pull: { 'activity.followingUsers': followingId }
+    });
+
+    // update the user who is following
+    Meteor.users.update(followingId, {
       $pull: { 'activity.followers': userId },
-      $inc: { 'stats.followersCount': -1 } 
+      $inc: { 'stats.followersCount': -1 }
     });
   }
 });
 
 // end methods ---------------------------------------
-
-
-
-
-
-
-
 

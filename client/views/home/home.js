@@ -8,7 +8,7 @@ Template.home.destroyed = function () {
 
 Template.home.helpers({
 	topics: function() {
-		return Topics.find();
+		return Topics.find({}, { sort: { 'score': -1, 'createdAt': -1 } });
 	},
 	moreTopics: function () {
 		return Topics.find().count() === Session.get('itemsLimit');

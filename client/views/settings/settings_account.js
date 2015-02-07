@@ -7,9 +7,9 @@ function changeEmail (email) {
 
   Meteor.call('changeEmail', email, function (error, result) {
     if (error) {
-      throw 'Oops, something went wrong. Please try again later.';
+      throw i18n.t('error');
     } else {
-      alert('Please check your email for a verification link. Thanks!');
+      toastr.success(i18n.t('check_email_for_verification'));
     }
   });
 }
@@ -26,6 +26,9 @@ function stopEditing (template) {
 var changingPassword = new ReactiveVar(false);
 
 Template.settingsAccount.helpers({
+  settingsTitle: function () {
+    return i18n.t('account_settings');
+  },
   changingPassword: function () {
     return changingPassword.get();
   }
@@ -35,9 +38,9 @@ Template.settingsAccount.events({
   'click #js-email-verification': function (event, template) {
     Meteor.call('sendVerificationEmail', function (error) {
       if (error)
-        alert(formatError(error))
+        toastr.warning(i18n.t('error'));
       else
-        alert('Please check your email for a verification link. Thanks!');
+        toastr.success(i18n.t('check_email_for_verification'));
     });
   },
   'click #js-edit-password': function (event, template) {
@@ -54,7 +57,7 @@ Template.settingsAccount.events({
         changeEmail(email);
         return;
       } catch (e) {
-        alert(e);
+        toastr.warning(e);
       }
     }
 
@@ -62,14 +65,14 @@ Template.settingsAccount.events({
     var newPassword = template.find('#js-newPassword').value;
 
     if (newPassword.length < 6) {
-      alert('Your password must be at least 6 characters long.');
+      toastr.warning(i18n.t('password_too_short'));
       $('#js-newPassword').focus();
       return;
     }
-    
+
     Accounts.changePassword(oldPassword, newPassword, function (error) {
       if (error) {
-        alert('Please verify that you have entered the correct password.');
+        toastr.warning(i18n.t('incorrect_password'));
         $('#js-password').focus();
         return;
       } else {
@@ -77,7 +80,7 @@ Template.settingsAccount.events({
           changeEmail(email);
           stopEditing(template);
         } catch (e) {
-          alert(e);
+          toastr.warning(e);
         }
       }
     });

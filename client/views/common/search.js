@@ -14,7 +14,10 @@ var isSearching = function () {
 
 Template.searchInput.helpers({
   indexes: ['topics', 'users'],
-  searching: isSearching
+  searching: isSearching,
+  placeholder: function () {
+    return i18n.t('search_prompt');
+  }
 });
 
 Template.mainLayout.helpers({
@@ -32,18 +35,22 @@ Template.nav.events({
 });
 
 Template.searchInput.events({
-  'focus .search-input': function (event, template) {
-    searching.set(true);
-  },
+  'input .search-input': _.debounce(function (event, template) {
+    if (event.target.value == '') {
+      searching.set(false);
+    } else {
+      searching.set(true);
+    }
+  }, 200),
   'click #js-search-cancel': function (event, template) {
-    stopSearching(); 
+    stopSearching();
+  },
+  'submit #js-search-form': function (event, template) {
+    event.preventDefault();
   }
 });
 
 Template.searchResults.events({
-  'submit #js-search-form': function (event, template) {
-    event.preventDefault();
-  },
   'click a[href]': function (event, template) {
     stopSearching();
   }

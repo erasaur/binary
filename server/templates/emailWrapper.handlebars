@@ -33,7 +33,7 @@
           padding-right: 12px !important;
         }
       }
-      a {
+      a.action-link {
         color: white;
         font-weight: 400;
         text-decoration: none;
@@ -47,7 +47,7 @@
         background-color: rgba(0, 0, 0, 0.1);
       }
       .wrapper {
-        padding: 20px 0;
+        padding: 20px;
       }
       .container {
         border-radius: 6px;
@@ -97,14 +97,17 @@
             <tr>
               <td class="main-container container-padding" bgcolor="#ffffff">
                 {{{body}}}
-                Best,<br/>
-                the Binary team
+                {{{signature}}}
               </td>
             </tr>
             <tr>
               <td class="footer-container">
                 <hr/>
-                <p>We're currently in invitation-only private beta.</p><p>If you feel that you have received this in error, we apologize and promise you won't be bothered again!</p>©2014 Binary, All Rights Reserved.
+                <p>{{footer_message}}</p>
+                <p>
+                  {{{opt_out}}} 
+                </p>
+                {{copyright}}
               </td>
             </tr>
           </table>

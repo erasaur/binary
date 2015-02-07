@@ -1,13 +1,14 @@
 <template name="notFound">
-	<div class="row full-height">
+  <div class="row full-height">
     <div class="col full-height col-xs-12 col-sm-8 col-sm-offset-2">
       <div class="col-content page-body">
         <div class="page-body-header">
-          <h3>Sorry!</h3>
+          <h3>{{_ "sorry"}}</h3>
         </div>
         <div class="page-body-content">
           <div class="list">
-            <div class="list-item">We were unable to find what you were looking for. It may have been moved or deleted... who knows?</div>
+            <div class="list-item">{{_ "not_found"}}</div>
+            <div class="list-item"><a href="{{pathFor 'home'}}" class="action-link">{{_ "go_home"}}</a></div>
           </div>
         </div>
       </div>

@@ -1,37 +1,24 @@
-// We don't use publish-composite here since we need to transform
-// the documents as they are added, by inserting temporary *non-reactive*
-// values (to be used for sorting client-side) so sorting won't keep
-// changing as the comments change.
- 
 /**
- * @summary Publish all comments for a topic, limited by topicId, each transformed with an additional `initVotes` property
+ * @summary Publish all comments for a topic, limited by topicId, each transformed with an additional `initScore` property
  * @param {String} topicId Id of the specific topic
- * @param {String} sortBy Sort option. Possible values: 'top' [default] or 'newest'
  * @param {String} side Each column of comments is published separately. Possible values: 'pro' or 'con'
  * @param {Number} limit Limit the amount of comments published (note that each side of comments is limited separately)
  */
-Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
+Meteor.publish('topicComments', function (topicId, side, limit) {
+  check([topicId, side], [String]);
+  check(limit, Match.Integer);
+
+  var pub = this;
   var topic = Topics.findOne(topicId);
 
   if (!topic || !this.userId) return this.ready();
 
-  var sort = sortBy === 'newest' ? 
-    { 'createdAt': -1, 'upvotes': -1 } : { 'upvotes': -1, 'createdAt': -1 };
-
-  var pub = this;
-  var comments = Comments.find({ 'topicId': topicId, 'side': side }, { 
-    sort: sort, 
-    limit: limit
-  });
-
+  var selector = { 'topicId': topicId, 'side': side, 'replyTo': { $exists: false } };
+  var comments = Comments.find(selector, { sort: { 'score': -1 }, limit: limit });
   var commentsHandle = comments.observeChanges({
-    // in added case, fields essentially is the entirety of the added comment
-    added: function (id, fields) { 
-      var replyToUser = publishAssociatedOwners(id, fields); // publish the owners associated with this comment
-
-      fields.initVotes = fields.upvotes;
-      if (replyToUser) fields.replyToUser = replyToUser; // so we don't necessarily need to pub replyTo comment to get the user
-
+    added: function (id, fields) {
+      publishOwner(fields);
+      fields.initScore = fields.score;
       pub.added('comments', id, fields);
     },
     changed: function (id, fields) {
@@ -40,24 +27,14 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
   });
 
   // we don't need owners to be reactive
-  function publishAssociatedOwners (commentId, comment) {
-    var replyTo = Comments.findOne(comment.replyTo);
-    var owner = Meteor.users.findOne({ '_id': comment.userId }, { 
-      fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } 
+  function publishOwner (comment) {
+    var owner = Meteor.users.findOne({ '_id': comment.userId }, {
+      fields: { 'profile': 1, 'stats': 1 }
     });
-
     pub.added('users', owner._id, owner);
-
-    if (typeof replyTo !== 'undefined') {
-      var replyToUser = Meteor.users.findOne({ '_id': replyTo.userId });
-      if (!replyToUser) return;
-      
-      return replyToUser.profile && replyToUser.profile.name;
-    }
   }
 
   pub.ready();
-
   pub.onStop(function () {
     commentsHandle.stop();
   });
@@ -66,26 +43,24 @@ Meteor.publish('topicComments', function (topicId, sortBy, side, limit) {
 /**
  * @summary Publish replies for specific comment
  * @param {Array} commentIds The id's of the comment replies
- * @param {String} sortBy Sort option. Possible values: 'top' [default] or 'newest'
  */
-Meteor.publish('commentReplies', function (commentIds, sortBy) {
+Meteor.publish('commentReplies', function (commentIds) {
+  check(commentIds, [String]);
+
   if (!this.userId) return this.ready();
 
-  var userId = this.userId;
-  var sort = sortBy === 'newest' ? 
-    { 'upvotes': -1, 'createdAt': -1 } : { 'createdAt': -1, 'upvotes': -1 };
-
   var pub = this;
-  var comments = Comments.find({ 'replyTo': { $in: commentIds } }, { 
-    sort: sort
-  });
+  var userId = this.userId;
+  var sort = { sort: { 'score': -1 } };
+  var comments = Comments.find({ $or: [
+    { '_id': { $in: commentIds } },
+    { 'replyTo': { $in: commentIds } }
+  ]}, sort);
 
   var commentsHandle = comments.observeChanges({
-    added: function (id, fields) { 
-      var replyToUser = publishAssociatedOwners(id, fields);
-      fields.initVotes = fields.upvotes;
-      if (replyToUser) fields.replyToUser = replyToUser;
-
+    added: function (id, fields) {
+      publishOwner(fields);
+      fields.initScore = fields.score;
       pub.added('comments', id, fields);
     },
     changed: function (id, fields) {
@@ -93,25 +68,14 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
     }
   });
 
-  function publishAssociatedOwners (commentId, comment) {
-    var replyTo = Comments.findOne(comment.replyTo);
-    var owner = Meteor.users.findOne({ '_id': comment.userId }, { 
-      fields: { 'email_hash': 1, 'profile': 1, 'stats': 1 } 
+  function publishOwner (comment) {
+    var owner = Meteor.users.findOne({ '_id': comment.userId }, {
+      fields: { 'profile': 1, 'stats': 1 }
     });
-
     pub.added('users', owner._id, owner);
-
-    if (typeof replyTo !== 'undefined') {
-      var replyToUser = Meteor.users.findOne({ '_id': replyTo.userId });
-      if (!replyToUser) return;
-      
-      // pub.added('users', replyToUser._id, replyToUser);
-      return replyToUser.profile && replyToUser.profile.name;
-    }
   }
 
   pub.ready();
-
   pub.onStop(function () {
     commentsHandle.stop();
   });
@@ -123,6 +87,9 @@ Meteor.publish('commentReplies', function (commentIds, sortBy) {
  * @param {Date} initDate Initial date of visiting the topic route. Used to determine which comments are new
  */
 Meteor.publishComposite('singleTopic', function (topicId, initDate) {
+  check(topicId, String);
+  check(initDate, Date);
+
   var userId = this.userId;
 
   return {
@@ -133,8 +100,8 @@ Meteor.publishComposite('singleTopic', function (topicId, initDate) {
     },
     children: [{
       find: function (topic) { // topic author
-        return Meteor.users.find(topic.userId, { 
-          limit: 1, fields: { 'profile': 1 } 
+        return Meteor.users.find(topic.userId, {
+          limit: 1, fields: { 'profile': 1 }
         });
       }
     }, {

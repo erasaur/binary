@@ -20,7 +20,7 @@ Template.notificationItem.events({
     function (error, result) {
       if (error) {
         console.log(error);
-      } 
-    });  
+      }
+    });
   }
 });

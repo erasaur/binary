@@ -1,36 +1,35 @@
-
 <!-- BEGIN PAGE TABS -->
 
 <template name="profileComments">
-	{{#pageBody items=comments item='comment' message='No comments yet.' class='no-container'}}
-		<div class="page-title">
-			<h3 class="muted uppercase">Comments</h3>
-		</div>
-	{{/pageBody}}
+  {{#pageBody items=comments item='comment' class='no-container'}}
+    <div class="page-title">
+      <h4 class="muted uppercase">{{_ "comments"}}</h4>
+    </div>
+  {{/pageBody}}
 </template>
 
 <template name="profileTopics">
-	{{#pageBody items=topics item='topicItem' message='No topics yet.' class='no-container'}}
-		<div class="page-title">
-			<h3 class="muted uppercase">Topics</h3>
-		</div>
-	{{/pageBody}}
+  {{#pageBody items=topics item='topicItem' class='no-container'}}
+    <div class="page-title">
+      <h4 class="muted uppercase">{{_ "topics"}}</h4>
+    </div>
+  {{/pageBody}}
 </template>
 
 <template name="profileFollowers">
-	{{#pageBody items=followers item='profileItem' message='No followers yet.'}}
-		<div class="page-title">
-			<h3 class="muted uppercase">Followers</h3>
-		</div>
-	{{/pageBody}}
+  {{#pageBody items=followers item='profileItem'}}
+    <div class="page-title">
+      <h4 class="muted uppercase">{{_ "followers"}}</h4>
+    </div>
+  {{/pageBody}}
 </template>
 
 <template name="profileFollowing">
-	{{#pageBody items=following item='profileItem' message='Not following anybody yet.'}}
-		<div class="page-title">
-			<h3 class="muted uppercase">Following</h3>
-		</div>
-	{{/pageBody}}
+  {{#pageBody items=following item='profileItem'}}
+    <div class="page-title">
+      <h4 class="muted uppercase">{{_ "following"}}</h4>
+    </div>
+  {{/pageBody}}
 </template>
 
 <!-- END PAGE TABS -->
@@ -38,67 +37,69 @@
 <!-- BEGIN PAGE LAYOUT -->
 
 <template name="profile">
-	<div class="page-body">
-		{{> Template.dynamic template=currentTab}}
-	</div>
+  <div class="page-body">
+    {{> Template.dynamic template=currentTab}}
+  </div>
 </template>
 
 <template name="profileButtons">
-	{{#if canFollow}}
-		{{#if following}}
-			<button id="js-unfollow" class="btn btn-primary">Unfollow</button>
-		{{else}}
-			<button id="js-follow" class="btn btn-default">Follow</button>
-		{{/if}}
-	{{else}}
-		<div class="icon-group">
-			<i id="js-settings" class="icon-action b-icon-gear"></i>
-		</div>
-		<div class="icon-group">
-			<i id="js-logout" class="icon-action b-icon-logout"></i>
-		</div>
-	{{/if}}
+  {{#unless canFollow}}
+    <div class="icon-group">
+      <i id="js-settings" class="icon-action b-icon-gear"></i>
+    </div>
+    <div class="icon-group">
+      <i id="js-logout" class="icon-action b-icon-logout"></i>
+    </div>
+  {{/unless}}
 </template>
 
 <template name="profileHeader">
-	<div class="profile-header">
-		<div class="profile-avatar">
-			{{> avatar user=this size='large' shape='circle'}}
-		</div>
-		<h3 class="profile-title">{{profile.name}}</h3>
-		<p class="muted">{{profile.bio}}</p>
-		<p class="muted"><small>{{stats.reputation}} Rep</small></p>
-	</div>
+  <div class="profile-header">
+    <div class="profile-avatar">
+      {{> avatar user=this size='large' shape='circle'}}
+    </div>
+    <div class="profile-info">
+      <h3 class="profile-title">{{profile.name}}</h3>
+      <p class="muted">{{profile.bio}}</p>
+      {{#if canFollow}}
+        {{#if following}}
+          <button id="js-unfollow" class="btn btn-primary">{{_ "unfollow"}}</button>
+        {{else}}
+          <button id="js-follow" class="btn btn-default">{{_ "follow"}}</button>
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
 </template>
 
 <template name="profileNav">
-	<div class="divider"><hr></div>
-	<ul class="page-nav-action clearfix">
-	  <li>
-	  	<a href="#" class="js-nav-button {{Session 'currentTab' eq='profileComments' s='active'}}" data-tab="profileComments">
-	  		<span class="value">{{stats.commentsCount}}</span>
-	  		<span class="label">Comments</span>
-	  	</a>
-	  </li>
-	  <li>
-	  	<a href="#" class="js-nav-button {{Session 'currentTab' eq='profileTopics' s='active'}}" data-tab="profileTopics">
-	  		<span class="value">{{stats.topicsCount}}</span>
-	  		<span class="label">Topics</span>
-	  	</a>
-	  </li>
-	  <li>
-	  	<a href="#" class="js-nav-button {{Session 'currentTab' eq='profileFollowers' s='active'}}" data-tab="profileFollowers">
-	  		<span class="value">{{activity.followers.length}}</span>
-	  		<span class="label">Followers</span>
-	  	</a>
-  	</li>
-  	<li>
-	  	<a href="#" class="js-nav-button {{Session 'currentTab' eq='profileFollowing' s='active'}}" data-tab="profileFollowing">
-	  		<span class="value">{{activity.followingUsers.length}}</span>
-	  		<span class="label">Following</span>
-	  	</a>
-	  </li>
-	</ul>
+  <div class="divider"><hr></div>
+  <ul class="page-nav-action clearfix">
+    <li>
+      <a href="#" class="js-nav-button {{Session 'currentTab' eq='profileComments' s='active'}}" data-tab="profileComments">
+        <span class="value">{{stats.commentsCount}}</span>
+        <span class="label">{{_ "comments"}}</span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="js-nav-button {{Session 'currentTab' eq='profileTopics' s='active'}}" data-tab="profileTopics">
+        <span class="value">{{stats.topicsCount}}</span>
+        <span class="label">{{_ "topics"}}</span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="js-nav-button {{Session 'currentTab' eq='profileFollowers' s='active'}}" data-tab="profileFollowers">
+        <span class="value">{{activity.followers.length}}</span>
+        <span class="label">{{_ "followers"}}</span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="js-nav-button {{Session 'currentTab' eq='profileFollowing' s='active'}}" data-tab="profileFollowing">
+        <span class="value">{{activity.followingUsers.length}}</span>
+        <span class="label">{{_ "following"}}</span>
+      </a>
+    </li>
+  </ul>
 </template>
 
 <!-- END PAGE LAYOUT -->

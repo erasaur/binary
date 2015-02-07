@@ -1,20 +1,61 @@
 <template name="landing">
-  {{#AnimateWithVelocity}}
-    <div data-animate data-duration="500">
-      <div class="landing-container">
-        <div class="landing-header">
-          <h1>binary</h1>
-          <h2>explore the fascinating world of binary questions</h2>
-        </div>
-        <div class="landing-image">
-          <h3 id="landing-image-header"></h3>
-          <span id="landing-image-pro"></span>
-          <span id="landing-image-con"></span>
-          
-          <img src="/binary-frontpage-image.png">
-        </div>
-        <a href="{{pathFor route='login'}}" class="btn btn-default landing-login">Log In</a>
+  <div class="landing-container front-page">
+    <a href="{{pathFor route='login'}}" class="btn btn-default landing-login">{{_ "login"}}</a>
+    <div class="landing-header">
+      <h1 class="logo main">binary</h1>
+      <h2 class="logo-sub muted">{{_ "landing_lead"}}</h2>
+    </div>
+    <div class="push visible-xs"></div>
+  </div>
+  <div class="landing-image">
+    <img src="/binary-frontpage-web.png" class="hidden-xs" width="640">
+    <h3 id="landing-image-header"></h3>
+    <span id="landing-image-pro"></span>
+    <span id="landing-image-con"></span>
+  </div>
+  <div class="landing-features hidden-xs">
+    <div class="landing-header">
+      <h1 class="logo main">{{_ "feature_lead"}}</h1>
+    </div>
+    <div class="row landing-feature">
+      <div class="col-sm-6 landing-feature-left">
+        <h2 class="logo-sub feature-1">{{_ "feature_1"}}</h2>
+      </div>
+      <div class="col-sm-6 landing-feature-right">
+        <img src="/binary-web-feature1.png" width="500" height="71"> 
       </div>
     </div>
-  {{/AnimateWithVelocity}}
+    <div class="row landing-feature">
+      <div class="col-sm-6 landing-feature-left">
+        <h2 class="logo-sub feature-2">{{_ "feature_2"}}</h2>
+      </div>
+      <div class="col-sm-6 landing-feature-right">
+        <img src="/binary-web-feature2.png" width="500" height="99">
+      </div>
+    </div>
+    <div class="row landing-feature">
+      <div class="col-sm-6 landing-feature-left">
+        <h2 class="logo-sub feature-3">{{_ "feature_3"}}</h2>
+      </div>
+      <div class="col-sm-6 landing-feature-right">
+        <img src="/binary-web-feature3.png" width="500" height="224">
+      </div>
+    </div>
+    <div class="row landing-feature">
+      <div class="col-sm-6 landing-feature-left">
+        <h2 class="logo-sub feature-4">{{_ "feature_4"}}</h2>
+      </div>
+      <div class="col-sm-6 landing-feature-right">
+        <img src="/binary-web-feature4.png" width="500" height="262">
+      </div>
+    </div>
+    <div class="row landing-feature">
+      <div class="col-sm-6 landing-feature-left">
+        <h2 class="logo-sub feature-5">{{_ "feature_5"}}</h2>
+      </div>
+      <div class="col-sm-6 landing-feature-right">
+        <img src="/binary-web-feature5.png" width="500" height="224">
+      </div>
+    </div>
+  </div>
 </template>

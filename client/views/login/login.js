@@ -15,13 +15,13 @@ Template.login.events({
 		}
 
 		if (!email || !password) {
-			showError('Please fill in all of the fields!');
+			showError(i18n.t('missing_fields'));
 			return;
 		}
 
 		Meteor.loginWithPassword(email, password, function (error) {
-			if (error) { 
-				showError(error.reason);
+			if (error) {
+				showError(i18n.t('error'));
 			}
 		});
 	}

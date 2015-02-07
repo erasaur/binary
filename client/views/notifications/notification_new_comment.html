@@ -1,11 +1,11 @@
 <template name="notificationNewComment">
   {{#if count}}
     {{#if followerCourier}}
-      {{author}} posted {{count}} new comments {{topicMessage}}
+      {{_ "notification_new_comment_plural" user=author count=count topic=topicMessage}}
     {{else}}
-      {{author}} and {{subCount}} others posted new comments {{topicMessage}}
+      {{_ "notification_new_comment_users_plural" user=author count=subCount topic=topicMessage}}
     {{/if}}
   {{else}}
-    {{author}} posted a new comment {{topicMessage}}
+    {{_ "notification_new_comment" user=author topic=topicMessage}}
   {{/if}}
 </template>

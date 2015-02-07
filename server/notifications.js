@@ -1,24 +1,31 @@
 Meteor.methods({
   newFollowerNotification: function (followingId) { // initiated by the follower
+    check(followingId, String);
+
     var follower = Meteor.user();
+    if (!follower) return;
 
     var notificationData = {
       follower: { '_id': follower._id, 'name': follower.profile.name }
     };
 
     // notify user who follower is following
-    Herald.createNotification(followingId, { 
-      courier: 'newFollower', 
-      data: notificationData, 
-      'duplicates': false, 
+    Herald.createNotification(followingId, {
+      courier: 'newFollower',
+      data: notificationData,
+      'duplicates': false,
       'aggregate': true,
-      'aggregateAt': 3 
+      'aggregateAt': 3
     });
   },
   newTopicNotification: function (topic) { // initiated by the topic creator
-    var user = Meteor.user(); // topic owner
+    check(topic, Match.ObjectIncluding({
+      _id: String,
+      title: String
+    }));
 
-    if (!user.activity || !user.activity.followers) return;
+    var user = Meteor.user(); // topic owner
+    if (!user || !user.activity || !user.activity.followers) return;
 
     var notificationData = {
       author: { '_id': user._id, 'name': user.profile.name },
@@ -28,33 +35,41 @@ Meteor.methods({
     // notify owner's followers
     _.each(user.activity.followers, function (followerId) {
       if (Herald.userPreference(followerId, 'onsite', 'newTopic')) {
-        Herald.createNotification(followerId, { 
-          courier: 'newTopic', 
+        Herald.createNotification(followerId, {
+          courier: 'newTopic',
           data: notificationData // don't aggregate new topics
         });
       }
     });
   },
   newCommentNotification: function (comment) { // initiated by the comment creator
-    var topic = Topics.findOne(comment.topicId);
-    var replyToId = comment.replyTo;
-    var user = Meteor.user(); // comment owner
-    var notified = [];
+    check(comment, Match.ObjectIncluding({
+      _id: String,
+      topicId: String,
+      replyTo: Match.Optional(String)
+    }));
 
+    var topic = Topics.findOne(comment.topicId);
+    var user = Meteor.user(); // comment owner
+
+    if (!topic || !user) return;
+
+    var replyToId = comment.replyTo;
+    var notified = [];
     var notificationData = {
       author: { '_id': user._id, 'name': user.profile.name },
       comment: _.pick(comment, '_id'),
       topic: _.pick(topic, '_id', 'title', 'userId')
     };
 
-    if (replyToId) { // comment reply      
+    if (replyToId) { // comment reply
       var replyTo = Comments.findOne(replyToId);
 
       // notify replyTo owner, unless user is just replying to self
       if (replyTo && replyTo.userId !== user._id) {
-        Herald.createNotification(replyTo.userId, { 
-          courier: 'newReply', 
-          data: notificationData, 
+        Herald.createNotification(replyTo.userId, {
+          courier: 'newReply',
+          data: notificationData,
           'duplicates': false,
           'aggregate': true,
           'aggregateAt': 3,
@@ -67,10 +82,10 @@ Meteor.methods({
     // notify topic owner (if topic owner wants to be notified)
     // unless the comment owner is also the topic owner,
     // or the topic owner is the replyTo owner (in which case we already notified them with 'newReply')
-    if (topic && topic.userId !== user._id && !_.contains(notified, topic.userId)) {
-      Herald.createNotification(topic.userId, { 
-        courier: 'newComment.topicOwner', 
-        data: notificationData, 
+    if (topic.userId !== user._id && !_.contains(notified, topic.userId)) {
+      Herald.createNotification(topic.userId, {
+        courier: 'newComment.topicOwner',
+        data: notificationData,
         'duplicates': false,
         'aggregate': true,
         'aggregateAt': 3,
@@ -81,13 +96,14 @@ Meteor.methods({
 
     // notify topic followers
     var topicFollowers = _.difference(topic.followers, notified);
-    
+
     _.each(topicFollowers, function (followerId) {
       // in case user is following the topic
       if (followerId !== user._id) {
-        Herald.createNotification(followerId, { 
-          courier: 'newComment.topicFollower', 
-          data: notificationData, 
+        Herald.createNotification(followerId, {
+          courier: 'newComment.topicFollower',
+          data: notificationData,
+          'duplicates': false,
           'aggregate': true,
           'aggregateAt': 3,
           'aggregateUnder': 'topic'
@@ -98,15 +114,15 @@ Meteor.methods({
 
     // notify commenter's followers
     var commenterFollowers = _.difference(user.activity.followers, notified);
-    
+
     _.each(commenterFollowers, function (followerId) {
-      Herald.createNotification(followerId, { 
-        courier: 'newComment.follower', 
-        data: notificationData, 
+      Herald.createNotification(followerId, {
+        courier: 'newComment.follower',
+        data: notificationData,
         'aggregate': true,
         'aggregateAt': 3,
         'aggregateUnder': 'topic'
-      });     
+      });
       // notified.push(followerId);
     });
   }

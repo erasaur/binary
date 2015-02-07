@@ -1,6 +1,6 @@
 Template.invite.events({
 	'input input': function (event, template) {
-		fadeElement($('.landing-form-errors'));	
+		fadeElement($('.landing-form-errors'));
 	},
 	'submit #js-signup-form': function (event, template) {
 		event.preventDefault();
@@ -11,26 +11,26 @@ Template.invite.events({
 
 		Meteor.call('newUser', name, password, inviteCode, function (error, result) {
 			if (error) {
-				var niceError = error.reason || 'Sorry, something went wrong. Please try again in a moment.';
+				var niceError = i18n.t('error');
 
 				if (error.error === 'invalid-invite') {
-					niceError = 'Sorry, the invitation link provided is broken!';
+					niceError = i18n.t('invalid_invitation_link');
 				}
 				else if (error.error === 'invalid-content') {
-					niceError = 'Please use alphanumeric characters (minimum 3, maximum 25) to keep names identifiable. Thank you!';
+					niceError = i18n.t('use_alphanumeric_name');
 				}
 				else if (error.error === 'weak-password') {
-					niceError = 'Your password should have 6 characters at minimum. We don\'t want your account to be compromised!';
+					niceError = i18n.t('password_too_short');
 				}
 
 				template.find('.landing-form-errors').innerHTML = '<li>' + niceError + '</li>';
 				$('.landing-form-errors').fadeTo('slow', 1);
-			} 
+			}
 			else {
 				var email = result;
 				Meteor.loginWithPassword(email, password, function (error) {
 					if (error)
-						alert('Oops, something went wrong when you were logging in. Please try again in a moment. Thank you!');
+						toastr.warning(i18n.t('error'));
 					else
 						Router.go('home');
 				});
@@ -43,20 +43,26 @@ Template.inviteForm.events({
 	'submit #js-invite-form': function (event, template) {
 		event.preventDefault();
 		event.stopPropagation();
-		
-		var email = template.$('#js-invite-email');
-		
-		Meteor.call('inviteUser', email.val(), function (error) {
+
+		var $email = template.$('#js-invite-email');
+    var email = $email.val();
+
+    if (!email) {
+      toastr.warning(i18n.t('missing_fields'));
+      return;
+    }
+
+		Meteor.call('inviteUser', email, function (error) {
 			if (error) {
 				if (error.error === 'no-permission')
-					alert('Oh no, it looks like you are out of invites!');
+					toastr.warning(i18n.t('no_more_invites'));
 				else if (error.error === 'duplicate-content')
-					alert('Your friend has already been invited. Try another?');
+					toastr.warning(i18n.t('already_invited'));
 				else
-					alert('Sorry, something went wrong. Please try again in a moment.');
+					toastr.warning(i18n.t('error'));
 			} else {
-				alert('Your invite was sent successfully!');
-				email.val('');
+				toastr.success(i18n.t('invite_success'));
+				$email.val('');
 			}
 		});
 	}
