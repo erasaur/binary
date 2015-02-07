@@ -22,6 +22,7 @@ Template.topic.rendered = function () {
     }
   };
 };
+
 Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
 
@@ -46,33 +47,19 @@ Template.topicHeader.rendered = function () {
 
 Template.topic.events({
   'click #js-load-original': function (event, template) {
-    // reset showing single comment
-    var controller = getCurrentController();
-    controller && controller._hash && controller._hash.set();
-
-    // remove all reply boxes
-    var showing = SessionAmplify.get('showingReplies');
-    var $replyTo = template.$('#' + showing[0]);
-    if ($replyTo.length) {
-      var $replyToRow = $replyTo.closest('.comment-row');
-      var replyRows = $replyToRow.siblings('.comment-container');
-      Blaze.remove(Blaze.getView(replyRows[0]));
-    }
-
-    // reset replies
+    Router.go('topic', { _id: this._id });
     SessionAmplify.set('showingReplies', []);
   }
 });
+
 Template.topic.helpers({
   showOriginal: function () {
-    var controller = getCurrentController();
-    var hash = controller && controller._hash && controller._hash.get();
-    return hash && Comments.findOne(hash);
+    var params = getCurrentParams();
+    return params && Comments.findOne(params.commentId);
   },
   comments: function () {
-    var controller = getCurrentController();
-    var hash = controller && controller._hash && controller._hash.get();
-    var comment = hash && Comments.findOne(hash);
+    var params = getCurrentParams();
+    var comment = params && Comments.findOne(params.commentId);
     var res = [];
 
     if (comment) {
