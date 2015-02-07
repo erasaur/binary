@@ -25,13 +25,6 @@ Template.topic.rendered = function () {
 
 Template.topic.destroyed = function () {
   stopInfiniteScroll.call(this);
-
-  var $replyRows = $('.comment-container');
-  if ($replyRows.length) {
-    Blaze.remove(Blaze.getView($replyRows[0]));
-    $replyRows.remove();
-  }
-  SessionAmplify.set('showingReplies', []);
 };
 
 Template.topicHeader.rendered = function () {
