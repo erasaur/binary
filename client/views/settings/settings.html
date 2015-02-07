@@ -4,14 +4,14 @@
       <form role="form" class="list">
         <div class="list-item settings-item">
           <div class="list-item-info">
-            <h3 class="muted uppercase">{{title}}</h3>
+            <h4 class="muted uppercase">{{title}}</h4>
           </div>
           <div class="list-item-action">
             {{#if editing}}
-              <a href="#" id="js-cancel-edit" class="action-link">Cancel</a>
-              <button type="submit" class="btn btn-primary">Save</button>
+              <a href="#" id="js-cancel-edit" class="action-link">{{_ "cancel"}}</a>
+              <button type="submit" class="btn btn-primary">{{_ "save"}}</button>
             {{else}}
-              <button type="submit" class="btn btn-primary" disabled>Saved</button>
+              <button type="submit" class="btn btn-primary" disabled>{{_ "saved"}}</button>
             {{/if}}
           </div>
         </div>
@@ -32,25 +32,13 @@
       <div class="list">
         <div class="list-item settings-item">
           <div class="list-item-info">
-            <h3 class="muted uppercase">Notifications</h3>
+            <h4 class="muted uppercase">{{_ "email_notifications"}}</h4>
           </div>
         </div>
         <div class="list-item settings-item">
           <div class="list-item-info">
-            <label>Notifications</label>
-            <p class="help-block">Turn all notifications on/off</p>
-          </div>
-          <div class="list-item-action settings-input">
-            <label class="toggle">
-              <input type="checkbox" {{isEnabled}}>
-              <span class="handle"></span>
-            </label>
-          </div>
-        </div>
-        <div class="list-item settings-item">
-          <div class="list-item-info">
-            <label>Followers</label>
-            <p class="help-block">Get notified when you gain a new follower</p>
+            <label>{{_ "new_followers"}}</label>
+            <p class="help-block">{{_ "settings_new_follower"}}</p>
           </div>
           <div class="list-item-action settings-input">
             <label class="toggle">
@@ -61,20 +49,8 @@
         </div>
         <div class="list-item settings-item">
           <div class="list-item-info">
-            <label>Following Users' Comments</label>
-            <p class="help-block">Get notified when someone you are following posts a new comment</p>
-          </div>
-          <div class="list-item-action settings-input">
-            <label class="toggle">
-              <input type="checkbox" {{isEnabled 'newComment.follower'}} data-value="newComment.follower">
-              <span class="handle"></span>
-            </label>
-          </div>
-        </div>
-        <div class="list-item settings-item">
-          <div class="list-item-info">
-            <label>Following Users' Topics</label>
-            <p class="help-block">Get notified when someone you are following creates a new topic</p>
+            <label>{{_ "new_topics"}}</label>
+            <p class="help-block">{{_ "settings_newTopic"}}</p>
           </div>
           <div class="list-item-action settings-input">
             <label class="toggle">
@@ -85,8 +61,8 @@
         </div>
         <div class="list-item settings-item">
           <div class="list-item-info">
-            <label>Comment Replies</label>
-            <p class="help-block">Get notified whenever someone replies to your comment</p>
+            <label>{{_ "new_replies"}}</label>
+            <p class="help-block">{{_ "settings_newReply"}}</p>
           </div>
           <div class="list-item-action settings-input">
             <label class="toggle">
@@ -97,8 +73,20 @@
         </div>
         <div class="list-item settings-item">
           <div class="list-item-info">
-            <label>Topic Comments</label>
-            <p class="help-block">Get notified whenever someone posts a comment in your topic</p>
+            <label>{{_ "new_comments"}}</label>
+            <p class="help-block">{{_ "settings_newComment_follower"}}</p>
+          </div>
+          <div class="list-item-action settings-input">
+            <label class="toggle">
+              <input type="checkbox" {{isEnabled 'newComment.follower'}} data-value="newComment.follower">
+              <span class="handle"></span>
+            </label>
+          </div>
+        </div>
+        <div class="list-item settings-item">
+          <div class="list-item-info">
+            <label>{{_ "new_comments"}}</label>
+            <p class="help-block">{{_ "settings_newComment_topicOwner"}}</p>
           </div>
           <div class="list-item-action settings-input">
             <label class="toggle">
@@ -109,8 +97,8 @@
         </div>
         <div class="list-item settings-item">
           <div class="list-item-info">
-            <label>Following Topics</label>
-            <p class="help-block">Get notified when someone posts a comment in a topic you are following</p>
+            <label>{{_ "new_comments"}}</label>
+            <p class="help-block">{{_ "settings_newComment_topicFollower"}}</p>
           </div>
           <div class="list-item-action settings-input">
             <label class="toggle">

@@ -1,14 +1,17 @@
 <template name="topicItem">
   <a href="{{pathFor route='topic'}}" class="list-item topic-item {{#if topComment}}has-comment{{/if}}" id="{{_id}}">
     <div class="list-item-action">
-      <button type="button" class="btn btn-pro">{{pro}}</button> 
-      <button type="button" class="btn btn-con">{{con}}</button>
-      <h3>{{title}}</h3>
+      <div class="topic-item-vote">
+        <button type="button" class="btn btn-pro">{{pro}}</button> 
+        <button type="button" class="btn btn-con">{{con}}</button>
+      </div>
+      <div class="topic-item-title">
+        <h3>{{title}}</h3>
+      </div>
     </div>
     <div class="list-item-info">
-      <div>{{commentsCount}} Comments</div>
-      <div>{{formatDate createdAt}}</div>
-      <div><a href="{{pathFor 'profile' _id=userId}}" class="action-link">{{formatName userId}}</a></div>
+      <span>{{_ "num_comments" count=commentsCount}}</span>
+      <span>{{formatDate createdAt}} {{_ "by"}} <a href="{{pathFor 'profile' _id=userId}}" class="action-link">{{formatName userId}}</a></span>
       {{#if isAdmin}}  
         <div class="icon-group float-right js-delete-topic">
           <i class="icon-action fa fa-remove"></i>

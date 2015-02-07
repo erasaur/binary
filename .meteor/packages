@@ -8,7 +8,6 @@ less
 accounts-base
 accounts-password
 underscore
-mizzao:bootstrap-3
 meteor-platform
 blaze
 mrt:animation-helper-velocity
@@ -25,10 +24,8 @@ iron:router
 meteorhacks:fast-render
 chuangbo:marked
 meteorhacks:subs-manager
-codepoet:medium-editor-npm
 reactive-var
 meteorhacks:kadira
-matteodem:easy-search
 jparker:gravatar
 email
 cmather:handlebars-server
@@ -39,7 +36,6 @@ meteorhacks:npm
 npm-container
 kestanous:herald
 multiply:iron-router-progress
-linto:fontawesome
 erasaur:notification-badge
 erasaur:session-helper
 bengott:avatar
@@ -50,4 +46,11 @@ dburles:collection-helpers
 browser-policy
 miro:mailchimp
 percolate:synced-cron
+matteodem:easy-search
 
+chrismbeckett:toastr
+tap:i18n
+audit-argument-checks
+check
+twbs:bootstrap
+fortawesome:fontawesome

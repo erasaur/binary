@@ -1,61 +1,57 @@
 <template name="topic">	
-	<div class="page-body">
-		{{#pageBody items=comments item='commentRow' hasItems=commentsCount message='No comments yet.' class='no-container'}}
-			<div class="page-title">
-				<h3 class="muted uppercase">{{commentsCount}} Comments</h3>
-				<span class="dropdown">
-				  <button class="dropdown-toggle muted" type="button" id="comment-category" data-toggle="dropdown">
-				    {{commentCategory}} <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu" role="menu" aria-labelledby="comment-category">
-				    <li><a role="menuitem" tabindex="-1" href="{{pathFor route='topic' query='sort_by=top'}}" class="list-item">Top</a></li>
-				    <li><a role="menuitem" tabindex="-1" href="{{pathFor route='topic' query='sort_by=newest'}}" class="list-item">Newest</a></li>
-				  </ul>
-				</span>
-			</div>
+  <div class="page-body">
+    {{#pageBody items=comments item='commentRow' hasItems=commentsCount class='no-container'}}
+      <div class="page-title">
+        <h4 class="muted uppercase">{{_ "num_comments" count=commentsCount}}</h4>
+      </div>
 
-			{{> newComment}}
-		{{/pageBody}}
-	</div>
+      {{#if showOriginal}}
+        <div class="alert alert-info center load-original" id="js-load-original">{{_ "load_original_comments"}}</div>
+      {{else}}
+        {{> newComment}}
+      {{/if}}
+    {{/pageBody}}
+  </div>
 </template>
 
 <template name="topicButtons">
-	{{#if following}}
-		<button id="js-unfollow" class="btn btn-primary">Unfollow</button>
-	{{else}}
-		<button id="js-follow" class="btn btn-default">Follow</button>
-	{{/if}}
-
-	{{#if canFlag}}
-    <div class="icon-group" id="js-flag-topic">
-      <i class="icon-action b-icon-flag"></i>
-    </div>
+  {{#if following}}
+    <button id="js-unfollow" class="btn btn-primary">{{_ "unfollow"}}</button>
+  {{else}}
+    <button id="js-follow" class="btn btn-default">{{_ "follow"}}</button>
   {{/if}}
-	{{#if isAdmin}}
-		<div id="js-delete-topic" class="icon-group">
-      <i class="icon-action fa fa-remove"></i>
-    </div>
-	{{/if}}
 </template>
 
 <template name="topicHeader">
-	<h3>{{title}}</h3>
-	<div class="topic-vote center">
-		<button id="js-vote-pro" class="btn btn-pro {{selected 'pro'}}">{{pro}}</button> 
-		<button id="js-vote-con" class="btn btn-con {{selected 'con'}}">{{con}}</button>
-	</div>
-	
-	{{#if description}}
-		<div class="topic-description collapsed muted markdown">
-			{{{description}}}
-		</div>
-	{{/if}}
+  <h3>{{title}}</h3>
+  <div class="topic-vote center">
+    <button id="js-vote-pro" class="btn btn-pro {{selected 'pro'}}">{{pro}}</button> 
+    <button id="js-vote-con" class="btn btn-con {{selected 'con'}}">{{con}}</button>
+  </div>
+
+  {{#if description}}
+    <div class="topic-description collapsed muted markdown">
+      {{{description}}}
+    </div>
+  {{/if}}
 </template>
 
 <template name="topicNav">
-	<div class="topic-info">
-		<div>{{formatDate createdAt}}</div>
-		<div>by <a href="{{pathFor 'profile' _id=userId}}" class="action-link">{{formatName userId}}</a></div>
-	</div>
+  <div class="divider"><hr></div>
+  <div class="topic-info">
+    <span>{{formatDate createdAt}} {{_ "by"}} <a href="{{pathFor 'profile' _id=userId}}" class="action-link">{{formatName userId}}</a></span>
+    <div class="float-right">
+      {{#if canFlag}}
+        <div class="icon-group" id="js-flag-topic">
+          <i class="icon-action b-icon-flag"></i>
+        </div>
+      {{/if}}
+      {{#if isAdmin}}
+        <div id="js-delete-topic" class="icon-group">
+          <i class="icon-action fa fa-remove"></i>
+        </div>
+      {{/if}}
+    </div>
+  </div>
 </template>
 

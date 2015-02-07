@@ -1,4 +1,6 @@
 Meteor.publishComposite('flagsList', function (limit) {
+  check(limit, Match.Integer);
+
   var userId = this.userId;
   return {
     find: function () {
@@ -9,8 +11,8 @@ Meteor.publishComposite('flagsList', function (limit) {
     children: [{
       find: function (flag) {
         return Meteor.users.find(flag.userId, { fields: {
-          'profile.name': 1, 
-          'stats.flagsCount': 1 
+          'profile.name': 1,
+          'stats.flagsCount': 1
         }});
       }
     }, {

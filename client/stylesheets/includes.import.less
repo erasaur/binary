@@ -1,8 +1,8 @@
 // fonts
 @fontSize-small: 0.75em;
 // @fontSize-base: 1em;
-@fontSize-large: 1.3em;
-// @fontSize-larger: 1.5em;
+@fontSize-large: 1.2em;
+@fontSize-larger: 1.5em;
 @fontColor-muted: rgba(0, 0, 0, 0.6);
 
 // line heights
@@ -94,6 +94,11 @@
      -moz-border-radius: @radius;
           border-radius: @radius;
 }
+.transform(@transform) {
+  -webkit-transform: @transform;
+      -ms-transform: @transform;
+          transform: @transform;
+}
 .transition(@type) {
   -webkit-transition: -webkit-transform .3s @type;
      -moz-transition:    -moz-transform .3s @type;
@@ -114,7 +119,7 @@
 .uppercase {
   text-transform: uppercase;
   letter-spacing: 0.01em;
-  font-weight: 700;
+  font-weight: 500;
   &.muted { color: rgba(0, 0, 0, 0.35); }
 }
 

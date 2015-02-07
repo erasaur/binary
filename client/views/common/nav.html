@@ -3,7 +3,7 @@
     <div class="container">
       <div class="navbar-header col-sm-2">
         <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar">
-          <span class="sr-only">Toggle navigation</span>
+          <span class="sr-only">{{_ "toggle_navigation"}}</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -19,29 +19,40 @@
 
   {{> newTopic}}
   {{> inviteForm}}
-  <div class="invite icon-group" data-toggle="modal" data-target="#invite-modal">
+  {{> feedbackForm}}
+  <div class="invite icon-group hidden-xs" data-toggle="modal" data-target="#invite-modal">
     <i class="b-icon-share"></i>
+  </div>
+  <div class="feedback icon-group hidden-xs" data-toggle="modal" data-target="#feedback-modal">
+    <i class="fa fa-question"></i>
   </div>
 </template>
 
 <template name="navItems">
-  {{#if currentUser}}
-    <ul class="nav navbar-nav col-sm-2">
+  <ul class="nav navbar-nav col-sm-2 navbar-items">
+    <li role="presentation" class="visible-xs">
+      <a href="#" data-toggle="modal" data-target="#new-topic-modal">
+        <span>{{_ "add_new_topic"}}</span>
+      </a>
+    </li>
+    <li role="presentation">
+      <a href="{{pathFor route='profile' data=currentUser}}" id="nav-profile">
+        {{> avatar user=currentUser size='small' shape='circle' class='navbar-item hidden-xs'}}
+        <span class="visible-xs">{{_ "your_profile"}}</span>
+      </a>
+    </li>
+
+    {{> notifications}}
+
+    {{#if isAdmin}}
       <li role="presentation">
-        <a href="{{pathFor route='profile' data=currentUser}}" id="nav-profile">
-          {{> avatar user=currentUser size='small' shape='circle' class='navbar-item hidden-xs'}}
-          <span class="visible-xs">Your Profile</span>
-        </a>
-      </li>
-      {{> notifications}}
-      <li class="dropdown">
-        <a href="#" data-toggle="modal" data-target="#new-topic-modal">
-          <div class="navbar-item icon-group hidden-xs">
-            <i class="b-icon-write"></i>
+        <a href="{{pathFor 'admin'}}">
+          <div class="moderator avatar avatar-small avatar-circle navbar-item hidden-xs">
+            <span class="avatar-initials">{{_ "moderator"}}</span>
           </div>
-          <span class="visible-xs">Add New Topic</span>
+          <span class="visible-xs">{{_ "moderation"}}</span>
         </a>
       </li>
-    </ul>
-  {{/if}} 
+    {{/if}}
+  </ul>
 </template>

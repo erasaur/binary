@@ -2,30 +2,32 @@ Template.newTopic.events({
   'submit #js-create-topic-form': function(event, template) {
     event.preventDefault();
 
+    var $title = template.$('#js-create-title');
+    var $description = template.$('#js-create-description');
+
     var topic = {
-      title: template.find('#js-create-title').value,
-      description: template.find('#js-create-description').value
+      title: $title.val(),
+      description: $description.val()
     };
 
     Meteor.call('newTopic', topic, function (error, result) {
       if (error) {
         if (error.error === 'logged-out')
-          alert('Please login to post a topic. Thank you!');
+          toastr.warning(i18n.t('please_login'));
         else if (error.error === 'wait')
-          alert('Please wait ' + error.reason + ' seconds before posting again. Thank you!');
+          toastr.warning(i18n.t('please_wait', { num: error.reason }));
         else if (error.error === 'invalid-content')
-          alert('Sorry, the topic title has to have at least 8 characters.'); 
+          toastr.warning(i18n.t('topic_too_short'));
         else if (error.error === 'duplicate-content')
-          alert('Sorry, there is already a topic with that title.');
+          toastr.warning(i18n.t('topic_title_exists'));
         else
-          alert('Sorry, something went wrong. Please try again in a moment.');
+          toastr.warning(i18n.t('error'));
       }
       else {
-        $('#js-create-title').val('');
-        $('#js-create-description').val('');
-        $('#new-topic-modal').modal('hide');
+        $title.val('');
+        $description.val('');
 
-        $('#new-topic-modal').on('hidden.bs.modal', function () {
+        $('#new-topic-modal').modal('hide').on('hidden.bs.modal', function () {
           Router.go('topic', { '_id': result });
         });
       }

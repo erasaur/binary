@@ -13,7 +13,7 @@ Template.forgotPassword.events({
     var value = template.find('#js-forgot').value;
 
     if (!value) {
-      template.find('.landing-form-errors').innerHTML = '<li>Please fill in the fields!</li>';
+      template.find('.landing-form-errors').innerHTML = '<li>' + i18n.t('missing_fields') + '</li>';
       $('.landing-form-errors').fadeTo('slow', 1);
       return;
     }
@@ -22,7 +22,7 @@ Template.forgotPassword.events({
     if (token) {
       Accounts.resetPassword(token, value, function (error) {
         if (error) {
-          template.find('.landing-form-errors').innerHTML = '<li>' + formatError(error) + '</li>';
+          template.find('.landing-form-errors').innerHTML = '<li>' + i18n.t('error') + '</li>';
           $('.landing-form-errors').fadeTo('slow', 1);
         } else {
           Session.set('resetPassword', '');
@@ -30,10 +30,10 @@ Template.forgotPassword.events({
         }
       });
     } else {
-      Accounts.forgotPassword({ email: value }, function () { 
-        alert('Success! Please check your email for a recovery link.'); 
+      Accounts.forgotPassword({ email: value }, function () {
+        toastr.success(i18n.t('check_email_for_recovery'));
         Router.go('landing');
-      });  
+      });
     }
   }
 });

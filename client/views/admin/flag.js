@@ -12,16 +12,16 @@ Template.flagForm.events({
 
     if (reason === 'other') {
       reason = $form.find('#js-other-reason').val();
-    } 
+    }
 
     Meteor.call('newFlag', this._id, this.type, reason, function (error, result) {
       if (error) {
         if (error.error === 'no-permission')
-          alert('Please log in before continuing. Thank you!');
+          toastr.warning(i18n.t('please_login'));
         else
-          alert('Make sure you provide a valid reason for flagging. Thank you!');
+          toastr.warning(i18n.t('missing_fields'));
       } else {
-        alert('Thank you for helping keep Binary clean!');
+        toastr.success(i18n.t('thank_you_for_flagging'));
         template.$('#flag-modal').modal('hide');
       }
     });

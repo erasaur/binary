@@ -2,13 +2,19 @@
   <div class="page-body">
     <div class="list">
       {{#unless flags.count}}
-        <div class="show-more">No flags.</div>
+        <div class="show-more">{{_ "no_more"}}</div>
       {{/unless}}
       {{#each flags}}
         <div class="flag-item list-item">
           <div class="list-item-info">
-            <p>Flagged by <a href="{{pathFor 'profile' _id=user._id}}" class="action-link">{{user.profile.name}}</a> [{{user.stats.flagsCount}} helpful flags]</p>
-            <span>Reason: {{reason}}</span>
+            <p>
+              {{_ "flagged_by"}} 
+              <a href="{{pathFor 'profile' _id=user._id}}" class="action-link">
+                {{user.profile.name}}
+              </a>
+              [{{_ "num_helpful_flags" count=user.stats.flagsCount}}]
+            </p>
+            <span>{{_ "reason" reason=reason}}</span>
           </div>
           <div class="list-item-action">
             <div class="icon-group {{statusClass}}">
