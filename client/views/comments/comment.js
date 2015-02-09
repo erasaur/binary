@@ -129,7 +129,7 @@ Template.comment.events({
     var $replyRows = $replyTo.siblings('.comment-container');
     var closing = _.contains(showing, self._id);
 
-    if (closing && $replyRows.length) {
+    if ($replyRows.length) {
       $replyRows.each(function (i) {
         var id = $(this).attr('id');
         id = id.slice(0, id.indexOf('-'));
