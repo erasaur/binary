@@ -178,7 +178,6 @@ Meteor.methods({
     check(followingId, String);
 
     var userId = this.userId;
-
     if (!userId || !canFollowById(userId))
       throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 
@@ -199,7 +198,6 @@ Meteor.methods({
     check(followingId, String);
 
     var userId = this.userId;
-
     if (!userId || !canFollowById(userId))
       throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 

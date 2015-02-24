@@ -5,8 +5,6 @@ Meteor.publishComposite('userProfile', function (userId) {
 
   return {
     find: function () { // the user
-      if (!this.userId) return this.ready();
-
       return Meteor.users.find(userId, {
         limit: 1,
         fields: { 'profile': 1, 'stats': 1, 'activity': 1 }
@@ -31,8 +29,6 @@ Meteor.publishComposite('userComments', function (userId, limit) {
 
   return {
     find: function () {
-      if (!this.userId) return this.ready();
-
       return Comments.find({ 'userId': userId, 'isDeleted': false }, {
         sort: { 'createdAt': -1 },
         limit: limit
@@ -61,8 +57,6 @@ Meteor.publishComposite('userTopics', function (userId, limit) {
 
   return {
     find: function () { // topics created/followed by user
-      if (!this.userId) return this.ready();
-
       // return Topics.find({ 'userId': userId, 'isDeleted': false }, {
       return Topics.find({ 'userId': userId }, {
         sort: { 'createdAt': -1 },

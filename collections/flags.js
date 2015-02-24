@@ -32,9 +32,11 @@ Flags.attachSchema(FlagSchema);
 
 Flags.allow({
   insert: canPostById,
-  update: isAdminById,
+  update: isAdminById
+});
+Flags.deny({
   remove: function () {
-    return false;
+    return true;
   }
 });
 
