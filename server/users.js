@@ -147,11 +147,13 @@ Meteor.methods({
     return invite.invitedEmail;
   },
   changeProfile: function (newName, newBio) {
-    check(newName, String);
-    check(newBio, String);
+    check([newName, newBio], [String]);
+
+    if (!this.userId)
+      throw new Meteor.Error('no-permission', i18n.t('please_login'));
 
     var query = { $set: { 'profile.name': newName, 'profile.bio': newBio } };
-    Meteor.users.update(Meteor.userId(), query, function (error, result) {
+    Meteor.users.update(this.userId, query, function (error, result) {
       if (error) {
         // throw error.sanitizedError;
         throw error;
@@ -161,15 +163,19 @@ Meteor.methods({
   changeEmail: function (newEmail) {
     check(newEmail, String);
 
-    Meteor.users.update(Meteor.userId(), {
-      $set: {
-        'emails': [{ 'address': newEmail, 'verified': false }]
-      }
-    });
-    Accounts.sendVerificationEmail(Meteor.userId());
+    if (!this.userId)
+      throw new Meteor.Error('no-permission', i18n.t('please_login'));
+
+    Meteor.users.update(this.userId, { $set: {
+      'emails': [{ 'address': newEmail, 'verified': false }]
+    }});
+    Accounts.sendVerificationEmail(this.userId);
   },
   sendVerificationEmail: function () {
-    Accounts.sendVerificationEmail(Meteor.userId());
+    if (!this.userId)
+      throw new Meteor.Error('no-permission', i18n.t('please_login'));
+
+    Accounts.sendVerificationEmail(this.userId);
   },
   // sendResetSuccessEmail: function () {
   //   var user = Meteor.user();

@@ -52,10 +52,7 @@ Comments.attachSchema(CommentSchema);
 // permissions ---------------------------------------
 
 Comments.allow({
-  update: canEditById,
-  remove: function () {
-    return false;
-  }
+  update: canEditById
 });
 Comments.deny({
   update: function (userId, comment, fields) {
@@ -63,6 +60,9 @@ Comments.deny({
 
     // deny update if it contains invalid fields
     return _.without(fields, 'content').length > 0;
+  },
+  remove: function () {
+    return true;
   }
 });
 
@@ -101,11 +101,11 @@ Meteor.methods({
     var content = comment.content;
     var side = comment.side;
     var replyTo = comment.replyTo;
-    var timeSinceLastComment = timeSinceLast(user, Comments);
+    var timeSinceLastComment = user && timeSinceLast(user, Comments);
     var commentInterval = 15; // 15 seconds
 
     if (!user || !canComment(user))
-      throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
+      throw new Meteor.Error('no-permission', i18n.t('please_login'));
 
     // check that user waits more than 15 seconds between comments
     if (!isAdmin(user) && !this.isSimulation && timeSinceLastComment < commentInterval)

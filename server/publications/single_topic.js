@@ -11,7 +11,7 @@ Meteor.publish('topicComments', function (topicId, side, limit) {
   var pub = this;
   var topic = Topics.findOne(topicId);
 
-  if (!topic || !this.userId) return this.ready();
+  if (!topic) return this.ready();
 
   var selector = { 'topicId': topicId, 'side': side, 'replyTo': { $exists: false } };
   var comments = Comments.find(selector, { sort: { 'score': -1 }, limit: limit });
@@ -46,8 +46,6 @@ Meteor.publish('topicComments', function (topicId, side, limit) {
  */
 Meteor.publish('commentReplies', function (commentIds) {
   check(commentIds, [String]);
-
-  if (!this.userId) return this.ready();
 
   var pub = this;
   var userId = this.userId;
@@ -94,8 +92,6 @@ Meteor.publishComposite('singleTopic', function (topicId, initDate) {
 
   return {
     find: function () {
-      if (!userId) return this.ready();
-
       return Topics.find(topicId);
     },
     children: [{
@@ -106,6 +102,7 @@ Meteor.publishComposite('singleTopic', function (topicId, initDate) {
       }
     }, {
       find: function (topic) { // new comments posted by currentUser
+        console.log(this.userId);
         return Comments.find({ 'userId': userId, 'createdAt': { $gt: initDate } });
       }
     }]

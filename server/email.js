@@ -18,12 +18,7 @@ buildEmailTemplate = function (htmlContent) {
 
   var emailHTML = Handlebars.templates['emailWrapper'](emailProperties);
 
-  var inlinedHTML = Async.runSync(function (done) {
-    juice.juiceContent(emailHTML, {
-      url: getSiteUrl(),
-      removeStyleTags: false
-    }, done);
-  }).result;
+  var inlinedHTML = juice(emailHTML);
 
   var doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
 
