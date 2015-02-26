@@ -41,10 +41,14 @@ Template.newComment.helpers({
 
 Template.newComment.events({
   'focus .js-comment-new': function (event, template) {
-    template.editingComment.set(true);
-    Tracker.afterFlush(function () {
-      template.$('.editable').focus();
-    });
+    if (Meteor.userId()) {
+      template.editingComment.set(true);
+      Tracker.afterFlush(function () {
+        template.$('.editable').focus();
+      });
+    } else {
+      $('#signup-modal').modal('show');
+    }
   },
   'click .js-comment-cancel': function (event, template) {
     template.editingComment.set(false);

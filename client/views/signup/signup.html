@@ -1,0 +1,16 @@
+<template name="signupModal">
+  <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form id="js-signup-form" role="form">
+            <input type="email" class="form-control" id="js-create-email" placeholder="{{_ 'email'}}">
+            <input type="password" class="form-control" id="js-create-password" placeholder="{{_ 'password'}}">
+            <button type="submit" class="btn btn-primary">{{_ "sign_up"}}</button>
+          </form>
+          <a href="{{pathFor route='login'}}" class="action-link">{{_ "login"}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

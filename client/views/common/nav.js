@@ -1,3 +1,9 @@
+Template.nav.helpers({
+  topicModal: function () {
+    return Meteor.userId() ? '#new-topic-modal' : '#signup-modal';
+  }
+});
+
 Template.nav.events({
 	//prevent page from scrolling when mouse is in notifications box
 	'DOMMouseScroll .notifications, mousewheel .notifications': function (event, template) {
