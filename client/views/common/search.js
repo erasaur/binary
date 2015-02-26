@@ -17,6 +17,9 @@ Template.searchInput.helpers({
   searching: isSearching,
   placeholder: function () {
     return i18n.t('search_prompt');
+  },
+  topicModal: function () {
+    return Meteor.userId() ? '#new-topic-modal' : '#signup-modal';
   }
 });
 

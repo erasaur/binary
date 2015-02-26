@@ -193,6 +193,7 @@
   "save": "Save",
   "cancel": "Cancel",
   "missing_fields": "Oops! Looks like you left some fields empty.",
+  "login_error": "Oops, we don't recognize that username/password combination. Try again?",
   "error": "Sorry, something went wrong. Please try again.",
   "please_login": "That's something you have to be logged in to do.",
   "no_permission": "Sorry, we can't let you do that."
