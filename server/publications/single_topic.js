@@ -102,7 +102,6 @@ Meteor.publishComposite('singleTopic', function (topicId, initDate) {
       }
     }, {
       find: function (topic) { // new comments posted by currentUser
-        console.log(this.userId);
         return Comments.find({ 'userId': userId, 'createdAt': { $gt: initDate } });
       }
     }]
