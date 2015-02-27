@@ -85,8 +85,9 @@ Template.topic.helpers({
 
 Template.topicButtons.helpers({
   following: function () {
-    if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.followingTopics)
-      return _.contains(Meteor.user().activity.followingTopics, this._id);
+    var user = Meteor.user();
+    var following = user && user.activity && user.activity.followingTopics;
+    return following && _.contains(following, this._id);
   }
 });
 
@@ -94,15 +95,13 @@ Template.topicHeader.helpers({
   selected: function (side) {
     var userId = Meteor.userId();
     var side = side + 'Users';
-
     return userId && _.contains(this[side], userId) && 'selected';
   }
 });
 
 Template.topicNav.helpers({
   canFlag: function () {
-    var user = Meteor.user();
-    return user && !isAdmin(user) && user.flags && !_.contains(user.flags.topics, this._id);
+    return canFlagTopic(Meteor.user(), this._id);
   }
 });
 
@@ -132,10 +131,16 @@ Template.topicHeader.events({
     template.$('.topic-description').toggleClass('collapsed');
   },
   'click #js-vote-pro': function (event, template) {
-    Meteor.call('vote', this, 'pro');
+    if (Meteor.userId())
+      Meteor.call('vote', this, 'pro');
+    else
+      $('#signup-modal').modal('show');
   },
   'click #js-vote-con': function (event, template) {
-    Meteor.call('vote', this, 'con');
+    if (Meteor.userId())
+      Meteor.call('vote', this, 'con');
+    else
+      $('#signup-modal').modal('show');
   }
 });
 

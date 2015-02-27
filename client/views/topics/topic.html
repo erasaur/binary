@@ -15,10 +15,12 @@
 </template>
 
 <template name="topicButtons">
-  {{#if following}}
-    <button id="js-unfollow" class="btn btn-primary">{{_ "unfollow"}}</button>
-  {{else}}
-    <button id="js-follow" class="btn btn-default">{{_ "follow"}}</button>
+  {{#if currentUser}}
+    {{#if following}}
+      <button id="js-unfollow" class="btn btn-primary">{{_ "unfollow"}}</button>
+    {{else}}
+      <button id="js-follow" class="btn btn-default">{{_ "follow"}}</button>
+    {{/if}}
   {{/if}}
 </template>
 

@@ -22,8 +22,9 @@ Template.profile.helpers({
 });
 
 Template.profileButtons.helpers({
-	canFollow: function () {
-		return canFollow(Meteor.user(), this._id);
+	ownProfile: function () {
+    var userId = Meteor.userId();
+		return userId && userId === this._id;
 	}
 });
 

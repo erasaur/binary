@@ -9,7 +9,7 @@ Template.invite.events({
 		var query = getCurrentQuery();
 		var inviteCode = query && query.invite_code;
 
-		Meteor.call('newUser', name, password, inviteCode, function (error, result) {
+		Meteor.call('newInvitedUser', name, password, inviteCode, function (error, result) {
 			if (error) {
 				var niceError = i18n.t('error');
 
