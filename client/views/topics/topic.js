@@ -134,13 +134,13 @@ Template.topicHeader.events({
     if (Meteor.userId())
       Meteor.call('vote', this, 'pro');
     else
-      $('#signup-modal').modal('show');
+      $('#signup-modal').modal();
   },
   'click #js-vote-con': function (event, template) {
     if (Meteor.userId())
       Meteor.call('vote', this, 'con');
     else
-      $('#signup-modal').modal('show');
+      $('#signup-modal').modal();
   }
 });
 
