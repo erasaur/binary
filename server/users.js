@@ -31,21 +31,20 @@ Accounts.onCreateUser(function (options, user) {
   // add default properties
   user = _.extend(user, userProperties);
 
-  user.emails[0].verified = true;
-
   var email = user.emails[0].address;
   if (!email) {
     throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
   }
 
   var invite = Invites.findOne({ 'invitedEmail': email, 'accepted': false });
+  if (invite) {
+    // update the user who invited
+    user.invites.invitedBy = invite.inviterId;
+    // update the invite status to accepted
+    Invites.update(invite._id, { $set: { 'accepted': true } });
 
-  if (!invite) throw new Meteor.Error('invalid-invite', 'This invitation does not match any existing invitations.');
-
-  // update the user who invited
-  user.invites.invitedBy = invite.inviterId;
-  // update the invite status to accepted
-  Invites.update(invite._id, { $set: { 'accepted': true } });
+    user.emails[0].verified = true;
+  }
 
   // set notifications default preferences
   user.profile.notifications = {
@@ -115,7 +114,28 @@ Accounts.onCreateUser(function (options, user) {
 });
 
 Meteor.methods({
-  newUser: function (name, password, inviteCode) {
+  newUser: function (email, name, password) {
+    check([email, password], [String]);
+
+    var name = stripHTML(name);
+
+    if (!validName(name))
+      throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
+
+    if (password.length < 6)
+      throw new Meteor.Error('weak-password', 'This password must have at least 6 characters.');
+
+    Accounts.createUser({
+      'email': email,
+      'password': password,
+      'ipAddress': this.connection.clientAddress,
+      'profile': {
+        'name': name,
+        'bio': i18n.t('default_profile')
+      }
+    });
+  },
+  newInvitedUser: function (name, password, inviteCode) {
     check([name, password, inviteCode], [String]);
 
     var name = stripHTML(name);
