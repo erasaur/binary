@@ -43,14 +43,14 @@
 </template>
 
 <template name="profileButtons">
-  {{#unless canFollow}}
+  {{#if ownProfile}}
     <div class="icon-group">
       <i id="js-settings" class="icon-action b-icon-gear"></i>
     </div>
     <div class="icon-group">
       <i id="js-logout" class="icon-action b-icon-logout"></i>
     </div>
-  {{/unless}}
+  {{/if}}
 </template>
 
 <template name="profileHeader">

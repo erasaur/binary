@@ -14,7 +14,7 @@ Template.comment.helpers({
   },
   voteClass: function () {
     var user = Meteor.user();
-    if (!user) return;
+    if (!user) return 'js-upvote-comment';
 
     var upvoted = user.activity && user.activity.upvotedComments;
     return upvoted && _.contains(upvoted, this._id) ?
@@ -24,8 +24,7 @@ Template.comment.helpers({
     return this.replies && this.replies.length;
   },
   canFlag: function () {
-    var user = Meteor.user();
-    return user && !isAdmin(user) && user.flags && !_.contains(user.flags.comments, this._id);
+    return canFlagComment(Meteor.user(), this._id);
   }
 });
 
@@ -181,10 +180,18 @@ Template.comment.events({
     );
   }, 200, true),
   'click .js-upvote-comment': function (event, template) {
-    Meteor.call('upvoteComment', this);
+    if (Meteor.userId()) {
+      Meteor.call('upvoteComment', this);
+    } else {
+      $('#signup-modal').modal('show');
+    }
   },
   'click .js-downvote-comment': function (event, template) {
-    Meteor.call('cancelUpvoteComment', this);
+    if (Meteor.userId()) {
+      Meteor.call('cancelUpvoteComment', this);
+    } else {
+      $('#signup-modal').modal('show');
+    }
   },
   'click .js-flag-comment': function (event, template) {
     var modal = Blaze.renderWithData(Template.flagForm, { _id: this._id, type: 'comments' }, $('body')[0]);
