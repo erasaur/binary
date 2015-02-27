@@ -163,7 +163,7 @@ Meteor.users.initEasySearch('profile.name', {
     var query = EasySearch.getSearcher(this.use).defaultQuery(this, searchString);
     var user = Meteor.users.findOne(this.publishScope.userId);
 
-    query['profile.name'] = { $ne: user.profile.name };
+    if (user) query['profile.name'] = { $ne: user.profile.name };
     return query;
   }
 });
