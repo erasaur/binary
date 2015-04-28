@@ -41,19 +41,29 @@ Meteor.publish('topicComments', function (topicId, side, limit) {
 });
 
 /**
- * @summary Publish replies for specific comment
- * @param {Array} commentIds The id's of the comment replies
+ * @summary Publish a specific comment
+ * @param {String} commentId The id the comment
  */
-Meteor.publish('commentReplies', function (commentIds) {
-  check(commentIds, [String]);
+Meteor.publish('topicComment', function (commentId) {
+  check(commentId, String);
+
+  var comment = Comments.findOne(commentId);
+  return [
+    Meteor.users.find({ '_id': comment.userId }, { fields: { 'profile': 1, 'stats': 1 } }),
+    Comments.find(commentId)
+  ];
+});
+
+/**
+ * @summary Publish replies for specific comment
+ * @param {String} commentId The id the parent comment whose replies we want
+ */
+Meteor.publish('commentReplies', function (commentId) {
+  check(commentId, String);
 
   var pub = this;
-  var userId = this.userId;
   var sort = { sort: { 'score': -1 } };
-  var comments = Comments.find({ $or: [
-    { '_id': { $in: commentIds } },
-    { 'replyTo': { $in: commentIds } }
-  ]}, sort);
+  var comments = Comments.find({ 'replyTo': commentId }, sort);
 
   var commentsHandle = comments.observeChanges({
     added: function (id, fields) {
