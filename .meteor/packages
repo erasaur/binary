@@ -20,7 +20,6 @@ mrt:session-amplify
 iron:core
 iron:dynamic-template
 iron:layout
-iron:router
 meteorhacks:fast-render
 chuangbo:marked
 meteorhacks:subs-manager
@@ -52,3 +51,4 @@ audit-argument-checks
 check
 twbs:bootstrap
 fortawesome:fontawesome
+iron:router
