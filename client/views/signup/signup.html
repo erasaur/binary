@@ -1,26 +1,34 @@
 <template name="signupModal">
   <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
       <div class="modal-content">
-        <div class="modal-body">
-          {{#if showLogin}}
-            <form id="js-login-form" role="form">
+        {{#if showLogin}}
+          <div class="modal-header center">
+            <h3 class="modal-title muted uppercase">{{_ "login"}}</h3>
+          </div>
+          <div class="modal-body">
+            <form id="js-login-form" class="stacked-form" role="form">
               <input type="text" class="form-control" id="js-email" placeholder="{{_ 'email'}}">
               <input type="password" class="form-control" id="js-password" placeholder="{{_ 'password'}}">
               <button type="submit" class="btn btn-primary">{{_ "login"}}</button>
             </form>
-            <a href="#" class="action-link js-show-signup">{{_ "sign_up"}}</a>
-            <a href="#" class="action-link">{{_ "forgot_password"}}</a>
-          {{else}}
-            <form id="js-signup-form" role="form">
+            <a href="#" id="js-show-signup" class="action-link">{{_ "dont_have_account"}}</a>
+            <a href="{{pathFor route='forgotPassword'}}" class="action-link">{{_ "forgot_password"}}</a>
+          </div>
+        {{else}}
+          <div class="modal-header center">
+            <h3 class="modal-title muted uppercase">{{_ "sign_up"}}</h3>
+          </div>
+          <div class="modal-body">
+            <form id="js-signup-form" class="stacked-form" role="form">
               <input type="email" class="form-control" id="js-create-email" placeholder="{{_ 'email'}}">
               <input type="text" class="form-control" id="js-create-name" placeholder="{{_ 'name'}}">
               <input type="password" class="form-control" id="js-create-password" placeholder="{{_ 'password'}}">
               <button type="submit" class="btn btn-primary">{{_ "sign_up"}}</button>
             </form>
-            <a href="#" class="action-link js-show-login">{{_ "login"}}</a>
-          {{/if}}
-        </div>
+            <a href="#" id="js-show-login" class="action-link">{{_ "already_have_account"}}</a>
+          </div>
+        {{/if}}
       </div>
     </div>
   </div>
