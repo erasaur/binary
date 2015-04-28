@@ -47,7 +47,7 @@ iron:dynamic-template@1.0.7
 iron:layout@1.0.7
 iron:location@1.0.7
 iron:middleware-stack@1.0.7
-iron:router@1.0.7
+iron:router@1.0.5
 iron:url@1.0.7
 jparker:crypto-core@0.1.0
 jparker:crypto-md5@0.1.1
