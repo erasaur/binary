@@ -20,11 +20,12 @@ function InfiniteScroll (cursor) {
 initInfiniteScroll = function (cursors) {
   var self = this;
   var cursors = _.isArray(cursors) ? cursors : [cursors];
-  var controller = getCurrentController();
+  var controller = this instanceof Iron.Controller ? this : getCurrentController();
   var limit = this.state || controller.state;
   var currentLimit;
 
-  self._infiniteScroll = self._infiniteScroll || [];
+  stopInfiniteScroll.call(self);
+  self._infiniteScroll = [];
 
   _.each(cursors, function (cursor) {
     var obj = new InfiniteScroll(cursor);
