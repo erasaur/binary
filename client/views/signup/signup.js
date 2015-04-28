@@ -15,22 +15,10 @@ Template.signupModal.events({
   },
   'click #js-show-login': function (event, template) {
     template._showLogin && template._showLogin.set(true);
-  },
-  'submit #js-login-form': function (event, template) {
-    event.preventDefault();
+  }
+});
 
-    var email = template.find('#js-email').value;
-    var password = template.find('#js-password').value;
-    var $errors = template.$('.landing-form-errors');
-
-    if (!email || !password) {
-      toastr.warning(i18n.t('missing_fields'));
-    } else {
-      Meteor.loginWithPassword(email, password, function (error) {
-        if (error) toastr.warning(i18n.t('login_error'));
-      });
-    }
-  },
+Template.signupForm.events({
   'submit #js-signup-form': function (event, template) {
     event.preventDefault();
 
