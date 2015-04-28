@@ -5,16 +5,12 @@ Template.forgotPassword.helpers({
 });
 
 Template.forgotPassword.events({
-  'input input': function (event, template) {
-    fadeElement($('.landing-form-errors'));
-  },
   'submit #js-forgot-password-form': function (event, template) {
     event.preventDefault();
     var value = template.find('#js-forgot').value;
 
     if (!value) {
-      template.find('.landing-form-errors').innerHTML = '<li>' + i18n.t('missing_fields') + '</li>';
-      $('.landing-form-errors').fadeTo('slow', 1);
+      toastr.warning(i18n.t('missing_fields'));
       return;
     }
 
@@ -22,10 +18,9 @@ Template.forgotPassword.events({
     if (token) {
       Accounts.resetPassword(token, value, function (error) {
         if (error) {
-          template.find('.landing-form-errors').innerHTML = '<li>' + i18n.t('error') + '</li>';
-          $('.landing-form-errors').fadeTo('slow', 1);
+          toastr.warning(i18n.t('error'));
         } else {
-          Session.set('resetPassword', '');
+          Session.set('resetPassword');
           Router.go('home');
         }
       });

@@ -49,6 +49,12 @@
         </a>
       </li>
       {{> notifications}}
+    {{else}}
+      <li role="presentation">
+        <a href="{{pathFor route='login'}}">
+          <button class="btn btn-primary">{{_ "login"}}</button>
+        </a>
+      </li>
     {{/if}}
 
     {{#if isAdmin}}
