@@ -48,7 +48,7 @@ buildEmailNotification = function (notification) {
       case 'newComment.follower':
         if (!n.topic || !n.comment) break;
         email.action = {
-          link: getTopicUrl(n.topic._id, n.comment._id),
+          link: getCommentUrl(n.topic._id, n.comment._id),
           message: i18n.t('discuss')
         };
 
@@ -77,7 +77,7 @@ buildEmailNotification = function (notification) {
         if (!n.author || !n.topic) break;
 
         email.action = {
-          link: getTopicUrl(n.topic._id, n.comment._id),
+          link: getCommentUrl(n.topic._id, n.comment._id),
           message: i18n.t('discuss')
         };
 
