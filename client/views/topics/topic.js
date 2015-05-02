@@ -130,7 +130,7 @@ Template.topicNav.events({
     }
   },
   'click #js-flag-topic': function (event, template) {
-    OneModal('flagModal', { _id: this._id, type: 'topics' });
+    OneModal('flagModal', { data: { _id: this._id, type: 'topics' } });
   }
 });
 
