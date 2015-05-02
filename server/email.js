@@ -4,7 +4,6 @@
  * See: https://github.com/TelescopeJS/Telescope/blob/ba38e2a75b1de3e5a5e5332341a74d5f4424498c/lib/permissions.js
  */
 
-var juice = Meteor.npmRequire('juice');
 var htmlToText = Meteor.npmRequire('html-to-text');
 
 buildEmailTemplate = function (htmlContent) {
@@ -17,9 +16,7 @@ buildEmailTemplate = function (htmlContent) {
   };
 
   var emailHTML = Handlebars.templates['emailWrapper'](emailProperties);
-
   var inlinedHTML = juice(emailHTML);
-
   var doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
 
   return doctype + inlinedHTML;
