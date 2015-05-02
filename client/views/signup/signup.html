@@ -4,36 +4,31 @@
       <h1 class="logo"><a href="{{pathFor route='home'}}">binary</a></h1>
     </div>
     <div class="landing-form-body">
-      {{> signupForm}}
       <a href="{{pathFor route='login'}}" class="action-link">{{_ "already_have_account"}}</a>
     </div>
   </div>
 </template>
 
 <template name="signupModal">
-  <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        {{#if showLogin}}
-          <div class="modal-header center">
-            <h3 class="modal-title muted uppercase">{{_ "login"}}</h3>
-          </div>
-          <div class="modal-body">
-            {{> loginForm}}
-            <a href="#" id="js-show-signup" class="action-link">{{_ "dont_have_account"}}</a>
-            <a href="#" id="js-show-forgot" class="action-link">{{_ "forgot_password"}}</a>
-          </div>
-        {{else}}
-          <div class="modal-header center">
-            <h3 class="modal-title muted uppercase">{{_ "sign_up"}}</h3>
-          </div>
-          <div class="modal-body">
-            {{> signupForm}}
-            <a href="#" id="js-show-login" class="action-link">{{_ "already_have_account"}}</a>
-          </div>
-        {{/if}}
+  <div class="modal-content">
+    {{#if showLogin}}
+      <div class="modal-header center">
+        <h3 class="modal-title muted uppercase" id="modal-title">{{_ "login"}}</h3>
       </div>
-    </div>
+      <div class="modal-body">
+        {{> loginForm}}
+        <a href="#" id="js-show-signup" class="action-link">{{_ "dont_have_account"}}</a>
+        <a href="#" id="js-show-forgot" class="action-link">{{_ "forgot_password"}}</a>
+      </div>
+    {{else}}
+      <div class="modal-header center">
+        <h3 class="modal-title muted uppercase" id="modal-title">{{_ "sign_up"}}</h3>
+      </div>
+      <div class="modal-body">
+        {{> signupForm}}
+        <a href="#" id="js-show-login" class="action-link">{{_ "already_have_account"}}</a>
+      </div>
+    {{/if}}
   </div>
 </template>
 
