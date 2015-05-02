@@ -1,6 +1,6 @@
-Template.signupModal.created = function () {
+Template.signupModal.onCreated(function () {
   this._showLogin = new ReactiveVar(false);
-};
+});
 
 Template.signupModal.helpers({
   showLogin: function () {
@@ -17,7 +17,7 @@ Template.signupModal.events({
     template._showLogin && template._showLogin.set(true);
   },
   'click #js-show-forgot': function (event, template) {
-    $('#signup-modal').modal('hide').on('hidden.bs.modal', function () {
+    $('#one-modal').modal('hide').on('hidden.bs.modal', function () {
       Router.go('forgotPassword');
     });
   }
