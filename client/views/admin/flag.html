@@ -1,65 +1,59 @@
 <template name="flagForm">
-  <div class="modal fade" id="flag-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header center">
-          <div class="icon-group close" data-dismiss="modal" aria-hidden="true">
-            <i class="icon-action fa fa-remove"></i>
-          </div>
-          <h4 class="modal-title muted uppercase" id="modalLabel">{{_ "flag_content"}}</h4>
+  <div class="modal-header center">
+    <div class="icon-group close" data-dismiss="modal" aria-hidden="true">
+      <i class="icon-action fa fa-remove"></i>
+    </div>
+    <h4 class="modal-title muted uppercase" id="modal-title">{{_ "flag_content"}}</h4>
+  </div>
+  <div class="modal-body">
+    <form role="form" id="js-flag-form">
+      <div class="form-group">
+        <label>{{_ "why_are_you_reporting_this"}}</label>
+        <div class="radio">
+          <label>
+            <input type="radio" name="flag-option" value="Spam">{{_ "spam"}}
+          </label>
         </div>
-        <div class="modal-body">
-          <form role="form" id="js-flag-form">
-            <div class="form-group">
-              <label>{{_ "why_are_you_reporting_this"}}</label>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="flag-option" value="Spam">{{_ "spam"}}
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="flag-option" value="Hateful Speech">{{_ "hateful_speech"}}
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="flag-option" value="Harasses or threatens others">{{_ "harasses_or_threatens_others"}}
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="flag-option" value="Encourages self-harm">{{_ "encourages_self_harm"}}
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="flag-option" value="Compromises others' privacy or security">{{_ "compromises_privacy_or_security"}}
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="flag-option" value="Infringes IP">{{_ "infringes_ip"}}
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="flag-option" value="Illegal activity">{{_ "illegal_activity"}}
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="flag-option" value="other">{{_ "other_reason"}}
-                </label>
-                <input type="text" id="js-other-reason" maxlength="100" class="form-control" disabled>
-              </div>
-            </div>
-            <div class="action-group clearfix">
-              <button type="submit" class="btn btn-primary">{{_ "send"}}</button>
-            </div>
-          </form>
+        <div class="radio">
+          <label>
+            <input type="radio" name="flag-option" value="Hateful Speech">{{_ "hateful_speech"}}
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="flag-option" value="Harasses or threatens others">{{_ "harasses_or_threatens_others"}}
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="flag-option" value="Encourages self-harm">{{_ "encourages_self_harm"}}
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="flag-option" value="Compromises others' privacy or security">{{_ "compromises_privacy_or_security"}}
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="flag-option" value="Infringes IP">{{_ "infringes_ip"}}
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="flag-option" value="Illegal activity">{{_ "illegal_activity"}}
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="flag-option" value="other">{{_ "other_reason"}}
+          </label>
+          <input type="text" id="js-other-reason" maxlength="100" class="form-control" disabled={{otherDisabled}}>
         </div>
       </div>
-    </div>
+      <div class="action-group clearfix">
+        <button type="submit" class="btn btn-primary">{{_ "send"}}</button>
+      </div>
+    </form>
   </div>
 </template>

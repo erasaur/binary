@@ -1,7 +1,17 @@
+Template.flagForm.onCreated(function () {
+  this._other = new ReactiveVar(false);
+});
+
+Template.flagForm.helpers({
+  otherDisabled: function () {
+    var template = Template.instance();
+    return !template._other.get();
+  }
+});
+
 Template.flagForm.events({
   'change input[name="flag-option"]': function (event, template) {
-    var $input = template.$('#js-other-reason');
-    $input.prop('disabled', event.target.value !== 'other');
+    template._other.set(event.target.value === 'other');
   },
   'submit #js-flag-form': function (event, template) {
     event.preventDefault();

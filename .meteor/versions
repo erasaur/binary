@@ -32,7 +32,6 @@ djedi:sanitize-html@1.6.1
 ejson@1.0.6
 email@1.0.6
 erasaur:notification-badge@0.0.6
-erasaur:session-helper@0.0.2
 fastclick@1.0.3
 fortawesome:fontawesome@4.3.0
 geojson-utils@1.0.3
@@ -86,6 +85,7 @@ multiply:iron-router-progress@1.0.1
 npm-bcrypt@0.7.8_2
 npm-container@1.0.0
 observe-sequence@1.0.6
+one-modal@0.0.1
 ordered-dict@1.0.3
 percolate:velocityjs@1.2.1_1
 random@1.0.3
