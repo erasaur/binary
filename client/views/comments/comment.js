@@ -195,10 +195,7 @@ Template.comment.events({
     }
   },
   'click .js-flag-comment': function (event, template) {
-    var modal = Blaze.renderWithData(Template.flagForm, { _id: this._id, type: 'comments' }, $('body')[0]);
-    $('#flag-modal').modal('show').on('hidden.bs.modal', function () {
-      Blaze.remove(modal);
-    });
+    OneModal('flagForm', { _id: this._id, type: 'comments' });
   },
   'click .js-delete-comment': function (event, template) {
     if (confirm(i18n.t('are_you_sure', { action: i18n.t('delete_comment') }))) {
