@@ -1,41 +1,40 @@
-Template.profileComments.created = function () {
-  initInfiniteScroll.call(this, Comments.find({
-    'userId': this.data._id
+// profile comments ----------------------------------
+
+Template.profileComments.onCreated(function () {
+  initInfiniteScroll.call(this, Comments.find({ 'userId': this.data._id }, {
+    fields: { '_id': 1 }
   }));
-};
-Template.profileComments.destroyed = function () {
+});
+Template.profileComments.onDestroyed(function () {
 	stopInfiniteScroll.call(this);
-};
-Template.profileTopics.created = function () {
-	initInfiniteScroll.call(this, Topics.find({
-    'userId': this.data._id
+});
+
+// profile topics ------------------------------------
+
+Template.profileTopics.onCreated(function () {
+	initInfiniteScroll.call(this, Topics.find({ 'userId': this.data._id }, {
+    fields: { '_id': 1 }
   }));
-};
-Template.profileTopics.destroyed = function () {
+});
+Template.profileTopics.onDestroyed(function () {
 	stopInfiniteScroll.call(this);
-};
+});
+
+// profile -------------------------------------------
 
 Template.profile.helpers({
 	currentTab: function () {
-		return Session.get('currentTab');
+    var controller = getCurrentController();
+		return controller.state.get('currentTab');
 	}
 });
+
+// profile buttons -----------------------------------
 
 Template.profileButtons.helpers({
 	ownProfile: function () {
-    var userId = Meteor.userId();
-		return userId && userId === this._id;
+		return Meteor.userId() === this._id;
 	}
-});
-
-Template.profileHeader.helpers({
-  canFollow: function () {
-    return canFollow(Meteor.user(), this._id);
-  },
-  following: function () {
-    return this.activity && this.activity.followers &&
-      _.contains(this.activity.followers, Meteor.userId());
-  }
 });
 
 Template.profileButtons.events({
@@ -46,6 +45,18 @@ Template.profileButtons.events({
     Meteor.logout(function (error) {
       Router.go('home');
     });
+  }
+});
+
+// profile header ------------------------------------
+
+Template.profileHeader.helpers({
+  canFollow: function () {
+    return canFollow(Meteor.user(), this._id);
+  },
+  following: function () {
+    var followers = getProperty(this, 'activity.followers');
+    return followers && _.contains(followers, Meteor.userId());
   }
 });
 
@@ -64,13 +75,23 @@ Template.profileHeader.events({
   }
 });
 
+// profile nav ---------------------------------------
+
+Template.profileNav.helpers({
+  activeClass: function (tab) {
+    var controller = getCurrentController();
+    return controller.state.get('currentTab') === tab && 'active';
+  }
+});
+
 Template.profileNav.events({
 	'click .js-nav-button': function (event, template) {
-		Session.set('currentTab', event.currentTarget.getAttribute('data-tab'));
+    var controller = getCurrentController();
+    controller.state.set('currentTab', event.currentTarget.getAttribute('data-tab'));
 	}
 });
 
-// page tabs -----------------------------------------
+// profile tabs --------------------------------------
 
 Template.profileTopics.helpers({
   topics: function () {
