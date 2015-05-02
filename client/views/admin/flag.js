@@ -1,15 +1,15 @@
-Template.flagForm.onCreated(function () {
+Template.flagModal.onCreated(function () {
   this._other = new ReactiveVar(false);
 });
 
-Template.flagForm.helpers({
+Template.flagModal.helpers({
   otherDisabled: function () {
     var template = Template.instance();
     return !template._other.get();
   }
 });
 
-Template.flagForm.events({
+Template.flagModal.events({
   'change input[name="flag-option"]': function (event, template) {
     template._other.set(event.target.value === 'other');
   },

@@ -184,18 +184,18 @@ Template.comment.events({
     if (Meteor.userId()) {
       Meteor.call('upvoteComment', this);
     } else {
-      $('#signup-modal').modal();
+      OneModal('signupModal');
     }
   },
   'click .js-downvote-comment': function (event, template) {
     if (Meteor.userId()) {
       Meteor.call('cancelUpvoteComment', this);
     } else {
-      $('#signup-modal').modal();
+      OneModal('signupModal');
     }
   },
   'click .js-flag-comment': function (event, template) {
-    OneModal('flagForm', { _id: this._id, type: 'comments' });
+    OneModal('flagModal', { _id: this._id, type: 'comments' });
   },
   'click .js-delete-comment': function (event, template) {
     if (confirm(i18n.t('are_you_sure', { action: i18n.t('delete_comment') }))) {
