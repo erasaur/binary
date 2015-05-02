@@ -1,11 +1,22 @@
-Template.topic.rendered = function () {
-  if (!this.data) return;
+Template.topic.onCreated(function () {
+  var topicId = this.data._id;
 
-  initInfiniteScroll.call(this, [
-    Comments.find({ 'topicId': this.data._id, 'side': 'pro' }),
-    Comments.find({ 'topicId': this.data._id, 'side': 'con' })
-  ]);
+  this.autorun(function () {
+    // reruns infinite scroll when we switch between single comment page and comment list page.
+    // because the templates/layout are identical between the two pages, the templates won't be recreated
+    // so we need to track changes on params and rerun it ourselves. ideally we only want to
+    // track the commentId param (not any query or hash changes) but there are none of those for now.
+    getCurrentParams();
 
+    initInfiniteScroll.call(this, [
+      Comments.find({ 'topicId': topicId, 'side': 'pro' }, { fields: { '_id': 1 } }),
+      Comments.find({ 'topicId': topicId, 'side': 'con' }, { fields: { '_id': 1 } })
+    ]);
+  });
+});
+
+Template.topic.onRendered(function () {
+  // top level comment reply boxes have to be animated separately
   var container = this.find('.list');
   container._uihooks = {
     insertElement: function (node, next) {
@@ -21,13 +32,13 @@ Template.topic.rendered = function () {
       }
     }
   };
-};
+});
 
-Template.topic.destroyed = function () {
+Template.topic.onDestroyed(function () {
   stopInfiniteScroll.call(this);
-};
+});
 
-Template.topicHeader.rendered = function () {
+Template.topicHeader.onRendered(function () {
   var description = this.find('.topic-description');
   var $description = $(description);
 
@@ -36,7 +47,7 @@ Template.topicHeader.rendered = function () {
   if (description.scrollHeight > $description.innerHeight()) {
     $description.addClass('collapsible');
   }
-};
+});
 
 Template.topic.events({
   'click #js-load-original': function (event, template) {
@@ -48,7 +59,7 @@ Template.topic.events({
 Template.topic.helpers({
   showOriginal: function () {
     var params = getCurrentParams();
-    return params && Comments.findOne(params.commentId);
+    return params && Comments.findOne(params.commentId, { fields: { '_id': 1 } });
   },
   comments: function () {
     var params = getCurrentParams();
