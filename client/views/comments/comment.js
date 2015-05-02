@@ -16,7 +16,7 @@ Template.comment.helpers({
     var user = Meteor.user();
     if (!user) return 'js-upvote-comment';
 
-    var upvoted = user.activity && user.activity.upvotedComments;
+    var upvoted = getProperty(user, 'activity.upvotedComments');
     return upvoted && _.contains(upvoted, this._id) ?
       'liked js-downvote-comment' : 'js-upvote-comment';
   },
@@ -28,9 +28,9 @@ Template.comment.helpers({
   }
 });
 
-Template.newComment.created = function () {
+Template.newComment.onCreated(function () {
   this.editingComment = new ReactiveVar(false);
-};
+});
 
 Template.newComment.helpers({
   editing: function () {
@@ -195,7 +195,7 @@ Template.comment.events({
     }
   },
   'click .js-flag-comment': function (event, template) {
-    OneModal('flagModal', { _id: this._id, type: 'comments' });
+    OneModal('flagModal', { data: { _id: this._id, type: 'comments' } });
   },
   'click .js-delete-comment': function (event, template) {
     if (confirm(i18n.t('are_you_sure', { action: i18n.t('delete_comment') }))) {
