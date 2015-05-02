@@ -35,7 +35,7 @@ Template.invite.events({
 	}
 });
 
-Template.inviteForm.events({
+Template.inviteModal.events({
 	'submit #js-invite-form': function (event, template) {
 		event.preventDefault();
 		event.stopPropagation();
