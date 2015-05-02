@@ -1,15 +1,19 @@
 <template name="replies">
   <div class="comment-container {{side}} {{#if side}}{{side}}{{color}}{{/if}}" id="{{id}}-replies">
-    <div class="comment-replies clearfix">
-      {{> newComment}}
-    </div>
+    {{#if Template.subscriptionsReady}}
+      <div class="comment-replies clearfix">
+        {{> newComment}}
+      </div>
 
-    {{#if hasReplies}}
-      {{#each replies}}
-        {{> commentRow}}
-      {{/each}}
+      {{#if hasReplies}}
+        {{#each replies}}
+          {{> commentRow}}
+        {{/each}}
+      {{else}}
+        <div class="muted">{{_ "no_more"}}</div>
+      {{/if}}
     {{else}}
-      <div class="muted">{{_ "no_more"}}</div>
+      <div class="loader">{{_ "loading"}}</div>
     {{/if}}
   </div>
 </template>
