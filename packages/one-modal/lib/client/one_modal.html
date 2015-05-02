@@ -1,0 +1,9 @@
+<template name="oneModal">
+  <div class="modal fade vcenter" id="one-modal" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog {{modalClass}}">
+      <div class="modal-content">
+        {{> Template.dynamic template=template data=data}}
+      </div>
+    </div>
+  </div>
+</template>
