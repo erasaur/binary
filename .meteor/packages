@@ -36,7 +36,6 @@ npm-container
 kestanous:herald
 multiply:iron-router-progress
 erasaur:notification-badge
-erasaur:session-helper
 bengott:avatar
 reywood:publish-composite
 kestanous:herald-email
@@ -52,3 +51,4 @@ check
 twbs:bootstrap
 fortawesome:fontawesome
 iron:router
+one-modal
