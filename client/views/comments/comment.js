@@ -46,7 +46,7 @@ Template.newComment.events({
         template.$('.editable').focus();
       });
     } else {
-      $('#signup-modal').modal();
+      OneModal('signupModal', { modalClass: 'modal-sm' });
     }
   },
   'click .js-comment-cancel': function (event, template) {
@@ -184,14 +184,14 @@ Template.comment.events({
     if (Meteor.userId()) {
       Meteor.call('upvoteComment', this);
     } else {
-      OneModal('signupModal');
+      OneModal('signupModal', { modalClass: 'modal-sm' });
     }
   },
   'click .js-downvote-comment': function (event, template) {
     if (Meteor.userId()) {
       Meteor.call('cancelUpvoteComment', this);
     } else {
-      OneModal('signupModal');
+      OneModal('signupModal', { modalClass: 'modal-sm' });
     }
   },
   'click .js-flag-comment': function (event, template) {
