@@ -1,7 +1,7 @@
 <template name="signup">
   <div class="landing-form-container">
     <div class="landing-form-header">
-      <h1 class="logo"><a href="{{pathFor route='landing'}}">binary</a></h1>
+      <h1 class="logo"><a href="{{pathFor route='home'}}">binary</a></h1>
     </div>
     <div class="landing-form-body">
       {{> signupForm}}
@@ -21,7 +21,7 @@
           <div class="modal-body">
             {{> loginForm}}
             <a href="#" id="js-show-signup" class="action-link">{{_ "dont_have_account"}}</a>
-            <a href="{{pathFor route='forgotPassword'}}" class="action-link">{{_ "forgot_password"}}</a>
+            <a href="#" id="js-show-forgot" class="action-link">{{_ "forgot_password"}}</a>
           </div>
         {{else}}
           <div class="modal-header center">

@@ -15,6 +15,11 @@ Template.signupModal.events({
   },
   'click #js-show-login': function (event, template) {
     template._showLogin && template._showLogin.set(true);
+  },
+  'click #js-show-forgot': function (event, template) {
+    $('#signup-modal').modal('hide').on('hidden.bs.modal', function () {
+      Router.go('forgotPassword');
+    });
   }
 });
 
