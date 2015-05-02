@@ -18,17 +18,12 @@
   </div>
 
   {{#if currentUser}}
-    {{> newTopic}}
-    {{> inviteForm}}
-
-    <div class="invite icon-group hidden-xs" data-toggle="modal" data-target="#invite-modal">
+    <div class="invite icon-group hidden-xs" id="js-invite">
       <i class="b-icon-share"></i>
     </div>
   {{/if}}
 
-  {{> feedbackForm}}
-
-  <div class="feedback icon-group hidden-xs" data-toggle="modal" data-target="#feedback-modal">
+  <div class="feedback icon-group hidden-xs" id="js-feedback">
     <i class="fa fa-question"></i>
   </div>
 </template>
@@ -36,7 +31,7 @@
 <template name="navItems">
   <ul class="nav navbar-nav col-sm-2 navbar-items">
     <li role="presentation" class="visible-xs">
-      <a href="#" data-toggle="modal" data-target="{{topicModal}}">
+      <a href="#" id="js-create-topic">
         <span>{{_ "add_new_topic"}}</span>
       </a>
     </li>
@@ -51,7 +46,7 @@
     {{else}}
       <li role="presentation">
         <a href="{{pathFor route='login'}}">
-          <button class="btn btn-primary">{{_ "login"}}</button>
+          <button class="btn btn-primary btn-block">{{_ "login"}}</button>
         </a>
       </li>
     {{/if}}

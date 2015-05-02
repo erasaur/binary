@@ -1,10 +1,17 @@
-Template.nav.helpers({
-  topicModal: function () {
-    return Meteor.userId() ? '#new-topic-modal' : '#signup-modal';
-  }
-});
-
 Template.nav.events({
+  'click #js-feedback': function (event, template) {
+    OneModal('feedbackModal');
+  },
+  'click #js-invite': function (event, template) {
+    OneModal('inviteModal');
+  },
+  'click #js-create-topic': function (event, template) {
+    if (Meteor.userId()) {
+      OneModal('newTopic');
+    } else {
+      OneModal('signupModal', { modalClass: 'modal-sm' });
+    }
+  },
 	//prevent page from scrolling when mouse is in notifications box
 	'DOMMouseScroll .notifications, mousewheel .notifications': function (event, template) {
 		var target = event.currentTarget;
@@ -27,16 +34,3 @@ Template.nav.events({
 		}
 	}
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
