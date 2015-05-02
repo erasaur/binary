@@ -142,13 +142,13 @@ Template.topicHeader.events({
     if (Meteor.userId())
       Meteor.call('vote', this, 'pro');
     else
-      OneModal('signupModal');
+      OneModal('signupModal', { modalClass: 'modal-sm' });
   },
   'click #js-vote-con': function (event, template) {
     if (Meteor.userId())
       Meteor.call('vote', this, 'con');
     else
-      OneModal('signupModal');
+      OneModal('signupModal', { modalClass: 'modal-sm' });
   }
 });
 
