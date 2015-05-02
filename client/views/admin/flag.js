@@ -32,7 +32,7 @@ Template.flagModal.events({
           toastr.warning(i18n.t('missing_fields'));
       } else {
         toastr.success(i18n.t('thank_you_for_flagging'));
-        template.$('#flag-modal').modal('hide');
+        $('#one-modal').modal('hide');
       }
     });
   }
