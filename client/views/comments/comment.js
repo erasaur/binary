@@ -53,7 +53,8 @@ Template.newComment.events({
     template.editingComment.set(false);
   },
   'click .js-comment-post': function (event, template) {
-    if (!Session.get('currentTopic')) return;
+    var params = getCurrentParams();
+    var currentTopic = params._id;
 
     var comment = {
       content: template.$('.editable').val(),
@@ -61,7 +62,7 @@ Template.newComment.events({
       replyTo: this.id
     };
 
-    Meteor.call('newComment', Session.get('currentTopic'), comment, function (error, result) {
+    Meteor.call('newComment', currentTopic, comment, function (error, result) {
       if (error) {
         if (error.error === 'logged-out')
           toastr.warning(i18n.t('please_login'));
