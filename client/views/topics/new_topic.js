@@ -27,7 +27,7 @@ Template.newTopic.events({
         $title.val('');
         $description.val('');
 
-        $('#new-topic-modal').modal('hide').on('hidden.bs.modal', function () {
+        $('#one-modal').modal('hide').on('hidden.bs.modal', function () {
           Router.go('topic', { '_id': result });
         });
       }
