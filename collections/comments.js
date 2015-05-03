@@ -11,6 +11,10 @@ CommentSchema = new SimpleSchema({
   content: {
     type: String
   },
+  htmlContent: {
+    type: String,
+    autoValue: afAutoMarkdown('content')
+  },
   createdAt: {
     type: Date
   },
@@ -67,23 +71,6 @@ Comments.deny({
 });
 
 // end permissions -----------------------------------
-
-
-// collection hooks ----------------------------------
-
-Comments.before.insert(function (userId, doc) {
-  if (Meteor.isServer)
-    doc.content = sanitize(marked(doc.content));
-});
-
-Comments.before.update(function (userId, doc, fields, modifier, options) {
-  if (Meteor.isServer && modifier.$set && modifier.$set.content) {
-    modifier.$set = modifier.$set || {};
-    modifier.$set.content = sanitize(marked(modifier.$set.content));
-  }
-});
-
-// end collection hooks ------------------------------
 
 
 // methods -------------------------------------------
