@@ -5,7 +5,17 @@ Meteor.publishComposite('topicsList', function (limit) {
 
   return {
     find: function () {
-      return Topics.find({}, { sort: { 'score': -1, 'createdAt': -1 }, limit: limit });
+      var fields = {
+        'title': 1,
+        'userId': 1,
+        'createdAt': 1,
+        'commentsCount': 1,
+        'pro': 1,
+        'con': 1,
+        'score': 1
+      };
+
+      return Topics.find({}, { fields: fields, sort: { 'score': -1, 'createdAt': -1 }, limit: limit });
     },
     children: [{
       find: function (topic) { // top comment for each topic
