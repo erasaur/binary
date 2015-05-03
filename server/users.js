@@ -3,22 +3,10 @@
 Accounts.onCreateUser(function (options, user) {
   var userProperties = {
     profile: options.profile || {},
-    isAdmin: false,
     ipAddress: options.ipAddress,
     invites: {
       inviteCount: 3,
       invitedEmails: []
-    },
-    stats: {
-      reputation: 0,
-      flagsCount: 0, // helpful flags
-      topicsCount: 0,
-      commentsCount: 0,
-      followersCount: 0,
-    },
-    flags: {
-      comments: [],
-      topics: []
     },
     activity: { // activity involving other users/collections
       upvotedComments: [],
@@ -31,21 +19,20 @@ Accounts.onCreateUser(function (options, user) {
   // add default properties
   user = _.extend(user, userProperties);
 
-  user.emails[0].verified = true;
-
   var email = user.emails[0].address;
   if (!email) {
     throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
   }
 
   var invite = Invites.findOne({ 'invitedEmail': email, 'accepted': false });
+  if (invite) {
+    // update the user who invited
+    user.invites.invitedBy = invite.inviterId;
+    // update the invite status to accepted
+    Invites.update(invite._id, { $set: { 'accepted': true } });
 
-  if (!invite) throw new Meteor.Error('invalid-invite', 'This invitation does not match any existing invitations.');
-
-  // update the user who invited
-  user.invites.invitedBy = invite.inviterId;
-  // update the invite status to accepted
-  Invites.update(invite._id, { $set: { 'accepted': true } });
+    user.emails[0].verified = true;
+  }
 
   // set notifications default preferences
   user.profile.notifications = {
@@ -83,12 +70,23 @@ Accounts.onCreateUser(function (options, user) {
     }
   };
 
+  return user;
+});
+
+var sendWelcomeEmail = function (userId) {
+  var user = userId && Meteor.users.findOne(userId);
+  if (!user) return;
+
+  var name = getDisplayName(user);
+  var email = getEmail(user);
+  var profileUrl = getProfileUrl(user._id);
+
   // notify admins
   var admins = Meteor.users.find({ 'isAdmin': true });
   admins.forEach(function (admin) {
     var properties = {
-      name: getDisplayName(user),
-      actionLink: getProfileUrl(user._id)
+      name: name,
+      actionLink: profileUrl
     };
 
     var adminEmail = admin.emails[0].address;
@@ -100,7 +98,7 @@ Accounts.onCreateUser(function (options, user) {
   // send welcome email
   Meteor.setTimeout(function () {
     buildAndSendEmail(email, i18n.t('email_welcome_subject'), 'emailWelcome', {
-      greeting: i18n.t('greeting', user.profile.name),
+      greeting: i18n.t('greeting', name),
       message: [
         i18n.t('email_welcome_message_0'),
         i18n.t('email_welcome_message_1'),
@@ -108,14 +106,32 @@ Accounts.onCreateUser(function (options, user) {
       ]
     });
   }, 1);
-
-  // TODO: subscribe user to newsletter
-
-  return user;
-});
+};
 
 Meteor.methods({
-  newUser: function (name, password, inviteCode) {
+  newUser: function (email, name, password) {
+    check([email, name, password], [String]);
+
+    var name = stripHTML(name);
+    if (!validName(name))
+      throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
+
+    if (password.length < 6)
+      throw new Meteor.Error('weak-password', 'This password must have at least 6 characters.');
+
+    var userId = Accounts.createUser({
+      'email': email,
+      'password': password,
+      'ipAddress': this.connection.clientAddress,
+      'profile': {
+        'name': name,
+        'bio': i18n.t('default_profile')
+      }
+    });
+
+    sendWelcomeEmail(userId);
+  },
+  newInvitedUser: function (name, password, inviteCode) {
     check([name, password, inviteCode], [String]);
 
     var name = stripHTML(name);
@@ -134,7 +150,7 @@ Meteor.methods({
     if (password.length < 6)
       throw new Meteor.Error('weak-password', 'This password must have at least 6 characters.');
 
-    Accounts.createUser({
+    var userId = Accounts.createUser({
       'email': invite.invitedEmail,
       'password': password,
       'ipAddress': this.connection.clientAddress,
@@ -144,14 +160,17 @@ Meteor.methods({
       }
     });
 
+    sendWelcomeEmail(userId);
     return invite.invitedEmail;
   },
   changeProfile: function (newName, newBio) {
-    check(newName, String);
-    check(newBio, String);
+    check([newName, newBio], [String]);
+
+    if (!this.userId)
+      throw new Meteor.Error('no-permission', i18n.t('please_login'));
 
     var query = { $set: { 'profile.name': newName, 'profile.bio': newBio } };
-    Meteor.users.update(Meteor.userId(), query, function (error, result) {
+    Meteor.users.update(this.userId, query, function (error, result) {
       if (error) {
         // throw error.sanitizedError;
         throw error;
@@ -161,15 +180,19 @@ Meteor.methods({
   changeEmail: function (newEmail) {
     check(newEmail, String);
 
-    Meteor.users.update(Meteor.userId(), {
-      $set: {
-        'emails': [{ 'address': newEmail, 'verified': false }]
-      }
-    });
-    Accounts.sendVerificationEmail(Meteor.userId());
+    if (!this.userId)
+      throw new Meteor.Error('no-permission', i18n.t('please_login'));
+
+    Meteor.users.update(this.userId, { $set: {
+      'emails': [{ 'address': newEmail, 'verified': false }]
+    }});
+    Accounts.sendVerificationEmail(this.userId);
   },
   sendVerificationEmail: function () {
-    Accounts.sendVerificationEmail(Meteor.userId());
+    if (!this.userId)
+      throw new Meteor.Error('no-permission', i18n.t('please_login'));
+
+    Accounts.sendVerificationEmail(this.userId);
   },
   // sendResetSuccessEmail: function () {
   //   var user = Meteor.user();

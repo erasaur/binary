@@ -1,16 +1,23 @@
 <template name="login">
   <div class="landing-form-container">
     <div class="landing-form-header">
-      <h1 class="logo"><a href="{{pathFor route='landing'}}">binary</a></h1>
+      <h1 class="logo"><a href="{{pathFor route='home'}}">binary</a></h1>
     </div>
-    <ul class="landing-form-errors"></ul>
     <div class="landing-form-body">
-      <form id="js-login-form" role="form">
-        <input type="text" class="form-control" id="js-email" placeholder="{{_ 'email'}}">
-        <input type="password" class="form-control" id="js-password" placeholder="{{_ 'password'}}">
-        <button type="submit" class="btn btn-primary">{{_ "login"}}</button>
-      </form>
-      <a href="{{pathFor route='forgotPassword'}}" class="action-link">{{_ "forgot_password"}}</a>
+      {{> loginForm}}
+
+      <ul>
+        <li><a href="{{pathFor route='signup'}}" class="action-link">{{_ "dont_have_account"}}</a></li>
+        <li><a href="{{pathFor route='forgotPassword'}}" class="action-link">{{_ "forgot_password"}}</a></li>
+      </ul>
     </div>
   </div>
+</template>
+
+<template name="loginForm">
+  <form id="js-login-form" class="stacked-form" role="form">
+    <input type="text" class="form-control" id="js-email" placeholder="{{_ 'email'}}">
+    <input type="password" class="form-control" id="js-password" placeholder="{{_ 'password'}}">
+    <button type="submit" class="btn btn-primary">{{_ "login"}}</button>
+  </form>
 </template>

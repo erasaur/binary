@@ -30,11 +30,15 @@ FlagSchema = new SimpleSchema({
 Flags = new Mongo.Collection('flags');
 Flags.attachSchema(FlagSchema);
 
-Flags.allow({
-  insert: canPostById,
-  update: isAdminById,
+Flags.deny({
+  insert: function () {
+    return true;
+  },
+  update: function () {
+    return true;
+  },
   remove: function () {
-    return false;
+    return true;
   }
 });
 

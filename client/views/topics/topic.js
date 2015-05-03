@@ -1,11 +1,22 @@
-Template.topic.rendered = function () {
-  if (!this.data) return;
+Template.topic.onCreated(function () {
+  var topicId = this.data._id;
 
-  initInfiniteScroll.call(this, [
-    Comments.find({ 'topicId': this.data._id, 'side': 'pro' }),
-    Comments.find({ 'topicId': this.data._id, 'side': 'con' })
-  ]);
+  this.autorun(function () {
+    // reruns infinite scroll when we switch between single comment page and comment list page.
+    // because the templates/layout are identical between the two pages, the templates won't be recreated
+    // so we need to track changes on params and rerun it ourselves. ideally we only want to
+    // track the commentId param (not any query or hash changes) but there are none of those for now.
+    getCurrentParams();
 
+    initInfiniteScroll.call(this, [
+      Comments.find({ 'topicId': topicId, 'side': 'pro' }, { fields: { '_id': 1 } }),
+      Comments.find({ 'topicId': topicId, 'side': 'con' }, { fields: { '_id': 1 } })
+    ]);
+  });
+});
+
+Template.topic.onRendered(function () {
+  // top level comment reply boxes have to be animated separately
   var container = this.find('.list');
   container._uihooks = {
     insertElement: function (node, next) {
@@ -21,13 +32,13 @@ Template.topic.rendered = function () {
       }
     }
   };
-};
+});
 
-Template.topic.destroyed = function () {
+Template.topic.onDestroyed(function () {
   stopInfiniteScroll.call(this);
-};
+});
 
-Template.topicHeader.rendered = function () {
+Template.topicHeader.onRendered(function () {
   var description = this.find('.topic-description');
   var $description = $(description);
 
@@ -36,7 +47,7 @@ Template.topicHeader.rendered = function () {
   if (description.scrollHeight > $description.innerHeight()) {
     $description.addClass('collapsible');
   }
-};
+});
 
 Template.topic.events({
   'click #js-load-original': function (event, template) {
@@ -48,7 +59,7 @@ Template.topic.events({
 Template.topic.helpers({
   showOriginal: function () {
     var params = getCurrentParams();
-    return params && Comments.findOne(params.commentId);
+    return params && Comments.findOne(params.commentId, { fields: { '_id': 1 } });
   },
   comments: function () {
     var params = getCurrentParams();
@@ -85,8 +96,9 @@ Template.topic.helpers({
 
 Template.topicButtons.helpers({
   following: function () {
-    if (Meteor.user() && Meteor.user().activity && Meteor.user().activity.followingTopics)
-      return _.contains(Meteor.user().activity.followingTopics, this._id);
+    var user = Meteor.user();
+    var following = user && user.activity && user.activity.followingTopics;
+    return following && _.contains(following, this._id);
   }
 });
 
@@ -94,15 +106,13 @@ Template.topicHeader.helpers({
   selected: function (side) {
     var userId = Meteor.userId();
     var side = side + 'Users';
-
     return userId && _.contains(this[side], userId) && 'selected';
   }
 });
 
 Template.topicNav.helpers({
   canFlag: function () {
-    var user = Meteor.user();
-    return user && !isAdmin(user) && user.flags && !_.contains(user.flags.topics, this._id);
+    return canFlagTopic(Meteor.user(), this._id);
   }
 });
 
@@ -120,10 +130,7 @@ Template.topicNav.events({
     }
   },
   'click #js-flag-topic': function (event, template) {
-    var modal = Blaze.renderWithData(Template.flagForm, { _id: this._id, type: 'topics' }, $('body')[0]);
-    $('#flag-modal').modal('show').on('hidden.bs.modal', function () {
-      Blaze.remove(modal);
-    });
+    OneModal('flagModal', { data: { _id: this._id, type: 'topics' } });
   }
 });
 
@@ -132,10 +139,16 @@ Template.topicHeader.events({
     template.$('.topic-description').toggleClass('collapsed');
   },
   'click #js-vote-pro': function (event, template) {
-    Meteor.call('vote', this, 'pro');
+    if (Meteor.userId())
+      Meteor.call('vote', this, 'pro');
+    else
+      OneModal('signupModal', { modalClass: 'modal-sm' });
   },
   'click #js-vote-con': function (event, template) {
-    Meteor.call('vote', this, 'con');
+    if (Meteor.userId())
+      Meteor.call('vote', this, 'con');
+    else
+      OneModal('signupModal', { modalClass: 'modal-sm' });
   }
 });
 
