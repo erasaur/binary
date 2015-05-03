@@ -44,6 +44,8 @@ kestanous:herald-email
 percolate:velocityjs
 dburles:collection-helpers
 browser-policy
+miro:mailchimp
+percolate:synced-cron
 matteodem:easy-search
 
 chrismbeckett:toastr
