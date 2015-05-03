@@ -17,6 +17,7 @@ TopicSchema = new SimpleSchema({
   },
   htmlDescription: {
     type: String,
+    optional: true,
     autoValue: afAutoMarkdown('description')
   },
   createdAt: {
