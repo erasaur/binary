@@ -1,8 +1,6 @@
 Meteor.methods({
   validLink: function (inviterId, inviteCode) {
-    check(inviterId, String);
-    check(inviteCode, String);
-
+    check([inviterId, inviteCode], [String]);
     return !!Invites.findOne({ 'inviterId': inviterId, 'inviteCode': inviteCode, 'accepted': false });
   },
   inviteUser: function (email) {
