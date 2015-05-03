@@ -1,9 +1,14 @@
 // profile comments ----------------------------------
 
 Template.profileComments.onCreated(function () {
-  initInfiniteScroll.call(this, Comments.find({ 'userId': this.data._id }, {
-    fields: { '_id': 1 }
-  }));
+  var self = this;
+
+  self.autorun(function () {
+    var params = getCurrentParams(); // see note on topic.onCreated
+    initInfiniteScroll.call(self, Comments.find({ 'userId': params._id }, {
+      fields: { '_id': 1 }
+    }));
+  });
 });
 Template.profileComments.onDestroyed(function () {
 	stopInfiniteScroll.call(this);
@@ -12,9 +17,14 @@ Template.profileComments.onDestroyed(function () {
 // profile topics ------------------------------------
 
 Template.profileTopics.onCreated(function () {
-	initInfiniteScroll.call(this, Topics.find({ 'userId': this.data._id }, {
-    fields: { '_id': 1 }
-  }));
+  var self = this;
+
+  self.autorun(function () {
+    var params = getCurrentParams(); // see note on topic.onCreated
+    initInfiniteScroll.call(self, Topics.find({ 'userId': params._id }, {
+      fields: { '_id': 1 }
+    }));
+  });
 });
 Template.profileTopics.onDestroyed(function () {
 	stopInfiniteScroll.call(this);
