@@ -15,6 +15,10 @@ TopicSchema = new SimpleSchema({
     type: String,
     optional: true
   },
+  htmlDescription: {
+    type: String,
+    autoValue: afAutoMarkdown('description')
+  },
   createdAt: {
     type: Date
   },
@@ -86,24 +90,6 @@ Topics.deny({
 });
 
 // end permissions -----------------------------------
-
-
-// collection hooks ----------------------------------
-
-Topics.before.insert(function (userId, doc) {
-  if (Meteor.isServer && doc.description)
-    doc.description = sanitize(marked(doc.description));
-});
-
-Topics.before.update(function (userId, doc, fields, modifier, options) {
-  // sanitize before update
-  if (Meteor.isServer && modifier.$set && modifier.$set.description) {
-    modifier.$set = modifier.$set || {};
-    modifier.$set.description = sanitize(marked(modifier.$set.description));
-  }
-});
-
-// end collection hooks ------------------------------
 
 
 // methods -------------------------------------------
