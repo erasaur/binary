@@ -1,15 +1,12 @@
 Meteor.methods({
   validLink: function (inviterId, inviteCode) {
-    check(inviterId, String);
-    check(inviteCode, String);
-
+    check([inviterId, inviteCode], [String]);
     return !!Invites.findOne({ 'inviterId': inviterId, 'inviteCode': inviteCode, 'accepted': false });
   },
   inviteUser: function (email) {
     check(email, String);
 
     var currentUser = Meteor.user();
-    var inviterId = currentUser._id;
 
     // check that user can invite
     if (!canInvite(currentUser))
@@ -24,6 +21,7 @@ Meteor.methods({
       throw new Meteor.Error('duplicate-content', 'This content already exists.');
 
     // calculate email hash
+    var inviterId = currentUser._id;
     var inviteCode = Random.id();
 
     var invite = {

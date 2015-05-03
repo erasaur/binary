@@ -108,9 +108,9 @@ Meteor.methods({
     check([itemId, itemType, reason], [String]);
 
     var user = Meteor.user();
-    var userId = user._id;
+    var userId = user && user._id;
 
-    if (!userId)
+    if (!user)
       throw new Meteor.Error('no-permission', 'This user does not have permission to continue.');
 
     if (!_.contains(['comments', 'topics'], itemType))
@@ -150,7 +150,6 @@ Meteor.methods({
     check(newStatus, Match.Integer);
 
     var user = Meteor.user();
-
     if (!user || !isAdmin(user))
       throw new Meteor.Error('no-permission', 'This user does not have permission to continue.');
 

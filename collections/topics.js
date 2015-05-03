@@ -15,6 +15,11 @@ TopicSchema = new SimpleSchema({
     type: String,
     optional: true
   },
+  htmlDescription: {
+    type: String,
+    optional: true,
+    autoValue: afAutoMarkdown('description')
+  },
   createdAt: {
     type: Date
   },
@@ -88,24 +93,6 @@ Topics.deny({
 // end permissions -----------------------------------
 
 
-// collection hooks ----------------------------------
-
-Topics.before.insert(function (userId, doc) {
-  if (Meteor.isServer && doc.description)
-    doc.description = sanitize(marked(doc.description));
-});
-
-Topics.before.update(function (userId, doc, fields, modifier, options) {
-  // sanitize before update
-  if (Meteor.isServer && modifier.$set && modifier.$set.description) {
-    modifier.$set = modifier.$set || {};
-    modifier.$set.description = sanitize(marked(modifier.$set.description));
-  }
-});
-
-// end collection hooks ------------------------------
-
-
 // methods -------------------------------------------
 
 Meteor.methods({
@@ -119,11 +106,11 @@ Meteor.methods({
     var userId = this.userId;
     var title = topic.title;
     var description = topic.description;
-    var timeSinceLastTopic = timeSinceLast(user, Topics);
+    var timeSinceLastTopic = user && timeSinceLast(user, Topics);
     var topicInterval = 15; // 15 seconds
 
     if (!user || !canPost(user))
-      throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
+      throw new Meteor.Error('no-permission', i18n.t('please_login'));
 
     if(!isAdmin(user) && !this.isSimulation && timeSinceLastTopic < topicInterval)
       throw new Meteor.Error('wait', (topicInterval - timeSinceLastTopic));
@@ -153,7 +140,6 @@ Meteor.methods({
     };
 
     topic.score = getTopicScore(topic);
-    console.log(topic.score);
     topic._id = Topics.insert(topic);
 
     Meteor.users.update(userId, { $inc: { 'stats.topicsCount': 1 } });
@@ -166,9 +152,8 @@ Meteor.methods({
     check(topicId, String);
 
     var userId = this.userId;
-
     if (!userId || !canFollowById(userId))
-      throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
+      throw new Meteor.Error('no-permission', i18n.t('please_login'));
 
     Topics.update(topicId, { $addToSet: { 'followers': userId } });
     Meteor.users.update(userId, { $addToSet: { 'activity.followingTopics': topicId } });
@@ -177,9 +162,8 @@ Meteor.methods({
     check(topicId, String);
 
     var userId = this.userId;
-
     if (!userId || !canFollowById(userId))
-      throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
+      throw new Meteor.Error('no-permission', i18n.t('please_login'));
 
     Topics.update(topicId, { $pull: { 'followers': userId } });
     Meteor.users.update(userId, { $pull: { 'activity.followingTopics': topicId } });

@@ -17,13 +17,13 @@
     </div>
   </div>
 
-  {{> newTopic}}
-  {{> inviteForm}}
-  {{> feedbackForm}}
-  <div class="invite icon-group hidden-xs" data-toggle="modal" data-target="#invite-modal">
-    <i class="b-icon-share"></i>
-  </div>
-  <div class="feedback icon-group hidden-xs" data-toggle="modal" data-target="#feedback-modal">
+  {{#if currentUser}}
+    <div class="invite icon-group hidden-xs" id="js-invite">
+      <i class="b-icon-share"></i>
+    </div>
+  {{/if}}
+
+  <div class="feedback icon-group hidden-xs" id="js-feedback">
     <i class="fa fa-question"></i>
   </div>
 </template>
@@ -31,18 +31,25 @@
 <template name="navItems">
   <ul class="nav navbar-nav col-sm-2 navbar-items">
     <li role="presentation" class="visible-xs">
-      <a href="#" data-toggle="modal" data-target="#new-topic-modal">
+      <a href="#" id="js-create-topic">
         <span>{{_ "add_new_topic"}}</span>
       </a>
     </li>
-    <li role="presentation">
-      <a href="{{pathFor route='profile' data=currentUser}}" id="nav-profile">
-        {{> avatar user=currentUser size='small' shape='circle' class='navbar-item hidden-xs'}}
-        <span class="visible-xs">{{_ "your_profile"}}</span>
-      </a>
-    </li>
-
-    {{> notifications}}
+    {{#if currentUser}}
+      <li role="presentation">
+        <a href="{{pathFor route='profile' data=currentUser}}" id="nav-profile">
+          {{> avatar user=currentUser size='small' shape='circle' class='navbar-item hidden-xs'}}
+          <span class="visible-xs">{{_ "your_profile"}}</span>
+        </a>
+      </li>
+      {{> notifications}}
+    {{else}}
+      <li role="presentation">
+        <a href="{{pathFor route='login'}}">
+          <button class="btn btn-primary btn-block">{{_ "login"}}</button>
+        </a>
+      </li>
+    {{/if}}
 
     {{#if isAdmin}}
       <li role="presentation">

@@ -18,10 +18,14 @@ function InfiniteScroll (cursor) {
 }
 
 initInfiniteScroll = function (cursors) {
-  var cursors = _.isArray(cursors) ? cursors : [cursors];
   var self = this;
+  var cursors = _.isArray(cursors) ? cursors : [cursors];
+  var controller = this instanceof Iron.Controller ? this : getCurrentController();
+  var limit = this.state || controller.state;
+  var currentLimit;
 
-  self._infiniteScroll = self._infiniteScroll || [];
+  stopInfiniteScroll.call(self);
+  self._infiniteScroll = [];
 
   _.each(cursors, function (cursor) {
     var obj = new InfiniteScroll(cursor);
@@ -34,12 +38,13 @@ initInfiniteScroll = function (cursors) {
 
     if (window.innerHeight + window.scrollY >= target) {
       _.each(self._infiniteScroll, function (obj) {
-        if (obj.count >= Session.get('itemsLimit')) {
-          Session.set('itemsLimit', Session.get('itemsLimit') + 30); //fetch more items from server
+        currentLimit = limit.get('itemsLimit');
+        if (obj.count >= currentLimit) {
+          limit.set('itemsLimit', currentLimit + 30); //fetch more items from server
         }
       });
     }
-  }, 300));  
+  }, 300));
 };
 
 stopInfiniteScroll = function () {

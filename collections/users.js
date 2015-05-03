@@ -5,12 +5,10 @@ var Schema = {};
 Schema.UserInvites = new SimpleSchema({
   inviteCount: {
     type: Number,
-    min: 0,
-    optional: true
+    min: 0
   },
   invitedEmails: {
-    type: [String],
-    optional: true
+    type: [String]
   },
   invitedBy: {
     type: String,
@@ -37,33 +35,40 @@ Schema.UserProfile = new SimpleSchema({
 
 Schema.UserFlags = new SimpleSchema({
   comments: {
-    type: [String]
+    type: [String],
+    defaultValue: []
   },
   topics: {
-    type: [String]
+    type: [String],
+    defaultValue: []
   }
 });
 
 Schema.UserStats = new SimpleSchema({
   commentsCount: {
     type: Number,
-    min: 0
+    min: 0,
+    defaultValue: 0
   },
   followersCount: {
     type: Number,
-    min: 0
+    min: 0,
+    defaultValue: 0
   },
   topicsCount: {
     type: Number,
-    min: 0
+    min: 0,
+    defaultValue: 0
   },
   reputation: {
     type: Number,
-    min: 0 // possibly negative if we have downvotes ?
+    min: 0, // possibly negative if we have downvotes ?
+    defaultValue: 0
   },
   flagsCount: { // number of helpful flags
     type: Number,
-    min: 0
+    min: 0,
+    defaultValue: 0
   }
 });
 
@@ -85,7 +90,7 @@ Schema.User = new SimpleSchema({
   },
   isAdmin: {
     type: Boolean,
-    optional: true
+    defaultValue: false
   },
   ipAddress: {
     type: String,
@@ -163,7 +168,7 @@ Meteor.users.initEasySearch('profile.name', {
     var query = EasySearch.getSearcher(this.use).defaultQuery(this, searchString);
     var user = Meteor.users.findOne(this.publishScope.userId);
 
-    query['profile.name'] = { $ne: user.profile.name };
+    if (user) query['profile.name'] = { $ne: user.profile.name };
     return query;
   }
 });
@@ -178,7 +183,6 @@ Meteor.methods({
     check(followingId, String);
 
     var userId = this.userId;
-
     if (!userId || !canFollowById(userId))
       throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 
@@ -199,7 +203,6 @@ Meteor.methods({
     check(followingId, String);
 
     var userId = this.userId;
-
     if (!userId || !canFollowById(userId))
       throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
 

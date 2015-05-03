@@ -7,11 +7,9 @@ Meteor.startup(function () {
   // update scores every minute
   Meteor.setInterval(function () {
     Topics.find().forEach(function (topic) {
-      Topics.update(topic._id, {
-        $set: {
-          score: getTopicScore(topic)
-        }
-      });
+      Topics.update(topic._id, { $set: {
+        score: getTopicScore(topic)
+      }});
     });
   }, 60 * 1000);
 });

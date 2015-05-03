@@ -1,9 +1,9 @@
-Template.admin.created = function () {
-  initInfiniteScroll.call(this, Flags.find());
-};
-Template.admin.destroyed = function () {
+Template.admin.onCreated(function () {
+  initInfiniteScroll.call(this, Flags.find({}, { fields: { '_id': 1 } }));
+});
+Template.admin.onDestroyed(function () {
   stopInfiniteScroll.call(this);
-};
+});
 
 Template.admin.helpers({
   flags: function () {

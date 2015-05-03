@@ -1,16 +1,17 @@
-Template.home.rendered = function () {
-  initInfiniteScroll.call(this, Topics.find());
-};
+Template.home.onCreated(function () {
+  initInfiniteScroll.call(this, Topics.find({}, { fields: { '_id': 1 } }));
+});
 
-Template.home.destroyed = function () {
+Template.home.onDestroyed(function () {
   stopInfiniteScroll.call(this);
-};
+});
 
 Template.home.helpers({
 	topics: function() {
 		return Topics.find({}, { sort: { 'score': -1, 'createdAt': -1 } });
 	},
 	moreTopics: function () {
-		return Topics.find().count() === Session.get('itemsLimit');
+    var controller = getCurrentController();
+		return Topics.find({}, { fields: { '_id': 1 } }).count() === controller.state.get('itemsLimit');
 	}
 });

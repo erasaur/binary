@@ -30,8 +30,11 @@
   "send_recovery_link": "Send Recovery Link",
   "check_email_for_recovery": "Please check your email for a recovery link. Thanks!",
 
-  // Login/Forgot Password
+  // Signup/Login
+  "sign_up": "Sign Up",
   "login": "Login",
+  "already_have_account": "Already have an account?",
+  "dont_have_account": "Don't have an account?",
 
   // Nav
   "toggle_navigation": "Toggle Navigation",
@@ -52,7 +55,6 @@
 
   // Invite
   "your_name": "Your Name",
-  "sign_up": "Sign Up",
   "invite_your_friends": "Invite Your Friends!",
   "invite_message_0": "We spent a lot of care cookin’ this site up, and we’d love for your friends to try it out!",
   "invite_message_1": "We are still testing things though, so lest we can’t handle the load, we’ve given you exactly",
@@ -193,6 +195,7 @@
   "save": "Save",
   "cancel": "Cancel",
   "missing_fields": "Oops! Looks like you left some fields empty.",
+  "login_error": "Oops, we don't recognize that username/password combination. Try again?",
   "error": "Sorry, something went wrong. Please try again.",
   "please_login": "That's something you have to be logged in to do.",
   "no_permission": "Sorry, we can't let you do that."
