@@ -10,9 +10,8 @@ Template.loginForm.events({
 		}
 
 		Meteor.loginWithPassword(email, password, function (error) {
-			if (error) {
-				toastr.warning(i18n.t('login_error'));
-			}
+			if (error) toastr.warning(i18n.t('login_error'));
+      else $('#one-modal').modal('hide');
 		});
 	}
 });
