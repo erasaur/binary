@@ -1,11 +1,10 @@
 <template name="invite">
   <div class="landing-form-container">
     <div class="landing-form-header">
-      <h1 class="logo"><a href="{{pathFor route='landing'}}">binary</a></h1>
+      <h1 class="logo"><a href="{{pathFor route='home'}}">binary</a></h1>
     </div>
-    <ul class="landing-form-errors"></ul>
     <div class="landing-form-body">
-      <form id="js-signup-form" role="form">
+      <form id="js-signup-form" class="stacked-form" role="form">
         <input type="text" class="form-control" id="js-create-name" placeholder="{{_ 'your_name'}}" maxlength="25">
         <input type="password" class="form-control" id="js-create-password" placeholder="{{_ 'password'}}">
         <button type="submit" class="btn btn-primary">{{_ "sign_up"}}</button>
@@ -14,38 +13,34 @@
   </div>
 </template>
 
-<template name="inviteForm">
-  <div class="modal fade" id="invite-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header center">
-          <div class="icon-group close" data-dismiss="modal" aria-hidden="true">
-            <i class="icon-action fa fa-remove"></i>
-          </div>
-          <h4 class="modal-title muted uppercase" id="modalLabel">{{_ "invite_your_friends"}}</h4>
-        </div>
-        <div class="modal-body">
-          <form role="form" id="js-invite-form">
-            {{#if currentUser.invites.inviteCount}}
-              <div class="form-group">
-                <p class="help-block">{{_ "invite_message_0"}}</p>
-                <p class="help-block">{{_ "invite_message_1"}} <strong>three</strong> {{_ "invite_message_2"}}</p>
-              </div>
-              <div class="form-group">
-                <p class="help-block">{{_ "num_invites_left" count=currentUser.invites.inviteCount}}</p>
-                <input type="text" class="form-control" id="js-invite-email" placeholder="friend@email.com">
-              </div>
-              <div class="action-group clearfix">
-                <button type="submit" class="btn btn-primary">{{_ "send"}}</button>
-              </div>
-            {{else}}
-              <div class="form-group">
-                <p class="help-block">{{_ "thank_you_for_inviting"}}</p>
-              </div>
-            {{/if}}
-          </form>
-        </div>
+<template name="inviteModal">
+  <div class="modal-content">
+    <div class="modal-header center">
+      <div class="icon-group close" data-dismiss="modal" aria-hidden="true">
+        <i class="icon-action fa fa-remove"></i>
       </div>
+      <h4 class="modal-title muted uppercase" id="modal-title">{{_ "invite_your_friends"}}</h4>
+    </div>
+    <div class="modal-body">
+      <form role="form" id="js-invite-form">
+        {{#if currentUser.invites.inviteCount}}
+          <div class="form-group">
+            <p class="help-block">{{_ "invite_message_0"}}</p>
+            <p class="help-block">{{_ "invite_message_1"}} <strong>three</strong> {{_ "invite_message_2"}}</p>
+          </div>
+          <div class="form-group">
+            <p class="help-block">{{_ "num_invites_left" count=currentUser.invites.inviteCount}}</p>
+            <input type="text" class="form-control" id="js-invite-email" placeholder="friend@email.com">
+          </div>
+          <div class="action-group clearfix">
+            <button type="submit" class="btn btn-primary">{{_ "send"}}</button>
+          </div>
+        {{else}}
+          <div class="form-group">
+            <p class="help-block">{{_ "thank_you_for_inviting"}}</p>
+          </div>
+        {{/if}}
+      </form>
     </div>
   </div>
 </template>

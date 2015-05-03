@@ -14,9 +14,9 @@ Template.comment.helpers({
   },
   voteClass: function () {
     var user = Meteor.user();
-    if (!user) return;
+    if (!user) return 'js-upvote-comment';
 
-    var upvoted = user.activity && user.activity.upvotedComments;
+    var upvoted = getProperty(user, 'activity.upvotedComments');
     return upvoted && _.contains(upvoted, this._id) ?
       'liked js-downvote-comment' : 'js-upvote-comment';
   },
@@ -24,14 +24,13 @@ Template.comment.helpers({
     return this.replies && this.replies.length;
   },
   canFlag: function () {
-    var user = Meteor.user();
-    return user && !isAdmin(user) && user.flags && !_.contains(user.flags.comments, this._id);
+    return canFlagComment(Meteor.user(), this._id);
   }
 });
 
-Template.newComment.created = function () {
+Template.newComment.onCreated(function () {
   this.editingComment = new ReactiveVar(false);
-};
+});
 
 Template.newComment.helpers({
   editing: function () {
@@ -41,16 +40,21 @@ Template.newComment.helpers({
 
 Template.newComment.events({
   'focus .js-comment-new': function (event, template) {
-    template.editingComment.set(true);
-    Tracker.afterFlush(function () {
-      template.$('.editable').focus();
-    });
+    if (Meteor.userId()) {
+      template.editingComment.set(true);
+      Tracker.afterFlush(function () {
+        template.$('.editable').focus();
+      });
+    } else {
+      OneModal('signupModal', { modalClass: 'modal-sm' });
+    }
   },
   'click .js-comment-cancel': function (event, template) {
     template.editingComment.set(false);
   },
   'click .js-comment-post': function (event, template) {
-    if (!Session.get('currentTopic')) return;
+    var params = getCurrentParams();
+    var currentTopic = params._id;
 
     var comment = {
       content: template.$('.editable').val(),
@@ -58,7 +62,7 @@ Template.newComment.events({
       replyTo: this.id
     };
 
-    Meteor.call('newComment', Session.get('currentTopic'), comment, function (error, result) {
+    Meteor.call('newComment', currentTopic, comment, function (error, result) {
       if (error) {
         if (error.error === 'logged-out')
           toastr.warning(i18n.t('please_login'));
@@ -129,7 +133,7 @@ Template.comment.events({
     var $replyRows = $replyTo.siblings('.comment-container');
     var closing = _.contains(showing, self._id);
 
-    if (closing && $replyRows.length) {
+    if ($replyRows.length) {
       $replyRows.each(function (i) {
         var id = $(this).attr('id');
         id = id.slice(0, id.indexOf('-'));
@@ -177,16 +181,21 @@ Template.comment.events({
     );
   }, 200, true),
   'click .js-upvote-comment': function (event, template) {
-    Meteor.call('upvoteComment', this);
+    if (Meteor.userId()) {
+      Meteor.call('upvoteComment', this);
+    } else {
+      OneModal('signupModal', { modalClass: 'modal-sm' });
+    }
   },
   'click .js-downvote-comment': function (event, template) {
-    Meteor.call('cancelUpvoteComment', this);
+    if (Meteor.userId()) {
+      Meteor.call('cancelUpvoteComment', this);
+    } else {
+      OneModal('signupModal', { modalClass: 'modal-sm' });
+    }
   },
   'click .js-flag-comment': function (event, template) {
-    var modal = Blaze.renderWithData(Template.flagForm, { _id: this._id, type: 'comments' }, $('body')[0]);
-    $('#flag-modal').modal('show').on('hidden.bs.modal', function () {
-      Blaze.remove(modal);
-    });
+    OneModal('flagModal', { data: { _id: this._id, type: 'comments' } });
   },
   'click .js-delete-comment': function (event, template) {
     if (confirm(i18n.t('are_you_sure', { action: i18n.t('delete_comment') }))) {

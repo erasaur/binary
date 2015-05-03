@@ -11,6 +11,11 @@ CommentSchema = new SimpleSchema({
   content: {
     type: String
   },
+  htmlContent: {
+    type: String,
+    optional: true,
+    autoValue: afAutoMarkdown('content')
+  },
   createdAt: {
     type: Date
   },
@@ -52,10 +57,7 @@ Comments.attachSchema(CommentSchema);
 // permissions ---------------------------------------
 
 Comments.allow({
-  update: canEditById,
-  remove: function () {
-    return false;
-  }
+  update: canEditById
 });
 Comments.deny({
   update: function (userId, comment, fields) {
@@ -63,27 +65,13 @@ Comments.deny({
 
     // deny update if it contains invalid fields
     return _.without(fields, 'content').length > 0;
+  },
+  remove: function () {
+    return true;
   }
 });
 
 // end permissions -----------------------------------
-
-
-// collection hooks ----------------------------------
-
-Comments.before.insert(function (userId, doc) {
-  if (Meteor.isServer)
-    doc.content = sanitize(marked(doc.content));
-});
-
-Comments.before.update(function (userId, doc, fields, modifier, options) {
-  if (Meteor.isServer && modifier.$set && modifier.$set.content) {
-    modifier.$set = modifier.$set || {};
-    modifier.$set.content = sanitize(marked(modifier.$set.content));
-  }
-});
-
-// end collection hooks ------------------------------
 
 
 // methods -------------------------------------------
@@ -101,11 +89,11 @@ Meteor.methods({
     var content = comment.content;
     var side = comment.side;
     var replyTo = comment.replyTo;
-    var timeSinceLastComment = timeSinceLast(user, Comments);
+    var timeSinceLastComment = user && timeSinceLast(user, Comments);
     var commentInterval = 15; // 15 seconds
 
     if (!user || !canComment(user))
-      throw new Meteor.Error('logged-out', 'This user must be logged in to continue.');
+      throw new Meteor.Error('no-permission', i18n.t('please_login'));
 
     // check that user waits more than 15 seconds between comments
     if (!isAdmin(user) && !this.isSimulation && timeSinceLastComment < commentInterval)

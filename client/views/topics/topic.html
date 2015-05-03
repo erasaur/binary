@@ -15,10 +15,12 @@
 </template>
 
 <template name="topicButtons">
-  {{#if following}}
-    <button id="js-unfollow" class="btn btn-primary">{{_ "unfollow"}}</button>
-  {{else}}
-    <button id="js-follow" class="btn btn-default">{{_ "follow"}}</button>
+  {{#if currentUser}}
+    {{#if following}}
+      <button id="js-unfollow" class="btn btn-primary">{{_ "unfollow"}}</button>
+    {{else}}
+      <button id="js-follow" class="btn btn-default">{{_ "follow"}}</button>
+    {{/if}}
   {{/if}}
 </template>
 
@@ -29,9 +31,9 @@
     <button id="js-vote-con" class="btn btn-con {{selected 'con'}}">{{con}}</button>
   </div>
 
-  {{#if description}}
+  {{#if htmlDescription}}
     <div class="topic-description collapsed muted markdown">
-      {{{description}}}
+      {{{htmlDescription}}}
     </div>
   {{/if}}
 </template>

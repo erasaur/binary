@@ -1,27 +1,23 @@
 <template name="newTopic">
-  <div class="modal fade" id="new-topic-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content custom">
-        <div class="modal-header">
-          <div class="icon-group close" data-dismiss="modal" aria-hidden="true">
-            <i class="icon-action fa fa-remove"></i>
-          </div>
-          <h4 class="modal-title muted uppercase" id="modalLabel">{{_ "create_topic"}}</h4>
-        </div>
-        <div class="modal-body">
-          <form role="form" id="js-create-topic-form">
-            <div class="form-group">
-              <input type="text" class="form-control" id="js-create-title" placeholder="{{_ 'new_topic_prompt'}}">
-            </div>
-            <div class="form-group">
-              <textarea class="form-control" id="js-create-description" placeholder="{{_ 'new_topic_context'}}"></textarea>
-            </div>
-            <div class="action-group clearfix">
-              <button type="submit" class="btn btn-primary">{{_ "submit"}}</button>
-            </div>
-          </form>
-        </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="icon-group close" data-dismiss="modal" aria-hidden="true">
+        <i class="icon-action fa fa-remove"></i>
       </div>
+      <h4 class="modal-title muted uppercase" id="modal-title">{{_ "create_topic"}}</h4>
+    </div>
+    <div class="modal-body">
+      <form role="form" id="js-create-topic-form">
+        <div class="form-group">
+          <input type="text" class="form-control" id="js-create-title" placeholder="{{_ 'new_topic_prompt'}}">
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" id="js-create-description" placeholder="{{_ 'new_topic_context'}}"></textarea>
+        </div>
+        <div class="action-group clearfix">
+          <button type="submit" class="btn btn-primary">{{_ "submit"}}</button>
+        </div>
+      </form>
     </div>
   </div>
 </template>

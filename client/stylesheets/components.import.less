@@ -86,6 +86,7 @@
   background-color: @color-primary;
 }
 
+// toggle --------------------------------------------
 
 .toggle {
   height: 20px;
@@ -155,6 +156,67 @@
 .toggle input[type=radio]:checked + .handle:after {
   left: 22px;
 }
+
+// loader (http://projects.lukehaas.me/css-loaders/) -
+
+.loader:before,
+.loader:after,
+.loader {
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
+  animation: load7 1.8s infinite ease-in-out;
+}
+.loader {
+  margin: 0 auto 4.5em;
+  font-size: 11px;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.loader:before {
+  left: -2.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 2.5em;
+}
+.loader:before,
+.loader:after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+@-webkit-keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em #ffffff;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0 #FFF;
+  }
+}
+@keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em #ffffff;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0 #FFF;
+  }
+}
+
+// icons ---------------------------------------------
 
 .icon-group {
   display: inline-block;
@@ -583,8 +645,10 @@
     // background-color: #f0f0f0;
   }
 }
-.feedback.icon-group {
+.invite.icon-group {
   bottom: 66px;
+}
+.feedback.icon-group {
   text-align: center;
   i { font-size: 18px; }
 }
@@ -743,10 +807,10 @@
   top: 20px;
   right: 20px;
 }
-.landing-form-errors > li {
-  text-align: center;
-  padding: 0 @padding-main @padding-main;
-}
+// .landing-form-errors > li {
+//   text-align: center;
+//   padding: 0 @padding-main @padding-main;
+// }
 
 // landing form --------------------------------------
 
@@ -755,20 +819,20 @@
   margin: 20px auto;
   padding: 40px;
 }
-.landing-form-errors > li {
-  text-align: center;
-  padding: 0 @padding-main @padding-main;
-}
+// .landing-form-errors > li {
+//   text-align: center;
+//   padding: 0 @padding-main @padding-main;
+// }
 .landing-form-header {
   margin-bottom: @padding-larger;
   text-align: center;
   h1 { font-size: 50px; }
 }
-.landing-form-body button {
+.stacked-form button {
   width: 100%;
   margin: @padding-main 0 @padding-small;
 }
-.landing-form-body input {
+.stacked-form input {
   border-radius: 0 0 4px 4px;
   &:first-of-type {
     border-bottom: 0;

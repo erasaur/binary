@@ -1,4 +1,8 @@
-Template.replies.rendered = function () {
+Template.replies.onCreated(function () {
+  this.subscribe('commentReplies', this.data.id);
+});
+
+Template.replies.onRendered(function () {
   var container = this.firstNode;
   container._uihooks = {
     insertElement: function (node, next) {
@@ -14,11 +18,11 @@ Template.replies.rendered = function () {
       }
     }
   }
-};
+});
 
 Template.replies.helpers({
   hasReplies: function () {
-    var comment = Comments.findOne(this.id);
+    var comment = Comments.findOne(this.id, { fields: { 'replies': 1 } });
     return comment && comment.replies.length;
   },
   replies: function () {

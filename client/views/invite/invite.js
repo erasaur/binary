@@ -1,7 +1,4 @@
 Template.invite.events({
-	'input input': function (event, template) {
-		fadeElement($('.landing-form-errors'));
-	},
 	'submit #js-signup-form': function (event, template) {
 		event.preventDefault();
 		var	name = template.find('#js-create-name').value;
@@ -9,7 +6,7 @@ Template.invite.events({
 		var query = getCurrentQuery();
 		var inviteCode = query && query.invite_code;
 
-		Meteor.call('newUser', name, password, inviteCode, function (error, result) {
+		Meteor.call('newInvitedUser', name, password, inviteCode, function (error, result) {
 			if (error) {
 				var niceError = i18n.t('error');
 
@@ -23,8 +20,7 @@ Template.invite.events({
 					niceError = i18n.t('password_too_short');
 				}
 
-				template.find('.landing-form-errors').innerHTML = '<li>' + niceError + '</li>';
-				$('.landing-form-errors').fadeTo('slow', 1);
+				toastr.warning(niceError);
 			}
 			else {
 				var email = result;
@@ -39,7 +35,7 @@ Template.invite.events({
 	}
 });
 
-Template.inviteForm.events({
+Template.inviteModal.events({
 	'submit #js-invite-form': function (event, template) {
 		event.preventDefault();
 		event.stopPropagation();
