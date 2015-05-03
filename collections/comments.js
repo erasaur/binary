@@ -13,6 +13,7 @@ CommentSchema = new SimpleSchema({
   },
   htmlContent: {
     type: String,
+    optional: true,
     autoValue: afAutoMarkdown('content')
   },
   createdAt: {
