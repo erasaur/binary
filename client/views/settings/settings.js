@@ -1,6 +1,6 @@
-Template.settingsBody.created = function () {
+Template.settingsBody.onCreated(function () {
   this.editing = new ReactiveVar(false);
-};
+});
 
 Template.settingsBody.helpers({
   editing: function () {
