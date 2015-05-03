@@ -43,6 +43,8 @@ Template.signupForm.events({
           toastr.warning(i18n.t('error'));
         }
       } else {
+        $('#one-modal').modal('hide');
+
         Meteor.loginWithPassword(email, password, function (error) {
           if (error) toastr.warning(i18n.t('error'));
         });
