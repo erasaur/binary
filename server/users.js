@@ -3,22 +3,10 @@
 Accounts.onCreateUser(function (options, user) {
   var userProperties = {
     profile: options.profile || {},
-    isAdmin: false,
     ipAddress: options.ipAddress,
     invites: {
       inviteCount: 3,
       invitedEmails: []
-    },
-    stats: {
-      reputation: 0,
-      flagsCount: 0, // helpful flags
-      topicsCount: 0,
-      commentsCount: 0,
-      followersCount: 0,
-    },
-    flags: {
-      comments: [],
-      topics: []
     },
     activity: { // activity involving other users/collections
       upvotedComments: [],
@@ -82,12 +70,23 @@ Accounts.onCreateUser(function (options, user) {
     }
   };
 
+  return user;
+});
+
+var sendWelcomeEmail = function (userId) {
+  var user = userId && Meteor.users.findOne(userId);
+  if (!user) return;
+
+  var name = getDisplayName(user);
+  var email = getEmail(user);
+  var profileUrl = getProfileUrl(user._id);
+
   // notify admins
   var admins = Meteor.users.find({ 'isAdmin': true });
   admins.forEach(function (admin) {
     var properties = {
-      name: getDisplayName(user),
-      actionLink: getProfileUrl(user._id)
+      name: name,
+      actionLink: profileUrl
     };
 
     var adminEmail = admin.emails[0].address;
@@ -99,7 +98,7 @@ Accounts.onCreateUser(function (options, user) {
   // send welcome email
   Meteor.setTimeout(function () {
     buildAndSendEmail(email, i18n.t('email_welcome_subject'), 'emailWelcome', {
-      greeting: i18n.t('greeting', user.profile.name),
+      greeting: i18n.t('greeting', name),
       message: [
         i18n.t('email_welcome_message_0'),
         i18n.t('email_welcome_message_1'),
@@ -107,25 +106,20 @@ Accounts.onCreateUser(function (options, user) {
       ]
     });
   }, 1);
-
-  // TODO: subscribe user to newsletter
-
-  return user;
-});
+};
 
 Meteor.methods({
   newUser: function (email, name, password) {
-    check([email, password], [String]);
+    check([email, name, password], [String]);
 
     var name = stripHTML(name);
-
     if (!validName(name))
       throw new Meteor.Error('invalid-content', 'This content does not meet the specified requirements.');
 
     if (password.length < 6)
       throw new Meteor.Error('weak-password', 'This password must have at least 6 characters.');
 
-    Accounts.createUser({
+    var userId = Accounts.createUser({
       'email': email,
       'password': password,
       'ipAddress': this.connection.clientAddress,
@@ -134,6 +128,8 @@ Meteor.methods({
         'bio': i18n.t('default_profile')
       }
     });
+
+    sendWelcomeEmail(userId);
   },
   newInvitedUser: function (name, password, inviteCode) {
     check([name, password, inviteCode], [String]);
@@ -154,7 +150,7 @@ Meteor.methods({
     if (password.length < 6)
       throw new Meteor.Error('weak-password', 'This password must have at least 6 characters.');
 
-    Accounts.createUser({
+    var userId = Accounts.createUser({
       'email': invite.invitedEmail,
       'password': password,
       'ipAddress': this.connection.clientAddress,
@@ -164,6 +160,7 @@ Meteor.methods({
       }
     });
 
+    sendWelcomeEmail(userId);
     return invite.invitedEmail;
   },
   changeProfile: function (newName, newBio) {
