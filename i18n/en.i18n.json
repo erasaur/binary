@@ -169,7 +169,6 @@
   "email_verifyEmail_action": "Verify this email",
 
   "email_signature": "Best,<br/>the Binary Team",
-  "email_footer_message": "We're currently in invitation-only private beta.",
   "email_opt_out": "If you don't want to receive further emails, you can update your settings <a href='__url__'>here</a>.",
 
   "greeting_extended": "$t('greeting', %s) Just wanted to let you know that",

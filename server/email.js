@@ -10,7 +10,6 @@ buildEmailTemplate = function (htmlContent) {
   var emailProperties = {
     body: htmlContent,
     signature: i18n.t('email_signature'),
-    footer_message: i18n.t('email_footer_message'),
     opt_out: i18n.t('email_opt_out', { url: getSettingsUrl() }),
     copyright: i18n.t('copyright')
   };
