@@ -6,14 +6,16 @@ Template.comment.helpers({
     return result + this.side;
   },
   author: function () {
-    return Meteor.users.findOne(this.userId);
+    var fields = { 'profile.name': 1, 'profile.bio': 1, 'stats.reputation': 1 };
+    return Meteor.users.findOne(this.userId, { fields: fields });
   },
   toggleClass: function () {
     if (this.isCommentItem) return;
     return _.contains(SessionAmplify.get('showingReplies'), this._id) && 'showing';
   },
   voteClass: function () {
-    var user = Meteor.user();
+    var userId = Meteor.userId();
+    var user = Meteor.users.findOne(userId, { fields: { 'activity.upvotedComments': 1 } });
     if (!user) return 'js-upvote-comment';
 
     var upvoted = getProperty(user, 'activity.upvotedComments');
@@ -24,7 +26,8 @@ Template.comment.helpers({
     return this.replies && this.replies.length;
   },
   canFlag: function () {
-    return canFlagComment(Meteor.user(), this._id);
+    var userId = Meteor.userId();
+    return canFlagComment(userId, this._id);
   }
 });
 
