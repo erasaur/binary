@@ -12,7 +12,7 @@ We designed binary to be potentially beneficial to all sorts of people. In brief
 - **For non-developers.** Debate on all sorts of topics ranging from politics (presidential elections are coming up!) to gaming. Heck you could even ask for [(shoddy) life advice](https://binary10.co/topics/iqw86XJPDuZjW3k7j).
 
 ## Contributing
-We welcome any feedback/contributions! Feel free to drop us a line at `hi@binary10.co` and we'll get back to you within a few days. If you find any bugs, please [open an issue](https://github.com/markblee/binary/issues). If you have feature requests or ideas, open an issue or send a [pull request](https://github.com/markblee/binary/pulls) so we can discuss further.
+We welcome any feedback/contributions! Feel free to drop us a line at `hi@binary10.co` and we'll get back to you within a few days. If you find any bugs, please [open an issue](https://github.com/erasaur/binary/issues). If you have feature requests or ideas, open an issue or send a [pull request](https://github.com/erasaur/binary/pulls) so we can discuss further.
 
 Binary is based heavily on [Telescope](https://github.com/TelescopeJS/Telescope), currently the most popular open-source Meteor app. If you have any experience contributing or using Telescope, the codebase should be familiar to you.
 
