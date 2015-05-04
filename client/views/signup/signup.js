@@ -47,6 +47,7 @@ Template.signupForm.events({
 
         Meteor.loginWithPassword(email, password, function (error) {
           if (error) toastr.warning(i18n.t('error'));
+          else Router.go('home');
         });
       }
     });
